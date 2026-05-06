@@ -60,7 +60,7 @@ schemas.push(...extraSchemas);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth dark" data-theme="blue">
+<html lang="en" class="scroll-smooth dark" data-theme="blue" data-theme-mode="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -146,23 +146,38 @@ schemas.push(...extraSchemas);
       })();
     </script>
 
-    <!-- Theme script (runs before body paint; <html> starts with class="dark" as default) -->
+    <!-- Theme bootstrap (runs before body paint; no flash of wrong theme).
+         Implements a 3-state colour-mode contract:
+           localStorage.theme ∈ {'system','light','dark'}  (default 'system')
+           <html data-theme-mode="…">                      (mirrors saved mode)
+           <html class="dark">                              (resolved appearance)
+         When mode === 'system', <html>.dark tracks prefers-color-scheme live. -->
     <script is:inline>
       (function () {
         const COLOR_THEMES = ['orange', 'amber', 'lime', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'magenta'];
+        const VALID_MODES = ['system', 'light', 'dark'];
 
-        function applyTheme(el) {
+        function getMode() {
           try {
-            // Dark / light mode
-            if (sessionStorage.getItem('theme') === 'light') {
-              el.classList.remove('dark');
-            } else {
-              el.classList.add('dark');
-            }
-          } catch { /* ignored */ }
+            const stored = localStorage.getItem('theme');
+            if (VALID_MODES.indexOf(stored) !== -1) return stored;
+          } catch { /* private mode / disabled storage */ }
+          return 'system';
+        }
 
+        function applyMode(el) {
+          const mode = getMode();
+          el.setAttribute('data-theme-mode', mode);
+          const isDark =
+            mode === 'dark' ||
+            (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) el.classList.add('dark');
+          else el.classList.remove('dark');
+        }
+
+        function applyColorTheme(el) {
           try {
-            // Color theme — persisted in sessionStorage so it resets to sky on every new visit
+            // Color palette — sessionStorage so it resets to default on each new visit
             const saved = sessionStorage.getItem('color-theme');
             if (saved && COLOR_THEMES.indexOf(saved) !== -1) {
               el.setAttribute('data-theme', saved);
@@ -170,15 +185,28 @@ schemas.push(...extraSchemas);
           } catch { /* ignored */ }
         }
 
+        function applyTheme(el) {
+          applyMode(el);
+          applyColorTheme(el);
+        }
+
         applyTheme(document.documentElement);
 
         if (!window.__themeListenersInit) {
           window.__themeListenersInit = true;
 
+          // Live-update when the OS flips colour scheme AND the user is on 'system'.
+          const mql = window.matchMedia('(prefers-color-scheme: dark)');
+          const onSchemeChange = function () {
+            if (getMode() === 'system') applyMode(document.documentElement);
+          };
+          if (mql.addEventListener) mql.addEventListener('change', onSchemeChange);
+          else if (mql.addListener) mql.addListener(onSchemeChange); // Safari < 14
+
+          // Re-apply across Astro view transitions (no flash on swap).
           document.addEventListener('astro:before-swap', function (e) {
             applyTheme(e.newDocument.documentElement);
           });
-
           document.addEventListener('astro:after-swap', function () {
             applyTheme(document.documentElement);
           });

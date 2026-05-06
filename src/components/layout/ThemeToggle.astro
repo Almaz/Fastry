@@ -64,15 +64,13 @@ const { class: className } = Astro.props;
     toggle.dataset.themeInit = 'true';
 
     toggle.addEventListener('click', () => {
-      const isDark = document.documentElement.classList.contains('dark');
+      const root = document.documentElement;
+      const nextMode = root.classList.contains('dark') ? 'light' : 'dark';
 
-      if (isDark) {
-        document.documentElement.classList.remove('dark');
-        sessionStorage.setItem('theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        sessionStorage.removeItem('theme');
-      }
+      try { localStorage.setItem('theme', nextMode); } catch { /* private mode */ }
+      root.setAttribute('data-theme-mode', nextMode);
+      if (nextMode === 'dark') root.classList.add('dark');
+      else root.classList.remove('dark');
     });
   }
 
