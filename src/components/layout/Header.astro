@@ -28,7 +28,7 @@ import { headerVariants, headerInnerVariants } from './header.variants';
 import Button from '@/components/ui/form/Button/Button.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import Logo from '@/components/ui/marketing/Logo/Logo.astro';
-import ThemeToggle from '@/components/layout/ThemeToggle.astro';
+import ThemeModeDropdown from '@/components/layout/ThemeModeDropdown.astro';
 import ThemeSelector from '@/components/layout/ThemeSelector.astro';
 import ThemeSelectorDropdown from '@/components/layout/ThemeSelectorDropdown.astro';
 import siteConfig from '@/config/site.config';
@@ -86,7 +86,7 @@ const {
   cta = { label: 'Start a project', href: '/contact' },
   actions = [],
   showThemeToggle = true,
-  showThemeSelector = false,
+  showThemeSelector = true,
   showMobileMenu = true,
   showSocialLinks = false,
   showActiveState = true,
@@ -218,7 +218,9 @@ const buttonId = `${menuId}-button`;
         ) : (
           <>
             {showThemeToggle && (
-              <ThemeToggle class={isFloating ? 'hdr-invert-text' : undefined} />
+              <div class="hidden md:flex">
+                <ThemeModeDropdown class={isFloating ? 'hdr-invert-text' : undefined} />
+              </div>
             )}
 
             {showThemeSelector && (
@@ -390,6 +392,15 @@ const buttonId = `${menuId}-button`;
                   {cta.label}
                   {cta.trailingIcon && <Icon name={cta.trailingIcon} size="sm" />}
                 </Button>
+              </div>
+            )}
+
+            {showThemeToggle && (
+              <div class="border-border mt-3 border-t pt-3">
+                <div class="flex items-center justify-between px-1">
+                  <span class="text-sm text-foreground-muted">Theme mode</span>
+                  <ThemeModeDropdown />
+                </div>
               </div>
             )}
 

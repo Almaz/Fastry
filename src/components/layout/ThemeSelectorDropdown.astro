@@ -106,7 +106,8 @@ const themes = [
   }
 
   .theme-swatch-dd[data-active] span:first-child {
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-brand-500);
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
   }
 
   .theme-swatch-dd[data-active] span:last-child {
@@ -189,16 +190,22 @@ const themes = [
       }
     });
 
-    // Toggle dropdown
+    // Toggle dropdown — close Pill A first so only one panel is ever open.
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = panel.classList.contains('hidden') === false;
-      if (isOpen) {
-        closeDropdown();
-      } else {
+      const willOpen = panel.classList.contains('hidden');
+      // Close Pill A (theme-mode) panels
+      document.querySelectorAll<HTMLElement>('.ttg-panel').forEach((p) => p.classList.add('hidden'));
+      document.querySelectorAll<HTMLButtonElement>('.ttg-trigger').forEach((t) => {
+        t.setAttribute('aria-expanded', 'false');
+        t.querySelector('.ttg-chevron')?.classList.remove('rotate-180');
+      });
+      if (willOpen) {
         panel.classList.remove('hidden');
         trigger.setAttribute('aria-expanded', 'true');
         trigger.querySelector('.theme-chevron')?.classList.add('rotate-180');
+      } else {
+        closeDropdown();
       }
     });
 
