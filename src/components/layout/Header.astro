@@ -294,10 +294,11 @@ const buttonId = `${menuId}-button`;
             id={buttonId}
             class={cn(
               'hdr-mobile-toggle inline-flex items-center justify-center rounded-md p-2 md:hidden',
-              'text-brand-700 dark:text-foreground',
               'transition-colors',
               'focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none',
-              !isFloating && 'hover:bg-secondary'
+              isFloating
+                ? 'hdr-invert-text'
+                : 'text-foreground-muted hover:text-foreground hover:bg-secondary'
             )}
             aria-expanded="false"
             aria-controls={menuId}
@@ -922,6 +923,14 @@ const buttonId = `${menuId}-button`;
   html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .theme-dropdown-wrapper button,
   html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .ttg-wrapper .ttg-trigger {
     border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* ===== Mobile hamburger toggle: brand-700 in light mode only ===== */
+  html:not(.dark) header[data-menu-id] .hdr-mobile-toggle {
+    color: var(--color-brand-700);
+  }
+  html:not(.dark) header[data-menu-id] .hdr-mobile-toggle:hover {
+    color: var(--color-brand-700);
   }
 
   /* ===== Returned state: fix button hover backgrounds ===== */
