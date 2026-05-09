@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.2.0] — 2026-05-09
+
+### Added
+
+- **Table of contents layout option** — `articleFeatures.toc.layout` accepts `'inline'` (current default — card at top of article), `'sidebar'` (sticky sidebar to the right on `xl+` viewports, hidden below), or `'auto'` (sidebar on `xl+`, inline card below `xl`). The article column stays at `max-w-4xl` in every layout, so reading width never changes when the sidebar appears or disappears. Per-post `toc: false` override and `IntersectionObserver` scroll-spy work identically across all three layouts. Default stays `'inline'` so existing sites are unchanged on upgrade. See [Table of Contents — Reading Anchors for Long Posts](src/content/blog/en/table-of-contents.mdx) for setup. The Astro Rocket demo site uses `'auto'`.
+- Conditional `<link rel="preconnect" href="https://giscus.app">` in `BaseLayout` when `articleFeatures.comments.enabled` is `true` — warms the DNS+TLS handshake before the lazy-loaded Giscus iframe fires.
+
+### Changed
+
+- **Brand accent shifted from `brand-700` to `brand-600` in light mode** for the blog SVG hero background and the mobile hamburger / close icon — completes the 1.1.0 brand-color refresh that previously covered header + footer site name, hero H1, and primary button. Dark mode unchanged.
+- Header scroll behaviour and scroll-progress bar are now driven by a single `requestAnimationFrame` callback. All layout reads (`window.scrollY`, etc.) happen before any DOM writes, and `docMaxScrollY` is cached via `ResizeObserver` so the scroll path never reads `scrollHeight` after attribute writes.
+
+### Fixed
+
+- **Forced reflow (~537 ms)** in `Header.astro` flagged by Lighthouse Insights. Two scroll scripts (header scroll-watcher + scroll-progress bar) were running on the same frame: the first wrote attributes, the second then read `scrollHeight` and forced a synchronous layout recompute. Merging the scripts and caching `docMaxScrollY` eliminates the reflow. After the fix the live demo scores 100/100/100/100 on both mobile and desktop.
+- **TOC scroll-spy + duplicate `id` in `'auto'` layout** — when both the inline and sidebar TOC are mounted (one hidden via CSS per breakpoint), the scroll-spy script previously bound to the first instance only, leaving the visible TOC without active-section highlighting on desktop. The script now iterates all `[data-toc]` instances and each instance gets a unique `aria-labelledby` heading id.
+
+### Removed
+
+- **Dead `morphToBar` code path.** The prop on `<Header>` and `<LandingLayout>` defaulted to `false` everywhere and was never set to `true`; the entire `initNavMorph` script (~30 lines) ran on every page load only to bail on a failing `querySelector`. Removed the prop from both components, the `data-morph-to-bar` attribute, the `initNavMorph` script + `astro:transitions/client` import, and two associated CSS rules. After removal the Header script bundle is small enough that Astro inlines it directly into the HTML, eliminating the 1.3 s critical-path fetch Lighthouse previously flagged for `Header.astro_ast_…js`.
+
+### Upgrade notes
+
+`articleFeatures.toc.layout` is an additive setting — existing sites pick up the default (`'inline'`) and render exactly as before. To try the new sidebar mode, set `layout: 'sidebar'` (desktop only) or `layout: 'auto'` (sidebar on `xl+`, inline card on phones/tablets) in `site.config.ts`. The brand-color tweaks are visible in light mode on blog index / post pages and the mobile menu — review the diff if you've customized either area.
+
+---
+
 ## [1.1.0] — 2026-05-09
 
 ### Added
