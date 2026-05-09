@@ -76,6 +76,9 @@ The following changes were made to the free Velocity theme to create Astro Rocke
 | **Colour Mode** | 3-state picker — **System / Light / Dark** with `localStorage` persistence and live OS-preference tracking under 'System'; surfaced as a pill dropdown in the header (and inside the mobile menu) |
 | **Content Collections** | Type-safe blog, pages, authors, and FAQs with Zod validation |
 | **API Routes** | Contact form and newsletter endpoints with validation |
+| **Table of Contents** | Optional table of contents on blog posts, auto-generated from MDX headings, with three layouts: inline card, sticky desktop sidebar, or `auto` (sidebar on `xl+`, inline card below). Includes `IntersectionObserver` scroll-spy. Off by default; per-post `toc: false` in frontmatter hides on a single post |
+| **Blog Comments (Giscus)** | Optional comments at the bottom of blog posts, powered by [Giscus](https://giscus.app) and GitHub Discussions. **Lazy-loaded** so readers who don't scroll to comments pay zero network cost; reserved `min-height` prevents CLS. Off by default; per-post `comments: false` in frontmatter hides on a single post |
+| **Independent Footer Menu** | Header and footer navigation configured separately in `nav.config.ts` (`navItems`, `footerNavItems`, `legalLinks`) — add a Privacy or Imprint link to the footer without cluttering the main nav |
 | **React Islands** | Optional client-side interactivity where needed |
 
 ### Internationalization (i18n)

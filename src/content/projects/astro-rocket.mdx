@@ -143,6 +143,18 @@ The closing call-to-action on the homepage, projects index, and about page uses 
 
 Both endpoints are real Astro API routes, type-checked, unit-tested with **Vitest**, and ready to deploy.
 
+## Blog Reading Experience
+
+Long-form posts ship with two optional reading aids that activate with a single config flag. Both are **off by default**, so existing sites are unchanged on upgrade.
+
+**Table of contents.** Auto-generated from the MDX headings of every post, with three layouts to choose from: an inline card at the top of the article, a sticky sidebar to the right on desktop, or `auto` — sidebar on `xl+` viewports and inline card on phones and tablets. The reading column stays at `max-w-4xl` in every mode, so reading width never changes when the sidebar appears or disappears. An `IntersectionObserver` scroll-spy highlights the active section as the reader moves through the post. Per-post `toc: false` in frontmatter hides the TOC on a single post. Full setup: [Table of Contents — Reading Anchors for Long Posts](/blog/table-of-contents).
+
+**Comments via Giscus.** Comments at the bottom of articles powered by **Giscus** and GitHub Discussions — no database, no third-party account, no ads. The script is **lazy-loaded** with an `IntersectionObserver`, so readers who don't scroll to the comments section pay zero network cost; a reserved `min-height` on the placeholder prevents cumulative layout shift. Per-post `comments: false` in frontmatter hides comments on a single post. Full setup: [Comments on Blog Posts — Giscus, Lazy-Loaded](/blog/giscus-comments).
+
+## Independent Header & Footer Menus
+
+Header and footer navigation are configured separately, so a new Privacy or Imprint link can land in the footer without cluttering the main nav. `nav.config.ts` exports three arrays: `navItems` for the header, `footerNavItems` for the footer, and `legalLinks` for the small legal-style row some footer layouts render in their bottom strip. Defaults mirror the existing nav, so footers on existing sites are unchanged. Full setup: [Independent Footer Menu — Different Links in Header and Footer](/blog/independent-footer-menu).
+
 ## Search, Privacy, and Analytics
 
 **Pagefind search.** Static-site search powered by [Pagefind](https://pagefind.app) — index built at the end of every production build, no server, no third-party dependency, no per-search cost.
