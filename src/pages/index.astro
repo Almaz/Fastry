@@ -291,17 +291,11 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <!-- Blog -->
   <section class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
-      <div class="flex items-end justify-between" data-reveal>
-        <div class="flex flex-col gap-6">
-          <Badge variant="brand" pill class="self-start">From the blog</Badge>
-          <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-            Featured
-          </h2>
-        </div>
-        <a href="/blog" class="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors shrink-0">
-          View all posts
-          <Icon name="arrow-right" size="sm" />
-        </a>
+      <div class="flex flex-col items-center gap-6 text-center" data-reveal>
+        <Badge variant="brand" pill>From the blog</Badge>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+          Featured
+        </h2>
       </div>
 
       <div class="grid gap-6 md:grid-cols-3">
@@ -319,7 +313,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
         ))}
       </div>
 
-      <div class="text-center sm:hidden">
+      <div class="flex justify-center">
         <Button variant="outline" href="/blog">
           View all posts
           <Icon name="arrow-right" size="sm" />
