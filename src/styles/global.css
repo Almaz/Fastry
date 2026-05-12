@@ -327,13 +327,13 @@
 
   /* Hero gradient — dark mode */
   .dark .hero-dark-gradient {
-    background: linear-gradient(to bottom, var(--color-brand-600) 0%, #000 100%);
+    background: linear-gradient(to bottom, var(--color-brand-500) 0%, #000 100%);
   }
 
   .hero-dark-gradient {
     position: relative;
     isolation: isolate;
-    background: linear-gradient(to bottom, var(--color-brand-600) 0%, #000 100%);
+    background: linear-gradient(to bottom, var(--color-brand-500) 0%, #000 100%);
   }
   html:not(.dark) .hero-dark-gradient {
     --color-foreground:           oklch(91% 0.008 250);
