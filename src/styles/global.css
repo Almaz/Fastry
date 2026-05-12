@@ -380,10 +380,6 @@
     border-color: color-mix(in oklch, var(--color-foreground) 40%, transparent);
   }
 
-  /* Scroll-indicator chevrons. */
-  html:not(.dark) .hero-dark-gradient .scroll-indicator-chevron   { color: rgb(255 255 255 / 0.7); }
-  html:not(.dark) .hero-dark-gradient .scroll-indicator-chevron-2 { color: rgb(255 255 255 / 0.35); }
-
   /* Brand badge in the hero — applied in BOTH light and dark mode.
      Glass pill with a brand-400 pulse core and brand-300 soft halo. */
   .hero-dark-gradient .bg-brand-500\/10 {
