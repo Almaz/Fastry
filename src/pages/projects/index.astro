@@ -40,51 +40,55 @@ const projects = items.sort((a, b) => a.data.order - b.data.order);
     <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
       <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
 
-        <div class="grid gap-6 md:grid-cols-2">
+        <div class="flex flex-col gap-6">
           {projects.map((project) => (
-            <Card variant="elevated" hover padding="none" href={`/projects/${project.id.replace(/\.mdx?$/, '')}`} class:list={['group overflow-hidden flex flex-col', project.data.featured && 'md:col-span-2 md:grid md:grid-cols-2 md:flex-row']} data-reveal>
+            <Card
+              variant="elevated"
+              hover
+              padding="none"
+              href={project.data.placeholder ? undefined : `/projects/${project.id.replace(/\.mdx?$/, '')}`}
+              class="group overflow-hidden flex flex-col lg:grid lg:grid-cols-2"
+              data-reveal
+            >
               {project.data.image && (
-                <div class="overflow-hidden">
+                <div class="overflow-hidden p-6 pb-0 lg:bg-background-secondary lg:p-6 lg:aspect-auto lg:h-full lg:flex lg:items-center lg:justify-center">
                   <Image
                     src={project.data.image}
                     alt={project.data.imageAlt || project.data.title}
-                    widths={[640, 960]}
-                    sizes={project.data.featured ? '(max-width: 768px) 640px, 480px' : '(max-width: 768px) 640px, 960px'}
-                    class:list={[
-                      'w-full object-cover transition-transform duration-300 group-hover:scale-105',
-                      project.data.featured ? 'aspect-video md:aspect-auto md:h-full' : 'aspect-video'
-                    ]}
+                    widths={[640, 960, 1200]}
+                    sizes="(max-width: 1024px) 100vw, 480px"
+                    class="block w-full h-auto rounded-md shadow-md ring-1 ring-border/60 lg:max-h-full lg:max-w-full lg:w-auto lg:rounded-lg lg:ring-0 lg:shadow-none lg:object-contain transition-transform duration-300 group-hover:scale-[1.02]"
                     loading="lazy"
                   />
                 </div>
               )}
               <div class="flex flex-1 flex-col p-6">
-                <!-- Header -->
-                <div class="mb-3 flex items-start justify-between gap-4">
-                  {!project.data.image && (
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                      <Icon name="layers" size="sm" />
-                    </div>
-                  )}
-                  <Icon name="arrow-up-right" size="sm" class="text-foreground-muted group-hover:text-brand-500 transition-colors shrink-0 ml-auto" />
-                </div>
-
-                <!-- Title + year -->
+                {!project.data.image && (
+                  <div class="mb-3 w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                    <Icon name="layers" size="sm" />
+                  </div>
+                )}
                 <div class="mb-2 flex items-baseline gap-2">
                   <h3 class="font-display text-lg font-bold text-foreground">{project.data.title}</h3>
                   {project.data.year && (
                     <span class="text-xs text-foreground-muted">{project.data.year}</span>
                   )}
                 </div>
-
-                <p class="text-sm text-foreground-muted leading-relaxed mb-4 flex-1">{project.data.description}</p>
-
-                <!-- Tags -->
-                <div class="flex flex-wrap gap-1.5">
-                  {project.data.tags.map((tag) => (
-                    <Badge variant="brand">{tag}</Badge>
-                  ))}
-                </div>
+                <p class="text-sm text-foreground-muted leading-relaxed mb-4">{project.data.description}</p>
+                {project.data.meta && project.data.meta.length > 0 && (
+                  <p class="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-foreground-muted">
+                    {project.data.meta.map((item, i) => (
+                      <>
+                        {i > 0 && <span class="text-brand-500" aria-hidden="true">·</span>}
+                        <span>{item}</span>
+                      </>
+                    ))}
+                  </p>
+                )}
+                <span class="inline-flex items-center gap-1.5 text-sm font-medium text-brand-500">
+                  View project
+                  <Icon name="arrow-right" size="sm" />
+                </span>
               </div>
             </Card>
           ))}
