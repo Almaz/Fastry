@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <em>Perfect Lighthouse scores on mobile and desktop, out of the box.</em>
+  <em>Perfect Lighthouse scores.</em>
 </p>
 
 ---
