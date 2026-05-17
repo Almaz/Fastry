@@ -12,6 +12,7 @@ import TableOfContents from '@/components/blog/TableOfContents.astro';
 import Comments from '@/components/blog/Comments.astro';
 import CTA from '@/components/ui/marketing/CTA/CTA.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
 import { resolveSocialLinks } from '@/lib/utils';
 import { createBlogPostSchema } from '@/lib/schema';
 import { getBlogOgPath } from '@/lib/og';
@@ -229,7 +230,8 @@ const blogPostingSchema = createBlogPostSchema({
   )}
 
   <!-- Follow Along -->
-  <CTA variant="default" size="md" maxWidth="lg" glow={false} data-reveal class="bg-background-secondary">
+  <!-- Mobile: standard CTA, no LetterGlitch -->
+  <CTA variant="default" size="md" maxWidth="lg" glow={false} data-reveal class="glitch:hidden bg-background-secondary">
     <h2 slot="heading" class="!text-4xl">Follow along</h2>
     <p slot="description" class="!text-lg text-balance">Stay in the loop — new articles, thoughts, and updates.</p>
 
@@ -261,6 +263,42 @@ const blogPostingSchema = createBlogPostSchema({
       </a>
     </div>
   </CTA>
+
+  <!-- Desktop: contained LetterGlitch band with glass card -->
+  <section class="hidden glitch:block relative z-10 py-[var(--space-section-md)] bg-background-secondary">
+    <LetterGlitchBand>
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">Follow along</h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">Stay in the loop — new articles, thoughts, and updates.</p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/rss.xml"
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-400 hover:bg-brand-500/20 hover:text-foreground"
+        >
+          <Icon name="rss" size="sm" />
+          RSS Feed
+        </a>
+        {socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-400 hover:bg-brand-500/20 hover:text-foreground"
+          >
+            <Icon name={link.icon} size="sm" />
+            {link.label}
+          </a>
+        ))}
+        <a
+          href={`mailto:${siteConfig.email}`}
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-400 hover:bg-brand-500/20 hover:text-foreground"
+        >
+          <Icon name="mail" size="sm" />
+          Email
+        </a>
+      </div>
+    </LetterGlitchBand>
+  </section>
   </div>
 
   <Footer slot="footer" layout="simple" background="secondary" maxWidth={sidebarActive ? '7xl' : '6xl'} />
