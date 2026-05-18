@@ -1,7 +1,6 @@
 ---
 import type { ImageMetadata, MarkdownHeading } from 'astro';
 import type { CollectionEntry } from 'astro:content';
-import { Image } from 'astro:assets';
 
 interface GallerySlide {
   src: ImageMetadata;
@@ -192,39 +191,32 @@ const breadcrumbs = [
                 variant="elevated"
                 hover
                 padding="none"
-                href={`/projects/${project.id.replace(/\.mdx?$/, '')}`}
-                class="group flex flex-col overflow-hidden"
+                href={project.data.placeholder ? undefined : `/projects/${project.id.replace(/\.mdx?$/, '')}`}
+                class="group flex flex-col"
               >
-                {project.data.image ? (
-                  <div class="overflow-hidden p-5 pb-0">
-                    <Image
-                      src={project.data.image}
-                      alt={project.data.imageAlt || project.data.title}
-                      widths={[400, 600]}
-                      sizes="(max-width: 640px) 100vw, 400px"
-                      class="block h-auto w-full rounded-md shadow-md ring-1 ring-border/60 transition-transform duration-300 group-hover:scale-[1.02]"
-                      loading="lazy"
-                    />
-                  </div>
-                ) : (
-                  <div class="p-5 pb-0">
-                    <div class="aspect-video w-full rounded-md shadow-md ring-1 ring-border/60 bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center">
-                      <Icon name="layers" size="md" class="text-brand-500" />
+                <div class="flex flex-1 flex-col p-6">
+                  <div class="mb-3 flex items-start justify-between gap-4">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                      <Icon name="layers" size="sm" />
                     </div>
-                  </div>
-                )}
-                <div class="flex flex-1 flex-col p-5">
-                  <div class="mb-2 flex items-baseline justify-between gap-2">
-                    <h3 class="font-display text-base font-bold text-foreground">{project.data.title}</h3>
-                    {project.data.year && (
-                      <span class="text-xs text-foreground-muted shrink-0">{project.data.year}</span>
+                    {!project.data.placeholder && (
+                      <Icon name="arrow-up-right" size="sm" class="text-foreground-muted group-hover:text-brand-500 transition-colors shrink-0 ml-auto" />
                     )}
                   </div>
-                  <p class="text-sm text-foreground-muted leading-relaxed mb-4">{project.data.description}</p>
-                  <span class="inline-flex items-center gap-1.5 text-sm font-medium text-brand-500">
-                    View project
-                    <Icon name="arrow-right" size="sm" />
-                  </span>
+                  <div class="mb-2 flex items-baseline gap-2">
+                    <h3 class="font-display text-lg font-bold text-foreground">{project.data.title}</h3>
+                    {project.data.year && (
+                      <span class="text-xs text-foreground-muted">{project.data.year}</span>
+                    )}
+                  </div>
+                  <p class="text-sm text-foreground-muted leading-relaxed mb-4 flex-1">{project.data.description}</p>
+                  {project.data.tags && project.data.tags.length > 0 && (
+                    <div class="flex flex-wrap gap-1.5">
+                      {project.data.tags.map((tag) => (
+                        <Badge variant="brand">{tag}</Badge>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </Card>
             ))}
