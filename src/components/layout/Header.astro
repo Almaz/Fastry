@@ -249,7 +249,7 @@ const buttonId = `${menuId}-button`;
         ) : (
           <>
             {showThemeToggle && (
-              <div class="hidden lg:flex">
+              <div class="flex">
                 <ThemeModeDropdown class={isFloating ? 'hdr-invert-text' : undefined} />
               </div>
             )}
@@ -436,25 +436,12 @@ const buttonId = `${menuId}-button`;
               </ul>
             </section>
 
-            {showThemeToggle && (
-              <section class="mobile-menu-section">
-                <p class="mobile-menu-label">Appearance</p>
-                <div
-                  class="mobile-menu-stagger flex items-center justify-between rounded-xl px-3 py-2.5"
-                  style={`--stagger-index: ${navItems.length}`}
-                >
-                  <span class="text-sm text-foreground-muted">Theme mode</span>
-                  <ThemeModeDropdown />
-                </div>
-              </section>
-            )}
-
             {showThemeSelector && (
               <section class="mobile-menu-section">
                 <p class="mobile-menu-label">Theme</p>
                 <div
                   class="mobile-menu-stagger flex items-center justify-between rounded-xl px-3 py-2.5"
-                  style={`--stagger-index: ${navItems.length + (showThemeToggle ? 1 : 0)}`}
+                  style={`--stagger-index: ${navItems.length}`}
                 >
                   <span class="text-sm text-foreground-muted">Colour theme</span>
                   <ThemeSelector />
@@ -467,7 +454,7 @@ const buttonId = `${menuId}-button`;
                 <p class="mobile-menu-label">Language</p>
                 <div
                   class="mobile-menu-stagger flex items-center justify-between rounded-xl px-3 py-2.5"
-                  style={`--stagger-index: ${navItems.length + (showThemeToggle ? 1 : 0) + (showThemeSelector ? 1 : 0)}`}
+                  style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0)}`}
                 >
                   <span class="text-sm text-foreground-muted">Language</span>
                   <LanguageSwitcher />
@@ -489,7 +476,7 @@ const buttonId = `${menuId}-button`;
                         aria-label={label}
                         title={label}
                         class="mobile-menu-social mobile-menu-stagger inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-foreground-muted transition-colors"
-                        style={`--stagger-index: ${navItems.length + (showThemeToggle ? 1 : 0) + (showThemeSelector ? 1 : 0) + (showLanguageSwitcher ? 1 : 0) + sIdx}`}
+                        style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0) + (showLanguageSwitcher ? 1 : 0) + sIdx}`}
                       >
                         <Icon name={icon} size="md" />
                       </a>
@@ -502,7 +489,7 @@ const buttonId = `${menuId}-button`;
             {showCta && (
               <div
                 class="mobile-menu-stagger mobile-menu-cta-wrap pt-2"
-                style={`--stagger-index: ${navItems.length + (showThemeToggle ? 1 : 0) + (showThemeSelector ? 1 : 0) + (showLanguageSwitcher ? 1 : 0) + mobileSocialLinks.length}`}
+                style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0) + (showLanguageSwitcher ? 1 : 0) + mobileSocialLinks.length}`}
               >
                 <Button fullWidth href={ctaHref} target={ctaHref?.startsWith('http') ? '_blank' : undefined}>
                   {cta.icon && <Icon name={cta.icon} size="sm" />}
