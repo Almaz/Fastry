@@ -6,6 +6,56 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.4.0] — 2026-05-19
+
+### Added
+
+- **Services page** — new top-level `/services` route (`src/pages/services.astro`) with three anchored sections (`#design`, `#development`, `#performance`), brand-coloured hero badges, bullet lists, and scroll-reveal animations. Added to both the header `navItems` and `footerNavItems` in `src/config/nav.config.ts` (now ordered Services → Projects → Blog → About → Contact). The mobile dropdown uses the `sparkles` icon. Homepage service cards link to the matching anchors on the Services page.
+- **Project gallery + carousel** — `ProjectCarousel.astro` swipeable image carousel that replaces the single `image` in `ProjectHero` when a `gallery: [{ src, alt }]` array is present in project frontmatter. Schema added in `src/content.config.ts`.
+- **Project `meta` tagline** — optional `meta: string[]` array in project frontmatter renders as a single line under the hero description with brand-coloured dot separators.
+- **Project `placeholder` flag** — `placeholder: true` in frontmatter renders a branded SVG placeholder in the project hero instead of an image, for image-less starter project cards.
+- **Per-project TOC override** — `toc: false` in project frontmatter, mirroring the existing blog post override.
+- **Blog FAQ schema** — optional `faqs: [{ question, answer }]` array in blog frontmatter emits an additional FAQ JSON-LD block alongside the existing `BlogPosting` schema.
+- **Blog pagination, tag archives, and dynamic OG images** — new routes `blog/page/[page].astro` and `blog/tag/[tag].astro`, plus dynamic OG image endpoints `og/blog/[slug].svg.ts`, `og/blog/tag/[tag].svg.ts`, and `og/projects/[slug].svg.ts`. New `Pagination.astro`, `TagList.astro`, and `ShareButtons.astro` components, with shared helpers in `src/lib/blog.ts` and `src/lib/og.ts`.
+- **`Callout.astro` pattern** — new pattern component for pull-quotes and inline callouts; the existing pull-quote icon now lives inside the Callout card.
+- **Global arrow-slide hover pattern** — `arrow-right` / `arrow-left` icons now slide on hover everywhere via a standardised CSS pattern in `src/styles/global.css`.
+- **New project + blog content** — `src/content/projects/hans-martens.mdx`, expanded `astro-rocket.mdx` with a multi-image gallery, and a new post `src/content/blog/en/i18n-in-astro-rocket.mdx`.
+
+### Changed
+
+- **Header rework** (`src/components/layout/Header.astro`) — desktop breakpoint raised from `md` to `lg` to prevent tablet squeeze; theme-mode (light/dark) toggle promoted from the mobile menu to the header itself at every breakpoint; brand-coloured chrome neutralised in light mode so the header reads as neutral while keeping brand accents on hover/active states.
+- **Project hero redesign** (`ProjectHero.astro`, `ProjectLayout.astro`) — synced from the live `hansmartens.dev` site: cleaner meta line, brand placeholder fallback, back-nav button, optional FAQ schema, and dropped brand glow.
+- **Project cards aligned with homepage selected-work layout** — image-less grid restored as the default, `arrow-up-right` icon now shows on every card (not just hover-active), and related-project cards on `projects/[slug]` are equalised in height with three cards instead of two.
+- **Blog index + post pages synced from `hansmartens.dev`** — refreshed `ArticleHero`, `BlogCard`, `BlogImageSVG`, `TableOfContents`, and the new "Follow along" section now matches between the blog index and individual posts.
+- **Layout max-width** — single project pages, blog post pages, and the projects index now share the same `max-w-7xl` section width as the rest of the site.
+- **Contact copy** — homepage CTA + contact hero clarified to scope work to new builds only; contact form heading "Send a message" → "Project details".
+- **Homepage projects section** — replaced placeholder projects with Astro Rocket + Hans Martens Dev; redesigned section to mirror the projects-index layout 1:1.
+- **`global.css` + all 12 theme tokens** (`amber`, `blue`, `cyan`, `emerald`, `green`, `indigo`, `lime`, `magenta`, `orange`, `purple`, `sky`, `teal`, `violet`) received small token tweaks for header neutrality and the new arrow-slide pattern.
+- **404 page rewritten** with the same hero pattern as the rest of the marketing pages.
+
+### Fixed
+
+- **Reveal-animation overshoot** on contact-page slide-ins and other horizontal slide reveals — animations no longer overshoot their resting position.
+- **Services-card 3-column grid** — moved the responsive snap point from `md` to `lg` so the three service cards no longer squeeze on tablet widths. `components.astro` showcase grids reverted to their original breakpoints.
+- **Services "Web Development" card reveal direction** corrected to slide in from the matching side as its siblings.
+- **LCP on the homepage hero** — `scrollHeight` reads deferred off the LCP critical path in `BaseLayout`; H1 opacity animation kept after a brief revert experiment.
+- **Long tag titles** wrap correctly on narrow mobile screens on the `blog/tag/[tag]` page.
+- **Mobile project-card images** — tightened the `sizes` hint to avoid downloading desktop-resolution images on phones.
+
+### Removed
+
+- **Brand glow** removed from project hero, project carousel, and blog article hero (a dark-mode hero halo was added then reverted).
+- **Lighthouse score section** removed from the README in favour of pointing at the live demo.
+
+### Upgrade notes
+
+- **Navigation order changed** — `Services` was inserted as the first item in both `navItems` and `footerNavItems`, pushing Blog from order 1 to order 3. If you've customised `src/config/nav.config.ts`, re-apply your overrides on top of the new defaults rather than copying the file verbatim.
+- **Project frontmatter additions are all optional** — existing `.mdx` projects continue to work unchanged. To opt into the new features, add `gallery: [...]`, `meta: [...]`, `placeholder: true`, or `toc: false` as needed (see `src/content/projects/astro-rocket.mdx` for examples).
+- **Blog `faqs` frontmatter is optional** — set `faqs: [{ question, answer }]` to emit FAQ JSON-LD; existing posts emit only `BlogPosting` as before.
+- **Header desktop breakpoint raised to `lg`** — if you've customised `Header.astro` or `header.variants.ts` against the previous `md` breakpoint, expect the desktop layout to engage one breakpoint later than before.
+
+---
+
 ## [1.3.0] — 2026-05-11
 
 ### Added
