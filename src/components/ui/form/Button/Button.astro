@@ -62,12 +62,14 @@ const classes = cn(
 </Element>
 
 <style is:global>
-  /* Light mode: brand-600 fill — paired with brand-700 hover for a one-step darker accent */
+  /* Light mode: brand-700 fill, brand-800 hover. brand-700 is the lightest
+     brand step that keeps white label text at WCAG AA (>=4.5:1) across all
+     themes — brand-500/600 failed for the cooler hues (teal, cyan, sky…). */
   html:not(.dark) .btn-primary {
-    background-color: var(--color-brand-600);
+    background-color: var(--color-brand-700);
   }
   html:not(.dark) .btn-primary:hover {
-    background-color: var(--color-brand-700);
+    background-color: var(--color-brand-800);
   }
 
   /*
