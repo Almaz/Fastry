@@ -1,6 +1,6 @@
 ---
 title: "Hans Martens Dev"
-description: "My personal site and a live showcase of Astro Rocket — running the Indigo theme, with view transitions, reveal animations, LetterGlitch CTAs, and an MDX-driven blog and project log. The first place every new pattern lands before it makes its way into the framework."
+description: "My portfolio and personal proving ground — designed and coded by me on Astro Rocket, the Astro 6 starter I built. A locked brand-violet identity, a real 3-state colour mode, LetterGlitch CTAs, and a clean 100/100/100/100 Lighthouse run on mobile and desktop."
 url: "https://hansmartens.dev"
 tags: ["Astro", "TypeScript", "Tailwind CSS", "Personal Site"]
 featured: true
@@ -9,69 +9,108 @@ year: 2026
 role: "Designer & Developer"
 services: ["Web Design", "Web Development", "Performance"]
 meta: ["Personal site", "Built on Astro Rocket", "Astro 6", "Lighthouse 4×100"]
+icon: "code"
 image: "../../assets/projects/hansmartensdev-website.jpg"
-imageAlt: "Hans Martens Dev website"
+imageAlt: "The Hans Martens Dev homepage — a brand-violet hero fading to black, shown in a browser window."
 ---
 
 import LighthouseScoresGrid from '@/components/landing/LighthouseScoresGrid.astro';
 import Callout from '@/components/patterns/Callout.astro';
-import { Image } from 'astro:assets';
-import letterGlitchScreenshot from '../../assets/projects/hansmartens-project.jpeg';
 
-## A site that's mine, not a template
+## The site you're standing on
 
-This is my home on the web — where my work, my writing, and the way I think about the craft live together. I designed and built it side by side with [Astro Rocket](/projects/astro-rocket), the open-source Astro 6 starter I released on the same day.
+You're looking at it. This is my portfolio, my writing desk, and the first place every new idea gets tried before it goes anywhere near a paying project. I designed it, and I wrote every line of it myself — as a freelance web designer and developer, this is the one brief where I'm also the client.
 
-Same starting line, different finish. Astro Rocket is the clean, opinionated theme anyone can clone. This site is what happens after the clone — a place that keeps growing, picks up its own personality, and carries the ideas that wouldn't make sense in a generic starter.
+What makes this project worth writing up isn't a logo or a colour. It's where it came from. The whole thing is built on **Astro Rocket** — the open-source [Astro 6 starter I built and released](https://github.com/hansmartensdev/Astro-Rocket).
 
 <Callout>
-  Astro Rocket is the theme. This is the home it lives in.
+  I built the starter. Then I used the starter to build the site you're reading this on.
 </Callout>
 
-## Everything Astro Rocket ships, tuned for me
+## Built on my own Astro Rocket theme
 
-Because this site is built on Astro Rocket, it inherits the whole feature set: the full design system, 57+ components, the 3-state colour-mode picker, native opt-in i18n, the complete SEO stack with JSON-LD and `hreflang`, Pagefind search, the Resend-powered contact and newsletter forms, Google Consent Mode v2, an auto-generated table of contents on long blog posts, Giscus discussions, independently configured header and footer menus, and a layered animation system that respects reduced motion. Everything is there. I just made different decisions about what to keep visible.
+This site is built on [Astro Rocket](https://github.com/hansmartensdev/Astro-Rocket), my own open-source Astro 6 theme. The design system, components, SEO stack, contact form, colour-mode system, and animation layer all come from there — a finished foundation I could build straight on top of.
 
-## One brand, one colour
+## A short site, built properly
 
-Astro Rocket exposes twelve live-switchable colour themes from a pill in the header. On this site, that pill is off. Indigo is the brand, and the surface should reinforce that — not invite visitors to talk me out of it. The theme system underneath is still doing its job; I just locked the dial.
+The map is deliberately small. There's a **homepage**, a **Services** page, a **Projects** page (you're inside one of its cards right now), a **Blog**, and a **Contact** page — plus an About page where I tell the longer story. Five public destinations and a bit of backstory. No filler routes padded in just to make the navigation look busy.
 
-## Lighthouse: 100 across the board
+## The header knows when to disappear
+
+The header is a frosted-glass capsule that floats over the top of the page. The detail I care about most is what it does when you read: scroll **down** and it quietly slides up and out of the way, because a fixed bar is just clutter once you're three paragraphs in; scroll back **up** and it returns — and it returns wearing the right colour scheme for whatever section is now sitting under it. One smooth 300ms transition carries the menu links, the theme controls, and the logo through the change together.
+
+The light and dark stories are mirror images of each other:
+
+- **Light mode.** Over the homepage's brand-to-black hero, the capsule sits as dark glass so it reads cleanly against the colour. The moment you scroll past the hero into the white of the page, it flips to a clean, bright capsule.
+- **Dark mode.** Exactly the inverse — dark glass at rest, lifting to a brighter capsule once the page scrolls underneath it.
+
+Same component, same motion, opposite palette. It's the kind of thing you don't notice when it's right, which is the whole point of getting it right.
+
+## Two heroes, four moods
+
+The hero is where the brand has to land, so it gets two completely different treatments depending on the page.
+
+**The homepage hero is locked.** It's a single vertical wash of colour — brand violet at the top, sinking down to true black at the foot — and it renders *identically* whether your machine is set to light or dark. That's on purpose. The first screen is the brand's one chance to make an impression, and I didn't want the OS preference quietly changing the mood of my front door. The headline sits in a soft, brand-tinted near-white so it never shouts over the gradient, and the floating capsule rests on top like frosted glass.
+
+**The inner pages take the opposite approach** — and this is my favourite trick on the whole site. Services, Projects, Blog, About and Contact share a quieter hero that deliberately *flips its technique* with the colour mode, both versions pure CSS that cost nothing on performance:
+
+- **In light mode**, a faint architectural grid sits behind the heading — 56px cells, like pale blueprint paper, brightest just under the header and dissolving out to plain white at the corners, with the lines subtly *lighting up* in brand violet toward the centre.
+- **In dark mode**, the grid gives way to a **beam** — a soft pool of brand light spilling down from the top edge, as if it's falling from the underside of the fixed header, fading out before it reaches the headline so the title stays crisp on the dark.
+
+In light mode the structure is *drawn in lines*; in dark mode it's *painted in light*. Same anchor, same brand colour, two opposite moods from one idea.
+
+## System, Light, Dark — your call, not mine
+
+The colour-mode control in the header is a real **three-state switch**, not a binary toggle. You can pin **Light**, pin **Dark**, or choose **System** and hand the decision to your operating system. And when System is active, the site tracks your OS live — change your Mac or Windows preference and the page flips the instant you do, no reload. Your choice is remembered across reloads and new tabs, and the icon in the pill always shows what *you* picked, never just what happens to be on screen.
+
+The detail I'm quietly proud of: there's never a flash of the wrong theme. A tiny script runs in the page head *before* the body paints, reads your saved preference, and applies dark mode up front — so a dark-mode visitor never catches a single white frame, not on first load and not when moving between pages. I wrote the whole thing up in [System, Light, Dark — How the Colour-Mode System Works](/blog/colour-mode-system).
+
+One restraint worth mentioning: Astro Rocket can offer twelve switchable accent colours, but on this site I've turned that off. Violet is the brand. The dial still works underneath — I've just locked it, because my own portfolio shouldn't be inviting you to redecorate it.
+
+## The CTA you keep scrolling back to
+
+Every page that wants to convert ends on the same closing note: a contained band with the **LetterGlitch** effect running behind it — a field of brand-violet characters flickering and cycling on a canvas — with a brand-tinted glass card floating on top to keep the headline and buttons perfectly readable. There's a soft halo bleeding out behind the rounded band so it feels like it's glowing rather than just sitting there.
+
+It's intentionally a **desktop moment**. On a phone the band would squeeze into something tense and unreadable, so small screens get a calm, flat version of the same call-to-action instead — same words, same buttons, no canvas. It's a little flourish of texture in an otherwise restrained layout, and that contrast is exactly why it works. The full build, component and all, is in [Add a LetterGlitch Effect to Your Astro 6 Site](https://hansmartens.dev/blog/letter-glitch-astro-6).
+
+## Motion with manners
+
+Nothing on this site moves to show off. The animation layer is there to make things feel like they *arrive* rather than just appear:
+
+- **A spring, not an ease.** Entrances ride a `cubic-bezier` curve tuned to overshoot a few pixels and settle back, so elements land with a tiny bounce instead of stopping dead. It feels like a physics spring — but it's pure CSS, no animation library shipped to your browser.
+- **Things reveal as you reach them.** Sections fade and lift into place as they scroll into view; grids of cards cascade in one after another instead of all at once.
+- **A cursor that leaves a trail.** On desktop, a brand-violet dot tracks your pointer, a soft ring chases it and blooms over anything clickable, and a comet of fading particles follows fast movements.
+- **A reading progress ring.** A thin arc draws itself clockwise around the back-to-top button as you move down a page — empty at the top, a full circle at the bottom.
+- **A headline that types itself** without ever shifting the layout around it, because the line is pre-measured to its longest phrase before the animation starts.
+
+And the rule that ties it all together: **if you've set `prefers-reduced-motion`, the whole layer steps aside.** Entrances become instant, the cursor trail never spawns, the typing effect falls back to static text. Motion is a treat for people who want it, never a tax on people who don't. The full breakdown lives in [Animations in Astro Rocket](/blog/animations-in-astro-rocket).
+
+## Never losing your place
+
+Long reads on this site — both the **blog posts** and the **project pages** like this one — get an automatic table of contents, generated straight from the headings. On a wide screen it pins itself to the side and quietly highlights the section you're currently in as you scroll; on narrower screens it tucks away so it never crowds the reading column.
+
+If your window is wide enough, that list of every heading on this page is sitting beside you right now, tracking where you are. It's a small thing that makes a long page feel navigable instead of endless. I covered how it's built — and the layout options — in [Table of Contents — Reading Anchors for Long Posts](/blog/table-of-contents).
+
+## The contact page
+
+The contact page is built to make starting a conversation effortless, so it's split into two halves.
+
+On the left is the **project form** — a card headed "Project details" with a handful of fields and a single Send. Behind it, it's properly wired: schema validation so bad input is caught before it's sent, a hidden honeypot to quietly soak up spam bots, and a Resend-powered handler that drops the message straight into my inbox. The promise next to it is one I keep: a reply within one business day.
+
+On the right is a column of **other channels** for people who'd rather not fill in a form — direct email and my social links as tidy little cards, a card showing where I'm based, and my business registration details for anyone who needs them. Wiring that form up to actually deliver real email — Resend, the domain, the one environment variable on Vercel, and the GoDaddy DNS records — is the kind of thing that trips people up, so I documented every step in [Contact Form Setup: Resend, Vercel, and GoDaddy Step by Step](/blog/contact-form-resend-setup).
+
+## Lighthouse score
 
 <div class="my-10">
   <LighthouseScoresGrid staggered={false} />
 </div>
 
-This site scores **100 on every Lighthouse category — on both desktop and mobile** — Performance, Accessibility, Best Practices, and SEO. Every new feature is weighed against its Lighthouse cost before it ships; the mobile LetterGlitch was on the table for a while, and the 2-point Performance hit it would have cost is exactly why I left it off. For what each score actually measures, see [What the Lighthouse Score Actually Means](https://hansmartens.dev/blog/lighthouse-score-explained).
+Here's the number I'm proudest of. This site scores **100 on every Lighthouse category — Performance, Accessibility, Best Practices, and SEO — on both mobile and desktop.** A clean sweep, four out of four, on the full site: animations, theme switcher, typed headline, contact form, cursor trail, LetterGlitch and all.
 
-## One hero, both modes
+That score isn't a trick page tuned for the test. It's the by-product of decisions made the whole way through — shipping zero JavaScript on pages that don't need it, deferring layout reads so nothing janks, running every image through a proper pipeline, and meeting contrast and keyboard requirements by default rather than as an afterthought. Every new feature gets weighed against its Lighthouse cost before it ships; that's literally why the LetterGlitch band is desktop-only. If you want the plain-language version of what those four numbers actually measure, I wrote [What the Lighthouse Score Actually Means](https://hansmartens.dev/blog/lighthouse-score-explained).
 
-The homepage hero is built around a single vertical gradient — brand-indigo at the top, fading to pure black at the bottom — and it renders **identically in light and dark mode**. The hero is the moment the brand has to land, and locking it to a fixed brand-to-black ramp means the headline reads with the same drama regardless of which mode the visitor's OS prefers. The headline sits in a slightly dimmed, brand-tinted near-white so it never competes with the gradient, and the floating header rests on top as a frosted capsule. Every inner page — blog, projects, about, contact — drops the decoration entirely and lets the content speak.
+## I'm proud of this one
 
-## The desktop CTA you keep scrolling back to
+I don't say that lightly about my own work. But this is the rare project where the design, the code, the performance, and the foundation all came together exactly the way I pictured them — a site that's fast, accessible, genuinely mine, and built on a starter I'm happy to put my name on twice.
 
-<Image src={letterGlitchScreenshot} alt="The homepage LetterGlitch CTA: brand-indigo letters cycling on a near-black canvas behind a tinted glass card with the headline 'Have a project in mind?' and two action buttons." widths={[640, 960, 1280]} sizes="(max-width: 768px) 100vw, 800px" />
-
-The closing call-to-action on the homepage, about page, projects index, and every blog post finishes with the same composition: a contained band with the **LetterGlitch** canvas cycling brand-indigo letters behind a near-opaque glass card. It's deliberately desktop-only — on mobile the band would compress badly, so phones get a quieter brand-tinted glass card instead. The full build is written up in [Add a LetterGlitch effect to your Astro 6 site](/blog/letter-glitch-astro-6).
-
-## Small details that compound
-
-- **The cursor leaves a trail.** A brand-indigo dot sits exactly under the pointer, a lagging ring chases it with elastic ease and blooms over anything clickable, and a comet of fading particles spawns behind every flick of the mouse. Desktop and fine-pointer only — the moment a visitor sets `prefers-reduced-motion`, the whole layer vanishes without a trace.
-
-- **Cards lift, they don't jump.** Every project card, blog card, and about-me tile rises 1px on hover, picks up a softer shadow, and fades in a brand-coloured top-border accent. Small enough that you feel it before you see it — which is the only way a grid should respond.
-
-- **The header flips when you come back.** Scroll down and the floating capsule slides up out of sight; scroll back and it returns with its colour scheme inverted to read cleanly against whatever section is now sitting underneath. One 300ms animation does it — menu items, theme pill, and hamburger all ease through together.
-
-- **Scroll progress lives on a ring.** A thin arc traces clockwise around the back-to-top button as you read, filling from empty at the top to a full circle at the bottom. Theme-aware, `requestAnimationFrame`-throttled, never the centre of attention.
-
-- **Things arrive, they don't stop.** Every entrance uses a cubic-bezier with a controlled overshoot, so elements travel a few pixels past their mark and snap back. A physics spring, no runtime library. Reduced motion turns the whole layer off cleanly — no awkward fallback frame.
-
-- **The headline types itself without shifting.** The hero word cycles through phrases, but the line width is locked to the longest one before the animation starts — measured from an off-screen clone that inherits the exact computed font metrics. Most typing effects shift their surroundings every cycle; this one doesn't. It's the Core Web Vitals detail almost everyone gets wrong.
-
-- **No flash, ever.** A small synchronous script in `<head>` reads the saved colour mode and applies the right `.dark` class before the body paints, so dark-mode visitors never catch a frame of white — across reloads, new tabs, and every internal navigation. The kind of detail no one notices when it works, which is exactly the point.
-
-- **System, Light, Dark — a real three-state switch.** The colour-mode pill isn't a binary toggle. You can pin Light or Dark, or pick System and let the OS drive — and when System is active, the page flips live the moment macOS or Windows does, no reload. The icon in the pill always shows what you picked, not what's currently rendered.
-
-## What lands here first
-
-Astro Rocket is published, listed on the [official Astro themes directory](https://astro.build/themes/details/astro-rocket/), and stable. From here on, the new work — features, experiments, writing — lands on this site first. Some of it gets folded back into the starter. Some of it stays here because it only makes sense in context. Either way, this is where the next thing shows up.
+From here, this is where the new work shows up first. New features, new experiments, new writing — they land on this site before anything else. Some of it gets folded back into Astro Rocket; some of it stays here because it only makes sense in context. Either way, if you want to see what I'm building next, you're already in the right place.
