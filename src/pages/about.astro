@@ -12,94 +12,59 @@ import { Hero } from '@/components/hero';
 import TypingEffect from '@/components/ui/TypingEffect.astro';
 import TechStack from '@/components/landing/TechStack.astro';
 import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
-import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
 ---
 <PageLayout
-  title="About Astro Rocket — Web Designer & Developer | Amsterdam"
-  description="Designer & developer — Crafting modern web experiences shaped by clean design, solid structure, and attention to detail."
+  title="About Astro Rocket — Astro 6 Starter Theme"
+  description="Astro Rocket is a production-ready Astro 6 starter theme with 12 themes, 57+ components, built-in i18n, dark mode, and everything you need to launch fast."
 >
   <Hero layout="centered" size="sm" class="isolate" showHeroHalo>
     <Badge slot="badge" variant="brand" pill>
-      <Icon name="user" size="sm" />
-      About me
+      <Icon name="rocket" size="sm" />
+      About
     </Badge>
     <h1 slot="title">
       <span class="text-foreground [-webkit-text-fill-color:currentColor]">Astro Rocket —</span><br />
       <span class="text-brand-500 [-webkit-text-fill-color:var(--color-brand-500)]">
-        <TypingEffect words={["Web Designer", "Web Developer", "Astro Developer", "Claude Code User", "UI / UX Enthusiast", "Blogger", "Coffee lover"]} />
+        <TypingEffect words={["Astro 6 Starter", "Production-Ready", "12 Themes", "57+ Components", "Dark Mode", "Built-in i18n", "Zero Config SEO"]} />
       </span>
     </h1>
 
     <p slot="description">
-      I care about both sides of the craft — how a site looks and how it
-      performs. Here's a bit more about how I think and work.
+      A free, production-ready Astro 6 starter theme with everything you need to build fast, modern websites — without starting from scratch.
     </p>
   </Hero>
 
-  <!-- About me -->
+  <!-- About the theme -->
   <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <div class="mx-auto max-w-6xl px-6">
       <div class="grid gap-10 glitch:grid-cols-2 glitch:gap-12">
         <!-- Left: text -->
         <div class="flex flex-col justify-center gap-4 sm:items-center sm:text-center glitch:items-start glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
           <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
-            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Building since 2010</Badge>
+            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Free & Open Source</Badge>
             <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground text-balance">
-              Sixteen years of hands‑on craft
+              A solid foundation for any project
             </h2>
           </div>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            I'm a web designer and developer with 16 years of hands‑on experience, based in Amsterdam and working worldwide. Design and the code beneath it aren't separate jobs to me — they're one craft, kept with the same person from first sketch to final deploy.
+            Astro Rocket is a production-ready starter theme built on Astro 6. It ships with a full component library, 12 hand-crafted themes, dark mode, built-in i18n, and a blog — so you can focus on building your project, not the boilerplate.
           </p>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            The result is fast, maintainable sites built with intention — and a direct line to the person actually doing the work, from the first conversation to launch.
+            It's free, MIT licensed, and listed on the official Astro themes directory. Clone it, customise it, and ship something you're proud of.
           </p>
         </div>
-        <!-- Right: personal facts card -->
+        <!-- Right: theme facts card -->
         <div class="flex flex-col h-full" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
           <Card variant="elevated" padding="lg" class="flex-1 flex flex-col justify-center">
             <div class="grid grid-cols-2 sm:grid-cols-3 glitch:grid-cols-2 gap-x-6 gap-y-8">
               <div class="flex flex-col items-center text-center gap-3">
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="map-pin" size="md" />
+                  <Icon name="rocket" size="md" />
                 </div>
                 <div>
-                  <h3 class="text-base font-semibold text-foreground">Based in Amsterdam</h3>
+                  <h3 class="text-base font-semibold text-foreground">Astro 6</h3>
                   <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Working worldwide, in Dutch & English.
-                  </p>
-                </div>
-              </div>
-              <div class="flex flex-col items-center text-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="award" size="md" />
-                </div>
-                <div>
-                  <h3 class="text-base font-semibold text-foreground">16 years in the craft</h3>
-                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Designing and building since 2010.
-                  </p>
-                </div>
-              </div>
-              <div class="flex flex-col items-center text-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="code-2" size="md" />
-                </div>
-                <div>
-                  <h3 class="text-base font-semibold text-foreground">Astro enthusiast</h3>
-                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    My framework of choice.
-                  </p>
-                </div>
-              </div>
-              <div class="flex flex-col items-center text-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="sparkles" size="md" />
-                </div>
-                <div>
-                  <h3 class="text-base font-semibold text-foreground">AI enthusiast</h3>
-                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Claude is my daily thinking partner.
+                    Built on the latest Astro release.
                   </p>
                 </div>
               </div>
@@ -108,20 +73,53 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
                   <Icon name="layout" size="md" />
                 </div>
                 <div>
-                  <h3 class="text-base font-semibold text-foreground">UI/UX enthusiast</h3>
+                  <h3 class="text-base font-semibold text-foreground">12 themes</h3>
                   <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Clean, usable design.
+                    Switch themes with one line.
                   </p>
                 </div>
               </div>
               <div class="flex flex-col items-center text-center gap-3">
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="coffee" size="md" />
+                  <Icon name="code-2" size="md" />
                 </div>
                 <div>
-                  <h3 class="text-base font-semibold text-foreground">Coffee lover</h3>
+                  <h3 class="text-base font-semibold text-foreground">57+ components</h3>
                   <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Fuelled by the best coffee.
+                    Composable, production-ready.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="sparkles" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Dark mode</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Built in, no extra setup needed.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="award" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Built-in i18n</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Multi-language support out of the box.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="zap" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Zero config SEO</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Structured data & meta tags included.
                   </p>
                 </div>
               </div>
@@ -131,18 +129,19 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
       </div>
     </div>
   </section>
-  <!-- Values -->
+
+  <!-- Principles -->
   <section class="py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6">
       <div class="mb-8 text-center flex flex-col items-center gap-4" data-reveal>
         <div class="flex flex-col items-center gap-6">
-          <Badge variant="brand" pill>My Process</Badge>
+          <Badge variant="brand" pill>Design Principles</Badge>
           <h2 class="font-display text-4xl font-bold text-foreground">
-            How I Work
+            Built with intention
           </h2>
         </div>
         <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
-          These aren't aspirations — they're the constraints every project is held to, from the first conversation to the final handover.
+          Every decision in Astro Rocket — from component structure to default config — is driven by the same three principles.
         </p>
       </div>
       <div class="grid gap-6 sm:gap-8 sm:grid-cols-3">
@@ -154,7 +153,7 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
             <div class="flex-1 min-w-0">
               <h3 class="text-base font-semibold text-foreground">Performance First</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Fast sites rank better, convert better, and keep users happy. I optimise for speed from the ground up.
+                Zero JavaScript by default. Every component is optimised for speed, Core Web Vitals, and lean output.
               </p>
             </div>
           </div>
@@ -165,9 +164,9 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
               <Icon name="award" size="md" />
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-base font-semibold text-foreground">Experience That Shows</h3>
+              <h3 class="text-base font-semibold text-foreground">Developer Experience</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Sixteen years of experience means I know what works, what doesn't, and exactly what your project needs.
+                TypeScript throughout, sensible defaults, and a component library you can drop straight into any page.
               </p>
             </div>
           </div>
@@ -180,7 +179,7 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
             <div class="flex-1 min-w-0">
               <h3 class="text-base font-semibold text-foreground">Modern from the Ground Up</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Built with today's tooling. Fast, maintainable, and ready for whatever comes next.
+                Astro 6, Tailwind CSS 4, and a clean architecture that's easy to extend and maintain.
               </p>
             </div>
           </div>
@@ -188,13 +187,15 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
       </div>
     </div>
   </section>
-  <!-- My Stack -->
+
+  <!-- Tech Stack -->
   <TechStack
     badge="Tools & Tech"
-    title="My Stack"
-    description="The tools I rely on every day to build fast, modern websites — chosen for performance, great developer experience, and reliability."
+    title="The Stack"
+    description="The technologies powering Astro Rocket — chosen for performance, great developer experience, and long-term reliability."
     background="secondary"
   />
+
   <!-- FAQ -->
   <section class="py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
@@ -206,7 +207,7 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
           </h2>
         </div>
         <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
-          Some of the questions I get asked most often.
+          Everything you need to know before getting started.
         </p>
       </div>
 
@@ -231,95 +232,95 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
             </details>
             <details class="border-b border-border" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Why do you build with Astro?
+                Why build with Astro?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Because it matches the way I think about the web: lean, purposeful, and built to last. Astro lets me ship fast sites without fighting the framework — minimal JavaScript, clean HTML, great SEO — so I can focus on the design and details that actually matter.
+                Astro is the right tool for content-heavy sites: minimal JavaScript, clean HTML, great SEO out of the box, and a developer experience that stays out of your way. It's lean, purposeful, and built to last.
               </div>
             </details>
             <details class="border-b border-border" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Do you always build with Astro?
+                What can I build with Astro Rocket?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Almost always. For portfolios, business sites, marketing pages, and blogs, Astro is the right tool. If a project genuinely calls for something different, I'll be upfront about it. But Astro handles most of what clients need, and it does it exceptionally well.
+                Portfolios, business sites, marketing pages, blogs, documentation sites — any content-driven project. Astro Rocket gives you the structure, components, and defaults to hit the ground running.
               </div>
             </details>
             <details class="border-b border-border" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Do you build Astro themes?
+                Is Astro Rocket listed on the official Astro themes directory?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Yes. I built <a href="https://astro.build/themes/details/astro-rocket/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">Astro Rocket</a> — a free, production-ready theme listed on the official Astro themes directory. It includes a full component library, blog support, dark mode, SEO, and everything you need to launch a fast modern website without starting from scratch.
+                Yes. <a href="https://astro.build/themes/details/astro-rocket/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">Astro Rocket</a> is listed on the official Astro themes directory as a free, production-ready theme.
               </div>
             </details>
             <details class="border-b border-border last:border-0" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Do you plan to build more Astro themes?
+                Will Astro Rocket keep up with new Astro releases?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Yes, that's the plan. Astro Rocket is actively maintained and I have ideas for new themes in the pipeline. Follow along on the blog or keep an eye on the official Astro themes directory for what's next.
+                Yes. Astro Rocket is actively maintained and updated to track new Astro releases. Follow along on the blog or watch the GitHub repository for updates.
               </div>
             </details>
           </div>
         </Card>
 
-        <!-- Card 2: About the work -->
+        <!-- Card 2: Using the theme -->
         <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="2">
           <div class="flex items-center gap-3 pb-4 border-b border-border">
             <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-              <Icon name="user" size="md" />
+              <Icon name="code-2" size="md" />
             </div>
-            <h3 class="font-display text-base font-semibold text-foreground">About the work</h3>
+            <h3 class="font-display text-base font-semibold text-foreground">Using the theme</h3>
           </div>
           <div class="w-full">
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Do you use AI when you build a website?
+                Is it free to use?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Yes — I work alongside Claude as a thinking partner throughout every project. Not as a shortcut, but as a second perspective that helps me think through design decisions, review code, and spot things I might otherwise miss.
+                Yes, completely free. Astro Rocket is MIT licensed — use it for personal and commercial projects, no attribution required.
               </div>
             </details>
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Are you a company or agency?
+                How do I switch themes?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                No. I'm a designer and developer who works solo, driven by genuine enthusiasm for the craft — not by commercial targets. There's no sales team, no account manager, no handoff to a junior. You work directly with me from the first conversation to the final delivery.
+                Change a single line in your config. Astro Rocket ships with 12 hand-crafted colour themes — swap between them instantly without touching a line of CSS.
               </div>
             </details>
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                How do you choose which projects to take on?
+                Does it support TypeScript?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                I look for projects where good design and solid execution actually matter to the client. I work best when there's a clear goal, an open line of communication, and a client who trusts the process. I'd rather take on fewer projects and do them properly than stretch across too many at once.
+                Yes, TypeScript is used throughout. All components, configs, and utilities are fully typed.
               </div>
             </details>
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Do you offer support or maintenance after launch?
+                How do I add my own language for i18n?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Yes. Whether it's small updates, content changes, or something more involved — I'm available after launch. We can agree on whatever arrangement works best for the project.
+                Astro Rocket's i18n is config-driven. Add your locale to the i18n config file, create a matching translation file, and the routing and UI adapt automatically.
               </div>
             </details>
-            <details class="border-b border-border last:border-0" name="faq-work">
+            <details class="border-b border-border last:border-0" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Do you work with clients outside the Netherlands?
+                Where do I report bugs or suggest features?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Absolutely. I'm based in Amsterdam but work with clients worldwide. Most projects run entirely remote, which works well for clear briefs and good communication. Time zone differences are rarely a problem.
+                Open an issue or start a discussion on the <a href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">GitHub repository</a>. Contributions and feedback are always welcome.
               </div>
             </details>
           </div>
@@ -328,44 +329,47 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
     </div>
   </section>
 
-  <!-- More about me -->
+  <!-- Open Source -->
   <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <div class="mx-auto max-w-6xl px-6">
       <div class="grid gap-8 sm:gap-10 glitch:grid-cols-2 glitch:items-center">
         <!-- Text -->
         <div class="flex flex-col gap-4 sm:items-center sm:text-center glitch:items-start glitch:justify-center glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
-          <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Backstory</Badge>
+          <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Open Source</Badge>
           <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-            The longer story
+            Built in the open
           </h2>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            You've seen the work, the process, and the tools. If you'd like to know the person behind them, I've put the whole story in one place.
+            Astro Rocket is free, open source, and MIT licensed. Browse the source, open issues, submit PRs, or just clone it and build something great.
           </p>
-          <Button variant="outline" size="lg" href="https://hansmartens.dev/blog/hans-martens-web-designer-veghel" target="_blank" rel="noopener noreferrer" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
-            Read the full story
+          <Button variant="outline" size="lg" href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer" class="self-start sm:self-center glitch:self-start mt-2">
+            View on GitHub
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
 
-        <!-- Image -->
-        <div class="mx-auto w-full max-w-sm sm:max-w-md glitch:mx-0 glitch:max-w-none" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
-          <a
-            href="https://hansmartens.dev/blog/hans-martens-web-designer-veghel"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group block overflow-hidden rounded-2xl border border-brand-500/20 bg-brand-500/5 shadow-md ring-1 ring-border/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:border-brand-500/40"
-            aria-label="Read the introduction post"
-          >
-            <div class="transition-transform duration-300 group-hover:scale-105">
-              <BlogImageSVG slug="hi-im-hans-martens" title="Hi, I'm Hans Martens — the longer story" />
+        <!-- Info card -->
+        <div class="flex flex-col h-full" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
+          <Card variant="elevated" padding="lg" class="flex-1 flex flex-col justify-center gap-6">
+            <div class="flex flex-col gap-2">
+              <h3 class="text-base font-semibold text-foreground">Made by Hans Martens</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed">
+                Astro Rocket was designed and built by <a href="https://hansmartens.dev" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">Hans Martens</a> — a web designer and developer who uses it as the foundation for client projects.
+              </p>
             </div>
-          </a>
-        </div>
-        <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
-          <Button size="lg" variant="outline" href="https://hansmartens.dev/blog/hans-martens-web-designer-veghel" target="_blank" rel="noopener noreferrer">
-            Read the full story
-            <Icon name="arrow-right" size="sm" />
-          </Button>
+            <div class="flex flex-col gap-2">
+              <h3 class="text-base font-semibold text-foreground">MIT License</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed">
+                Free to use in personal and commercial projects. No attribution required, though a star on GitHub is always appreciated.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <h3 class="text-base font-semibold text-foreground">Actively maintained</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed">
+                The theme is kept up to date with new Astro releases and regularly improved based on community feedback.
+              </p>
+            </div>
+          </Card>
         </div>
       </div>
     </div>
@@ -375,15 +379,15 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
   <section class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <!-- Mobile: flat section, no card -->
     <div class="glitch:hidden mx-auto max-w-2xl px-6 text-center" data-reveal>
-      <Badge variant="brand" pill class="mb-6">Let's talk</Badge>
+      <Badge variant="brand" pill class="mb-6">Get started</Badge>
       <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
-        Sound like a good fit?
+        Ready to build?
       </h2>
       <p class="text-lg text-foreground-muted mb-8 text-balance">
-        If my background and approach match what you're looking for, I'm open to new projects. Let's have a conversation.
+        Clone Astro Rocket, pick a theme, and launch your next project in minutes.
       </p>
-      <Button size="lg" href="/contact" class="cta-btn-brand">
-        Start a Project
+      <Button size="lg" href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer" class="cta-btn-brand">
+        Get Started
         <Icon name="arrow-right" size="sm" />
       </Button>
     </div>
@@ -391,13 +395,13 @@ import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
     <!-- Desktop: contained LetterGlitch band with glass card -->
     <LetterGlitchBand>
       <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
-        Sound like a good fit?
+        Ready to build?
       </h2>
       <p class="text-lg text-foreground-muted mb-8 text-balance">
-        If my background and approach match what you're looking for, I'm open to new projects. Let's have a conversation.
+        Clone Astro Rocket, pick a theme, and launch your next project in minutes.
       </p>
-      <Button size="lg" href="/contact" class="hero-btn-brand">
-        Start a Project
+      <Button size="lg" href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer" class="hero-btn-brand">
+        Get Started
         <Icon name="arrow-right" size="sm" />
       </Button>
     </LetterGlitchBand>
