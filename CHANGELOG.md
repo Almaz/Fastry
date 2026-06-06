@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.5.0] — 2026-06-06
+
+### Changed
+
+- **Upgraded to Astro 6.4.4** — bumped `astro` from `6.0.0` to the latest `6.4.4`, picking up the new pluggable Markdown pipeline, resilient island hydration, finer-grained image-optimization controls, and the bug fixes and security/performance work shipped across the 6.1–6.4 minor releases. These minor releases contain no breaking changes, so the upgrade is drop-in for this theme and required no code changes.
+- **Astro integrations updated to latest** — `@astrojs/mdx` `5.0.0` → `6.0.2`, `@astrojs/react` `5.0.0` → `5.0.7`, `@astrojs/sitemap` `^3.7.1` → `^3.7.3`, `@astrojs/vercel` `^10.0.0` → `^10.0.8`, `@astrojs/netlify` `^7.0.2` → `^7.0.12`, and `@astrojs/check` `0.9.7` → `0.9.9`. Both the Vercel (default) and Netlify (`DEPLOY_TARGET=netlify`) build paths were verified.
+- **`@astrojs/mdx` v6 note** — v6 adds an *optional* Rust-based Markdown processor (`@astrojs/markdown-satteri`) and deprecates the top-level `markdown.remarkPlugins` / `markdown.rehypePlugins` config. This theme uses neither, so the optional Rust engine is not installed, the default `unified()` processor stays in use, and rendered output is unchanged.
+
+---
+
 ## [1.4.1] — 2026-05-20
 
 ### Fixed
