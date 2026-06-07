@@ -16,6 +16,18 @@ const blog = defineCollection({
       imageAlt: z.string().optional(),
       tags: z.array(z.string()).default([]),
       svgSlug: z.string().optional(),
+      /**
+       * Optional stable canonical id, decoupled from the slug. Used by
+       * <PostLink> for durable internal links that survive slug renames.
+       * Lowercase kebab-case.
+       */
+      uid: z
+        .string()
+        .regex(
+          /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+          'uid must be lowercase kebab-case, e.g. "getting-started"'
+        )
+        .optional(),
       draft: z.boolean().default(false),
       featured: z.boolean().default(false),
       locale: z.enum(['en', 'es', 'fr']).default('en'),

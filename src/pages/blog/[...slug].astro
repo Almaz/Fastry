@@ -2,10 +2,14 @@
 import BlogLayout from '@/layouts/BlogLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { assertNoSlugCollisions } from '@/lib/content-validation';
+import { assertValidPostUids } from '@/lib/post-links';
+import PostLink from '@/components/blog/PostLink.astro';
 
 export async function getStaticPaths() {
-  // Fail the build early if any two entries resolve to the same URL in a locale.
+  // Fail the build early on content-integrity problems: two entries resolving
+  // to the same URL within a locale, or a duplicated canonical id.
   await assertNoSlugCollisions();
+  await assertValidPostUids();
 
   const posts = await getCollection('blog', ({ data }) => {
     return data.locale === 'en' && (import.meta.env.PROD ? data.draft !== true : true);
@@ -37,5 +41,5 @@ const { Content, headings } = await render(post);
   toc={post.data.toc}
   comments={post.data.comments}
 >
-  <Content />
+  <Content components={{ PostLink }} />
 </BlogLayout>

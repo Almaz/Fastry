@@ -40,10 +40,11 @@ interface ContentEntryLike {
 
 /**
  * Strip a leading `<locale>/` segment from a collection entry id to get its
- * slug. Mirrors `getPostSlug` in `./blog`, reimplemented here so this module
- * stays free of the `astro:content` runtime import and remains unit-testable.
+ * slug. Mirrors `getPostSlug` in `./blog`, kept here free of the
+ * `astro:content` runtime import so it stays unit-testable and can be reused
+ * by other build-time helpers (e.g. canonical-id resolution).
  */
-function localeStrippedSlug(id: string, locale: string): string {
+export function localeStrippedSlug(id: string, locale: string): string {
   const prefix = `${locale}/`;
   return id.startsWith(prefix) ? id.slice(prefix.length) : id;
 }
