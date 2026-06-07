@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.6.0] — 2026-06-07
+
+### Added
+
+- **Durable internal links via `<PostLink>` (canonical ids)** — blog posts can declare an optional, stable `uid` in frontmatter (lowercase kebab-case, format-validated in `src/content.config.ts`) and reference one another by that id with the new `<PostLink>` component (`src/components/blog/PostLink.astro`), available globally in blog MDX — e.g. `<PostLink uid="configuration-guide">…</PostLink>` (a `post:` prefix is also accepted). The id resolves to the correct locale-aware URL at build time and **a broken reference fails the build** instead of shipping a silent 404, so renaming a post (and its slug) never breaks inbound links. Index/resolution helpers and an `assertValidPostUids()` guard — which also rejects duplicate canonical ids within a locale — live in `src/lib/post-links.ts`, with unit tests in `src/__tests__/post-links.test.ts`. When no link text is given, the target post's title is used. All resolution is build-time only — no client JS and no change to the shipped payload. (#377, point #5)
+- **Build-time duplicate-slug validation** — `astro build` now fails with an actionable error if any two pieces of content resolve to the same URL within a locale (checked across blog posts and pages), catching a silent content bug where one entry quietly shadows another. The pure, unit-tested helpers (`findSlugCollisions`, `formatSlugCollisions`) and the `assertNoSlugCollisions()` build guard live in `src/lib/content-validation.ts` (tests in `src/__tests__/content-validation.test.ts`), wired into the blog route's `getStaticPaths`. (#377, point #4)
+
+---
+
 ## [1.5.0] — 2026-06-06
 
 ### Changed

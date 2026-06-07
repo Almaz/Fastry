@@ -530,6 +530,40 @@ socialLinks: [
 
 Remove any URL you don't use. The footer won't render an empty social section. Icons are resolved automatically from the URL — GitHub, X, Instagram, LinkedIn, and Bluesky are all recognised out of the box.
 
+## Linking between posts
+
+When one post links to another, hard-coding the URL — `[text](/blog/some-slug)` — is fragile: rename the target file and every link to it breaks silently. Astro Rocket gives each post an optional **canonical id** so you can link by a stable identifier instead of the slug.
+
+Add a `uid` to the target post's frontmatter (lowercase, kebab-case):
+
+```yaml
+---
+title: "Evaluating URL Structures"
+uid: "url-structures"
+---
+```
+
+Then link to it from any post's MDX with the `<PostLink>` component — it's available globally, so no import is needed:
+
+```mdx
+Read more in the <PostLink uid="url-structures">URL structures guide</PostLink>.
+```
+
+That renders an ordinary `<a>` to the post's URL. Omit the link text and the target post's own title is used:
+
+```mdx
+See also: <PostLink uid="url-structures" />
+```
+
+Worth knowing:
+
+- **Broken links fail the build.** If a `uid` matches no published post, `astro build` stops with an error naming the missing id — a dead internal link can never ship.
+- **Rename-safe.** The `uid` is independent of the filename and slug, so you can rename a post freely and every `<PostLink>` to it keeps working.
+- **Locale-aware.** The link resolves to the URL for the current locale, falling back to the default locale when a translation doesn't exist yet.
+- A `post:` prefix is also accepted (`uid="post:url-structures"`) if you prefer that style.
+
+The `uid` field is entirely optional — posts without one behave exactly as before; they simply can't be targeted by `<PostLink>`.
+
 ## Quick reference
 
 | What | Where | Key |

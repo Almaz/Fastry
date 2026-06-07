@@ -79,6 +79,8 @@ The following changes were made to the free Velocity theme to create Astro Rocke
 | **API Routes** | Contact form and newsletter endpoints with validation |
 | **Table of Contents** | Optional table of contents on blog posts, auto-generated from MDX headings, with three layouts: inline card, sticky desktop sidebar, or `auto` (sidebar on `xl+`, inline card below). Includes `IntersectionObserver` scroll-spy. Off by default; per-post `toc: false` in frontmatter hides on a single post |
 | **Blog Comments (Giscus)** | Optional comments at the bottom of blog posts, powered by [Giscus](https://giscus.app) and GitHub Discussions. **Lazy-loaded** so readers who don't scroll to comments pay zero network cost; reserved `min-height` prevents CLS. Off by default; per-post `comments: false` in frontmatter hides on a single post |
+| **Durable Internal Links** | Link between posts by a stable canonical id with `<PostLink uid="…">` instead of a slug, so renaming a post never breaks inbound links. Ids resolve to the correct locale-aware URL at build time, and a broken reference **fails the build** rather than shipping a 404. Add an optional `uid` to a post's frontmatter to make it linkable |
+| **Build-Time Content Validation** | The build fails with a clear error if two pieces of content resolve to the same URL within a locale (duplicate slugs across posts and pages), or if two posts claim the same canonical id — catching silent content mistakes before they ship |
 | **Independent Footer Menu** | Header and footer navigation configured separately in `nav.config.ts` (`navItems`, `footerNavItems`, `legalLinks`) — add a Privacy or Imprint link to the footer without cluttering the main nav |
 | **React Islands** | Optional client-side interactivity where needed |
 
@@ -576,11 +578,14 @@ description: "Brief description for SEO"
 publishedAt: 2026-01-30
 author: "Author Name"
 tags: ["astro", "tutorial"]
+uid: "your-post-id"        # optional — stable id used by <PostLink> for internal links
 locale: en
 ---
 
 Your content here...
 ```
+
+To link from one post to another, use `<PostLink uid="target-post-id">link text</PostLink>` in your MDX instead of a hard-coded `/blog/...` URL. The id resolves to the right URL at build time, and a broken reference fails the build — so renaming a post never leaves a dead internal link. Give a post an optional `uid` (above) to make it a link target. The [configuration guide](/blog/astro-rocket-configuration-guide) post has the full walkthrough.
 
 ### Querying Content
 
