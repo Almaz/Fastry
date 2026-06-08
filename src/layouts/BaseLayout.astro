@@ -78,8 +78,13 @@ const locale = getLocaleFromPath(Astro.url.pathname);
       <link rel="preconnect" href="https://giscus.app" crossorigin />
     )}
 
-    <!-- Favicon -->
+    <!-- Favicon. The SVG letter is outlined to a vector path at build time (see
+         src/lib/favicon), and PNG/ICO fallbacks are provided so search-engine
+         crawlers, Safari and legacy browsers all render the brand mark. -->
     <link rel="icon" type="image/svg+xml" href={siteConfig.branding.favicon.svg} />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content={siteConfig.branding.colors.themeColor} />
 
@@ -110,49 +115,10 @@ const locale = getLocaleFromPath(Astro.url.pathname);
          run cleanly from frame 0 every time. -->
 
 
-    <!-- Dynamic favicon: syncs letter (first letter of site name) and color (brand-500) with active theme -->
-    <script is:inline define:vars={{ _faviconLetter: siteConfig.name.charAt(0).toUpperCase() }}>
-      (function () {
-        const LETTER = _faviconLetter;
-
-        function updateFavicon() {
-          const color = getComputedStyle(document.documentElement).getPropertyValue('--brand-500').trim();
-          if (!color) return;
-          const svg =
-            '<svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">' +
-            '<rect width="48" height="48" rx="8" fill="' + color + '"/>' +
-            '<text x="24" y="24" text-anchor="middle" dominant-baseline="central" ' +
-            'font-family="Outfit, system-ui, sans-serif" font-weight="700" font-size="34" fill="white">' +
-            LETTER +
-            '</text></svg>';
-          const link = document.querySelector('link[rel="icon"]');
-          if (link) link.setAttribute('href', 'data:image/svg+xml,' + encodeURIComponent(svg));
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', updateFavicon);
-        } else {
-          updateFavicon();
-        }
-
-        if (!window.__faviconListenerInit) {
-          window.__faviconListenerInit = true;
-
-          // Re-run whenever data-theme or dark/light class changes
-          new MutationObserver(function (mutations) {
-            for (let i = 0; i < mutations.length; i++) {
-              if (mutations[i].attributeName === 'data-theme' || mutations[i].attributeName === 'class') {
-                updateFavicon();
-                break;
-              }
-            }
-          }).observe(document.documentElement, { attributes: true });
-
-          // Re-run after Astro view transitions swap the head
-          document.addEventListener('astro:after-swap', updateFavicon);
-        }
-      })();
-    </script>
+    <!-- The favicon is a single static brand mark (see the Favicon block above).
+         It intentionally does NOT re-tint to the active theme at runtime: the
+         logo must stay identical across every context — browser tab, search
+         results, social previews and home-screen icon. -->
 
     <!-- Theme bootstrap (runs before body paint; no flash of wrong theme).
          Implements a 3-state colour-mode contract:
