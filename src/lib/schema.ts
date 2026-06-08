@@ -35,12 +35,16 @@ export function createPersonSchema(): WithContext<Person> {
     url: siteConfig.url,
     email: siteConfig.email,
     ...(siteConfig.authorImage ? { image: `${siteConfig.url}${siteConfig.authorImage}` } : {}),
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Veghel',
-      addressRegion: 'Noord-Brabant',
-      addressCountry: 'NL',
-    },
+    ...(siteConfig.address?.city
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: siteConfig.address.city,
+            addressRegion: 'Noord-Brabant',
+            addressCountry: 'NL',
+          },
+        }
+      : {}),
     sameAs: siteConfig.socialLinks,
   };
 }
@@ -57,12 +61,16 @@ export function createProfessionalServiceSchema(): WithContext<LocalBusiness> {
     email: siteConfig.email,
     ...(siteConfig.phone ? { telephone: siteConfig.phone } : {}),
     ...(siteConfig.authorImage ? { image: `${siteConfig.url}${siteConfig.authorImage}` } : {}),
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Veghel',
-      addressRegion: 'Noord-Brabant',
-      addressCountry: 'NL',
-    },
+    ...(siteConfig.address?.city
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: siteConfig.address.city,
+            addressRegion: 'Noord-Brabant',
+            addressCountry: 'NL',
+          },
+        }
+      : {}),
     areaServed: [
       { '@type': 'Country', name: 'Netherlands' },
       { '@type': 'Country', name: 'Worldwide' },

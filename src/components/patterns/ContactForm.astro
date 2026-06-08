@@ -8,14 +8,44 @@ import { cn } from '@/lib/cn';
 interface Props {
   action?: string;
   successMessage?: string;
+  locale?: 'en' | 'ru';
   class?: string;
 }
 
 const {
   action = '/api/contact',
-  successMessage = 'Message sent successfully!',
+  successMessage,
+  locale = 'en',
   class: className,
 } = Astro.props;
+
+const labels = {
+  en: {
+    nameLabel: 'Name',
+    emailLabel: 'Email',
+    subjectLabel: 'Subject',
+    messageLabel: 'Message',
+    submitText: 'Send message',
+    sendingText: 'Sending…',
+    errorGeneric: 'Something went wrong',
+    errorNetwork: 'Failed to send message. Please try again.',
+    honeypotLabel: 'Leave empty',
+  },
+  ru: {
+    nameLabel: 'Имя',
+    emailLabel: 'Email',
+    subjectLabel: 'Тема',
+    messageLabel: 'Сообщение',
+    submitText: 'Отправить сообщение',
+    sendingText: 'Отправка…',
+    errorGeneric: 'Что-то пошло не так',
+    errorNetwork: 'Не удалось отправить сообщение. Пожалуйста, попробуйте снова.',
+    honeypotLabel: 'Оставьте пустым',
+  },
+};
+
+const l = labels[locale] || labels.en;
+const resolvedSuccessMessage = successMessage || (locale === 'ru' ? 'Сообщение отправлено успешно!' : 'Message sent successfully!');
 ---
 
 <form
@@ -23,19 +53,22 @@ const {
   action={action}
   method="POST"
   class={cn('space-y-6', className)}
-  data-success-message={successMessage}
+  data-success-message={resolvedSuccessMessage}
+  data-locale={locale}
 >
   <!-- Name + Email side by side on sm+ -->
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <Input
-      label="Name"
+
+      label={l.nameLabel}
       name="name"
       type="text"
       required
       autocomplete="name"
     />
     <Input
-      label="Email"
+
+      label={l.emailLabel}
       name="email"
       type="email"
       required
@@ -44,13 +77,13 @@ const {
   </div>
 
   <Input
-    label="Subject"
+    label={l.subjectLabel}
     name="subject"
     type="text"
   />
 
   <Textarea
-    label="Message"
+    label={l.messageLabel}
     name="message"
     required
     rows={5}
@@ -58,14 +91,14 @@ const {
 
   <!-- Honeypot field for spam protection -->
   <div class="hidden" aria-hidden="true">
-    <input type="text" name="honeypot" tabindex="-1" autocomplete="off" />
+    <input type="text" name="honeypot" tabindex="-1" autocomplete="off" aria-label={l.honeypotLabel} />
   </div>
 
   <div id="form-message" class="hidden text-sm"></div>
 
   <div class="flex justify-center">
-    <Button type="submit" id="submit-button" class="gap-2">
-      Send message
+    <Button type="submit" id="submit-button" class="gap-2 cta-btn-brand">
+      {l.submitText}
       <Icon name="arrow-right" size="sm" />
     </Button>
   </div>
@@ -79,17 +112,28 @@ const {
 
     if (!form || !button || !message) return;
 
-    const successMessage = form.dataset.successMessage || 'Message sent successfully!';
+    const locale = form.dataset.locale || 'en';
+
+    const labels: Record<string, any> = {
+      en: { sendingText: 'Sending…', successText: 'Message sent successfully!', errorGeneric: 'Something went wrong', errorNetwork: 'Failed to send message. Please try again.' },
+      ru: { sendingText: 'Отправка…', successText: 'Сообщение отправлено успешно!', errorGeneric: 'Что-то пошло не так', errorNetwork: 'Не удалось отправить сообщение. Пожалуйста, попробуйте снова.' },
+    };
+
+    const l2 = labels[locale] || labels.en;
+    const successMessage = form.dataset.successMessage || l2.successText;
+    const originalButtonHTML = button.innerHTML;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       button.disabled = true;
-      button.textContent = 'Sending…';
+      button.textContent = l2.sendingText;
       message.classList.add('hidden');
 
       try {
         const formData = new FormData(form);
+        formData.append('locale', locale);
+
         const response = await fetch(form.action, {
           method: 'POST',
           body: formData,
@@ -104,16 +148,16 @@ const {
         } else {
           const errors = data.errors
             ? Object.values(data.errors).flat().join(', ')
-            : 'Something went wrong';
+            : l2.errorGeneric;
           message.textContent = errors as string;
           message.className = 'text-sm text-destructive';
         }
       } catch {
-        message.textContent = 'Failed to send message. Please try again.';
+        message.textContent = l2.errorNetwork;
         message.className = 'text-sm text-destructive';
       } finally {
         button.disabled = false;
-        button.textContent = 'Send message';
+        button.innerHTML = originalButtonHTML;
         message.classList.remove('hidden');
       }
     });

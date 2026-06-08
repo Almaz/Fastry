@@ -16,9 +16,34 @@ const blog = defineCollection({
       imageAlt: z.string().optional(),
       tags: z.array(z.string()).default([]),
       svgSlug: z.string().optional(),
+      /**
+       * Optional stable canonical id, decoupled from the slug. Used by
+       * <PostLink> for durable internal links that survive slug renames.
+       * Lowercase kebab-case.
+       */
+      uid: z
+        .string()
+        .regex(
+          /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+          'uid must be lowercase kebab-case, e.g. "getting-started"'
+        )
+        .optional(),
       draft: z.boolean().default(false),
       featured: z.boolean().default(false),
-      locale: z.enum(['en', 'es', 'fr']).default('en'),
+      locale: z.enum(['en', 'es', 'fr', 'ru']).default('en'),
+      /** Optional FAQs — when set, emit FAQ JSON-LD alongside the BlogPosting schema. */
+      faqs: z
+        .array(
+          z.object({
+            question: z.string(),
+            answer: z.string(),
+          })
+        )
+        .optional(),
+      /** Per-post override: hide table of contents on this post */
+      toc: z.boolean().optional(),
+      /** Per-post override: hide comments on this post */
+      comments: z.boolean().optional(),
     }),
 });
 
@@ -29,7 +54,7 @@ const pages = defineCollection({
     title: z.string(),
     description: z.string(),
     updatedAt: z.coerce.date().optional(),
-    locale: z.enum(['en', 'es', 'fr']).default('en'),
+    locale: z.enum(['en', 'es', 'fr', 'ru']).default('en'),
   }),
 });
 
@@ -59,7 +84,7 @@ const faqs = defineCollection({
     answer: z.string(),
     category: z.string().optional(),
     order: z.number().default(0),
-    locale: z.enum(['en', 'es', 'fr']).default('en'),
+    locale: z.enum(['en', 'es', 'fr', 'ru']).default('en'),
   }),
 });
 
@@ -70,10 +95,19 @@ const projects = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      url: z.string().url().optional(),
-      repo: z.string().url().optional(),
+      url: z.string().optional(),
+      repo: z.string().optional(),
       image: image().optional(),
       imageAlt: z.string().optional(),
+      /** Optional gallery — when provided, renders a swipeable carousel in the hero in place of the single `image`. */
+      gallery: z
+        .array(
+          z.object({
+            src: image(),
+            alt: z.string(),
+          })
+        )
+        .default([]),
       tags: z.array(z.string()).default([]),
       featured: z.boolean().default(false),
       order: z.number().default(99),
@@ -81,7 +115,13 @@ const projects = defineCollection({
       client: z.string().optional(),
       role: z.string().optional(),
       services: z.array(z.string()).default([]),
+      /** Optional editorial tagline — short facts rendered as a single line under the hero description with brand-coloured dot separators. */
+      meta: z.array(z.string()).default([]),
       draft: z.boolean().default(false),
+      placeholder: z.boolean().default(false),
+      /** Per-project override: hide table of contents on this project */
+      toc: z.boolean().optional(),
+      locale: z.enum(['en', 'es', 'fr', 'ru']).default('en'),
     }),
 });
 
@@ -92,7 +132,7 @@ const stack = defineCollection({
     name: z.string(),
     description: z.string(),
     version: z.string(),
-    url: z.string().url(),
+    url: z.string(),
     icon: z.string(), // icon name, e.g. 'brand-astro'
     colorOklch: z.string(), // OKLCH params, e.g. '62.5% 0.22 38'
     order: z.number().default(0),

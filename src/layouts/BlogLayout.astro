@@ -1,5 +1,5 @@
 ---
-import type { ImageMetadata } from 'astro';
+import type { ImageMetadata, MarkdownHeading } from 'astro';
 import siteConfig from '@/config/site.config';
 import BaseLayout from './BaseLayout.astro';
 import Header from '@/components/layout/Header.astro';
@@ -8,9 +8,18 @@ import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
 import ArticleHero from '@/components/blog/ArticleHero.astro';
 import ShareButtons from '@/components/blog/ShareButtons.astro';
 import RelatedPosts from '@/components/blog/RelatedPosts.astro';
+import TableOfContents from '@/components/blog/TableOfContents.astro';
+import Comments from '@/components/blog/Comments.astro';
 import CTA from '@/components/ui/marketing/CTA/CTA.astro';
+import Button from '@/components/ui/form/Button/Button.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
 import { resolveSocialLinks } from '@/lib/utils';
+import { createBlogPostSchema, createFAQSchema } from '@/lib/schema';
+import { getBlogOgPath } from '@/lib/og';
+import { getLocaleFromPath, localizedPath, t } from '@/i18n';
+
+const locale = getLocaleFromPath(Astro.url.pathname);
 
 const socialLinks = resolveSocialLinks(siteConfig.socialLinks);
 
@@ -25,6 +34,14 @@ interface Props {
   svgSlug?: string;
   tags?: string[];
   slug?: string;
+  /** Optional FAQs — when provided, an FAQ JSON-LD schema is emitted alongside the BlogPosting schema. */
+  faqs?: Array<{ question: string; answer: string }>;
+  /** MDX headings — used by the optional table of contents */
+  headings?: MarkdownHeading[];
+  /** Per-post override: hide table of contents on this post */
+  toc?: boolean;
+  /** Per-post override: hide comments on this post */
+  comments?: boolean;
 }
 
 const {
@@ -38,18 +55,71 @@ const {
   svgSlug,
   tags = [],
   slug = '',
+  faqs,
+  headings = [],
+  toc: tocOverride,
+  comments: commentsOverride,
 } = Astro.props;
 
-const ogImage = image?.src || siteConfig.ogImage;
+// Resolve opt-in features (site config + per-post overrides).
+// Per-post override only fires when explicitly set to `false`, so authors
+// can hide the TOC/comments on a single post without changing site config.
+const tocConfig = siteConfig.articleFeatures?.toc;
+const commentsConfig = siteConfig.articleFeatures?.comments;
+const showToc = !!tocConfig?.enabled && tocOverride !== false;
+const showComments = !!commentsConfig?.enabled && commentsOverride !== false;
+
+// TOC layout: 'inline' (top-of-article card), 'sidebar' (xl+ sticky aside,
+// hidden below xl), or 'auto' (sidebar on xl+; inline opt-in elsewhere).
+// `sidebarActive` controls whether we render the wider grid wrapper.
+const tocLayout = tocConfig?.layout ?? 'auto';
+const sidebarActive = showToc && (tocLayout === 'sidebar' || tocLayout === 'auto');
+// Inline TOC is now opt-in: 'auto' shows only the desktop sidebar so the
+// mobile/landscape/tablet experience isn't dominated by a TOC card the
+// majority of visitors don't use. Posts that want the inline TOC visible
+// everywhere can set `toc.layout: 'inline'` in frontmatter.
+const inlineActive = showToc && tocLayout === 'inline';
+const sidebarOnLeft = (tocConfig?.sidebarPosition ?? 'right') === 'left';
+
+// Prefer the post's own image; otherwise serve the per-post dynamic OG image
+// generated at build time (see src/pages/og/blog/[slug].svg.ts). Falls back to
+// the site-wide default only when slug is missing.
+const ogImage = image?.src || (slug ? getBlogOgPath(slug.replace(/^en\//, '')) : siteConfig.ogImage);
 
 const breadcrumbs = [
-  { label: 'Home', href: '/' },
-  { label: 'Blog', href: '/blog' },
+
+  { label: '', href: localizedPath('/', locale), icon: 'home' },
+  { label: t('blog.title', locale), href: localizedPath('/blog', locale) },
   { label: title },
 ];
 
+// Astro.site may drop the pathname when i18n prefixDefaultLocale is false
+// (e.g. on GitHub Pages project sites like https://almaz.github.io/Fastry/).
+// Use siteConfig.url as the authoritative base instead.
+const siteBase = siteConfig.url.endsWith('/') ? siteConfig.url : `${siteConfig.url}/`;
+
 // Get full URL for sharing
-const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
+// Astro.url.pathname already includes the base path (/Fastry/), so use it directly.
+const fullUrl = new URL(Astro.url.pathname, siteBase).toString();
+
+// Resolve ogImage URL — use manual concatenation for paths with leading slash
+// to avoid new URL() discarding the base pathname (e.g. /og-default.svg).
+const ogImageUrl = ogImage.startsWith('http')
+  ? ogImage
+  : `${siteBase}${ogImage.replace(/^\//, '')}`;
+
+const blogPostingSchema = createBlogPostSchema({
+  title,
+  description,
+  url: fullUrl,
+  image: ogImageUrl,
+  datePublished: publishedAt,
+  dateModified: updatedAt,
+  author: { name: author, url: siteConfig.url },
+});
+
+const faqSchema = faqs && faqs.length > 0 ? createFAQSchema(faqs) : null;
+const schemas = faqSchema ? [blogPostingSchema, faqSchema] : [blogPostingSchema];
 ---
 
 <BaseLayout
@@ -63,6 +133,7 @@ const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
     authors: [author],
     tags,
   }}
+  extraSchemas={schemas}
 >
   <Header
     slot="header"
@@ -70,10 +141,8 @@ const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
     shape="bar"
     variant="solid"
     size="lg"
-    showThemeSelector
     showCta={false}
-    cta={{ label: 'Get in touch', href: '/contact' }}
-    showScrollProgress
+    maxWidth="7xl"
   />
 
   <div class="min-h-screen pt-16">
@@ -91,57 +160,93 @@ const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
   />
 
   <article class="pt-8 pb-[var(--space-section-md)]">
-    <div class="mx-auto max-w-4xl px-6">
+    <div class:list={[
+      'mx-auto px-6 max-w-7xl',
+      sidebarActive && (sidebarOnLeft
+        ? 'xl:grid xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-10'
+        : 'xl:grid xl:grid-cols-[minmax(0,1fr)_15rem] xl:gap-10'),
+    ]}>
+      {sidebarActive && sidebarOnLeft && (
+        <aside class="hidden xl:block" aria-label="Table of contents">
+          <TableOfContents
+            headings={headings}
+            maxDepth={tocConfig?.maxDepth ?? 3}
+            minHeadings={tocConfig?.minHeadings ?? 3}
+            title={t('blog.tableOfContents', locale)}
+            sticky
+          />
+        </aside>
+      )}
+
+      <div class:list={['min-w-0 max-w-5xl w-full mx-auto', sidebarActive && 'xl:mx-0']}>
       <!-- Breadcrumbs -->
-      <Breadcrumbs items={breadcrumbs} class="mb-8" />
+      <div class="sticky top-18 md:top-24 z-10 pb-2 mb-2 -mx-6 px-6 bg-background before:content-[''] before:absolute before:inset-x-0 before:bottom-full before:h-18 md:before:h-24 before:bg-background after:content-[''] after:absolute after:inset-x-0 after:top-full after:h-4 after:bg-gradient-to-b after:from-background after:to-transparent">
+        <Breadcrumbs items={breadcrumbs} />
+      </div>
+
+      {inlineActive && (
+        <div class="mb-10 rounded-xl border border-border bg-background-secondary p-5">
+          <TableOfContents
+            headings={headings}
+            maxDepth={tocConfig?.maxDepth ?? 3}
+            minHeadings={tocConfig?.minHeadings ?? 3}
+            title={t('blog.tableOfContents', locale)}
+          />
+        </div>
+      )}
 
       <!-- Article Content -->
       <div
         class="prose prose-lg max-w-none"
+        data-reveal-content
       >
         <slot />
       </div>
 
-      <!-- Article Footer -->
-      <footer class="border-border mt-12 border-t pt-8" data-reveal>
-        <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <!-- Back link -->
-          <a
-            href="/blog"
-            class="text-brand-600 hover:text-brand-500 dark:text-brand-400 dark:hover:text-brand-300 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-          >
-            <svg
-              class="h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              ></path>
-            </svg>
-            Back to Blog
-          </a>
+      <!-- Share buttons (centered, above the divider) -->
+      <div class="mt-12 flex justify-center" data-reveal>
+        <ShareButtons title={title} url={fullUrl} locale={locale} />
+      </div>
 
-          <!-- Share buttons -->
-          <ShareButtons title={title} url={fullUrl} />
-        </div>
+      <!-- Article Footer -->
+      <footer class="border-border mt-12 border-t pt-8 flex justify-center" data-reveal>
+        <Button href={localizedPath('/blog', locale)} variant="secondary" size="sm">
+          <Icon name="arrow-left" size="sm" />
+          {t('common.backToBlog', locale)}
+        </Button>
       </footer>
+      </div>
+
+      {sidebarActive && !sidebarOnLeft && (
+        <aside class="hidden xl:block" aria-label="Table of contents">
+          <TableOfContents
+            headings={headings}
+            maxDepth={tocConfig?.maxDepth ?? 3}
+            minHeadings={tocConfig?.minHeadings ?? 3}
+            title={t('blog.tableOfContents', locale)}
+            sticky
+          />
+        </aside>
+      )}
     </div>
   </article>
 
+  {showComments && (
+    <Comments />
+  )}
+
   <!-- Related Posts -->
   {tags.length > 0 && (
-    <div class="mx-auto max-w-screen-xl px-6" data-reveal>
-      <RelatedPosts currentSlug={slug} tags={tags} locale="en" maxPosts={3} />
+    <div class="mx-auto max-w-7xl px-6" data-reveal>
+      <RelatedPosts currentSlug={slug} tags={tags} locale={locale} maxPosts={3} />
     </div>
   )}
 
   <!-- Follow Along -->
-  <CTA variant="default" size="md" maxWidth="lg" glow={false} data-reveal class="bg-background-secondary">
-    <h2 slot="heading" class="!text-4xl">Follow along</h2>
-    <p slot="description" class="!text-lg text-balance">Stay in the loop — new articles, thoughts, and updates.</p>
+  <!-- Mobile: standard CTA, no LetterGlitch -->
+  <CTA variant="default" size="md" maxWidth="lg" glow={false} data-reveal class="glitch:hidden bg-background-secondary">
+    <h2 slot="heading" class="!text-4xl">{t('common.followAlong', locale)}</h2>
+    <p slot="description" class="!text-lg text-balance">{t('common.stayInLoop', locale)}</p>
 
     <div class="flex flex-wrap items-center justify-center gap-3">
       <a
@@ -149,7 +254,7 @@ const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
         class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-500 hover:text-brand-500"
       >
         <Icon name="rss" size="sm" />
-        RSS Feed
+        {t('common.rssFeed', locale)}
       </a>
       {socialLinks.map((link) => (
         <a
@@ -167,11 +272,47 @@ const fullUrl = new URL(Astro.url.pathname, Astro.site).toString();
         class="inline-flex items-center gap-2 rounded-full border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-500 hover:text-brand-500"
       >
         <Icon name="mail" size="sm" />
-        Email
+        {t('common.email', locale)}
       </a>
     </div>
   </CTA>
+
+  <!-- Desktop: contained LetterGlitch band with glass card -->
+  <section class="hidden glitch:block relative z-10 py-[var(--space-section-md)] bg-background-secondary">
+    <LetterGlitchBand maxWidth="7xl">
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">{t('common.followAlong', locale)}</h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">{t('common.stayInLoop', locale)}</p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <a
+          href="/rss.xml"
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-400 hover:bg-brand-500/20 hover:text-foreground"
+        >
+          <Icon name="rss" size="sm" />
+          {t('common.rssFeed', locale)}
+        </a>
+        {socialLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-400 hover:bg-brand-500/20 hover:text-foreground"
+          >
+            <Icon name={link.icon} size="sm" />
+            {link.label}
+          </a>
+        ))}
+        <a
+          href={`mailto:${siteConfig.email}`}
+          class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-brand-400 hover:bg-brand-500/20 hover:text-foreground"
+        >
+          <Icon name="mail" size="sm" />
+          {t('common.email', locale)}
+        </a>
+      </div>
+    </LetterGlitchBand>
+  </section>
   </div>
 
-  <Footer slot="footer" layout="simple" background="secondary" />
+  <Footer slot="footer" layout="simple" background="default" maxWidth="7xl" />
 </BaseLayout>

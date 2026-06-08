@@ -1,106 +1,143 @@
 ---
-import LandingLayout from '@/layouts/LandingLayout.astro';
-import Button from '@/components/ui/form/Button/Button.astro';
+/**
+ * 404 page — supports both English and Russian based on URL
+ */
+import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Card from '@/components/ui/data-display/Card/Card.astro';
+import Button from '@/components/ui/form/Button/Button.astro';
+import { Hero } from '@/components/hero';
+import { getLocaleFromPath, localizedPath, t } from '@/i18n';
+
+const url = Astro.url;
+const locale = getLocaleFromPath(url.pathname);
+
+const badgeText = t('errors.404.badge', locale);
+const headingPart = t('errors.404.titlePart', locale);
+const headingHighlight = t('errors.404.titleHighlight', locale);
+const description = t('errors.404.description', locale);
+const recoveryTitle = t('errors.404.recoveryTitle', locale);
+
+const homeLabel = t('errors.404.buttons.home', locale);
+const blogLabel = t('errors.404.buttons.blog', locale);
+
+const recoveryLinks = [
+  {
+    icon: 'layers',
+    title: t('errors.404.links.projects.title', locale),
+    description: t('errors.404.links.projects.description', locale),
+    href: localizedPath('/projects', locale),
+  },
+  {
+    icon: 'book',
+    title: t('errors.404.links.blog.title', locale),
+    description: t('errors.404.links.blog.description', locale),
+    href: localizedPath('/blog', locale),
+  },
+  {
+    icon: 'mail',
+    title: t('errors.404.links.contact.title', locale),
+    description: t('errors.404.links.contact.description', locale),
+    href: localizedPath('/contact', locale),
+  },
+];
+
+const homeHref = localizedPath('/', locale);
+const blogHref = localizedPath('/blog', locale);
 ---
 
-<LandingLayout
-  title="Page not found"
-  description="The page you're looking for has either been moved, deleted, or never existed in the first place."
+<PageLayout
+  title={t('errors.pageNotFound', locale) + ' — ' + t('siteName', locale)}
+  description={t('errors.pageNotFoundMessage', locale)}
   noindex
+  eagerReveal
 >
-  <section class="relative min-h-[calc(100vh-8rem)] flex items-center justify-center overflow-hidden pt-16">
-    <!-- Background Effects -->
-    <div class="absolute inset-0 bg-grid-pattern [mask-image:radial-gradient(ellipse_at_center,white_20%,transparent_70%)] pointer-events-none opacity-40"></div>
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-500/15 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-brand-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-    <div class="relative container px-6">
-      <div class="max-w-2xl mx-auto text-center">
-        <!-- Animated 404 -->
-        <div class="relative mb-8">
-          <div class="error-code font-display text-[10rem] md:text-[14rem] lg:text-[18rem] font-bold leading-none tracking-tighter select-none">
-            <span class="inline-block error-digit" style="animation-delay: 0s;">4</span>
-            <span class="inline-block error-digit text-transparent bg-clip-text bg-gradient-to-br from-brand-400 via-brand-500 to-brand-600" style="animation-delay: 0.1s;">0</span>
-            <span class="inline-block error-digit" style="animation-delay: 0.2s;">4</span>
-          </div>
-          <!-- Glow effect behind the 0 -->
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="w-32 h-32 md:w-48 md:h-48 bg-brand-500/20 rounded-full blur-[60px] animate-pulse"></div>
-          </div>
-        </div>
+  <Hero layout="centered" size="sm" class="!bg-transparent" data-reveal>
+    <Badge slot="badge" variant="brand" pill>
+      <Icon name="compass" size="sm" />
+      {badgeText}
+    </Badge>
 
-        <!-- Copy -->
-        <h1 class="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-          Looks like you've drifted off course
-        </h1>
+    <h1 slot="title">
+      {headingPart} <span class="text-brand-500">{headingHighlight}</span>
+    </h1>
 
-        <p class="text-lg text-foreground-muted max-w-md mx-auto mb-10">
-          The page you're looking for has either been moved, deleted, or never existed in the first place.
-        </p>
+    <p slot="description">
+      {description}
+    </p>
 
-        <!-- CTAs -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <Button href="/" size="lg">
-            <Icon name="arrow-left" size="sm" />
-            Back to home
-          </Button>
-          <Button href="/blog" variant="outline" size="lg">
-            Browse blog
-          </Button>
-        </div>
+    <div slot="actions" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <Button href={homeHref} size="lg">
+        <Icon name="arrow-left" size="sm" />
+        {homeLabel}
+      </Button>
+      <Button href={blogHref} variant="outline" size="lg">
+        {blogLabel}
+        <Icon name="arrow-right" size="sm" />
+      </Button>
+    </div>
+  </Hero>
 
-        <!-- Quick Links -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border">
-          <span class="text-sm text-foreground-muted">Quick Links:</span>
-          <a
-            href="/#features"
-            class="text-sm font-medium text-foreground hover:text-brand-500 transition-colors"
-          >
-            Features
-          </a>
-          <span class="text-foreground-subtle">|</span>
-          <a
-            href="/components"
-            class="text-sm font-medium text-foreground hover:text-brand-500 transition-colors"
-          >
-            Components
-          </a>
-        </div>
+  {/* Recovery Section */}
+  <section class="py-[var(--space-section-md)] bg-background-secondary/80 backdrop-blur-sm border-t border-border relative z-10">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mb-8 text-center" data-reveal>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+          {recoveryTitle}
+        </h2>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        {recoveryLinks.map((link, i) => (
+          <Card hover href={link.href} class="group" data-reveal data-reveal-delay={i}>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                <Icon name={link.icon} size="sm" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="text-base font-semibold text-foreground">{link.title}</h3>
+                <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                  {link.description}
+                </p>
+              </div>
+              <Icon name="arrow-up-right" size="sm" class="text-foreground-muted group-hover:text-brand-500 transition-colors shrink-0" />
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
   </section>
-</LandingLayout>
+</PageLayout>
 
-<style>
-  .error-code {
-    color: var(--foreground);
-    opacity: 0.15;
+<style is:global>
+  body:has(#bg-canvas) {
+    background-color: transparent !important;
   }
 
-  .error-digit {
-    animation: float 3s ease-in-out infinite;
+  body:has(#bg-canvas) main {
+    background-color: transparent !important;
+    position: relative;
+    z-index: 1;
   }
 
-  .error-digit:nth-child(2) {
-    opacity: 1;
+  body:has(#bg-canvas) footer {
+    position: relative;
+    z-index: 1;
   }
 
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  /* Dark mode adjustments */
-  :global(.dark) .error-code {
-    opacity: 0.1;
-  }
-
-  :global(.dark) .error-digit:nth-child(2) {
-    opacity: 1;
+  #bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 0;
+    pointer-events: none;
   }
 </style>
+
+<script is:inline src="/scripts/404-bg.js"></script>

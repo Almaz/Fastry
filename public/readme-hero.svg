@@ -1,6 +1,6 @@
 <svg width="880" height="260" viewBox="0 0 880 260" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="880" height="260" fill="#2563eb"/>
+  <rect width="880" height="260" fill="#3b82f6"/>
 
   <!-- Lucide Rocket — scale(5), visual centre at (440, 100) -->
   <g transform="translate(379, 41) scale(5)"
@@ -19,8 +19,8 @@
         fill="#eff6ff">Astro Rocket</text>
 
   <!-- Corner marks -->
-  <path d="M 30 50 L 30 30 L 50 30"     stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
-  <path d="M 830 30 L 850 30 L 850 50"   stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
-  <path d="M 30 210 L 30 230 L 50 230"   stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
-  <path d="M 830 230 L 850 230 L 850 210" stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 30 50 L 30 30 L 50 30"     stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 830 30 L 850 30 L 850 50"   stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 30 210 L 30 230 L 50 230"   stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 830 230 L 850 230 L 850 210" stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
 </svg>

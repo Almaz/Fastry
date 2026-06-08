@@ -3,7 +3,7 @@
    =============================================================================
    This file aggregates primitive color scales and all themes.
    The active theme is selected at runtime via the data-theme attribute on
-   <html>. Default: midnight.
+   <html>. Default: indigo.
 
    To add a new theme: create a file in ../themes/ following the same token
    contract, scope it under html[data-theme="name"], and import it below.
@@ -11,10 +11,10 @@
    Theme files
    -----------
    Active in selector (ThemeSelector.astro):
-     orange, lime, emerald, teal, sky, blue, purple
+     green, lime, emerald, teal, sky, blue, purple
 
    Hidden from selector (files kept for re-use):
-     cyan, green, indigo
+     cyan, orange, indigo
 
    Available but not exposed in selector:
      amber, magenta

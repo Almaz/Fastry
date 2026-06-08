@@ -1,0 +1,410 @@
+---
+/**
+ * About page — Russian
+ * URL: /ru/about
+ */
+import PageLayout from '@/layouts/PageLayout.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Card from '@/components/ui/data-display/Card/Card.astro';
+import Button from '@/components/ui/form/Button/Button.astro';
+import { Hero } from '@/components/hero';
+import TypingEffect from '@/components/ui/TypingEffect.astro';
+import TechStack from '@/components/landing/TechStack.astro';
+import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
+---
+<PageLayout
+  title="Обо мне — Веб-дизайнер и Разработчик"
+  description="Дизайнер и разработчик — создаю современные веб-проекты с чистым дизайном, прочной структурой и вниманием к деталям."
+>
+  <Hero layout="centered" size="sm" class="isolate" showHeroHalo>
+    <Badge slot="badge" variant="brand" pill>
+      <Icon name="user" size="sm" />
+      Обо мне
+    </Badge>
+    <h1 slot="title">
+      <span class="text-foreground [-webkit-text-fill-color:currentColor]">Astro Rocket —</span><br />
+      <span class="text-brand-500 [-webkit-text-fill-color:var(--color-brand-500)]">
+        <TypingEffect words={["Веб-дизайнер", "Веб-разработчик", "Astro-разработчик", "Пользователь Claude Code", "UI/UX-энтузиаст", "Блогер", "Любитель кофе"]} />
+      </span>
+    </h1>
+
+    <p slot="description">
+      Мне важны обе стороны мастерства — как сайт выглядит и как он
+      работает. Вот немного подробнее о том, как я мыслю и работаю.
+    </p>
+  </Hero>
+
+  <!-- About me -->
+  <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 glitch:grid-cols-2 glitch:gap-12">
+        <!-- Left: text -->
+        <div class="flex flex-col justify-center gap-4 sm:items-center sm:text-center glitch:items-start glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
+          <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
+            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Строю с 2010</Badge>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground text-balance">
+              16 лет практического мастерства
+            </h2>
+          </div>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Я веб-дизайнер и разработчик с 16-летним опытом, базируюсь в Амстердаме и работаю по всему миру. Дизайн и код под ним — не разные работы для меня, а единое ремесло, которое ведёт один человек от первого эскиза до финального деплоя.
+          </p>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Результат — быстрые, поддерживаемые сайты, созданные с намерением, и прямая связь с человеком, который действительно делает работу, от первого разговора до запуска.
+          </p>
+        </div>
+        <!-- Right: personal facts card -->
+        <div class="flex flex-col h-full" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
+          <Card variant="elevated" padding="lg" class="flex-1 flex flex-col justify-center">
+            <div class="grid grid-cols-2 sm:grid-cols-3 glitch:grid-cols-2 gap-x-6 gap-y-8">
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="map-pin" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Базируюсь в Амстердаме</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Работаю по всему миру, на голландском и английском.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="award" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">16 лет в ремесле</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Проектирую и создаю с 2010 года.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="code-2" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Энтузиаст Astro</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Мой фреймворк выбора.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="sparkles" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Энтузиаст AI</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Claude — мой ежедневный партнёр по размышлениям.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="layout" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">UI/UX-энтузиаст</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Чистый, удобный дизайн.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="coffee" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Любитель кофе</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Заряжаюсь лучшим кофе.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Values -->
+  <section class="py-[var(--space-section-md)] bg-background border-t border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mb-8 text-center flex flex-col items-center gap-4" data-reveal>
+        <div class="flex flex-col items-center gap-6">
+          <Badge variant="brand" pill>Мой процесс</Badge>
+          <h2 class="font-display text-4xl font-bold text-foreground">
+            Как я работаю
+          </h2>
+        </div>
+        <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
+          Это не стремления — это ограничения, которым подчиняется каждый проект, от первого разговора до финальной передачи.
+        </p>
+      </div>
+      <div class="grid gap-6 sm:gap-8 sm:grid-cols-3">
+        <Card hover data-reveal>
+          <div class="flex items-start gap-4 sm:flex-col sm:items-center sm:gap-3 sm:text-center lg:flex-row lg:items-start lg:gap-4 lg:text-left">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+              <Icon name="zap" size="md" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-semibold text-foreground">Производительность прежде всего</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                Быстрые сайты лучше ранжируются, лучше конвертируют и радуют пользователей. Я оптимизирую скорость с самого начала.
+              </p>
+            </div>
+          </div>
+        </Card>
+        <Card hover data-reveal data-reveal-delay="1">
+          <div class="flex items-start gap-4 sm:flex-col sm:items-center sm:gap-3 sm:text-center lg:flex-row lg:items-start lg:gap-4 lg:text-left">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+              <Icon name="award" size="md" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-semibold text-foreground">Опыт, который виден</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                16 лет опыта означают, что я знаю, что работает, что нет и что именно нужно вашему проекту.
+              </p>
+            </div>
+          </div>
+        </Card>
+        <Card hover data-reveal data-reveal-delay="2">
+          <div class="flex items-start gap-4 sm:flex-col sm:items-center sm:gap-3 sm:text-center lg:flex-row lg:items-start lg:gap-4 lg:text-left">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+              <Icon name="rocket" size="md" />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-base font-semibold text-foreground">Современность с нуля</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                Создано с современными инструментами. Быстро, поддерживаемо и готово к тому, что будет дальше.
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+  <!-- My Stack -->
+  <TechStack
+    badge="Инструменты и технологии"
+    title="Мой стек"
+    description="Инструменты, на которые я полагаюсь каждый день для создания быстрых, современных сайтов — выбраны за производительность, отличный опыт разработки и надёжность."
+    background="secondary"
+  />
+  <!-- FAQ -->
+  <section class="py-[var(--space-section-md)] bg-background border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
+      <div class="flex flex-col items-center gap-4 text-center" data-reveal>
+        <div class="flex flex-col items-center gap-6">
+          <Badge variant="brand" pill>Полезно знать</Badge>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+            Часто задаваемые вопросы
+          </h2>
+        </div>
+        <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
+          Некоторые вопросы, которые мне задают чаще всего.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <!-- Card 1: About Astro -->
+        <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="1">
+          <div class="flex items-center gap-3 pb-4 border-b border-border">
+            <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+              <Icon name="rocket" size="md" />
+            </div>
+            <h3 class="font-display text-base font-semibold text-foreground">Об Astro</h3>
+          </div>
+          <div class="w-full">
+            <details class="border-b border-border" name="faq-astro">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Что такое Astro?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Astro — это современный веб-фреймворк для контент-ориентированных сайтов. Он поставляет ноль JavaScript по умолчанию — отправляя только то, что действительно нужно странице. Результат — быстрое время загрузки, отличные показатели Core Web Vitals и лёгкий поддерживаемый код.
+              </div>
+            </details>
+            <details class="border-b border-border" name="faq-astro">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Почему вы строите на Astro?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Потому что это совпадает с моим подходом к вебу: лёгкий, целенаправленный и созданный на века. Astro позволяет мне создавать быстрые сайты без борьбы с фреймворком — минимум JavaScript, чистый HTML, отличное SEO — чтобы я мог сосредоточиться на дизайне и деталях, которые действительно важны.
+              </div>
+            </details>
+            <details class="border-b border-border" name="faq-astro">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Вы всегда строите на Astro?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Почти всегда. Для портфолио, бизнес-сайтов, маркетинговых страниц и блогов Astro — правильный инструмент. Если проект действительно требует чего-то другого, я скажу об этом честно. Но Astro справляется с большинством клиентских задач и делает это исключительно хорошо.
+              </div>
+            </details>
+            <details class="border-b border-border" name="faq-astro">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Вы создаёте темы для Astro?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Да. Я создал <a href="https://astro.build/themes/details/astro-rocket/"  class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">Astro Rocket</a> — бесплатную, готовую к продакшену тему, опубликованную в официальном каталоге тем Astro. Она включает полную библиотеку компонентов, поддержку блога, тёмную тему, SEO и всё необходимое для запуска быстрого современного сайта без необходимости начинать с нуля.
+              </div>
+            </details>
+            <details class="border-b border-border last:border-0" name="faq-astro">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Планируете создавать больше тем для Astro?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Да, такие планы есть. Astro Rocket активно поддерживается, и у меня есть идеи для новых тем. Следите за блогом или наблюдайте за официальным каталогом тем Astro — там будет видно, что дальше.
+              </div>
+            </details>
+          </div>
+        </Card>
+
+        <!-- Card 2: About the work -->
+        <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="2">
+          <div class="flex items-center gap-3 pb-4 border-b border-border">
+            <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+              <Icon name="user" size="md" />
+            </div>
+            <h3 class="font-display text-base font-semibold text-foreground">О работе</h3>
+          </div>
+          <div class="w-full">
+            <details class="border-b border-border" name="faq-work">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Вы используете AI при создании сайтов?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Да — я работаю вместе с Claude как с партнёром по размышлениям на протяжении всего проекта. Не как с ярлыком, а как со вторым мнением, которое помогает обдумывать дизайн-решения, проверять код и замечать то, что я мог бы упустить.
+              </div>
+            </details>
+            <details class="border-b border-border" name="faq-work">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Вы компания или агентство?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Нет. Я дизайнер и разработчик, работающий solo, движимый искренним энтузиазмом к ремеслу, а не коммерческими показателями. Нет отдела продаж, нет аккаунт-менеджера, нет передачи джуниору. Вы работаете напрямую со мной от первого разговора до финальной сдачи.
+              </div>
+            </details>
+            <details class="border-b border-border" name="faq-work">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Как вы выбираете, какие проекты брать?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Я ищу проекты, где хороший дизайн и качественное исполнение действительно важны для клиента. Я работаю лучше всего, когда есть чёткая цель, открытая линия связи и клиент, доверяющий процессу. Я лучше возьму меньше проектов и сделаю их хорошо, чем размажусь по слишком многим одновременно.
+              </div>
+            </details>
+            <details class="border-b border-border" name="faq-work">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Вы предлагаете поддержку или обслуживание после запуска?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Да. Будь то небольшие обновления, изменения контента или что-то более серьёзное — я доступен после запуска. Мы можем согласовать любые условия, которые лучше всего подходят для проекта.
+              </div>
+            </details>
+            <details class="border-b border-border last:border-0" name="faq-work">
+              <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                Вы работаете с клиентами за пределами Нидерландов?
+                <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
+              </summary>
+              <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
+                Безусловно. Я базируюсь в Амстердаме, но работаю с клиентами по всему миру. Большинство проектов ведутся полностью удалённо, что отлично работает при чётких вводных и хорошей коммуникации. Разница в часовых поясах редко бывает проблемой.
+              </div>
+            </details>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- More about me -->
+  <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-8 sm:gap-10 glitch:grid-cols-2 glitch:items-center">
+        <!-- Text -->
+        <div class="flex flex-col gap-4 sm:items-center sm:text-center glitch:items-start glitch:justify-center glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
+          <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Предыстория</Badge>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+            Более длинная история
+          </h2>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Вы видели работу, процесс и инструменты. Если хотите узнать человека за ними, я собрал всю историю в одном месте.
+          </p>
+          <Button variant="outline" size="lg" href="/ru/blog/hans-martens-web-designer-veghel" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
+            Прочитать полную историю
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+
+        <!-- Image -->
+        <div class="mx-auto w-full max-w-sm sm:max-w-md glitch:mx-0 glitch:max-w-none" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
+          <a
+            href="/ru/blog/hans-martens-web-designer-veghel"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block overflow-hidden rounded-2xl border border-brand-500/20 bg-brand-500/5 shadow-md ring-1 ring-border/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:border-brand-500/40"
+            aria-label="Перейти к блогу"
+          >
+            <div class="flex items-center justify-center h-48 sm:h-64 bg-gradient-to-br from-brand-500/10 to-brand-500/5 transition-transform duration-300 group-hover:scale-105">
+              <Icon name="user" size="lg" class="text-brand-500/40" />
+            </div>
+          </a>
+        </div>
+        <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
+          <Button size="lg" variant="outline" href="/ru/blog/hans-martens-web-designer-veghel" >
+            Прочитать полную историю
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
+    <!-- Mobile: flat section, no card -->
+    <div class="glitch:hidden mx-auto max-w-2xl px-6 text-center" data-reveal>
+      <Badge variant="brand" pill class="mb-6">Давайте обсудим</Badge>
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        Подхожу вам?
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        Если мой опыт и подход совпадают с тем, что вы ищете, я открыт для новых проектов. Давайте поговорим.
+      </p>
+      <Button size="lg" href="/ru/contact" class="cta-btn-brand">
+        Начать проект
+        <Icon name="arrow-right" size="sm" />
+      </Button>
+    </div>
+
+    <!-- Desktop: contained LetterGlitch band with glass card -->
+    <LetterGlitchBand locale="ru">
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        Подхожу вам?
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        Если мой опыт и подход совпадают с тем, что вы ищете, я открыт для новых проектов. Давайте поговорим.
+      </p>
+      <Button size="lg" href="/ru/contact" class="hero-btn-brand">
+        Начать проект
+        <Icon name="arrow-right" size="sm" />
+      </Button>
+    </LetterGlitchBand>
+  </section>
+</PageLayout>
+
+<style>
+  details[open] > summary .faq-icon {
+    transform: rotate(180deg);
+  }
+</style>

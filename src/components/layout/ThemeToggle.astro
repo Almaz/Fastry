@@ -8,21 +8,39 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
+<!-- 3-state colour-mode cycler. Click cycles: system → light → dark → system.
+     The visible icon is driven by <html data-theme-mode="…"> so it stays in
+     sync with the inline bootstrap (no FOUC of the wrong icon). -->
 <button
   type="button"
   id="theme-toggle"
   class={cn(
-    'inline-flex items-center justify-center rounded-md p-2',
+    'theme-toggle inline-flex items-center justify-center rounded-md p-2',
     'text-muted-foreground hover:text-foreground hover:bg-secondary',
     'transition-colors duration-(--transition-fast)',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
     className
   )}
-  aria-label="Toggle theme"
+  aria-label="Theme: system"
+  title="Theme: system (click to cycle)"
 >
-  <!-- Sun icon (shown in dark mode) -->
+  <!-- Monitor icon — shown when mode === 'system' -->
   <svg
-    class="h-5 w-5 hidden dark:block"
+    class="theme-toggle__icon theme-toggle__icon--system h-5 w-5"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+    aria-hidden="true"
+  >
+    <rect x="2.75" y="3.75" width="18.5" height="13" rx="2" />
+    <path stroke-linecap="round" d="M8 20.25h8M12 16.75v3.5" />
+  </svg>
+
+  <!-- Sun icon — shown when mode === 'light' -->
+  <svg
+    class="theme-toggle__icon theme-toggle__icon--light h-5 w-5"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -37,9 +55,9 @@ const { class: className } = Astro.props;
     />
   </svg>
 
-  <!-- Moon icon (shown in light mode) -->
+  <!-- Moon icon — shown when mode === 'dark' -->
   <svg
-    class="h-5 w-5 block dark:hidden"
+    class="theme-toggle__icon theme-toggle__icon--dark h-5 w-5"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -55,24 +73,64 @@ const { class: className } = Astro.props;
   </svg>
 </button>
 
-<script>
-  function initThemeToggle() {
-    const toggle = document.getElementById('theme-toggle');
+<style>
+  /* Show exactly one icon based on the saved colour-mode. The bootstrap
+     sets data-theme-mode synchronously before paint, so the right icon is
+     visible from frame 0 (no flash). */
+  .theme-toggle__icon { display: none; }
+  :global(html[data-theme-mode='system']) .theme-toggle .theme-toggle__icon--system,
+  :global(html[data-theme-mode='light'])  .theme-toggle .theme-toggle__icon--light,
+  :global(html[data-theme-mode='dark'])   .theme-toggle .theme-toggle__icon--dark {
+    display: block;
+  }
+</style>
 
-    // Guard: skip if not found or already initialised on this element
+<script>
+  type Mode = 'system' | 'light' | 'dark';
+  const MODES: readonly Mode[] = ['system', 'light', 'dark'] as const;
+
+  function readMode(): Mode {
+    try {
+      const stored = localStorage.getItem('theme');
+      if (stored === 'system' || stored === 'light' || stored === 'dark') return stored;
+    } catch {
+      /* private mode */
+    }
+    return 'system';
+  }
+
+  function applyMode(mode: Mode): void {
+    const root = document.documentElement;
+    root.setAttribute('data-theme-mode', mode);
+    const isDark =
+      mode === 'dark' ||
+      (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    root.classList.toggle('dark', isDark);
+  }
+
+  function syncLabel(button: HTMLElement, mode: Mode): void {
+    button.setAttribute('aria-label', `Theme: ${mode}`);
+    button.setAttribute('title', `Theme: ${mode} (click to cycle)`);
+  }
+
+  function initThemeToggle(): void {
+    const toggle = document.getElementById('theme-toggle');
     if (!toggle || toggle.dataset.themeInit) return;
     toggle.dataset.themeInit = 'true';
 
-    toggle.addEventListener('click', () => {
-      const isDark = document.documentElement.classList.contains('dark');
+    syncLabel(toggle, readMode());
 
-      if (isDark) {
-        document.documentElement.classList.remove('dark');
-        sessionStorage.setItem('theme', 'light');
-      } else {
-        document.documentElement.classList.add('dark');
-        sessionStorage.removeItem('theme');
+    toggle.addEventListener('click', () => {
+      const current = readMode();
+      const next = MODES[(MODES.indexOf(current) + 1) % MODES.length];
+
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* private mode */
       }
+      applyMode(next);
+      syncLabel(toggle, next);
     });
   }
 

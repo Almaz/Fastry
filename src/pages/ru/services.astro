@@ -1,0 +1,504 @@
+---
+/**
+ * Services page — Russian
+ * URL: /ru/services
+ */
+import PageLayout from '@/layouts/PageLayout.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Card from '@/components/ui/data-display/Card/Card.astro';
+import Button from '@/components/ui/form/Button/Button.astro';
+import { Hero } from '@/components/hero';
+import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
+---
+<PageLayout
+  title="Услуги — Веб-дизайн, Разработка и Производительность"
+  description="Три ключевые услуги для современных сайтов: продуманный дизайн, чистая разработка на Astro и измеримая производительность с SEO."
+>
+  <Hero layout="centered" size="sm" class="isolate services-hero" showHeroHalo>
+    <Badge slot="badge" variant="brand" pill>
+      <Icon name="sparkles" size="sm" />
+      Услуги
+    </Badge>
+    <h1 slot="title">
+      <span class="text-foreground">Что я предлагаю —</span><br />
+      <span class="text-brand-500">спроектировано, создано и настроено.</span>
+    </h1>
+
+    <p slot="description">
+      Три ключевые услуги, один неизменный стандарт. От первого
+      макета до финального Lighthouse-скора — каждый проект получает
+      одинаковое внимание к деталям.
+    </p>
+
+    <Fragment slot="actions">
+      <Button size="lg" href="#design" variant="outline">
+        Веб-дизайн
+        <Icon name="arrow-down" size="sm" class="hero-jump-arrow" />
+      </Button>
+      <Button size="lg" href="#development" variant="outline">
+        Разработка
+        <Icon name="arrow-down" size="sm" class="hero-jump-arrow" />
+      </Button>
+      <Button size="lg" href="#performance" variant="outline">
+        Производительность
+        <Icon name="arrow-down" size="sm" class="hero-jump-arrow" />
+      </Button>
+    </Fragment>
+  </Hero>
+
+  <!-- Design -->
+  <section id="design" class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 glitch:grid-cols-2 glitch:gap-12 glitch:items-start">
+        <!-- Text -->
+        <div class="flex flex-col gap-4 sm:items-center sm:text-center glitch:items-start glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
+          <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
+            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">
+              <Icon name="layout" size="sm" />
+              Веб-дизайн
+            </Badge>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+              Дизайн с намерением
+            </h2>
+          </div>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Хороший дизайн начинается с людей, которые будут им пользоваться. Я создаю макеты, опираясь на ваш контент и вашу аудиторию, а не на тренды, которые быстро устаревают. Типографика, отступы и цвета выбираются ради ясности — а не новизны.
+          </p>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Учтён каждый экран: десктоп, планшет и телефон, который держат в руке на остановке. Бренд остаётся единым на протяжении всего опыта, а мелкие детали считаются частью дизайна, а не финальным полировкой.
+          </p>
+          <Button variant="outline" href="/ru/contact" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
+            Обсудить дизайн-проект
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+        <!-- Card -->
+        <div class="sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
+          <Card variant="elevated" padding="lg" class="h-full flex flex-col justify-center">
+            <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border sm:justify-center glitch:justify-start">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                <Icon name="layout" size="md" />
+              </div>
+              <h3 class="font-display text-base font-semibold text-foreground">Что входит</h3>
+            </div>
+            <ul class="flex flex-col gap-3">
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Индивидуальные макеты</span> — созданные под ваш контент, а не из шаблона. Каждая секция заслуживает своё место, служа цели страницы.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Адаптивность на всех разрешениях</span> — телефон, планшет, десктоп, ультраширокий. Макеты перестраиваются осмысленно, а не просто сжимаются.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Типографические системы</span> — читаемые, масштабируемые, в стиле бренда. Чёткая иерархия от заголовка до подписи, настроенная для длительного чтения.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Светлая и тёмная темы</span> — один дизайн, два настроения, выбор пользователя. Оба режима проверяются на каждом этапе, а не дорабатываются в конце.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Продуманная анимация</span> — взаимодействия, которые направляют, а не отвлекают. Настройки уменьшения движения уважаются без исключений.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Доступность в основе</span> — контраст, фокус, семантическая структура. Клавиатурная навигация и чтение с экрана проверяются перед запуском.
+                </p>
+              </li>
+            </ul>
+          </Card>
+        </div>
+        <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
+          <Button variant="outline" href="/ru/contact">
+            Обсудить дизайн-проект
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Development -->
+  <section id="development" class="py-[var(--space-section-md)] bg-background border-t border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 glitch:grid-cols-2 glitch:gap-12 glitch:items-start">
+        <!-- Text -->
+        <div class="flex flex-col gap-4 sm:items-center sm:text-center glitch:order-2 glitch:items-start glitch:text-left" data-reveal="left" data-reveal-ease="smooth">
+          <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
+            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">
+              <Icon name="code" size="sm" />
+              Веб-разработка
+            </Badge>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+              Код, который оправдывает себя
+            </h2>
+          </div>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Я создаю сайты на Astro, потому что он поставляет только то, что нужно, и ничего лишнего. Результат — сайты с отличными аудитами, которые ощущаются быстрыми и не становятся хрупкими со временем.
+          </p>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Архитектура важна не меньше результата: типизированный контент, предсказуемые границы компонентов, сборочный конвейер, который будущий разработчик (или будущий вы) сможет освоить без экскурсии.
+          </p>
+          <Button variant="outline" href="/ru/projects" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
+            Посмотреть проекты
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+        <!-- Card -->
+        <div class="sm:max-w-xl sm:mx-auto glitch:order-1 glitch:max-w-none glitch:mx-0" data-reveal="right" data-reveal-delay="1" data-reveal-ease="smooth">
+          <Card variant="elevated" padding="lg" class="h-full flex flex-col justify-center">
+            <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border sm:justify-center glitch:justify-start">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                <Icon name="code" size="md" />
+              </div>
+              <h3 class="font-display text-base font-semibold text-foreground">Что входит</h3>
+            </div>
+            <ul class="flex flex-col gap-3">
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Astro + Tailwind</span> — современный стек, минимум JavaScript, чистый HTML. Браузер отображает страницу почти мгновенно, без налога на гидратацию.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Типизированные коллекции контента</span> — структурированные блог, проекты и данные. Валидация схемы выполняется на сборке, поэтому неработающий контент никогда не публикуется.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Формы и интеграции</span> — защищённые, с учётом GDPR, интегрированные с вашими инструментами. Отправки попадают в почту или CRM без утечки на клиентской стороне.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Хостинг и деплой</span> — Netlify, Vercel, Cloudflare или ваша инфраструктура. Превью-деплои для каждой ветки, чтобы изменения можно было проверить до публикации.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Контроль версий и CI</span> — рабочий процесс на git, повторяемые деплои. Автоматические проверки блокируют каждый пул-реквест до слияния.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Документация по передаче</span> — код, ключи и README, который можно реально прочитать. Написано так, чтобы будущий разработчик (или будущий вы) мог взяться за проект без экскурсии.
+                </p>
+              </li>
+            </ul>
+          </Card>
+        </div>
+        <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
+          <Button variant="outline" href="/ru/projects">
+            Посмотреть проекты
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance -->
+  <section id="performance" class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="grid gap-10 glitch:grid-cols-2 glitch:gap-12 glitch:items-start">
+        <!-- Text -->
+        <div class="flex flex-col gap-4 sm:items-center sm:text-center glitch:items-start glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
+          <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
+            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">
+              <Icon name="zap" size="sm" />
+              Производительность
+            </Badge>
+            <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+              Быстрые страницы, находимые страницы
+            </h2>
+          </div>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Скорость и видимость в поиске — не функции, которые добавляют в конце, а ограничения, которые соблюдают с первого коммита. Каждая секунда загрузки страницы стоит внимания, рейтинга и доверия.
+          </p>
+          <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
+            Я работаю по измеримым целям, а не по ощущениям. Core Web Vitals, техническое SEO и доступность отслеживаются, настраиваются и проверяются перед запуском — а панели управления остаются у вас после передачи.
+          </p>
+          <Button variant="outline" href="/ru/contact" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
+            Начать проект
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+        <!-- Card -->
+        <div class="sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
+          <Card variant="elevated" padding="lg" class="h-full flex flex-col justify-center">
+            <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border sm:justify-center glitch:justify-start">
+              <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                <Icon name="zap" size="md" />
+              </div>
+              <h3 class="font-display text-base font-semibold text-foreground">Что входит</h3>
+            </div>
+            <ul class="flex flex-col gap-3">
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Core Web Vitals</span> — LCP, INP и CLS в рамках порогов Google. Измеряется на реальных устройствах, а не только на синтетических тестах.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Конвейер изображений</span> — современные форматы, адаптивные размеры, ленивая загрузка. Героические изображения управляются художественно, чтобы выглядеть правильно на каждом экране.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Техническое SEO</span> — метаданные, карты сайта, структурированные данные, OG-изображения. Всё настроено и проверено до первого сканирования.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Доступность</span> — разметка с учётом WCAG и проверенный порядок фокуса. Тестируется с программой чтения с экрана и только клавиатурой, а не только проверкой контраста.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Lighthouse-аудиты</span> — измеримые показатели, поставляемые с сайтом. Повторяемые в CI, чтобы они не дрейфовали после запуска.
+                </p>
+              </li>
+              <li class="flex items-start gap-3">
+                <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
+                <p class="text-sm text-foreground-muted leading-relaxed">
+                  <span class="font-semibold text-foreground">Приватная аналитика</span> — полезные данные, без баннера cookie. Самостоятельный хостинг или анонимизация вендором — данные никогда не продаются.
+                </p>
+              </li>
+            </ul>
+          </Card>
+        </div>
+        <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
+          <Button variant="outline" href="/ru/contact">
+            Начать проект
+            <Icon name="arrow-right" size="sm" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="py-[var(--space-section-md)] bg-background border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
+      <div class="flex flex-col items-center gap-4 text-center" data-reveal>
+        <div class="flex flex-col items-center gap-6">
+          <Badge variant="brand" pill>Как это работает</Badge>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+            Прозрачный и честный процесс
+          </h2>
+        </div>
+        <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
+          Четыре этапа, одна точка контакта, никаких сюрпризов.
+        </p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Card hover data-reveal>
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-base shrink-0">
+              1
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-foreground">Знакомство</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                Беседа о ваших целях, аудитории и том, как выглядит успех. Без обязательств.
+              </p>
+            </div>
+          </div>
+        </Card>
+        <Card hover data-reveal data-reveal-delay="1">
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-base shrink-0">
+              2
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-foreground">Предложение</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                Чёткие объём, сроки и стоимость. Одна страница, простым языком, фиксированная цена.
+              </p>
+            </div>
+          </div>
+        </Card>
+        <Card hover data-reveal data-reveal-delay="2">
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-base shrink-0">
+              3
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-foreground">Дизайн и сборка</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                Короткие циклы с регулярными проверками. Вы видите, как сайт развивается в процессе создания.
+              </p>
+            </div>
+          </div>
+        </Card>
+        <Card hover data-reveal data-reveal-delay="3">
+          <div class="flex flex-col items-center text-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-base shrink-0">
+              4
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-foreground">Запуск и поддержка</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                Деплой, передача, остаюсь на связи. Доработки после запуска — без проблем.
+              </p>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative z-10 py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <!-- Mobile: flat section, no card -->
+    <div class="glitch:hidden mx-auto max-w-2xl px-6 text-center" data-reveal>
+      <Badge variant="brand" pill class="mb-6">Давайте обсудим</Badge>
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        Есть проект?
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        Отправьте короткую заметку о том, что вы создаёте и что вам нужно. Я читаю каждое сообщение и отвечаю в течение рабочего дня.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button size="lg" href="/ru/contact" class="cta-btn-brand">
+          Начать проект
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+        <Button size="lg" variant="outline" href="/ru/about">
+          Подробнее обо мне
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+      </div>
+    </div>
+
+    <!-- Desktop: contained LetterGlitch band with glass card -->
+    <LetterGlitchBand locale="ru">
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        Есть проект?
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        Отправьте короткую заметку о том, что вы создаёте и что вам нужно. Я читаю каждое сообщение и отвечаю в течение рабочего дня.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button size="lg" href="/ru/contact" class="hero-btn-brand">
+          Начать проект
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+        <Button size="lg" variant="outline" href="/ru/about">
+          Подробнее обо мне
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+      </div>
+    </LetterGlitchBand>
+  </section>
+</PageLayout>
+
+<style is:global>
+  /* Gentle "scroll down" bounce on the hero jump-button arrows — same motion
+     language as the homepage hero scroll indicator. */
+  .services-hero .hero-jump-arrow {
+    animation: hero-jump-arrow-bounce 1.8s ease-in-out infinite;
+  }
+  @keyframes hero-jump-arrow-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .services-hero .hero-jump-arrow { animation: none; }
+  }
+
+  /* Page-local override: anchor links on /services should land the
+     section's coloured edge flush against the fixed header. */
+  html { scroll-padding-top: 4rem; }
+  @media (max-height: 600px) { html { scroll-padding-top: 4rem; } }
+  @media (min-width: 1024px) { html { scroll-padding-top: 4rem; } }
+
+  /* In-page anchor jumps (the hero section buttons) tag their destination —
+     and everything above it — with .reveal-instant so the content is already
+     in its final position when the smooth-scroll lands, instead of sliding in
+     mid-jump. Natural scrolling is untouched and still animates. */
+  .reveal-instant[data-reveal],
+  .reveal-instant [data-reveal],
+  .reveal-instant[data-reveal-children] > *,
+  .reveal-instant [data-reveal-children] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+</style>
+
+<script is:inline>
+  /* When a hero section button is clicked — or the page is opened directly on
+     one of those sections (e.g. /services#development) — the destination (and
+     everything the jump scrolls past) is snapped to its revealed state before
+     the scroll lands, so cards don't slide in mid-jump. Sections below the
+     target stay observed, so natural scrolling still animates normally. */
+  (function () {
+    function initServicesHeroJump() {
+      const hero = document.querySelector('.services-hero');
+      if (!hero) return;
+      const buttons = hero.querySelectorAll('a[href^="#"]');
+      if (!buttons.length) return;
+
+      function revealUpToAndIncluding(target) {
+        const reveals = document.querySelectorAll('[data-reveal], [data-reveal-children]');
+        Array.prototype.forEach.call(reveals, function (el) {
+          const targetFollowsEl =
+            el.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING;
+          if (el === target || target.contains(el) || targetFollowsEl) {
+            el.classList.add('reveal-instant', 'is-visible');
+          }
+        });
+      }
+
+      const targetIds = [];
+      Array.prototype.forEach.call(buttons, function (btn) {
+        const hash = btn.getAttribute('href');
+        const id = hash ? hash.slice(1) : '';
+        if (id) targetIds.push(id);
+        btn.addEventListener('click', function () {
+          const target = id && document.getElementById(id);
+          if (target) revealUpToAndIncluding(target);
+        });
+      });
+
+      const initialId = location.hash ? location.hash.slice(1) : '';
+      if (initialId && targetIds.indexOf(initialId) !== -1) {
+        const target = document.getElementById(initialId);
+        if (target) revealUpToAndIncluding(target);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initServicesHeroJump);
+    } else {
+      initServicesHeroJump();
+    }
+  })();
+</script>

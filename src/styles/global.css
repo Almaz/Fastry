@@ -14,8 +14,35 @@
 @import '@fontsource-variable/outfit';
 @import '@fontsource-variable/jetbrains-mono';
 
+/* Metric-adjusted fallback fonts.
+   The variable fonts above arrive after first paint, so headings and body
+   text used to reflow when the swap landed (Lighthouse reported CLS on the
+   hero wordmark). These @font-face rules alias the system Arial to
+   "Outfit Fallback" / "Manrope Fallback" with overrides that match each
+   variable font's metrics, so the pre-load fallback box has the same size
+   as the eventual webfont and the swap is invisible. */
+@font-face {
+  font-family: 'Outfit Fallback';
+  src: local('Arial');
+  ascent-override: 92.5%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+  size-adjust: 96.8%;
+}
+@font-face {
+  font-family: 'Manrope Fallback';
+  src: local('Arial');
+  ascent-override: 99%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+  size-adjust: 99.5%;
+}
+
 /* Dark mode variant */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* LetterGlitch variant — desktop with fine pointer only */
+@custom-variant glitch (@media (min-width: 1024px) and (pointer: fine));
 
 /* -------------------------------------------------------------------------
    Tailwind Theme Configuration
@@ -40,6 +67,9 @@
 
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
 
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -136,6 +166,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
   }
 
   body {
@@ -144,6 +175,7 @@
     font-size: var(--font-size-base);
     line-height: var(--theme-body-leading);
     min-height: 100vh;
+    overflow-x: clip;
   }
 
   /* Typography - headings use explicit foreground color to prevent any
@@ -294,13 +326,76 @@
     );
   }
 
-  /* Dark mode hero gradient: brand to black */
+  /* Hero gradient — dark mode */
   .dark .hero-dark-gradient {
-    background: linear-gradient(
-      to bottom,
-      var(--brand-700) 0%,
-      oklch(0% 0 0) 100%
-    ) !important;
+    background: linear-gradient(to bottom, var(--color-brand-500) 0%, #000 100%);
+  }
+
+  .hero-dark-gradient {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(to bottom, var(--color-brand-500) 0%, #000 100%);
+  }
+  html:not(.dark) .hero-dark-gradient {
+    --color-foreground:           oklch(91% 0.008 250);
+    --color-foreground-secondary: oklch(82% 0.012 250);
+    --color-foreground-muted:     oklch(68% 0.01 250);
+    --color-background:           var(--surface-invert);
+    --color-secondary:            var(--surface-invert-secondary);
+    --color-secondary-hover:      var(--surface-invert-tertiary);
+    --color-ring:                 oklch(91% 0.008 250);
+  }
+
+  /* H1 spans: first span uses remapped foreground (near-white), remaining
+     spans use pure #fff. Mirrors the dark-mode treatment. */
+  html:not(.dark) .hero-dark-gradient h1 > span:first-of-type {
+    color: var(--color-foreground);
+    -webkit-text-fill-color: currentColor;
+  }
+  html:not(.dark) .hero-dark-gradient h1 > span:not(:first-of-type) {
+    color: #fff;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  /* Primary CTA — near-white gradient pill. Targets .btn-primary, which is
+     the homepage primary CTA marker (added by the primary button variant). */
+  html:not(.dark) .hero-dark-gradient .btn-primary {
+    background-color: var(--color-foreground);
+    background-image: linear-gradient(
+      180deg,
+      var(--color-foreground) 0%,
+      color-mix(in oklch, var(--color-foreground) 55%, var(--color-foreground-secondary)) 100%
+    );
+    border: 1px solid var(--color-foreground-secondary);
+    color: var(--color-background);
+  }
+  html:not(.dark) .hero-dark-gradient .btn-primary:hover {
+    background-image: none;
+    background-color: color-mix(in oklch, var(--color-foreground) 90%, transparent);
+  }
+
+  html:not(.dark) .hero-dark-gradient .border-foreground\/25 {
+    border-color: color-mix(in oklch, var(--color-foreground) 25%, transparent);
+  }
+  html:not(.dark) .hero-dark-gradient .border-foreground\/25:hover {
+    border-color: color-mix(in oklch, var(--color-foreground) 40%, transparent);
+  }
+
+  /* Brand badge in the hero — applied in BOTH light and dark mode.
+     Glass pill with a brand-400 pulse core and brand-300 soft halo. */
+  .hero-dark-gradient .bg-brand-500\/10 {
+    background-color: color-mix(in oklch, var(--color-brand-500) 18%, transparent);
+    border-color:     color-mix(in oklch, var(--color-brand-400) 55%, transparent);
+    color:            var(--color-brand-100);
+    backdrop-filter:         blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 0 24px -4px color-mix(in oklch, var(--color-brand-500) 35%, transparent);
+  }
+  .hero-dark-gradient .bg-brand-500\/10 .bg-brand-500 {
+    background-color: var(--color-brand-400);
+  }
+  .hero-dark-gradient .bg-brand-500\/10 .bg-brand-500:not(.animate-ping) {
+    box-shadow: 0 0 14px 0 color-mix(in oklch, var(--color-brand-300) 40%, transparent);
   }
 
   /* Gradient border */
@@ -361,8 +456,8 @@
 
   .dark .bg-grid-pattern {
     background-image:
-      linear-gradient(to right, var(--gray-800) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--gray-800) 1px, transparent 1px);
+      linear-gradient(to right, var(--color-brand-600) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-brand-600) 1px, transparent 1px);
   }
 
   /* Animations */
@@ -949,36 +1044,178 @@
    transition shorthand is always valid.
    ------------------------------------------------------------------------- */
 
+/* Spring curve approximating Framer Motion's spring(stiffness:100, damping:15).
+   Pronounced overshoot gives elements a "settle" feel on entrance. */
 @keyframes hero-slide-up {
-  from { transform: translateY(28px); }
-  to   { transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Transform-only variant for the hero heading. The heading is the LCP
+   element, so it must never fade in: an element below full opacity can be
+   deferred or skipped as an LCP paint candidate. It slides up like the rest
+   of the hero but stays fully opaque from the first painted frame. */
+@keyframes hero-slide-up-solid {
+  from {
+    transform: translateY(40px);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .animate-hero-slide-up {
-  animation: hero-slide-up 0.7s cubic-bezier(0, 0, 0.2, 1) both;
+  animation: hero-slide-up 1s cubic-bezier(0.22, 1.6, 0.36, 1) both;
+}
+
+/* Stagger direct children of a hero container. Each child springs in 90ms
+   behind the previous — used on the Hero content column to cascade
+   badge → title → description → actions. */
+.animate-hero-stagger > * {
+  animation: hero-slide-up 1s cubic-bezier(0.22, 1.6, 0.36, 1) both;
+}
+.animate-hero-stagger > *:nth-child(1)   { animation-delay: 0ms;   }
+.animate-hero-stagger > *:nth-child(2)   { animation-delay: 90ms;  }
+.animate-hero-stagger > *:nth-child(3)   { animation-delay: 180ms; }
+.animate-hero-stagger > *:nth-child(4)   { animation-delay: 270ms; }
+.animate-hero-stagger > *:nth-child(5)   { animation-delay: 360ms; }
+.animate-hero-stagger > *:nth-child(n+6) { animation-delay: 450ms; }
+
+/* The hero heading opts into the transform-only keyframe so it paints opaque
+   on frame 1. This selector outranks the `> *` rule above, so it overrides
+   only animation-name — duration, easing, fill mode and the per-position
+   animation-delay are all inherited unchanged. */
+.animate-hero-stagger > .hero-lcp-title {
+  animation-name: hero-slide-up-solid;
+}
+
+/* Floating header drop-in: lands from above as the hero rises from below.
+   The translate values mirror the auto-hide hidden state so the entrance
+   plays cleanly with the existing transition system. */
+@keyframes header-drop-in {
+  from {
+    translate: -50% calc(-100% - 1.5rem);
+    opacity: 0;
+  }
+  to {
+    translate: -50% 0;
+    opacity: 1;
+  }
+}
+
+.animate-header-drop {
+  animation: header-drop-in 0.8s cubic-bezier(0.22, 1.6, 0.36, 1) 150ms both;
 }
 
 [data-reveal] {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(56px) scale(0.94);
   transition:
-    opacity  0.6s cubic-bezier(0, 0, 0.2, 1),
-    transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.22, 1.6, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal][data-reveal-ease="smooth"] {
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal="down"]  { transform: translateY(-56px) scale(0.94); }
+[data-reveal="left"]  { transform: translateX(56px) scale(0.94); }
+[data-reveal="right"] { transform: translateX(-56px) scale(0.94); }
+[data-reveal="scale"] { transform: scale(0.88); }
+
+/* Below lg the two-column split sections stack vertically, so horizontal
+   left/right reveals slide sideways against the page's vertical flow — and
+   collide with the hero's slide-up on load. Redirect them to slide up too,
+   so all motion shares one direction on mobile. */
+@media (max-width: 1023.98px) {
+  [data-reveal="left"],
+  [data-reveal="right"] { transform: translateY(56px) scale(0.94); }
 }
 
 [data-reveal].is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 [data-reveal][data-reveal-delay="1"] { transition-delay: 100ms; }
 [data-reveal][data-reveal-delay="2"] { transition-delay: 200ms; }
 [data-reveal][data-reveal-delay="3"] { transition-delay: 300ms; }
+[data-reveal][data-reveal-delay="4"] { transition-delay: 400ms; }
+
+/* Cascading reveal for grids of cards. Each direct child stages in behind
+   the previous when the parent intersects. Stagger and travel distance are
+   tunable per-instance via custom properties. */
+[data-reveal-children] {
+  --reveal-stagger: 100ms;
+  --reveal-distance: 48px;
+}
+
+[data-reveal-children] > * {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance)) scale(0.94);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.22, 1.6, 0.36, 1);
+}
+
+[data-reveal-children].is-visible > * {
+  opacity: 1;
+  transform: none;
+}
+
+[data-reveal-children] > *:nth-child(1)    { transition-delay: calc(var(--reveal-stagger) * 0);  }
+[data-reveal-children] > *:nth-child(2)    { transition-delay: calc(var(--reveal-stagger) * 1);  }
+[data-reveal-children] > *:nth-child(3)    { transition-delay: calc(var(--reveal-stagger) * 2);  }
+[data-reveal-children] > *:nth-child(4)    { transition-delay: calc(var(--reveal-stagger) * 3);  }
+[data-reveal-children] > *:nth-child(5)    { transition-delay: calc(var(--reveal-stagger) * 4);  }
+[data-reveal-children] > *:nth-child(6)    { transition-delay: calc(var(--reveal-stagger) * 5);  }
+[data-reveal-children] > *:nth-child(7)    { transition-delay: calc(var(--reveal-stagger) * 6);  }
+[data-reveal-children] > *:nth-child(8)    { transition-delay: calc(var(--reveal-stagger) * 7);  }
+[data-reveal-children] > *:nth-child(9)    { transition-delay: calc(var(--reveal-stagger) * 8);  }
+[data-reveal-children] > *:nth-child(10)   { transition-delay: calc(var(--reveal-stagger) * 9);  }
+[data-reveal-children] > *:nth-child(11)   { transition-delay: calc(var(--reveal-stagger) * 10); }
+[data-reveal-children] > *:nth-child(12)   { transition-delay: calc(var(--reveal-stagger) * 11); }
+[data-reveal-children] > *:nth-child(n+13) { transition-delay: calc(var(--reveal-stagger) * 12); }
+
+/* Per-block reveal for long-form article bodies (single blog posts /
+   single project pages). Each direct child of the prose container —
+   paragraph, heading, list, image, blockquote, custom MDX block — is
+   given its own observer so it springs in as the reader scrolls to it. */
+[data-reveal-content] > * {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.22, 1.6, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+[data-reveal-content] > *.is-visible {
+  opacity: 1;
+  transform: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-hero-slide-up { animation: none; }
+  .animate-hero-slide-up,
+  .animate-hero-stagger > *,
+  .animate-hero-stagger > .hero-lcp-title,
+  .animate-header-drop {
+    animation: none;
+  }
 
-  [data-reveal] {
+  [data-reveal],
+  [data-reveal-children] > *,
+  [data-reveal-content] > * {
     opacity: 1;
     transform: none;
     transition: none;
@@ -1002,16 +1239,40 @@
   opacity: 0.85;
 }
 
-/* Header CTA — brand colour in light mode */
+/* CTA primary button on mobile / coarse-pointer CTA sections.
+   brand-700 fill / brand-800 hover in both modes: the lightest brand step
+   that holds white label text at WCAG AA (>=4.5:1) across every theme. */
+.cta-btn-brand {
+  background-color: var(--color-brand-700) !important;
+  background-image: none !important;
+  color: white !important;
+  border-color: transparent !important;
+}
+.cta-btn-brand:hover {
+  background-color: var(--color-brand-800) !important;
+  background-image: none !important;
+}
+
+/* Header CTA — brand colour in light mode (brand-700 for AA white text) */
 :root:not(.dark) .hdr-cta-brand {
-  background-color: var(--color-brand-500) !important;
+  background-color: var(--color-brand-700) !important;
   background-image: none !important;
   color: white !important;
   border-color: transparent !important;
 }
 :root:not(.dark) .hdr-cta-brand:hover {
-  background-color: var(--color-brand-600) !important;
+  background-color: var(--color-brand-800) !important;
   opacity: 1 !important;
+}
+
+/* Destructive button — fixed dark red in both modes so the white label clears
+   WCAG AA (white on oklch(53%) = 5.9:1). Decoupled from the --destructive token,
+   which is tuned lighter in dark mode to stay readable as inline error text. */
+.btn-destructive {
+  background-color: oklch(53% 0.2 25);
+}
+.btn-destructive:hover {
+  background-color: oklch(47% 0.18 25);
 }
 
 .hero-btn-learn {
@@ -1033,4 +1294,26 @@
 }
 .dark .hero-btn-learn:hover {
   background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-icon='arrow-right'],
+[data-icon='arrow-left'] {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.group:hover [data-icon='arrow-right'] {
+  transform: translateX(0.25rem);
+}
+.group:hover [data-icon='arrow-left'] {
+  transform: translateX(-0.25rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-icon='arrow-right'],
+  [data-icon='arrow-left'] {
+    transition: none;
+  }
+  .group:hover [data-icon='arrow-right'],
+  .group:hover [data-icon='arrow-left'] {
+    transform: none;
+  }
 }

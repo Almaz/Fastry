@@ -1,8 +1,8 @@
 /* =============================================================================
    Astro Rocket Theme - Default
    =============================================================================
-   The default Astro Rocket theme: clean, neutral grays with International Orange
-   accent. This is the default theme shipped with the template.
+   The original Astro Rocket theme: clean, neutral grays with International Orange
+   accent.
 
    Theme Contract: Every theme must define the same set of semantic tokens
    listed below. Swap this file with another theme to change the entire look.
@@ -58,12 +58,12 @@ html[data-theme="orange"] {
 
   --input-bg: var(--gray-0);
   --input-border: var(--gray-300);
-  --input-focus: var(--brand-500);
+  --input-focus: var(--brand-600);
 
-  --ring: var(--brand-500);
+  --ring: var(--brand-600);
 
   /* Destructive - for delete/remove actions */
-  --destructive: var(--error);
+  --destructive: oklch(53% 0.2 25); /* darker red: WCAG AA as error text on white (5.9:1) */
   --destructive-foreground: var(--gray-0);
 
   /* Gradient colors - OKLCH */
@@ -90,11 +90,11 @@ html[data-theme="orange"] {
   /* -------------------------------------------------------------------------
      Typography
      ------------------------------------------------------------------------- */
-  --theme-font-sans: 'Manrope Variable', 'Manrope', ui-sans-serif, system-ui,
+  --theme-font-sans: 'Manrope Variable', 'Manrope', 'Manrope Fallback', ui-sans-serif, system-ui,
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
-  --theme-font-display: 'Outfit Variable', 'Outfit', var(--theme-font-sans);
+  --theme-font-display: 'Outfit Variable', 'Outfit', 'Outfit Fallback', var(--theme-font-sans);
   --theme-font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace,
     SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;

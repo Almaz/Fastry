@@ -3,10 +3,12 @@ import { cn } from '@/lib/cn';
 import JsonLd from './JsonLd.astro';
 import { createBreadcrumbSchema } from '@/lib/schema';
 import siteConfig from '@/config/site.config';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 
 interface BreadcrumbItem {
   label: string;
   href?: string;
+  icon?: string;
 }
 
 interface Props {
@@ -28,13 +30,13 @@ const schema = createBreadcrumbSchema(schemaItems);
 <JsonLd schema={schema} />
 
 <nav aria-label="Breadcrumb" class={cn('text-sm', className)}>
-  <ol class="flex flex-wrap items-center gap-2">
+  <ol class="flex items-center gap-2 whitespace-nowrap">
     {
       items.map((item, index) => (
-        <li class="flex items-center gap-2">
+        <li class:list={['flex items-center gap-2', index === items.length - 1 && 'min-w-0']}>
           {index > 0 && (
             <svg
-              class="h-4 w-4 text-muted-foreground"
+              class="h-4 w-4 text-muted-foreground shrink-0"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -44,11 +46,13 @@ const schema = createBreadcrumbSchema(schemaItems);
             </svg>
           )}
           {item.href && index !== items.length - 1 ? (
-            <a href={item.href} class="text-muted-foreground hover:text-foreground transition-colors">
+            <a href={item.href} class="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5">
+              {item.icon && <Icon name={item.icon} size="sm" />}
               {item.label}
             </a>
           ) : (
-            <span class="text-foreground font-medium" aria-current={index === items.length - 1 ? 'page' : undefined}>
+            <span class:list={['text-foreground font-medium flex items-center gap-1.5', index === items.length - 1 && 'truncate']} aria-current={index === items.length - 1 ? 'page' : undefined}>
+              {item.icon && <Icon name={item.icon} size="sm" />}
               {item.label}
             </span>
           )}

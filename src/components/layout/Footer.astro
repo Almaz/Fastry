@@ -18,14 +18,19 @@
  */
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/lib/cn';
-import { getNavItems, type NavItem as NavConfigItem } from '@/config/nav.config';
+import {
+  getFooterNavItems,
+  getLegalLinks,
+  type NavItem as NavConfigItem,
+} from '@/config/nav.config';
 import { footerVariants, footerColumnGridVariants } from './footer.variants';
 import Logo from '@/components/ui/marketing/Logo/Logo.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
-import siteConfig from '@/config/site.config';
+import { t, getLocaleFromPath, localizedPath } from '@/i18n';
 
 export interface NavItem {
   label: string;
+  labelKey?: string;
   href: string;
   external?: boolean;
 }
@@ -71,6 +76,8 @@ interface Props extends HTMLAttributes<'footer'> {
   hideLogo?: boolean;
   /** Tagline text under logo */
   tagline?: string;
+  /** Max width of the inner container. Defaults to `'6xl'`. */
+  maxWidth?: '4xl' | '5xl' | '6xl' | '7xl' | 'full';
 }
 
 const {
@@ -82,29 +89,44 @@ const {
   socialLinks = [],
   showSocial = true,
   showCopyright = true,
-  copyright = '© {year} {siteName}. Designed by <a href="https://hansmartens.dev" class="underline hover:text-foreground transition-colors" target="_blank" rel="noopener noreferrer">Hans Martens</a>.',
-  legalLinks = [],
+  copyright = '{siteName} © {year}',
+  legalLinks,
   hideLogo = false,
   tagline,
+  maxWidth = '6xl',
   class: className,
   ...attrs
 } = Astro.props;
 
-// Get navigation items
-const defaultNav: NavItem[] = getNavItems().map((item: NavConfigItem) => ({
+const locale = getLocaleFromPath(Astro.url.pathname);
+
+const maxWidthClass = {
+  '4xl': 'max-w-4xl',
+  '5xl': 'max-w-5xl',
+  '6xl': 'max-w-6xl',
+  '7xl': 'max-w-7xl',
+  full: 'max-w-full',
+}[maxWidth];
+
+// Get navigation items — footer nav is configured independently from the
+// header in `nav.config.ts` (see `footerNavItems`).
+const defaultNav: NavItem[] = getFooterNavItems().map((item: NavConfigItem) => ({
   label: item.label,
+  labelKey: item.labelKey,
   href: item.href,
+  external: item.external,
 }));
 const navItems: NavItem[] = nav || defaultNav;
+const allNavItems: NavItem[] = navItems;
 
-// Default external links if none provided via nav
-const allNavItems: NavItem[] = nav ? navItems : navItems;
+// Resolved legal links: prop wins, otherwise fall back to nav.config.ts
+const resolvedLegalLinks: LegalLink[] = legalLinks ?? getLegalLinks();
 
 // Process copyright text
 const currentYear = new Date().getFullYear();
 const processedCopyright = copyright
   .replace('{year}', String(currentYear))
-  .replace('{siteName}', siteConfig.name);
+  .replace('{siteName}', t("siteName", locale));
 
 // Check slots
 const hasLogoSlot = Astro.slots.has('logo');
@@ -130,7 +152,7 @@ function getSocialIcon(platform: string): string {
 ---
 
 <footer class={footerClasses} {...attrs}>
-  <div class="mx-auto max-w-6xl px-6">
+  <div class={cn('mx-auto px-6', maxWidthClass)}>
     {layout === 'simple' && (
       <>
       <div class="flex flex-col md:flex-row justify-between items-center gap-[var(--space-stack-lg)]">
@@ -140,10 +162,10 @@ function getSocialIcon(platform: string): string {
             {hasLogoSlot ? (
               <slot name="logo" />
             ) : (
-              <a href="/" class="flex items-center gap-2">
-                <Logo size="md" />
-                <span class="font-display text-base font-bold text-brand-500">
-                  {siteConfig.name}
+              <a href={localizedPath("/", locale)} class="flex items-center gap-2">
+                <Logo size="md" class="bg-brand-600" />
+                <span class="font-display text-base font-bold text-brand-600 dark:text-foreground">
+                  {t('siteName', locale)}
                 </span>
               </a>
             )}
@@ -159,12 +181,12 @@ function getSocialIcon(platform: string): string {
         <nav class="flex flex-wrap justify-center gap-[var(--space-inline-lg)] md:gap-[var(--space-stack-lg)] text-sm font-medium text-foreground-muted">
           {allNavItems.map((item) => (
             <a
-              href={item.href}
+              href={localizedPath(item.href, locale)}
               class="transition-colors hover:text-foreground"
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
-              {item.label}
+              {t(item.labelKey ?? item.label, locale)}
             </a>
           ))}
         </nav>
@@ -181,7 +203,7 @@ function getSocialIcon(platform: string): string {
                   class="transition-colors text-foreground-muted hover:text-foreground"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={social.label || `Follow us on ${social.platform}`}
+                  aria-label={social.label || `${t("common.followAlong", locale)}`}
                 >
                   <Icon name={getSocialIcon(social.platform)} size="md" />
                 </a>
@@ -207,10 +229,10 @@ function getSocialIcon(platform: string): string {
               {hasLogoSlot ? (
                 <slot name="logo" />
               ) : (
-                <a href="/" class="flex items-center gap-2">
-                  <Logo size="md" />
-                  <span class="font-display text-base font-bold text-brand-500">
-                    {siteConfig.name}
+                <a href={localizedPath("/", locale)} class="flex items-center gap-2">
+                  <Logo size="md" class="bg-brand-600" />
+                  <span class="font-display text-base font-bold text-brand-600 dark:text-foreground">
+                    {t('siteName', locale)}
                   </span>
                 </a>
               )}
@@ -228,7 +250,7 @@ function getSocialIcon(platform: string): string {
                       class="transition-colors text-foreground-muted hover:text-foreground"
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={social.label || `Follow us on ${social.platform}`}
+                      aria-label={social.label || `${t("common.followAlong", locale)}`}
                     >
                       <Icon name={getSocialIcon(social.platform)} size="md" />
                     </a>
@@ -267,20 +289,18 @@ function getSocialIcon(platform: string): string {
         </div>
 
         {/* Bottom section */}
-        {(showCopyright || legalLinks.length > 0) && (
+        {(showCopyright || resolvedLegalLinks.length > 0) && (
           <div class="mt-[var(--space-section-header)] pt-[var(--space-stack-lg)] border-t border-border flex flex-col md:flex-row justify-between items-center gap-[var(--space-stack-md)]">
             {hasBottomSlot ? (
               <slot name="bottom" />
             ) : (
               <>
                 {showCopyright && (
-                  <p class="text-sm text-foreground-muted">
-                    {processedCopyright}
-                  </p>
+                  <p class="text-sm text-foreground-muted" set:html={processedCopyright} />
                 )}
-                {legalLinks.length > 0 && (
+                {resolvedLegalLinks.length > 0 && (
                   <div class="flex items-center gap-[var(--space-inline-lg)]">
-                    {legalLinks.map((link) => (
+                    {resolvedLegalLinks.map((link) => (
                       <a
                         href={link.href}
                         class="text-sm transition-colors text-foreground-muted hover:text-foreground"
@@ -300,9 +320,7 @@ function getSocialIcon(platform: string): string {
     {layout === 'minimal' && (
       <div class="text-center">
         {showCopyright && (
-          <p class="text-sm text-foreground-muted">
-            {processedCopyright}
-          </p>
+          <p class="text-sm text-foreground-muted" set:html={processedCopyright} />
         )}
       </div>
     )}
@@ -314,10 +332,10 @@ function getSocialIcon(platform: string): string {
           hasLogoSlot ? (
             <slot name="logo" />
           ) : (
-            <a href="/" class="flex items-center gap-2">
-              <Logo size="md" />
-              <span class="font-display text-xl font-bold text-brand-500">
-                {siteConfig.name}
+            <a href={localizedPath("/", locale)} class="flex items-center gap-2">
+              <Logo size="md" class="bg-brand-600" />
+              <span class="font-display text-xl font-bold text-brand-600 dark:text-foreground">
+                {t('siteName', locale)}
               </span>
             </a>
           )
@@ -334,12 +352,12 @@ function getSocialIcon(platform: string): string {
         <nav class="flex flex-wrap justify-center gap-[var(--space-inline-lg)] text-sm font-medium text-foreground-muted">
           {allNavItems.map((item) => (
             <a
-              href={item.href}
+              href={localizedPath(item.href, locale)}
               class="transition-colors hover:text-foreground"
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
-              {item.label}
+              {t(item.labelKey ?? item.label, locale)}
             </a>
           ))}
         </nav>
@@ -353,7 +371,7 @@ function getSocialIcon(platform: string): string {
                 class="transition-colors text-foreground-muted hover:text-foreground"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={social.label || `Follow us on ${social.platform}`}
+                aria-label={social.label || `${t("common.followAlong", locale)}`}
               >
                 <Icon name={getSocialIcon(social.platform)} size="md" />
               </a>
@@ -362,16 +380,14 @@ function getSocialIcon(platform: string): string {
         )}
 
         {/* Copyright & Legal */}
-        {(showCopyright || legalLinks.length > 0) && (
+        {(showCopyright || resolvedLegalLinks.length > 0) && (
           <div class="pt-[var(--space-stack-lg)] border-t border-border w-full flex flex-col items-center gap-[var(--space-stack-md)]">
             {showCopyright && (
-              <p class="text-sm text-foreground-muted">
-                {processedCopyright}
-              </p>
+              <p class="text-sm text-foreground-muted" set:html={processedCopyright} />
             )}
-            {legalLinks.length > 0 && (
+            {resolvedLegalLinks.length > 0 && (
               <div class="flex items-center gap-[var(--space-inline-lg)]">
-                {legalLinks.map((link) => (
+                {resolvedLegalLinks.map((link) => (
                   <a
                     href={link.href}
                     class="text-sm transition-colors text-foreground-muted hover:text-foreground"

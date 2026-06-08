@@ -1,0 +1,84 @@
+---
+title: "Анимации в Astro Rocket — Intersection Observer, плавные появления и View Transitions"
+description: "Как Astro Rocket использует нативные веб-анимации с Intersection Observer, плавные появления элементов и View Transitions API для бесшовной навигации."
+publishedAt: 2026-04-25
+author: "Almaz"
+tags: ["astro-rocket", "анимации", "intersection-observer", "view-transitions"]
+featured: false
+locale: ru
+image: "../../../assets/blog/animations-in-astro-rocket.svg"
+svgSlug: "animations-in-astro-rocket"
+imageAlt: "Схематические линии, представляющие движение и анимацию"
+---
+
+Astro Rocket использует нативные веб-анимации без тяжелых библиотек. Всё построено на Intersection Observer API, CSS-переходах и View Transitions API.
+
+## Плавные появления (Fade-in Animations)
+
+Элементы на страницах появляются плавно при прокрутке с помощью Intersection Observer. Компонент `FadeIn` находится в `src/components/effects/` и оборачивает любой HTML или компонент Astro:
+
+```astro
+<FadeIn>
+  <h2>Этот заголовок появится плавно</h2>
+</FadeIn>
+```
+
+Компонент использует нативный Intersection Observer — без дополнительных библиотек. Каждый элемент анимируется один раз при первом появлении в области видимости.
+
+### Настройка анимации
+
+Компонент `FadeIn` принимает пропсы для настройки:
+
+```astro
+<FadeIn direction="up" duration={600} delay={100} threshold={0.2}>
+  <p>Контент с кастомной анимацией</p>
+</FadeIn>
+```
+
+- `direction` — направление: `up`, `down`, `left`, `right`, `none`
+- `duration` — длительность в мс
+- `delay` — задержка в мс
+- `threshold` — порог видимости (0–1)
+
+## View Transitions API
+
+Astro Rocket использует [View Transitions API](https://docs.astro.build/en/guides/view-transitions/) для плавной навигации между страницами. Переходы настроены в `BaseLayout.astro`:
+
+```astro
+---
+import { ViewTransitions } from 'astro:transitions';
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <ViewTransitions />
+  </head>
+</html>
+```
+
+Навигация между страницами происходит с кросс-фейдом, что создаёт ощущение нативного приложения. Цветовой режим и тема сохраняются при переходах.
+
+## Эффект печатающего текста в Hero
+
+Компонент `TypingEffect` в шапке Hero создаёт эффект печатающегося текста. Он циклически перебирает фразы с эффектом пишущей машинки:
+
+```astro
+<TypingEffect
+  words={["Быстро", "Современно", "Адаптивно"]}
+  typeSpeed={80}
+  deleteSpeed={40}
+  pauseDuration={2000}
+/>
+```
+
+Компонент написан на чистом TypeScript без зависимостей.
+
+## Индикатор прокрутки
+
+В шапке может отображаться индикатор прогресса прокрутки — тонкая цветная полоса, показывающая, как далеко пользователь продвинулся по странице. Включается пропсом `showScrollProgress` на компоненте Header.
+
+## Кольцо прогресса
+
+Для более визуального подхода доступно кольцо прогресса, которое отображает прогресс прокрутки в виде кольцевого индикатора.
+
+Все анимации отключаются при `prefers-reduced-motion: reduce`, что обеспечивает доступность для пользователей с чувствительностью к движению.

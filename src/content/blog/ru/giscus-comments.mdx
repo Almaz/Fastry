@@ -1,0 +1,80 @@
+---
+title: "Комментарии к постам блога — Giscus с ленивой загрузкой"
+description: "Astro Rocket поддерживает комментарии в блоге на основе Giscus и GitHub Discussions. Скрипт загружается лениво — читатели платят нулевую стоимость, если не прокручивают до низа."
+publishedAt: 2026-05-09
+author: "Almaz"
+tags: ["astro-rocket", "функции", "блог", "комментарии", "giscus"]
+featured: false
+locale: ru
+image: "../../../assets/blog/giscus-comments.svg"
+svgSlug: "giscus-comments"
+imageAlt: "Три облачка диалога, представляющие ветку комментариев, на фоне брендового цвета"
+---
+
+Astro Rocket теперь поддерживает комментарии внизу постов блога. Интеграция использует [Giscus](https://giscus.app), который хранит комментарии в GitHub Discussions выбранного вами репозитория.
+
+## Шаг 1 — Настройка Giscus
+
+1. Перейдите на [giscus.app](https://giscus.app)
+2. Выберите GitHub-репозиторий для обсуждений. Репозиторий должен быть **публичным** и с включёнными **Discussions**
+3. Установите приложение [Giscus](https://github.com/apps/giscus) на этот репозиторий
+4. Скопируйте четыре значения:
+   - `data-repo`
+   - `data-repo-id`
+   - `data-category`
+   - `data-category-id`
+
+## Шаг 2 — Настройка Astro Rocket
+
+Откройте `src/config/site.config.ts` и найдите `articleFeatures.comments`. Установите `enabled: true` и вставьте четыре значения:
+
+```ts
+articleFeatures: {
+  comments: {
+    enabled: true,
+    provider: 'giscus',
+    giscus: {
+      repo: 'you/your-repo',
+      repoId: 'R_kgDOAbcdef',
+      category: 'General',
+      categoryId: 'DIC_kwDOAbcdef',
+      mapping: 'pathname',
+      reactionsEnabled: true,
+      theme: 'preferred_color_scheme',
+      lang: 'en',
+    },
+  },
+},
+```
+
+## Отключение на отдельном посте
+
+Некоторые посты не нуждаются в комментариях. Отключите их с помощью frontmatter:
+
+```yaml
+---
+title: Моё объявление
+comments: false
+---
+```
+
+## Как работает ленивая загрузка
+
+Компонент делает следующее:
+
+1. На сервере рендерится пустой `<div>` с зарезервированной высотой
+2. На клиенте `IntersectionObserver` следит за этим `<div>`
+3. Когда читатель прокручивает в пределах 300px от области комментариев, скрипт Giscus загружается
+
+Читатели, которые уходят со страницы → 0 КБ. Читатели, которые дошли до конца → комментарии готовы к их приходу.
+
+## Темизация
+
+По умолчанию `theme: 'preferred_color_scheme'` заставляет Giscus следовать системным настройкам светлой/тёмной темы.
+
+## Где находится
+
+- Компонент: `src/components/blog/Comments.astro`
+- Подключение: `src/layouts/BlogLayout.astro`
+- Конфиг: `src/config/site.config.ts` → `articleFeatures.comments`
+- Переопределение на пост: `comments: false` в MDX frontmatter

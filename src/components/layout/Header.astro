@@ -28,13 +28,18 @@ import { headerVariants, headerInnerVariants } from './header.variants';
 import Button from '@/components/ui/form/Button/Button.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import Logo from '@/components/ui/marketing/Logo/Logo.astro';
-import ThemeToggle from '@/components/layout/ThemeToggle.astro';
+import ThemeModeDropdown from '@/components/layout/ThemeModeDropdown.astro';
 import ThemeSelector from '@/components/layout/ThemeSelector.astro';
 import ThemeSelectorDropdown from '@/components/layout/ThemeSelectorDropdown.astro';
+import LanguageSwitcher from "@/components/layout/LanguageSwitcher.astro";
+import PagefindSearch from "@/components/patterns/PagefindSearch.astro";
 import siteConfig from '@/config/site.config';
+import { isEnabled as i18nIsEnabled } from '@/i18n';
+import { t, getLocaleFromPath, localizedPath } from '@/i18n';
 
 export interface NavItem {
   label: string;
+  labelKey?: string;
   href: string;
 }
 
@@ -47,48 +52,32 @@ export interface HeaderAction {
 }
 
 interface Props extends HTMLAttributes<'header'> {
-  /** Layout style: default (logo left, nav right), centered (logo center), minimal (logo + cta only) */
   layout?: 'default' | 'centered' | 'minimal';
-  /** Position behavior */
   position?: 'fixed' | 'sticky' | 'static';
-  /** Header height */
   size?: 'sm' | 'md' | 'lg';
-  /** Background variant */
   variant?: 'default' | 'solid' | 'transparent';
-  /** Color scheme for text/icons - use 'invert' for dark backgrounds */
   colorScheme?: 'default' | 'invert';
-  /** Shape: 'bar' (full-width, default) or 'floating' (centered capsule) */
   shape?: 'bar' | 'floating';
-  /** Override default navigation (replaces getNavRoutes()) */
   nav?: NavItem[];
-  /** Additional navigation items (e.g., #features for landing pages) */
   extraNav?: NavItem[];
-  /** Show CTA button */
   showCta?: boolean;
-  /** CTA button configuration */
-  cta?: { label?: string; href?: string; icon?: string };
-  /** Action buttons (GitHub, etc.) */
+  cta?: { label?: string; href?: string; icon?: string; trailingIcon?: string };
   actions?: HeaderAction[];
-  /** Show theme toggle (default: true) */
   showThemeToggle?: boolean;
-  /** Show colour-theme selector swatches */
   showThemeSelector?: boolean;
-  /** Show mobile menu (default: true) */
   showMobileMenu?: boolean;
-  /** Show active state for current page (default: true) */
   showActiveState?: boolean;
-  /** Logo text override */
   logoText?: string;
-  /** Hide logo entirely */
   hideLogo?: boolean;
-  /** Show language switcher */
   showLanguageSwitcher?: boolean;
-  /** Show social icon links (desktop/tablet only, reads from siteConfig.socialLinks) */
   showSocialLinks?: boolean;
-  /** Show scroll progress bar at the bottom of the header */
-  showScrollProgress?: boolean;
-  /** Position of the scroll progress bar: 'top' (above header) or 'bottom' (below header, default) */
-  scrollProgressPosition?: 'top' | 'bottom';
+  autoHide?: boolean;
+  invertOnReturn?: boolean;
+  /**
+   * Max width of the inner container (only applies when `shape='bar'`).
+   * Defaults to `'6xl'` (the historical width).
+   */
+  maxWidth?: '4xl' | '5xl' | '6xl' | '7xl' | 'full';
 }
 
 const {
@@ -104,72 +93,89 @@ const {
   cta = { label: 'Start a project', href: '/contact' },
   actions = [],
   showThemeToggle = true,
-  showThemeSelector = false,
+  showThemeSelector = true,
   showMobileMenu = true,
   showSocialLinks = false,
+  showLanguageSwitcher = i18nIsEnabled(),
   showActiveState = true,
-  showScrollProgress = false,
-  scrollProgressPosition = 'bottom',
+  autoHide = true,
+  invertOnReturn = true,
   logoText,
   hideLogo = false,
+  maxWidth = '6xl',
   class: className,
   ...attrs
 } = Astro.props;
 
-// Shape + color scheme helpers
 const isFloating = shape === 'floating';
+const maxWidthClass = {
+  '4xl': 'max-w-4xl',
+  '5xl': 'max-w-5xl',
+  '6xl': 'max-w-6xl',
+  '7xl': 'max-w-7xl',
+  full: 'max-w-full',
+}[maxWidth];
 const isInvert = colorScheme === 'invert';
 
-// Get navigation items
 const defaultNav = getNavItems().map((item: NavConfigItem) => ({
   label: item.label,
+  labelKey: item.labelKey,
   href: item.href,
 }));
 const navItems: NavItem[] = nav || [...extraNav, ...defaultNav];
 
-// Current path for active state
 const currentPath = Astro.url.pathname;
-
-// Check if we're on the landing page
+const locale = getLocaleFromPath(Astro.url.pathname);
 const isLandingPage = currentPath === '/';
-
-// Process CTA href for landing page anchor links
 const ctaHref = cta.href?.startsWith('#') && !isLandingPage ? `/${cta.href}` : cta.href;
 
-// Check slots
 const hasLogoSlot = Astro.slots.has('logo');
 const hasNavSlot = Astro.slots.has('nav');
 const hasActionsSlot = Astro.slots.has('actions');
 const hasMobileMenuSlot = Astro.slots.has('mobile-menu');
 
-// Compute header classes
 const headerClasses = cn(
   headerVariants({ position, variant, shape }),
   isInvert && !isFloating && 'invert-section',
   className
 );
 
-// Compute inner container classes
-const innerClasses = headerInnerVariants({ size, shape });
+const innerClasses = cn(headerInnerVariants({ size, shape }), !isFloating && maxWidthClass);
 
-// Check if a nav item is active
 function isActive(href: string): boolean {
   if (!showActiveState) return false;
   if (href.startsWith('#')) return false;
-  return currentPath === href || currentPath.startsWith(href + '/');
+  const localizedHref = localizedPath(href.startsWith('#') && !isLandingPage ? `/${href}` : href, locale);
+  return currentPath === localizedHref || currentPath.startsWith(localizedHref + '/');
 }
 
-// Map a social URL to its icon name + accessible label
-function getSocialIconData(url: string): { icon: string; label: string } {
-  if (url.includes('github.com'))    return { icon: 'github',    label: 'GitHub' };
-  if (url.includes('instagram.com')) return { icon: 'instagram', label: 'Instagram' };
-  if (url.includes('x.com') || url.includes('twitter.com')) return { icon: 'x-twitter', label: 'X' };
-  if (url.includes('linkedin.com'))  return { icon: 'linkedin',  label: 'LinkedIn' };
-  if (url.includes('bsky.app'))      return { icon: 'bluesky',   label: 'Bluesky' };
-  return { icon: 'link', label: 'Social' };
+function getSocialIconData(url: string): { icon: string; labelKey: string } {
+  if (url.includes('github.com'))    return { icon: 'github',    labelKey: 'nav.social.github' };
+  if (url.includes('instagram.com')) return { icon: 'instagram', labelKey: 'nav.social.instagram' };
+  if (url.includes('x.com') || url.includes('twitter.com')) return { icon: 'x-twitter', labelKey: 'nav.social.twitter' };
+  if (url.includes('linkedin.com'))  return { icon: 'linkedin',  labelKey: 'nav.social.linkedin' };
+  if (url.includes('bsky.app'))      return { icon: 'bluesky',   labelKey: 'nav.social.bluesky' };
+  if (url.includes('youtube.com'))   return { icon: 'youtube',   labelKey: 'nav.social.youtube' };
+  return { icon: 'link', labelKey: 'nav.social.github' };
 }
 
-// Generate unique ID for this header instance
+function getNavIcon(href: string): string {
+  if (href === '/' || href === '') return 'home';
+  if (href.startsWith('/blog'))     return 'pen-line';
+  if (href.startsWith('/projects')) return 'layers';
+  if (href.startsWith('/services')) return 'sparkles';
+  if (href.startsWith('/about'))    return 'user';
+  if (href.startsWith('/contact'))  return 'mail';
+  if (href.startsWith('#'))         return 'hash';
+  if (href.startsWith('http'))      return 'arrow-up-right';
+  return 'chevron-right';
+}
+
+const mobileSocialOrder = ['x.com', 'instagram.com', 'bsky.app', 'github.com', 'linkedin.com', 'youtube.com'];
+const mobileSocialLinks = mobileSocialOrder
+  .map((host) => siteConfig.socialLinks.find((u) => u.includes(host)))
+  .filter((u): u is string => Boolean(u));
+
 const menuId = `mobile-menu-${Math.random().toString(36).slice(2, 9)}`;
 const buttonId = `${menuId}-button`;
 ---
@@ -181,41 +187,44 @@ const buttonId = `${menuId}-button`;
   data-header-shape={shape}
   data-header-variant={variant}
   data-header-color-scheme={colorScheme}
+  data-header-auto-hide={autoHide ? 'true' : 'false'}
+  data-header-invert-on-return={invertOnReturn ? 'true' : 'false'}
+  data-locale={locale}
+  data-i18n-navigate={t('nav.navigate', locale)}
+  data-i18n-theme={t('nav.theme', locale)}
   {...attrs}
 >
-  <div class={innerClasses}>
-    {/* Logo */}
+  <div class={cn(innerClasses, 'hdr-inner')}>
     {
       !hideLogo &&
         (hasLogoSlot ? (
           <slot name="logo" />
         ) : (
-          <a href="/" class="flex items-center gap-2">
-            <Logo size={size === 'lg' ? 'lg' : 'md'} forceDark={isInvert} />
+          <a href={localizedPath('/', locale)} class="flex items-center gap-2">
+            <Logo size={size === 'sm' ? 'md' : 'lg'} forceDark={isInvert} class="bg-brand-600" />
             <span
               class={cn(
                 'font-display text-xl font-bold tracking-tight',
-                isFloating ? 'hdr-logo-text' : (isInvert ? 'text-on-invert' : 'text-brand-500')
+                isFloating ? 'hdr-logo-text' : (isInvert ? 'text-brand-600 dark:text-foreground lg:text-on-invert' : 'text-brand-600 dark:text-foreground')
               )}
             >
-              {logoText || siteConfig.name}
+              {logoText || t('siteName', locale)}
             </span>
           </a>
         ))
     }
 
-    {/* Desktop Navigation */}
     {
       layout !== 'minimal' &&
         (hasNavSlot ? (
-          <nav class="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+          <nav class="hidden items-center gap-1 lg:flex" aria-label={t('nav.mainNavigation', locale)}>
             <slot name="nav" />
           </nav>
         ) : (
-          <nav class="hidden items-center gap-1 md:flex" aria-label="Main navigation">
-            {navItems.map(({ label, href }) => (
+          <nav class="hidden items-center gap-1 lg:flex" aria-label={t('nav.mainNavigation', locale)}>
+            {navItems.map(({ label, labelKey, href }) => (
               <a
-                href={href.startsWith('#') && !isLandingPage ? `/${href}` : href}
+                href={localizedPath(href.startsWith('#') && !isLandingPage ? `/${href}` : href, locale)}
                 class={cn(
                   'nav-link relative rounded-md px-3 py-2 text-sm',
                   'transition-all duration-(--transition-fast)',
@@ -223,47 +232,53 @@ const buttonId = `${menuId}-button`;
                   isFloating
                     ? (isActive(href)
                         ? 'hdr-nav-active font-semibold'
-                        : 'font-medium opacity-80 hover:opacity-100')
+                        : 'font-medium')
                     : (isActive(href)
                         ? 'nav-link-active font-semibold text-foreground bg-secondary'
                         : 'nav-link-inactive font-medium text-foreground-muted hover:text-foreground hover:bg-secondary/70')
                 )}
                 aria-current={isActive(href) ? 'page' : undefined}
               >
-                {label}
+                {t(labelKey ?? label, locale)}
               </a>
             ))}
           </nav>
         ))
     }
 
-    {/* Actions Area */}
     <div class="flex items-center gap-2 justify-self-end">
       {
         hasActionsSlot ? (
           <slot name="actions" />
         ) : (
           <>
+            <div class="flex">
+              <PagefindSearch />
+            </div>
+
             {showThemeToggle && (
-              <ThemeToggle class={isFloating ? 'hdr-invert-text' : undefined} />
+              <div class="flex">
+                <ThemeModeDropdown class={isFloating ? 'hdr-invert-text' : undefined} />
+              </div>
             )}
 
-            {showThemeSelector && (
-              <div class="hidden md:flex">
-                <ThemeSelectorDropdown class={isFloating ? 'hdr-invert-text' : undefined} />
+
+            {showLanguageSwitcher && (
+              <div class="hidden lg:flex">
+                <LanguageSwitcher class={isFloating ? 'hdr-invert-text' : undefined} />
               </div>
             )}
 
             {showSocialLinks && siteConfig.socialLinks.length > 0 && (
-              <div class="hidden md:flex items-center gap-0.5">
+              <div class="hidden lg:flex items-center gap-0.5">
                 {siteConfig.socialLinks.map((url) => {
-                  const { icon, label } = getSocialIconData(url);
+                  const { icon, labelKey } = getSocialIconData(url);
                   return (
                     <a
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={label}
+                      aria-label={t(labelKey, locale)}
                       class={cn(
                         'rounded-md p-2 transition-colors duration-(--transition-fast)',
                         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
@@ -295,7 +310,7 @@ const buttonId = `${menuId}-button`;
             ))}
 
             {showCta && (
-              <div class="hidden md:flex">
+              <div class="hidden lg:flex">
                 <Button
                   size="sm"
                   href={ctaHref}
@@ -303,7 +318,8 @@ const buttonId = `${menuId}-button`;
                   class={cn('hdr-cta-brand', isFloating ? 'hdr-invert-cta' : undefined)}
                 >
                   {cta.icon && <Icon name={cta.icon} size="sm" />}
-                  {cta.label}
+                  {t(cta.label || 'nav.startProject', locale)}
+                  {cta.trailingIcon && <Icon name={cta.trailingIcon} size="sm" />}
                 </Button>
               </div>
             )}
@@ -311,23 +327,22 @@ const buttonId = `${menuId}-button`;
         )
       }
 
-      {/* Mobile Menu Toggle */}
       {
         showMobileMenu && layout !== 'minimal' && (
           <button
             type="button"
             id={buttonId}
             class={cn(
-              'inline-flex items-center justify-center rounded-md p-2 md:hidden',
+              'hdr-hamburger inline-flex items-center justify-center rounded-md p-2 lg:hidden',
+              'text-foreground',
               'transition-colors',
               'focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none',
-              isFloating
-                ? 'hdr-invert-text'
-                : 'text-foreground-muted hover:text-foreground hover:bg-secondary'
+              isFloating ? 'hover:bg-secondary/40' : 'hover:bg-secondary'
             )}
             aria-expanded="false"
             aria-controls={menuId}
-            aria-label="Toggle menu"
+
+            aria-label={t('nav.openMenu', locale)}
           >
             <span class="menu-icon">
               <Icon name="menu" size="md" />
@@ -341,16 +356,6 @@ const buttonId = `${menuId}-button`;
     </div>
   </div>
 
-  {/* Scroll Progress Bar */}
-  {showScrollProgress && (
-    <div
-      id="scroll-progress-bar"
-      class={`absolute left-0 h-[2px] w-0 bg-brand-500 transition-none ${scrollProgressPosition === 'top' ? 'top-0' : 'bottom-0'}`}
-      aria-hidden="true"
-    />
-  )}
-
-  {/* Mobile Menu */}
   {
     showMobileMenu &&
       layout !== 'minimal' &&
@@ -358,13 +363,13 @@ const buttonId = `${menuId}-button`;
         <div
           id={menuId}
           class={cn(
-            'hidden origin-top scale-y-0 opacity-0 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.12)] md:hidden',
+            'hidden origin-top scale-y-0 opacity-0 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.12)] lg:hidden',
             isFloating
               ? 'rounded-b-2xl bg-background/95 backdrop-blur-xl'
               : 'border-border bg-background border-t'
           )}
           role="navigation"
-          aria-label="Mobile navigation"
+          aria-label={t('nav.mobileNavigation', locale)}
         >
           <slot name="mobile-menu" />
         </div>
@@ -372,48 +377,99 @@ const buttonId = `${menuId}-button`;
         <div
           id={menuId}
           class={cn(
-            'hidden origin-top scale-y-0 opacity-0 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.12)] md:hidden',
+            'hidden origin-top scale-y-0 opacity-0 shadow-[0_8px_24px_-12px_rgba(0,0,0,0.12)] lg:hidden',
             isFloating
               ? 'rounded-b-2xl bg-background/95 backdrop-blur-xl'
               : 'border-border bg-background border-t'
           )}
           role="navigation"
-          aria-label="Mobile navigation"
+          aria-label={t('nav.mobileNavigation', locale)}
         >
           <div class={cn(
-            'space-y-1 py-4',
-            isFloating ? 'px-4' : 'mx-auto max-w-6xl px-6'
+            'mobile-menu-body py-3',
+            isFloating ? 'px-3' : cn('mx-auto px-4', maxWidthClass)
           )}>
-            {navItems.map(({ label, href }) => (
-              <a
-                href={href.startsWith('#') && !isLandingPage ? `/${href}` : href}
-                class={cn(
-                  'mobile-nav-link block rounded-md px-3 py-2 text-sm',
-                  'transition-all duration-(--transition-fast)',
-                  isActive(href)
-                    ? 'mobile-nav-link-active bg-secondary text-foreground font-semibold'
-                    : 'mobile-nav-link-inactive text-foreground-muted hover:bg-secondary/70 hover:text-foreground font-medium'
-                )}
-                aria-current={isActive(href) ? 'page' : undefined}
-              >
-                {label}
-              </a>
-            ))}
+            <section class="mobile-menu-section">
 
-            {showCta && (
-              <div class="border-border mt-3 border-t pt-3">
-                <Button fullWidth href={ctaHref} target={ctaHref?.startsWith('http') ? '_blank' : undefined}>
-                  {cta.label}
-                </Button>
-              </div>
+              <p class="mobile-menu-label">{t('nav.navigate', locale)}</p>
+              <ul class="space-y-0.5">
+                {navItems.map(({ label, labelKey, href }, idx) => {
+                  const active = isActive(href);
+                  const resolvedHref = localizedPath(href.startsWith('#') && !isLandingPage ? `/${href}` : href, locale);
+                  return (
+                    <li>
+                      <a
+                        href={resolvedHref}
+                        class={cn(
+                          'mobile-menu-row mobile-menu-stagger group flex items-center gap-3 rounded-xl px-3 py-3 text-base transition-colors',
+                          active
+                            ? 'mobile-menu-row-active'
+                            : 'mobile-menu-row-inactive'
+                        )}
+                        style={`--stagger-index: ${idx}`}
+                        aria-current={active ? 'page' : undefined}
+                      >
+                        <span class="mobile-menu-tile">
+                          <Icon name={getNavIcon(href)} size="sm" />
+                        </span>
+                        <span class="flex-1">{t(labelKey ?? label, locale)}</span>
+                        <Icon name="chevron-right" size="sm" class="mobile-menu-chevron" />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+
+            {showLanguageSwitcher && (
+              <section class="mobile-menu-section">
+                <div
+                  class="mobile-menu-stagger flex items-center justify-between rounded-xl px-3 py-2.5"
+                  style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0)}`}
+                >
+                  <span class="text-sm text-foreground-muted">{t('nav.language', locale)}</span>
+                  <LanguageSwitcher />
+                </div>
+              </section>
             )}
 
-            {showThemeSelector && (
-              <div class="border-border mt-3 border-t pt-3">
-                <div class="flex items-center justify-between px-1">
-                  <span class="text-sm text-foreground-muted">Colour theme</span>
-                  <ThemeSelector />
+            {mobileSocialLinks.length > 0 && (
+              <section class="mobile-menu-section">
+                <p class="mobile-menu-label">{t('nav.connect', locale)}</p>
+                <div class="flex flex-wrap items-center gap-2 px-2 pt-1 pb-2">
+                  {mobileSocialLinks.map((url, sIdx) => {
+
+                    const { icon, labelKey } = getSocialIconData(url);
+                    return (
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+
+
+                        aria-label={t(labelKey, locale)}
+                        title={t(labelKey, locale)}
+                        class="mobile-menu-social mobile-menu-stagger inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-foreground-muted transition-colors"
+                        style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0) + (showLanguageSwitcher ? 1 : 0) + sIdx}`}
+                      >
+                        <Icon name={icon} size="md" />
+                      </a>
+                    );
+                  })}
                 </div>
+              </section>
+            )}
+
+            {showCta && (
+              <div
+                class="mobile-menu-stagger mobile-menu-cta-wrap pt-2"
+                style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0) + (showLanguageSwitcher ? 1 : 0) + mobileSocialLinks.length}`}
+              >
+                <Button fullWidth href={ctaHref} target={ctaHref?.startsWith('http') ? '_blank' : undefined}>
+                  {cta.icon && <Icon name={cta.icon} size="sm" />}
+                  {t(cta.label || 'nav.startProject', locale)}
+                  {cta.trailingIcon && <Icon name={cta.trailingIcon} size="sm" />}
+                </Button>
               </div>
             )}
           </div>
@@ -422,12 +478,11 @@ const buttonId = `${menuId}-button`;
   }
 </header>
 
-{/* Mobile Menu Backdrop - positioned outside header to blur page content */}
 {
   showMobileMenu && layout !== 'minimal' && (
     <div
       id={`${menuId}-backdrop`}
-      class="pointer-events-none fixed inset-0 z-40 opacity-0 transition-opacity duration-200 md:hidden"
+      class="pointer-events-none fixed inset-0 z-40 opacity-0 transition-opacity duration-200 lg:hidden"
       aria-hidden="true"
     />
   )
@@ -464,7 +519,6 @@ const buttonId = `${menuId}-button`;
         closeIcon!.classList.remove('hidden');
 
         if (isFloating) {
-          // Force scrolled state + flatten bottom corners
           header.setAttribute('data-scrolled', '');
           header.classList.remove('rounded-2xl');
           header.classList.add('rounded-t-2xl');
@@ -472,13 +526,11 @@ const buttonId = `${menuId}-button`;
           header.classList.add('!bg-background');
         }
 
-        // Fade out and blur the page content
         const mainContent = document.querySelector('main');
         const footer = document.querySelector('footer');
         if (mainContent) mainContent.classList.add('mobile-menu-blur');
         if (footer) footer.classList.add('mobile-menu-blur');
 
-        // Show menu and backdrop with animations
         menu!.classList.remove('hidden', 'animate-menu-up', 'opacity-0', 'scale-y-0');
         menu!.classList.add('animate-menu-down');
         if (backdrop) {
@@ -497,7 +549,6 @@ const buttonId = `${menuId}-button`;
         menuIcon!.classList.remove('hidden');
         closeIcon!.classList.add('hidden');
 
-        // Start closing animation
         menu!.classList.remove('animate-menu-down');
         menu!.classList.add('animate-menu-up');
         if (backdrop) {
@@ -505,13 +556,11 @@ const buttonId = `${menuId}-button`;
           backdrop.classList.add('animate-backdrop-out');
         }
 
-        // Restore page content
         const mainContent = document.querySelector('main');
         const footer = document.querySelector('footer');
         if (mainContent) mainContent.classList.remove('mobile-menu-blur');
         if (footer) footer.classList.remove('mobile-menu-blur');
 
-        // Wait for animation to complete before hiding
         setTimeout(() => {
           menu!.classList.add('hidden', 'opacity-0', 'scale-y-0');
           if (backdrop) {
@@ -519,10 +568,8 @@ const buttonId = `${menuId}-button`;
           }
 
           if (isFloating) {
-            // Restore rounded corners
             header.classList.remove('rounded-t-2xl');
             header.classList.add('rounded-2xl');
-            // Only remove scrolled if actually at top
             if (window.scrollY <= 60) {
               header.removeAttribute('data-scrolled');
             }
@@ -545,19 +592,16 @@ const buttonId = `${menuId}-button`;
 
       button.addEventListener('click', toggle);
 
-      // Close on backdrop click
       if (backdrop) {
         backdrop.addEventListener('click', close);
       }
 
-      // Close on Escape key
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && isOpen) {
           close();
         }
       });
 
-      // Close when clicking on mobile menu links
       menu.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', close);
       });
@@ -570,90 +614,121 @@ const buttonId = `${menuId}-button`;
 </script>
 
 <script>
+  // Header scroll behaviour (scroll-progress bar is driven independently from
+  // BaseLayout). All layout reads are taken before any DOM writes.
+  // `docMaxScrollY` is cached; the first read is deferred to a rAF so it runs
+  // AFTER first paint instead of forcing a synchronous layout before it.
+  // ResizeObserver handles subsequent changes (font swap, image loads, reveal
+  // animations) without re-introducing a critical-path reflow.
   const SCROLL_THRESHOLD = 60;
+  const AUTO_HIDE_THRESHOLD = 150;
   const BAR_SCROLLED_CLASSES = ['bg-background/80', 'backdrop-blur-lg', 'border-b', 'border-border/50'];
 
-  function initScrollWatcher() {
-    const scrollHeaders = document.querySelectorAll<HTMLElement>('header[data-header-shape="floating"], header[data-header-shape="bar"]');
+  let docMaxScrollY = 0;
+  let docMetricsInited = false;
+  function updateDocMaxScrollY() {
+    docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+  }
+  function initDocMetrics() {
+    if (docMetricsInited) return;
+    docMetricsInited = true;
+    window.addEventListener('resize', updateDocMaxScrollY, { passive: true });
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(updateDocMaxScrollY).observe(document.documentElement);
+    }
+  }
+
+  function initScrollDriven() {
+    initDocMetrics();
+
+    const scrollHeaders = document.querySelectorAll<HTMLElement>(
+      'header[data-header-shape="floating"], header[data-header-shape="bar"]'
+    );
+
     scrollHeaders.forEach((header) => {
       if (header.dataset.scrollInit) return;
       header.dataset.scrollInit = 'true';
 
       const isBar = header.dataset.headerShape === 'bar';
+      const isFloating = header.dataset.headerShape === 'floating';
+      const isAutoHide = header.dataset.headerAutoHide !== 'false';
       const isTransparentBar = isBar && header.dataset.headerVariant === 'transparent';
       let ticking = false;
+      let lastScrollY = window.scrollY;
+      let lastShownAtY = 0;
 
       function onScroll() {
         if (ticking) return;
         ticking = true;
 
         requestAnimationFrame(() => {
-          if (window.scrollY > SCROLL_THRESHOLD) {
+          // ── READS (gather everything before touching the DOM) ──
+          const currentScrollY = window.scrollY;
+          const menuId = header.dataset.menuId;
+          const menu = menuId ? document.getElementById(menuId) : null;
+          const menuOpen = menu && !menu.classList.contains('hidden');
+          const wasHidden = header.hasAttribute('data-header-hidden');
+
+          // ── WRITES ──
+          if (currentScrollY > SCROLL_THRESHOLD) {
             header.setAttribute('data-scrolled', '');
             if (isTransparentBar) {
               header.classList.add(...BAR_SCROLLED_CLASSES);
               header.classList.remove('bg-transparent');
             }
           } else {
-            // Don't remove if mobile menu is open
-            const menuId = header.dataset.menuId;
-            const menu = menuId ? document.getElementById(menuId) : null;
-            const menuOpen = menu && !menu.classList.contains('hidden');
             if (!menuOpen) {
               header.removeAttribute('data-scrolled');
+              header.removeAttribute('data-header-hidden');
+              lastShownAtY = 0;
               if (isTransparentBar) {
                 header.classList.remove(...BAR_SCROLLED_CLASSES);
                 header.classList.add('bg-transparent');
               }
             }
           }
+
+          if (isFloating && isAutoHide && !menuOpen) {
+            if (currentScrollY > AUTO_HIDE_THRESHOLD) {
+              if (currentScrollY > lastScrollY) {
+                if (currentScrollY - lastShownAtY >= AUTO_HIDE_THRESHOLD) {
+                  header.setAttribute('data-header-hidden', '');
+                }
+              } else {
+                if (wasHidden) {
+                  lastShownAtY = Math.min(
+                    currentScrollY,
+                    Math.max(0, docMaxScrollY - AUTO_HIDE_THRESHOLD),
+                  );
+                  header.setAttribute('data-header-returned', '');
+                }
+                header.removeAttribute('data-header-hidden');
+              }
+            } else {
+              header.removeAttribute('data-header-hidden');
+              header.removeAttribute('data-header-returned');
+              lastShownAtY = 0;
+            }
+          }
+
+          lastScrollY = currentScrollY;
           ticking = false;
         });
       }
 
       window.addEventListener('scroll', onScroll, { passive: true });
-
-      // Set initial state
-      onScroll();
+      // Defer the first read+write to the next frame so layout reads
+      // happen AFTER the browser has committed initial paint.
+      requestAnimationFrame(() => {
+        updateDocMaxScrollY();
+        onScroll();
+      });
     });
   }
 
-  initScrollWatcher();
-  document.addEventListener('astro:page-load', initScrollWatcher);
-  document.addEventListener('astro:after-swap', initScrollWatcher);
-</script>
-
-<script>
-  function initScrollProgress() {
-    const bar = document.getElementById('scroll-progress-bar');
-    if (!bar) return;
-    if (bar.dataset.progressInit) return;
-    bar.dataset.progressInit = 'true';
-
-    let ticking = false;
-
-    function update() {
-      if (!bar) return;
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      bar!.style.width = `${pct}%`;
-      ticking = false;
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    }, { passive: true });
-
-    update();
-  }
-
-  initScrollProgress();
-  document.addEventListener('astro:page-load', initScrollProgress);
-  document.addEventListener('astro:after-swap', initScrollProgress);
+  initScrollDriven();
+  document.addEventListener('astro:page-load', initScrollDriven);
+  document.addEventListener('astro:after-swap', initScrollDriven);
 </script>
 
 <style is:global>
@@ -663,17 +738,30 @@ const buttonId = `${menuId}-button`;
     transition: opacity 200ms, filter 200ms;
   }
 
-  /* ===== Floating header: scroll state ===== */
+  [data-header-shape="floating"] {
+    transition-property: translate, background, border-color, box-shadow, width, max-width, border-radius, margin-top;
+    transition-duration: 300ms;
+    transition-timing-function: ease;
+  }
+
+  [data-header-shape="floating"][data-header-hidden] {
+    translate: -50% calc(-100% - 1.5rem) !important;
+  }
+
   [data-header-shape="floating"][data-scrolled] {
     background: color-mix(in oklch, var(--color-background) 92%, transparent);
     backdrop-filter: blur(24px);
     border-color: var(--color-border);
-    box-shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.14), 0 2px 8px -2px rgba(0, 0, 0, 0.08);
   }
 
-  /* ===== Floating header: color flip (invert → normal on scroll) ===== */
+  [data-header-shape="floating"] .hdr-inner {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    transition: box-shadow 300ms;
+  }
 
-  /* Text elements: on-invert → foreground */
   [data-header-shape="floating"][data-header-color-scheme="invert"] .hdr-invert-text {
     color: var(--color-on-invert);
     transition: color 300ms;
@@ -682,18 +770,16 @@ const buttonId = `${menuId}-button`;
     color: var(--color-foreground);
   }
 
-  /* Logo text: on-invert → brand-500 */
   [data-header-shape="floating"][data-header-color-scheme="invert"] .hdr-logo-text {
     color: var(--color-on-invert);
     transition: color 300ms;
   }
   [data-header-shape="floating"][data-header-color-scheme="invert"][data-scrolled] .hdr-logo-text {
-    color: var(--color-brand-500);
+    color: var(--color-brand-600);
   }
 
-  /* Non-invert floating: use normal colors */
   [data-header-shape="floating"][data-header-color-scheme="default"] .hdr-logo-text {
-    color: var(--color-brand-500);
+    color: var(--color-brand-600);
   }
   [data-header-shape="floating"][data-header-color-scheme="default"] .hdr-invert-text {
     color: var(--color-foreground-muted);
@@ -703,7 +789,6 @@ const buttonId = `${menuId}-button`;
     color: var(--color-foreground);
   }
 
-  /* ===== Floating nav link underline indicators ===== */
   [data-header-shape="floating"] .nav-link::after {
     content: '';
     position: absolute;
@@ -722,7 +807,6 @@ const buttonId = `${menuId}-button`;
     right: 12px;
   }
 
-  /* ===== CTA: invert color flip ===== */
   [data-header-shape="floating"][data-header-color-scheme="invert"] .hdr-invert-cta {
     background: white;
     color: #111;
@@ -740,14 +824,321 @@ const buttonId = `${menuId}-button`;
     opacity: 0.9;
   }
 
-  /* ===== Reduced motion ===== */
   @media (prefers-reduced-motion: reduce) {
     [data-header-shape="floating"],
+    [data-header-shape="floating"] .hdr-inner,
     [data-header-shape="floating"] .hdr-invert-text,
     [data-header-shape="floating"] .hdr-logo-text,
     [data-header-shape="floating"] .hdr-invert-cta,
     [data-header-shape="floating"] .nav-link::after {
       transition: none !important;
     }
+    [data-header-shape="floating"][data-header-hidden] {
+      translate: -50% calc(-100% - 1.5rem) !important;
+    }
+  }
+
+  .dark [data-header-shape="floating"] {
+    background: color-mix(in oklch, var(--color-background) 65%, transparent);
+    border-color: color-mix(in oklch, var(--color-brand-400) 35%, transparent);
+    box-shadow: none;
+  }
+  .dark [data-header-shape="floating"][data-scrolled] {
+    background: color-mix(in oklch, var(--color-background) 88%, transparent);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 32px rgba(255, 255, 255, 0.07), 0 12px 40px -8px rgba(0, 0, 0, 0.6), 0 2px 8px -2px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Light-mode floating header at rest: dark-glass capsule, mirroring the
+     dark-mode look so it reads cleanly over the home hero's black→brand
+     gradient. A neutral 18% white hairline sits below the badge and pill
+     borders so the header reads as the quiet frame those chips live in. */
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) {
+    background: color-mix(in oklch, var(--surface-invert) 70%, transparent);
+    border-color: color-mix(in oklch, var(--color-on-invert) 18%, transparent);
+    box-shadow: none;
+  }
+  html:not(.dark) [data-header-shape="floating"][data-scrolled] {
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.14), 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+  }
+
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-logo-text {
+    color: oklch(91% 0.008 250);
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-invert-text {
+    color: oklch(68% 0.01 250);
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-invert-text:hover {
+    color: oklch(91% 0.008 250);
+  }
+
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .ttg-wrapper > .ttg-trigger,
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .lang-wrapper .ttg-trigger,
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .pagefind-search-btn,
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .theme-dropdown-wrapper > button {
+    border-color: oklch(58% 0.008 250 / 0.6);
+    color: oklch(68% 0.01 250);
+    box-shadow: none;
+  }
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .ttg-wrapper > .ttg-trigger:hover,
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .lang-wrapper .ttg-trigger:hover,
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .pagefind-search-btn:hover,
+  html:not(.dark) [data-header-shape="floating"]:not([data-scrolled]) .theme-dropdown-wrapper > button:hover {
+    border-color: oklch(58% 0.008 250 / 0.85);
+    background-color: rgb(255 255 255 / 0.06);
+    color: oklch(91% 0.008 250);
+  }
+
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-hamburger,
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-hamburger svg {
+    color: oklch(68% 0.01 250);
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-hamburger:hover,
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-hamburger:hover svg {
+    background-color: rgb(255 255 255 / 0.06);
+    color: oklch(91% 0.008 250);
+  }
+
+  .dark [data-header-shape="floating"] .theme-dropdown-wrapper button,
+  .dark [data-header-shape="floating"] .ttg-wrapper .ttg-trigger,
+  .dark [data-header-shape="floating"] .lang-wrapper .ttg-trigger,
+  .dark [data-header-shape="floating"] .pagefind-search-btn {
+    border-color: var(--color-foreground-subtle);
+  }
+
+  [data-header-shape="floating"][data-header-color-scheme="invert"][data-scrolled] .hdr-logo-text {
+    color: var(--color-brand-600);
+  }
+  .dark [data-header-shape="floating"][data-header-color-scheme="invert"][data-scrolled] .hdr-logo-text {
+    color: var(--color-foreground);
+  }
+  [data-header-shape="floating"][data-header-color-scheme="default"] .hdr-logo-text {
+    color: var(--color-brand-600);
+  }
+  .dark [data-header-shape="floating"][data-header-color-scheme="default"] .hdr-logo-text {
+    color: var(--color-foreground);
+  }
+
+  [data-header-shape="floating"][data-header-color-scheme="default"] .hdr-invert-text {
+    color: var(--color-foreground-muted);
+    transition: color 300ms;
+  }
+  .dark [data-header-shape="floating"][data-header-color-scheme="default"] .hdr-invert-text {
+    color: var(--color-foreground-muted);
+  }
+  [data-header-shape="floating"][data-header-color-scheme="default"] .hdr-invert-text:hover {
+    color: var(--color-foreground);
+  }
+
+  @media (max-width: 1023px) {
+    html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="invert"] .hdr-logo-text {
+      color: var(--color-brand-500);
+    }
+    html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="invert"][data-scrolled] .hdr-logo-text {
+      color: var(--color-brand-500);
+    }
+  }
+
+  /* ===== Returned state: color flip only when header comes back after being hidden ===== */
+
+  /* Dark mode: flip to white capsule */
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 32px rgba(255, 255, 255, 0.12), 0 8px 24px -4px rgba(0, 0, 0, 0.25);
+  }
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .hdr-invert-text {
+    color: oklch(20% 0.005 250);
+    transition: color 300ms;
+  }
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .hdr-invert-text:hover {
+    color: oklch(8% 0 0);
+  }
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .hdr-logo-text {
+    color: var(--color-brand-700);
+  }
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .theme-dropdown-wrapper button,
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .ttg-wrapper .ttg-trigger,
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .lang-wrapper .ttg-trigger,
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .pagefind-search-btn {
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  /* Light mode: flip to dark capsule */
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] {
+    background: oklch(12% 0.005 250 / 0.93);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.45), 0 2px 8px -2px rgba(0, 0, 0, 0.25);
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .hdr-invert-text {
+    color: rgba(255, 255, 255, 0.82);
+    transition: color 300ms;
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .hdr-invert-text:hover {
+    color: rgba(255, 255, 255, 1);
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .hdr-logo-text {
+    color: var(--color-brand-500);
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .theme-dropdown-wrapper button,
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .ttg-wrapper .ttg-trigger,
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .lang-wrapper .ttg-trigger,
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .pagefind-search-btn {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* ===== Returned state: fix button hover backgrounds ===== */
+  /* Dark mode: white header needs light hover, not dark-mode secondary */
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] button.hdr-invert-text:hover,
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .theme-dropdown-wrapper > button:hover,
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .lang-wrapper .ttg-trigger:hover,
+  .dark [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .pagefind-search-btn:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: oklch(8% 0 0);
+  }
+
+  /* Light mode: dark header needs dark hover, not light-mode secondary */
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] button.hdr-invert-text:hover,
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .theme-dropdown-wrapper > button:hover,
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .lang-wrapper .ttg-trigger:hover,
+  html:not(.dark) [data-header-shape="floating"][data-header-returned][data-header-invert-on-return="true"] .pagefind-search-btn:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 1);
+  }
+
+  /* ============================================================
+     Mobile dropdown menu — sectioned layout with icons + socials
+     ============================================================ */
+
+  .mobile-menu-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mobile-menu-section + .mobile-menu-section {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid color-mix(in oklch, var(--color-border) 60%, transparent);
+  }
+
+  .mobile-menu-label {
+    padding: 0.625rem 0.75rem 0.375rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-foreground-subtle);
+  }
+
+  .mobile-menu-row {
+    color: var(--color-foreground-muted);
+  }
+  .mobile-menu-row-inactive:hover {
+    background-color: color-mix(in oklch, var(--color-secondary) 60%, transparent);
+    color: var(--color-foreground);
+  }
+
+  .mobile-menu-row-active {
+    background-color: color-mix(in oklch, var(--color-brand-500) 10%, transparent);
+    color: var(--color-brand-700);
+    font-weight: 600;
+  }
+  html.dark .mobile-menu-row-active {
+    background-color: color-mix(in oklch, var(--color-brand-400) 14%, transparent);
+    color: var(--color-brand-300);
+  }
+
+  .mobile-menu-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    background-color: color-mix(in oklch, var(--color-secondary) 70%, transparent);
+    color: var(--color-foreground-muted);
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+  .mobile-menu-row-inactive:hover .mobile-menu-tile {
+    background-color: var(--color-secondary);
+    color: var(--color-foreground);
+  }
+  .mobile-menu-row-active .mobile-menu-tile {
+    background-color: color-mix(in oklch, var(--color-brand-500) 18%, transparent);
+    color: var(--color-brand-700);
+  }
+  html.dark .mobile-menu-row-active .mobile-menu-tile {
+    background-color: color-mix(in oklch, var(--color-brand-400) 22%, transparent);
+    color: var(--color-brand-300);
+  }
+
+  .mobile-menu-chevron {
+    opacity: 0.4;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+  .mobile-menu-row:hover .mobile-menu-chevron {
+    opacity: 0.8;
+    transform: translateX(2px);
+  }
+  .mobile-menu-row-active .mobile-menu-chevron {
+    opacity: 0.9;
+  }
+
+  .mobile-menu-cta-wrap {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid color-mix(in oklch, var(--color-border) 60%, transparent);
+  }
+
+  .mobile-menu-social {
+    border-color: var(--color-border-strong);
+  }
+  html:not(.dark) .mobile-menu-social:hover {
+    color: var(--color-foreground);
+    border-color: var(--color-border-strong);
+    background-color: color-mix(in oklch, var(--color-secondary) 60%, transparent);
+  }
+  html.dark .mobile-menu-social:hover {
+    color: var(--color-brand-300);
+    border-color: var(--color-brand-400);
+    background-color: color-mix(in oklch, var(--color-brand-400) 12%, transparent);
+  }
+  .mobile-menu-social:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .animate-menu-down .mobile-menu-stagger {
+      opacity: 0;
+      animation: mobileMenuItemIn 340ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      animation-delay: calc(var(--stagger-index, 0) * 38ms + 90ms);
+    }
+  }
+
+  /* End at `transform: none` (not translateY(0)) so each row drops its
+     stacking context after the entry animation. Otherwise the
+     ThemeModeDropdown panel's z-50 is trapped inside its row and the
+     colour-theme swatches in the next row paint through it. */
+  @keyframes mobileMenuItemIn {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* While the theme-mode dropdown is open, promote its row to a positioned
+     stacking context above sibling rows. The row sits in a non-flex
+     <section>, so a bare `z-index` is inert — `position: relative` is what
+     lets the panel paint above the colour-theme swatches below it. */
+  .mobile-menu-stagger:has(.ttg-panel:not(.hidden)) {
+    position: relative;
+    z-index: 60;
   }
 </style>

@@ -1,0 +1,168 @@
+{
+  "siteName": "Fastry",
+  "nav": {
+    "home": "Home",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "selectLanguage": "Select language",
+    "currentLanguage": "Current language",
+    "navigate": "Navigate",
+    "theme": "Theme",
+    "colourTheme": "Colour theme",
+    "language": "Language",
+    "connect": "Connect",
+    "mainNavigation": "Main navigation",
+    "mobileNavigation": "Mobile navigation",
+    "social": {
+      "github": "GitHub",
+      "instagram": "Instagram",
+      "twitter": "X (Twitter)",
+      "linkedin": "LinkedIn",
+      "bluesky": "Bluesky",
+      "youtube": "YouTube"
+    },
+    "startProject": "Start a project",
+    "sections": {
+      "services": "Services",
+      "projects": "Projects",
+      "blog": "Blog",
+      "about": "About",
+      "contact": "Contact"
+    }
+  },
+  "common": {
+    "readMore": "Read more",
+    "loading": "Loading…",
+    "backToTop": "Back to top",
+    "search": "Search",
+    "searchPlaceholder": "Type a keyword...",
+    "searchModalTitle": "Search the site",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "next": "Next",
+    "previous": "Previous",
+    "backToBlog": "Back to blog",
+    "followAlong": "Follow along",
+    "stayInLoop": "Stay in the loop — new articles, thoughts, and updates.",
+    "rssFeed": "RSS Feed",
+    "email": "Email"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Latest articles and updates",
+    "readingTime": "{minutes} min read",
+    "publishedOn": "Published on {date}",
+    "updatedOn": "Updated on {date}",
+    "writtenBy": "Written by {author}",
+    "tagsLabel": "Tags",
+    "featured": "Featured",
+    "draft": "Draft",
+    "noPostsFound": "No posts found.",
+    "tableOfContents": "Table of contents",
+    "shareThisPost": "Share this post",
+    "tag": "Tag",
+    "postsTagged": "{count} posts tagged \"{tag}\".",
+    "allPosts": "All posts",
+    "noPostsForTag": "No posts found for this tag.",
+    "backToAllPosts": "Back to all posts"
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Things I've built",
+    "viewProject": "View project",
+    "viewSource": "View source",
+    "noProjectsFound": "No projects found.",
+    "backToProjects": "Back to projects",
+    "moreProjects": "More projects",
+    "startProject": "Start a project",
+    "allProjects": "All projects",
+    "letsTalk": "Let's talk",
+    "haveProjectInMind": "Have a project in mind?",
+    "projectDescription": "Whether it's a new build or something that needs a fresh perspective — I'd love to hear about it."
+  },
+  "pagination": {
+    "page": "Page {current} of {total}",
+    "previousPage": "Previous page",
+    "nextPage": "Next page"
+  },
+  "errors": {
+    "pageNotFound": "Page not found",
+    "pageNotFoundMessage": "The page you're looking for doesn't exist or has moved.",
+    "goHome": "Go to homepage",
+    "404": {
+      "badge": "404 — page not found",
+      "titlePart": "Page not",
+      "titleHighlight": "found.",
+      "description": "This page has moved, been removed, or never existed in the first place. Let's get you back on track.",
+      "recoveryTitle": "Try one of these instead",
+      "links": {
+        "projects": {
+          "title": "Projects",
+          "description": "Selected work and case studies."
+        },
+        "blog": {
+          "title": "Blog",
+          "description": "Notes on design, code, and the craft."
+        },
+        "contact": {
+          "title": "Contact",
+          "description": "Start a conversation about your project."
+        }
+      },
+      "buttons": {
+        "home": "Back to home",
+        "blog": "Browse the blog"
+      }
+    }
+  },
+  "newsletter": {
+    "heading": "Subscribe to the newsletter",
+    "description": "Get the latest posts in your inbox.",
+    "emailPlaceholder": "your@email.com",
+    "subscribe": "Subscribe",
+    "subscribing": "Subscribing…",
+    "success": "Thanks! Please check your inbox to confirm.",
+    "error": "Something went wrong. Please try again."
+  },
+  "contact": {
+    "heading": "Get in touch",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Theme",
+    "message": "Message",
+    "send": "Submit",
+    "sending": "Sending…",
+    "success": "Thanks! Your message has been sent.",
+    "error": "Something went wrong. Please try again."
+  },
+  "themeNames": {
+    "orange": "Orange",
+    "amber": "Amber",
+    "lime": "Lime",
+    "emerald": "Emerald",
+    "teal": "Teal",
+    "cyan": "Cyan",
+    "sky": "Sky",
+    "blue": "Blue",
+    "indigo": "Indigo",
+    "violet": "Violet",
+    "purple": "Purple",
+    "magenta": "Magenta"
+  },
+  "theme": {
+    "selectTheme": "Select theme",
+    "lightMode": "Light mode",
+    "darkMode": "Dark mode",
+    "systemMode": "System",
+    "currentlyLight": "Currently light",
+    "currentlyDark": "Currently dark",
+    "clickToChange": "Click to change",
+    "colourMode": "Colour mode",
+    "toggleTheme": "Toggle theme"
+  },
+  "footer": {
+    "copyright": "© {year} {name}. All rights reserved.",
+    "builtWith": "Built with Astro Rocket"
+  }
+}

@@ -1,5 +1,5 @@
 ---
-import LandingLayout from '@/layouts/LandingLayout.astro';
+import PageLayout from '@/layouts/PageLayout.astro';
 // Form Components
 import Button from '@/components/ui/form/Button/Button.astro';
 import Input from '@/components/ui/form/Input/Input.astro';
@@ -42,27 +42,15 @@ import SearchInput from '@/components/patterns/SearchInput.astro';
 import PasswordInput from '@/components/patterns/PasswordInput.astro';
 import StatCard from '@/components/patterns/StatCard.astro';
 import EmptyState from '@/components/patterns/EmptyState.astro';
-
-// Component categories for navigation
-const categories = [
-  { id: 'hero', label: 'Hero', icon: 'star' },
-  { id: 'layout', label: 'Layout', icon: 'layout' },
-  { id: 'buttons', label: 'Buttons', icon: 'box' },
-  { id: 'inputs', label: 'Form Inputs', icon: 'terminal' },
-  { id: 'feedback', label: 'Feedback', icon: 'alert-circle' },
-  { id: 'overlays', label: 'Overlays', icon: 'layers' },
-  { id: 'navigation', label: 'Navigation', icon: 'menu' },
-  { id: 'data', label: 'Data Display', icon: 'layers' },
-  { id: 'loading', label: 'Loading', icon: 'loader' },
-  { id: 'toggles', label: 'Toggles', icon: 'toggle-left' },
-  { id: 'patterns', label: 'Patterns', icon: 'layers' },
-];
+// Landing Components
+import StackMarquee from '@/components/landing/StackMarquee.astro';
 ---
 
-<LandingLayout
+<PageLayout
   title="Component Showcase"
   description="Explore Astro Rocket's comprehensive UI component library. Production-ready, accessible, and beautifully designed."
   noindex={true}
+  footerBackground="secondary"
 >
 
   <!-- Hero Section -->
@@ -83,29 +71,14 @@ const categories = [
         Browse Components
         <Icon name="arrow-right" size="sm" />
       </Button>
-      <Button href="https://github.com/hansmartens68/Astro-Rocket" target="_blank" class="hero-btn-learn">
+      <Button href="https://github.com/hansmartensdev/Astro-Rocket" target="_blank" class="hero-btn-learn">
         <Icon name="github" size="sm" />
         View Source
       </Button>
     </Fragment>
   </Hero>
 
-  <!-- Category Navigation -->
-  <nav class="sticky top-16 z-40 bg-background/95 backdrop-blur-md border-y border-border">
-    <div class="mx-auto max-w-6xl px-6">
-      <div class="flex items-center gap-1 py-3 overflow-x-auto scrollbar-hide">
-        {categories.map((cat) => (
-          <a
-            href={`#${cat.id}`}
-            class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground-muted hover:text-foreground hover:bg-secondary rounded-md transition-all whitespace-nowrap group"
-          >
-            <Icon name={cat.icon} size="sm" class="text-foreground-subtle group-hover:text-brand-500 transition-colors" />
-            {cat.label}
-          </a>
-        ))}
-      </div>
-    </div>
-  </nav>
+
 
   <!-- Components Showcase -->
   <div class="mx-auto max-w-6xl px-6 py-20 space-y-32">
@@ -187,6 +160,19 @@ const categories = [
                 <Button size="sm" variant="ghost">Our Story</Button>
               </Fragment>
             </Hero>
+          </div>
+        </div>
+
+        <!-- Stack Marquee (double row) -->
+        <div class="component-showcase">
+          <div class="showcase-header">
+            <span class="showcase-label">Stack Marquee</span>
+            <span class="showcase-hint">Two rows of stack cards scrolling opposite ways — driven by src/content/stack, themed for light &amp; dark</span>
+          </div>
+          <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
+            <div class="w-full py-[var(--space-stack-lg)]">
+              <StackMarquee />
+            </div>
           </div>
         </div>
 
@@ -1007,10 +993,6 @@ const categories = [
               <Badge variant="warning">
                 <Icon name="alert-triangle" size="xs" />
                 Warning
-              </Badge>
-              <Badge variant="error">
-                <Icon name="x-circle" size="xs" />
-                Error
               </Badge>
               <Badge variant="info">
                 <Icon name="info" size="xs" />
@@ -2042,7 +2024,7 @@ const categories = [
       These components are just the beginning. Clone Astro Rocket and start shipping faster.
     </p>
     <Fragment slot="actions">
-      <Button href="https://github.com/hansmartens68/Astro-Rocket" target="_blank" class="hero-btn-brand">
+      <Button href="https://github.com/hansmartensdev/Astro-Rocket" target="_blank" class="hero-btn-brand">
         <Icon name="github" size="sm" />
         Clone Repository
       </Button>
@@ -2052,7 +2034,7 @@ const categories = [
     </Fragment>
   </CTA>
 
-</LandingLayout>
+</PageLayout>
 
 <style>
   /* Showcase card styling */

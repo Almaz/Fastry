@@ -5,6 +5,7 @@
  * The mobile menu still uses the flat ThemeSelector component.
  */
 import { cn } from '@/lib/cn';
+import { t, getLocaleFromPath } from '@/i18n';
 
 interface Props {
   class?: string;
@@ -12,7 +13,11 @@ interface Props {
 
 const { class: className } = Astro.props;
 
-// All 13 themes in Tailwind color order
+const locale = getLocaleFromPath(Astro.url.pathname);
+const colourThemeLabel = t('nav.colourTheme', locale);
+const tn = (id: string) => t(`themeNames.${id}`, locale);
+
+// All 12 themes in Tailwind color order
 const themes = [
   { id: 'orange',  name: 'Orange',  color: 'oklch(62.5% 0.22  38)'  },
   { id: 'amber',   name: 'Amber',   color: 'oklch(68%   0.19  75)'  },
@@ -36,7 +41,8 @@ const themes = [
     id="theme-dropdown-trigger"
     aria-haspopup="true"
     aria-expanded="false"
-    aria-label="Select colour theme"
+
+    aria-label={colourThemeLabel}
     class={cn(
       'inline-flex items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-1.5',
       'text-foreground-muted hover:text-foreground hover:bg-secondary',
@@ -70,29 +76,29 @@ const themes = [
   <div
     id="theme-dropdown-panel"
     role="dialog"
-    aria-label="Colour theme"
+    aria-label={colourThemeLabel}
     class={cn(
       'absolute right-0 top-full mt-2 z-50',
-      'w-52 rounded-xl border border-border bg-background shadow-lg',
+      'w-60 rounded-xl border border-border bg-background shadow-lg',
       'p-2.5',
       'hidden'
     )}
   >
-    <p class="text-xs font-medium text-foreground-muted mb-2.5 px-0.5">Colour theme</p>
-    <div class="grid grid-cols-4 gap-1.5">
+    <p class="text-xs font-medium text-foreground-muted mb-2.5 px-0.5">{colourThemeLabel}</p>
+    <div class="grid grid-cols-4 gap-2">
       {themes.map((theme) => (
         <button
           type="button"
           class="theme-swatch-dd group flex flex-col items-center gap-1 rounded-lg p-1 hover:bg-secondary transition-colors duration-(--transition-fast) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           data-theme-id={theme.id}
-          aria-label={`${theme.name} theme`}
+          aria-label={`${tn(theme.id)} ${t('nav.colourTheme', locale).toLowerCase()}`}
         >
           <span
             class="h-4 w-4 rounded-full block"
             style={`background-color:${theme.color}`}
           />
           <span class="text-[9px] font-medium text-foreground-muted group-hover:text-foreground leading-none">
-            {theme.name}
+            {tn(theme.id)}
           </span>
         </button>
       ))}
@@ -106,7 +112,8 @@ const themes = [
   }
 
   .theme-swatch-dd[data-active] span:first-child {
-    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-brand-500);
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
   }
 
   .theme-swatch-dd[data-active] span:last-child {
@@ -189,16 +196,22 @@ const themes = [
       }
     });
 
-    // Toggle dropdown
+    // Toggle dropdown — close Pill A first so only one panel is ever open.
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = panel.classList.contains('hidden') === false;
-      if (isOpen) {
-        closeDropdown();
-      } else {
+      const willOpen = panel.classList.contains('hidden');
+      // Close Pill A (theme-mode) panels
+      document.querySelectorAll<HTMLElement>('.ttg-panel').forEach((p) => p.classList.add('hidden'));
+      document.querySelectorAll<HTMLButtonElement>('.ttg-trigger').forEach((t) => {
+        t.setAttribute('aria-expanded', 'false');
+        t.querySelector('.ttg-chevron')?.classList.remove('rotate-180');
+      });
+      if (willOpen) {
         panel.classList.remove('hidden');
         trigger.setAttribute('aria-expanded', 'true');
         trigger.querySelector('.theme-chevron')?.classList.add('rotate-180');
+      } else {
+        closeDropdown();
       }
     });
 

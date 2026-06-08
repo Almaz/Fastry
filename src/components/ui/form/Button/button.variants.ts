@@ -2,6 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 export const buttonVariants = cva(
   [
+    'group',
     'inline-flex items-center justify-center gap-2',
     'font-medium rounded-md',
     'transition-all duration-150 ease-out',
@@ -22,7 +23,7 @@ export const buttonVariants = cva(
           'text-foreground-secondary hover:text-foreground hover:bg-secondary active:scale-[0.98]',
         link: 'text-foreground-secondary hover:text-foreground underline-offset-4 hover:underline',
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 active:scale-[0.98]',
+          'btn-destructive bg-destructive text-destructive-foreground hover:bg-destructive/90 active:scale-[0.98]',
       },
       size: {
         sm: 'h-8 px-3 text-xs [&_svg]:h-4 [&_svg]:w-4',

@@ -34,8 +34,6 @@ const {
   includePersonSchema = false,
   includeProfessionalServiceSchema = false,
 } = Astro.props;
-
-const isHomePage = Astro.url.pathname === '/';
 ---
 
 <BaseLayout
@@ -48,22 +46,24 @@ const isHomePage = Astro.url.pathname === '/';
   includeOrgSchema={includeOrgSchema}
   includePersonSchema={includePersonSchema}
   includeProfessionalServiceSchema={includeProfessionalServiceSchema}
+  scrollProgressAtTop={true}
 >
   <Header
     slot="header"
     position="fixed"
     shape="floating"
-    variant="default"
+    variant="transparent"
     colorScheme="default"
     size="lg"
     showCta={false}
-    cta={{ label: 'Get in touch', href: '/contact' }}
+    cta={{ label: 'Astro Rocket', href: 'https://github.com/hansmartensdev/Astro-Rocket', icon: 'rocket', trailingIcon: 'download' }}
     showThemeSelector
-    showScrollProgress={isHomePage}
-    scrollProgressPosition="top"
+    autoHide={false}
+    invertOnReturn={false}
   />
 
   <slot />
 
-  <Footer slot="footer" layout="simple" background="secondary" />
+  <!-- Footer defaults to `background` so it alternates with the secondary CTA above while the marquee is shown; on phones .home-footer reverts it to secondary (see the homepage zebra swap in index.astro) -->
+  <Footer slot="footer" layout="simple" background="default" class="home-footer" />
 </BaseLayout>

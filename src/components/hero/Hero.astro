@@ -2,6 +2,8 @@
 import type { HTMLAttributes } from 'astro/types';
 import { cn } from '@/lib/cn';
 import { heroSectionVariants } from './hero.variants';
+import HeroGrid from '@/components/effects/HeroGrid.astro';
+import HeroBeam from '@/components/effects/HeroBeam.astro';
 
 interface Props extends HTMLAttributes<'section'> {
   /** Layout mode: centered single column or split two-column */
@@ -10,15 +12,32 @@ interface Props extends HTMLAttributes<'section'> {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Show background grid pattern */
   showGrid?: boolean;
-  /** Apply the dark-mode hero gradient (black → brand). Homepage only. */
-  gradient?: boolean;
+  /** Show brand-coloured radial glow blobs behind the content */
+  showGlow?: boolean;
+  /** Show decorative gradient blob */
+  showBlob?: boolean;
+  /** Render the light-mode architectural grid + dark-mode halo behind the hero */
+  showHeroHalo?: boolean;
+  /** Blob position (only applies when showBlob is true) */
+  blobPosition?: 'left' | 'right' | 'center';
+  /** Fade the bottom of the section into the next section's background */
+  bottomFade?: boolean;
+  /** Stretch the section to fill at least the full viewport height (min-h-[100dvh]) */
+  fullHeight?: boolean;
+  /** Show animated scroll indicator at the bottom of the hero */
+  showScrollIndicator?: boolean;
 }
 
 const {
   layout = 'centered',
   size = 'lg',
   showGrid = false,
-  gradient = false,
+  showBlob = false,
+  blobPosition: _blobPosition = 'center',
+  showGlow = false,
+  showHeroHalo = false,
+  bottomFade = false,
+  fullHeight = false,
   class: className,
   ...attrs
 } = Astro.props;
@@ -34,7 +53,7 @@ const hasAsideSlot = Astro.slots.has('aside');
 const alignment = layout === 'centered' ? 'text-center items-center' : 'text-left items-start';
 
 // Compute classes
-const sectionClasses = cn(heroSectionVariants({ size }), gradient && 'hero-dark-gradient', className);
+const sectionClasses = cn(heroSectionVariants({ size }), fullHeight && 'min-h-[100dvh]', className);
 
 const contentClasses = cn(
   'z-10 flex flex-col',
@@ -42,24 +61,52 @@ const contentClasses = cn(
 );
 
 const gridClasses = cn(
-  'mx-auto grid max-w-6xl grid-cols-1 items-center gap-[var(--space-section-gap)] px-6',
+  'relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center gap-[var(--space-section-gap)] px-6',
   layout === 'split' && 'lg:grid-cols-2 lg:gap-[var(--space-section-gap)]'
 );
 ---
 
 <section class={sectionClasses} {...attrs}>
+  {showHeroHalo && <HeroGrid />}
+  {showHeroHalo && <HeroBeam />}
+
   {showGrid && (
     <div
-      class="bg-grid-pattern pointer-events-none absolute inset-x-0 -inset-y-[20%] opacity-30"
-      style="mask-image: radial-gradient(ellipse 50% 50% at 50% 40%, black 0%, transparent 70%);"
-      data-parallax="0.2"
+      class="bg-grid-pattern pointer-events-none absolute inset-x-0 -inset-y-[20%] opacity-30 hidden md:dark:block"
+      style="mask-image: radial-gradient(ellipse 50% 50% at 50% 40%, black 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 40%, black 0%, transparent 70%);"
       aria-hidden="true"
     />
   )}
 
+  {showGlow && (
+    <>
+      <div class="pointer-events-none absolute left-1/2 top-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-500/15 blur-[120px] hidden dark:block" aria-hidden="true" />
+      <div class="pointer-events-none absolute bottom-1/4 right-1/4 h-[400px] w-[400px] rounded-full bg-brand-600/10 blur-[100px] hidden dark:block" aria-hidden="true" />
+    </>
+  )}
+
+  {showBlob && (
+    <>
+      <div
+        class="pointer-events-none absolute hidden dark:block dark:opacity-[0.20] rounded-full blur-[120px] h-[500px] w-[500px] -left-20 top-0 -translate-y-1/4"
+        style="background: radial-gradient(ellipse at center, var(--color-brand-400) 0%, transparent 70%);"
+        aria-hidden="true"
+      />
+      <div
+        class="pointer-events-none absolute hidden dark:block dark:opacity-[0.20] rounded-full blur-[120px] h-[500px] w-[500px] -right-20 top-0 -translate-y-1/4"
+        style="background: radial-gradient(ellipse at center, var(--color-brand-400) 0%, transparent 70%);"
+        aria-hidden="true"
+      />
+    </>
+  )}
+
+  {bottomFade && (
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background-secondary hidden dark:block" aria-hidden="true" />
+  )}
+
   <div class={gridClasses}>
     {/* Content Column */}
-    <div class={cn(contentClasses, 'order-1 lg:order-none animate-hero-slide-up')}>
+    <div class={cn(contentClasses, 'order-1 lg:order-none animate-hero-stagger')}>
       {/* Badge Slot */}
       {hasBadgeSlot && (
         <div class="mb-[var(--space-heading-gap)]">
@@ -70,7 +117,7 @@ const gridClasses = cn(
       {/* Title Slot */}
       {hasTitleSlot && (
         <div class={cn(
-          'hero-title-slot mb-[var(--space-heading-gap)]',
+          'hero-title-slot hero-lcp-title mb-[var(--space-heading-gap)]',
           '[&>h1]:font-display [&>h1]:text-5xl [&>h1]:leading-[1.1] [&>h1]:font-bold [&>h1]:tracking-tight [&>h1]:text-balance [&>h1]:text-foreground md:[&>h1]:text-6xl lg:[&>h1]:text-7xl',
           '[&>h2]:font-display [&>h2]:text-4xl [&>h2]:leading-[1.1] [&>h2]:font-bold [&>h2]:tracking-tight [&>h2]:text-balance [&>h2]:text-foreground md:[&>h2]:text-5xl lg:[&>h2]:text-6xl'
         )}>
@@ -111,37 +158,3 @@ const gridClasses = cn(
     )}
   </div>
 </section>
-
-
-<script>
-  // Parallax: move [data-parallax] layers at a fraction of scroll speed.
-  // Elements with -inset-y-[20%] have extra room to move without clipping.
-  // Skipped entirely when the user prefers reduced motion.
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const layers = document.querySelectorAll<HTMLElement>('[data-parallax]');
-
-    function applyParallax() {
-      layers.forEach((el) => {
-        const section = el.closest('section');
-        if (!section) return;
-
-        const rect = section.getBoundingClientRect();
-        // Skip sections fully outside the viewport
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-
-        const speed = parseFloat(el.dataset.parallax ?? '0.3');
-        // Offset relative to how far the section top is from the viewport top
-        const offset = -rect.top * speed;
-        el.style.transform = `translateY(${offset.toFixed(2)}px)`;
-      });
-    }
-
-    window.addEventListener('scroll', applyParallax, { passive: true });
-    applyParallax();
-
-    // Clean up the listener when navigating away to prevent accumulation
-    document.addEventListener('astro:before-swap', () => {
-      window.removeEventListener('scroll', applyParallax);
-    }, { once: true });
-  }
-</script>

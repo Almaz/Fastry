@@ -57,6 +57,7 @@ const isSimpleIcon = resolvedName.startsWith('simple-icons:');
   name={resolvedName}
   class={cn(sizes[size], 'shrink-0', className)}
   aria-hidden="true"
+  data-icon={name}
   stroke-width={isSimpleIcon ? undefined : strokeWidth}
   {...attrs}
 />

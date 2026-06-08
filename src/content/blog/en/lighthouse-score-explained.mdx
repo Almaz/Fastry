@@ -1,0 +1,98 @@
+---
+title: "What the Lighthouse Score Actually Means — and Why This Site Hits 100"
+description: "A plain-language guide to the Google Lighthouse report: what the four scores measure, how to run one yourself, and what 100/100/100/100 says about a modern Astro site."
+publishedAt: 2026-05-15
+author: "Almaz"
+tags: ["lighthouse", "performance", "accessibility", "seo", "web-vitals"]
+locale: en
+featured: false
+image: "../../../assets/blog/lighthouse-score-explained.svg"
+svgSlug: "lighthouse-score-explained"
+---
+
+If you've scrolled my homepage you've seen the four big numbers under "Lighthouse report." Four times 100. The same four numbers show up on the Almaz project page and the Astro Rocket project page. This post explains what those numbers actually are, where they come from, and why they matter for a website you're thinking of hiring me to build.
+
+## What is a Lighthouse score?
+
+Lighthouse is an automated website auditing tool built by Google. It loads a page in a controlled environment, simulates a real visitor, and then grades the page on four separate dimensions — each scored from 0 to 100:
+
+- **Performance** — how fast the page loads and becomes usable
+- **Accessibility** — how well the page works for visitors with disabilities or assistive technology
+- **Best Practices** — how cleanly and securely the page is built
+- **SEO** — how easily search engines can read and index the page
+
+The tool ships inside Chrome's DevTools, but you don't need to install anything to run it. Google hosts a free public version at [pagespeed.web.dev](https://pagespeed.web.dev) — paste any URL and you get a full report in about thirty seconds, with both a mobile and a desktop score for that page.
+
+## Why four scores instead of one
+
+A site can be lightning-fast and still be unusable to a screen reader. It can be perfectly accessible and still leak mixed-content warnings. It can pass every best-practice check and still be invisible to Google because the meta description is missing. The four categories exist because "good website" isn't a single thing — it's a stack of separate concerns, and Lighthouse measures each one independently so you can see which part is dragging the rest down.
+
+### Performance
+
+Performance is the heaviest category and the hardest to keep at 100. It's calculated from a handful of real, measured timings: how long until the visitor sees something on screen, how long until they can interact with it, and how stable the layout is while it loads (so a button doesn't shift right as you go to tap it). These are the same Core Web Vitals that Google uses as a ranking signal in search.
+
+A page that ships a megabyte of JavaScript will not score 100. A page that loads correctly-sized images, sends only the JavaScript it actually needs, and doesn't block rendering on third-party scripts has a chance.
+
+### Accessibility
+
+Accessibility is scored against a checklist of automated WCAG checks: text contrast, alt attributes on images, keyboard focus states, ARIA labels on icon-only buttons, semantic landmarks like `<main>` and `<nav>`. The audit cannot catch every accessibility issue — some checks genuinely require a human — but if a site fails the automated ones, it almost certainly fails the manual ones too. A 100 here is the floor, not the ceiling.
+
+### Best Practices
+
+Best Practices catches the things you really should not be doing in 2026: serving pages over HTTP instead of HTTPS, using deprecated browser APIs, leaking errors to the console, embedding third-party iframes without the right sandbox attributes. It's the "is anything obviously wrong?" category, and it's the easiest of the four to keep at 100 if you start clean.
+
+### SEO
+
+SEO in Lighthouse is the technical layer of search optimisation, not the content layer — it can't tell you whether your post will rank, but it can tell you whether Google will be able to read it at all. The audit checks for a `<title>`, a meta description, a sensible canonical URL, indexable robots directives, valid hreflang if you're multilingual, tap targets that aren't crammed too close together on mobile, and so on. Get those right and you have a foundation. Skip them and even great content struggles.
+
+## How to run a report yourself
+
+Three options, in increasing order of friction:
+
+1. **[pagespeed.web.dev](https://pagespeed.web.dev)** — paste a URL, hit Analyse, read the report. No install, runs against Google's servers, gives you both mobile and desktop in one go. This is the easiest way to verify any number I'm about to quote.
+2. **Chrome DevTools** — open any page, press F12, click the Lighthouse tab, choose Mobile or Desktop, click Analyse. Runs locally in your browser.
+3. **The Lighthouse CLI** — `npx lighthouse https://example.com --view` if you want to script it into a CI pipeline.
+
+All three use the same audit engine. The score should match within a point or two between runs, with small variation coming from network conditions and CPU throttling.
+
+## What this site scores
+
+This site currently scores **100 / 100 / 100 / 100** on both desktop and mobile. Performance, Accessibility, Best Practices, SEO — perfect on every device profile, with no category dropping a point. That includes the simulated CPU throttling Lighthouse applies to mid-range mobile devices, which is the run that usually catches sites out.
+
+For a visitor, that means a few specific things in practice:
+
+- The first paragraph of any page is on screen well under a second on a normal connection.
+- The page is fully readable and tappable before any animation, font swap, or third-party widget has a chance to interfere.
+- A screen reader can navigate the site without hitting an unlabelled button, an empty link, or a missing heading level.
+- Search engines see a complete `<title>`, a real meta description, structured data, and a canonical URL on every page.
+
+The score isn't a tuned benchmark page either. It's the live site, with the hero animation, the typing effect, the dark/light theme switcher, the LetterGlitch CTA, the scroll-progress ring, the cursor trail on desktop, the share buttons on every post — everything you can interact with is included in the audit.
+
+## What Astro Rocket scores
+
+The Astro Rocket theme demo at astrorocket.dev clears the same bar: 100 / 100 / 100 / 100 on both desktop and mobile. A perfect score in every category, on every device profile. That matters because Astro Rocket is a free, MIT-licensed starter template for other developers and designers — they're not downloading a stripped-down landing page, they're getting a real production-quality site that ships at 100 the moment they deploy it.
+
+If you build on Astro Rocket and you don't bolt on a 500 KB analytics script or a hero video that autoplays at full resolution, the score stays where it is. That's the whole point of starting from a template that scores 100 — you have headroom to add the things your project genuinely needs without watching the number slide.
+
+## Why I treat 100 as a constraint
+
+Every new feature on this site goes through one extra check before it ships: what does it cost in Lighthouse? Most features cost nothing. Some cost a point or two. A few cost more, and those are the ones I either rebuild differently or leave out entirely.
+
+The mobile LetterGlitch animation in the CTA is the clearest example. On desktop it runs and looks great. On mobile, the canvas animation costs about two Performance points on the Lighthouse mobile run — exactly the difference between 100 and 98 — so it's disabled below a certain viewport width and a static glass-card variant takes its place. The visitor still gets a polished CTA — they just don't get a frame-rate-heavy canvas effect on a phone where the cost outweighs the benefit. That's the kind of trade-off the score forces you to think about, and it's the reason the mobile Performance number stays at 100.
+
+## Why your run might look slightly different
+
+If you run the report yourself and see 98 instead of 100 on mobile Performance, that's not a contradiction — it's how the tool works. Lighthouse simulates a mid-range phone with throttled CPU and network on top of a real cold-cache page load, and small run-to-run variation is part of the design. Performance typically moves by one to three points between runs depending on Google's lab load, network jitter, and whether the page is being fetched cold or warm. Accessibility, Best Practices, and SEO are deterministic checks and basically never move.
+
+Two practical notes if your numbers look off:
+
+- **Use pagespeed.web.dev, not your local Chrome.** Running Lighthouse in your own browser with ad blockers, password managers, or React DevTools installed can tank Performance by ten or more points — the extensions inject scripts into every page they audit. pagespeed.web.dev runs in a clean lab environment, which is the apples-to-apples comparison.
+- **Run it twice.** The first run is always cold-cache; a second run a moment later usually settles on the steady-state number. If both runs land within a couple of points of each other on Performance, that's the real score.
+
+The numbers I quote in this post are the ones both live sites consistently produce on pagespeed.web.dev. Your run may land a point or two off on mobile Performance from time to time — that's expected, and it doesn't change the picture.
+
+## The bottom line
+
+A perfect Lighthouse score isn't a trophy — it's a signal. It tells a visitor that the site they're about to use is fast, that it works on assistive tech, that it's built cleanly, and that search engines can find it. For a designer-developer's portfolio and for a free, MIT-licensed starter template I share with other builders, "100 across the board" is the bar I work to. This site and the Astro Rocket demo both clear it today, and every change I make to either site is weighed against keeping it that way.
+
+Want to verify any of this yourself? Drop any URL into [pagespeed.web.dev](https://pagespeed.web.dev) and run the report. Thirty seconds, no sign-up.

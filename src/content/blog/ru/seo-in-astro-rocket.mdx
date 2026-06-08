@@ -1,0 +1,103 @@
+---
+title: "SEO в Astro Rocket — метатеги, Open Graph, JSON-LD, карта сайта и Twitter-карточки"
+description: "Как Astro Rocket управляет SEO: автоматические метатеги, Open Graph изображения, JSON-LD схемы, карта сайта, robots.txt, Twitter-карточки и больше."
+publishedAt: 2026-04-20
+author: "Almaz"
+tags: ["astro-rocket", "seo", "метатеги", "open-graph", "json-ld"]
+featured: false
+locale: ru
+image: "../../../assets/blog/seo-in-astro-rocket.svg"
+svgSlug: "seo-in-astro-rocket"
+imageAlt: "SEO-элементы, расположенные вокруг значка поиска"
+---
+
+Astro Rocket включает комплексную SEO-систему "из коробки". В этом посте рассматривается каждый элемент — от метатегов и Open Graph до JSON-LD структурированных данных и карты сайта.
+
+## Метатеги
+
+Каждая страница автоматически получает правильные метатеги через SEO-компонент в `<BaseLayout>`:
+
+```html
+<meta name="description" content="..." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://yoursite.com/page" />
+```
+
+### Управление noindex/nofollow
+
+Любой макет страницы принимает пропсы `noindex` и `nofollow`:
+
+```astro
+<PageLayout noindex={true} nofollow={false}>
+  <!-- Содержимое страницы благодарности -->
+</PageLayout>
+```
+
+Используйте `noindex` на страницах, которые не должны появляться в результатах поиска.
+
+## Open Graph
+
+Open Graph теги генерируются автоматически на основе конфигурации страницы:
+
+```html
+<meta property="og:title" content="Заголовок страницы" />
+<meta property="og:description" content="Описание страницы" />
+<meta property="og:image" content="https://yoursite.com/og-image.svg" />
+<meta property="og:url" content="https://yoursite.com/page" />
+<meta property="og:type" content="website" />
+```
+
+Изображение Open Graph по умолчанию настраивается в `site.config.ts`:
+
+```ts
+ogImage: '/og-default.svg',
+```
+
+Отдельные страницы могут переопределить изображение через пропс `ogImage`.
+
+## JSON-LD Структурированные данные
+
+Главная страница может включать несколько JSON-LD схем:
+
+- **Person** — имя, должность, email, социальные профили, фото автора
+- **Organization** — название, URL, логотип, контактный email
+- **ProfessionalService** — добавляет адрес, часы работы, обслуживаемую территорию
+
+Включение управляется пропсами в `src/pages/index.astro`:
+
+```astro
+<LandingLayout
+  includePersonSchema={true}
+  includeOrgSchema={false}
+  includeProfessionalServiceSchema={true}
+>
+```
+
+Каждый пост в блоге автоматически получает схему `BlogPosting`.
+
+## Карта сайта
+
+Astro Rocket использует интеграцию `@astrojs/sitemap`. Карта сайта генерируется автоматически и включает все страницы. В многоязычном режиме карта сайта включает URL всех языковых версий.
+
+## Twitter-карточки
+
+Twitter-карточки (теперь X) настраиваются в `site.config.ts`:
+
+```ts
+twitter: {
+  site: 'https://x.com/hansmartens_dev',
+  creator: '@hansmartens_dev',
+},
+```
+
+Это генерирует теги `twitter:site` и `twitter:creator`.
+
+## favicon.svg и манифест
+
+Фавикон автоматически генерируется из первой буквы имени сайта и активного брендового цвета. Web-манифест настраивается в `src/pages/manifest.webmanifest.ts`.
+
+## robots.txt
+
+Файл `robots.txt` генерируется динамически в `src/pages/robots.txt.ts` и включает правильные директивы.
+
+Полный аудит Lighthouse SEO должен показывать 100/100 без дополнительной настройки.

@@ -2,6 +2,14 @@
  * Format a date for display
  */
 export function formatDate(date: Date, locale = 'en-US'): string {
+  // Russian: use DD.MM.YYYY format
+  if (locale.startsWith('ru')) {
+    return new Intl.DateTimeFormat('ru-RU', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(date);
+  }
   return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',

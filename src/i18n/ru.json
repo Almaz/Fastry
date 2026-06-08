@@ -1,0 +1,168 @@
+{
+  "siteName": "Фастри",
+  "nav": {
+    "home": "Главная",
+    "skipToContent": "Перейти к содержимому",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню",
+    "selectLanguage": "Выбрать язык",
+    "currentLanguage": "Текущий язык",
+    "navigate": "Навигация",
+    "theme": "Тема",
+    "colourTheme": "Цветовая тема",
+    "language": "Язык",
+    "connect": "Контакты",
+    "mainNavigation": "Основная навигация",
+    "mobileNavigation": "Мобильная навигация",
+    "social": {
+      "github": "GitHub",
+      "instagram": "Instagram",
+      "twitter": "X (Twitter)",
+      "linkedin": "LinkedIn",
+      "bluesky": "Bluesky",
+      "youtube": "YouTube"
+    },
+    "startProject": "Начать проект",
+    "sections": {
+      "services": "Услуги",
+      "projects": "Проекты",
+      "blog": "Блог",
+      "about": "Обо мне",
+      "contact": "Контакты"
+    }
+  },
+  "common": {
+    "readMore": "Читать далее",
+    "loading": "Загрузка…",
+    "backToTop": "Наверх",
+    "search": "Поиск",
+    "searchPlaceholder": "Введите ключ...",
+    "searchModalTitle": "Поиск по сайту",
+    "submit": "Отправить",
+    "cancel": "Отмена",
+    "next": "Далее",
+    "previous": "Назад",
+    "backToBlog": "Назад к блогу",
+    "followAlong": "Подписывайтесь",
+    "stayInLoop": "Будьте в курсе — новые статьи, мысли и обновления.",
+    "rssFeed": "RSS лента",
+    "email": "Почта"
+  },
+  "blog": {
+    "title": "Блог",
+    "description": "Свежие статьи и обновления",
+    "readingTime": "{minutes} мин. чтения",
+    "publishedOn": "Опубликовано {date}",
+    "updatedOn": "Обновлено {date}",
+    "writtenBy": "Автор: {author}",
+    "tagsLabel": "Теги",
+    "featured": "Рекомендуемое",
+    "draft": "Черновик",
+    "noPostsFound": "Записей не найдено.",
+    "tableOfContents": "Содержание",
+    "shareThisPost": "Поделиться записью",
+    "tag": "Метка",
+    "postsTagged": "{count} записей с меткой «{tag}».",
+    "allPosts": "Все записи",
+    "noPostsForTag": "Нет записей с этой меткой.",
+    "backToAllPosts": "Назад ко всем записям"
+  },
+  "projects": {
+    "title": "Проекты",
+    "description": "Что я создал",
+    "viewProject": "Посмотреть проект",
+    "viewSource": "Исходный код",
+    "noProjectsFound": "Проектов не найдено.",
+    "backToProjects": "Назад к проектам",
+    "moreProjects": "Другие проекты",
+    "startProject": "Начать проект",
+    "allProjects": "Все проекты",
+    "letsTalk": "Давайте обсудим",
+    "haveProjectInMind": "Есть проект?",
+    "projectDescription": "Новый проект или свежий взгляд на существующий — я готов обсудить."
+  },
+  "pagination": {
+    "page": "Страница {current} из {total}",
+    "previousPage": "Предыдущая страница",
+    "nextPage": "Следующая страница"
+  },
+  "errors": {
+    "pageNotFound": "Страница не найдена",
+    "pageNotFoundMessage": "Страница, которую вы ищете, не существует или была перемещена.",
+    "goHome": "Перейти на главную",
+    "404": {
+      "badge": "404 — страница не найдена",
+      "titlePart": "Страница не",
+      "titleHighlight": "найдена.",
+      "description": "Эта страница была перемещена, удалена или никогда не существовала. Давайте вернём вас на правильный путь.",
+      "recoveryTitle": "Попробуйте один из этих разделов",
+      "links": {
+        "projects": {
+          "title": "Проекты",
+          "description": "Избранные работы и кейсы."
+        },
+        "blog": {
+          "title": "Блог",
+          "description": "Заметки о дизайне, коде и мастерстве."
+        },
+        "contact": {
+          "title": "Контакты",
+          "description": "Начните разговор о вашем проекте."
+        }
+      },
+      "buttons": {
+        "home": "На главную",
+        "blog": "Перейти в блог"
+      }
+    }
+  },
+  "newsletter": {
+    "heading": "Подпишитесь на рассылку",
+    "description": "Получайте новые статьи на почту.",
+    "emailPlaceholder": "vash@email.ru",
+    "subscribe": "Подписаться",
+    "subscribing": "Подписка…",
+    "success": "Спасибо! Проверьте почту, чтобы подтвердить подписку.",
+    "error": "Что-то пошло не так. Попробуйте снова."
+  },
+  "contact": {
+    "heading": "Свяжитесь со мной",
+    "name": "Имя",
+    "email": "Email",
+    "subject": "Тема",
+    "message": "Сообщение",
+    "send": "Отправить",
+    "sending": "Отправка…",
+    "success": "Спасибо! Ваше сообщение отправлено.",
+    "error": "Что-то пошло не так. Попробуйте снова."
+  },
+  "themeNames": {
+    "orange": "Оранжевый",
+    "amber": "Янтарный",
+    "lime": "Лаймовый",
+    "emerald": "Изумрудный",
+    "teal": "Бирюзовый",
+    "cyan": "Циан",
+    "sky": "Небесный",
+    "blue": "Синий",
+    "indigo": "Индиго",
+    "violet": "Фиолетовый",
+    "purple": "Пурпурный",
+    "magenta": "Маджента"
+  },
+  "theme": {
+    "selectTheme": "Выберите тему",
+    "lightMode": "Светлая тема",
+    "darkMode": "Тёмная тема",
+    "systemMode": "Системная",
+    "currentlyLight": "Сейчас светлая",
+    "currentlyDark": "Сейчас тёмная",
+    "clickToChange": "Нажмите для смены",
+    "colourMode": "Цветовой режим",
+    "toggleTheme": "Сменить тему"
+  },
+  "footer": {
+    "copyright": "{siteName} © {year}",
+    "builtWith": "Создано с помощью Astro Rocket"
+  }
+}

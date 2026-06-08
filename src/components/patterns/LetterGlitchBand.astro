@@ -1,0 +1,27 @@
+---
+import LetterGlitch from '@/components/effects/LetterGlitch';
+
+interface Props {
+  maxWidth?: '6xl' | '7xl';
+  locale?: string;
+}
+
+const { maxWidth = '6xl', locale = 'en' } = Astro.props;
+
+const maxWidthClass = maxWidth === '7xl' ? 'max-w-7xl' : 'max-w-6xl';
+---
+
+<div class:list={['hidden glitch:block mx-auto px-6', maxWidthClass]}>
+  <div class="relative isolate">
+    <div class="relative overflow-hidden rounded-lg border border-brand-500/30 bg-background ring-1 ring-brand-500/20">
+      <div class="absolute inset-0" aria-hidden="true">
+        <LetterGlitch client:visible outerVignette locale={locale} />
+      </div>
+      <div class="relative z-10 px-6 py-16 sm:py-24" data-reveal>
+        <div class="mx-auto max-w-2xl rounded-lg border border-brand-500/30 bg-background/85 px-6 py-10 sm:px-10 text-center shadow-xl backdrop-blur-md">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

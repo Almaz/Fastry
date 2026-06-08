@@ -39,14 +39,19 @@ const relatedPosts = allPosts
 // Generate URLs for each post (remove locale prefix from id)
 const getPostUrl = (postId: string) => {
   const slug = postId.replace(`${locale}/`, '');
-  return `/blog/${slug}`;
+  if (locale === 'en') {
+    return `/blog/${slug}`;
+  }
+  return `/${locale}/blog/${slug}`;
 };
+
+const relatedTitle = locale === 'ru' ? 'Похожие записи' : 'Related Posts';
 ---
 
 {relatedPosts.length > 0 && (
   <section class="border-t border-border py-[var(--space-section-sm)]">
-    <h2 class="font-display text-2xl font-bold text-foreground mb-[var(--space-stack-lg)]">
-      Related Posts
+    <h2 class="font-display text-2xl font-bold text-foreground mb-[var(--space-stack-lg)] text-center">
+      {relatedTitle}
     </h2>
 
     <div class="grid gap-[var(--space-stack-lg)] md:grid-cols-2 lg:grid-cols-3">

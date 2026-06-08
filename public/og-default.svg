@@ -1,6 +1,6 @@
 <svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="1200" height="630" fill="#2563eb"/>
+  <rect width="1200" height="630" fill="#3b82f6"/>
 
   <!-- Lucide Rocket — scale(5), visual centre at (600, 240) -->
   <g transform="translate(540, 180) scale(5)"
@@ -18,18 +18,18 @@
         font-weight="800">Astro Rocket</text>
 
   <!-- Divider -->
-  <line x1="380" y1="436" x2="820" y2="436" stroke="#60a5fa" stroke-width="1" stroke-opacity="0.35"/>
+  <line x1="380" y1="436" x2="820" y2="436" stroke="#93c5fd" stroke-width="1" stroke-opacity="0.35"/>
 
   <!-- Domain pill -->
   <rect x="450" y="464" width="300" height="38" rx="19"
-        fill="#3b82f6" fill-opacity="0.25" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1"/>
+        fill="#60a5fa" fill-opacity="0.25" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1"/>
   <text x="600" y="488" font-size="13" text-anchor="middle" letter-spacing="1.5"
         fill="#dbeafe"
         font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">hansmartens.dev</text>
 
   <!-- Corner marks -->
-  <path d="M 36 60 L 36 36 L 60 36"     stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
-  <path d="M 1140 36 L 1164 36 L 1164 60"   stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
-  <path d="M 36 570 L 36 594 L 60 594"   stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
-  <path d="M 1140 594 L 1164 594 L 1164 570" stroke="#60a5fa" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 36 60 L 36 36 L 60 36"     stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 1140 36 L 1164 36 L 1164 60"   stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 36 570 L 36 594 L 60 594"   stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
+  <path d="M 1140 594 L 1164 594 L 1164 570" stroke="#93c5fd" stroke-width="1.5" fill="none" stroke-opacity="0.45"/>
 </svg>

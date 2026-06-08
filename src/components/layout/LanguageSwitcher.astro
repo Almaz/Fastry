@@ -1,0 +1,263 @@
+---
+/**
+ * LanguageSwitcher
+ *
+ * Pill dropdown that lists every configured locale and links to the
+ * "same page, other language" URL for each. The default locale lives
+ * at the site root (no prefix); additional locales live under `/<locale>/`.
+ *
+ * Renders nothing when i18n is disabled or only one locale is
+ * configured, so it has zero cost on single-locale sites.
+ *
+ * Styled identically to ThemeModeDropdown (ttg-wrapper / ttg-trigger / ttg-row).
+ */
+import { cn } from '@/lib/cn';
+import {
+  isEnabled as i18nIsEnabled,
+  getLocales,
+  getLocaleName,
+  getLocaleFromPath,
+  swapLocaleInPath,
+  t,
+} from '@/i18n';
+
+interface Props {
+  class?: string;
+  /** Render compact (icon-only trigger). Defaults to false. */
+  compact?: boolean;
+}
+
+const { class: className, compact = false } = Astro.props;
+
+const enabled = i18nIsEnabled();
+const currentPath = Astro.url.pathname;
+const currentLocale = getLocaleFromPath(currentPath);
+const locales = enabled ? getLocales() : [];
+
+const triggerLabel = t('nav.selectLanguage', currentLocale);
+const currentLanguageLabel = t('nav.currentLanguage', currentLocale);
+---
+
+{
+  enabled && (
+    <div class={cn('relative lang-wrapper', className)}>
+      <!-- Trigger pill (identical to ttg-trigger) -->
+      <button
+        type="button"
+        class={cn(
+          'ttg-trigger inline-flex items-center gap-1.5 rounded-full border border-border-strong px-2.5 py-1.5',
+          'text-foreground-muted hover:text-foreground hover:bg-secondary',
+          'transition-colors duration-(--transition-fast)',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+        )}
+        aria-haspopup="menu"
+        aria-expanded="false"
+        aria-label={`${currentLanguageLabel}: ${getLocaleName(currentLocale)}. ${triggerLabel}.`}
+      >
+        <!-- Globe icon -->
+        <svg
+          class="h-4 w-4"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="9" />
+          <path stroke-linecap="round" d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18" />
+        </svg>
+        {!compact && (
+          <span class="text-xs font-semibold uppercase tracking-wide">{currentLocale}</span>
+        )}
+        <!-- Chevron (identical to ttg-chevron) -->
+        <svg
+          class="lang-chevron h-3 w-3 flex-shrink-0 transition-transform duration-200"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+
+      <!-- Dropdown panel (identical to ttg-panel) -->
+      <div
+        class={cn(
+          'lang-panel absolute right-0 top-full mt-2 z-50',
+          'w-56 rounded-xl border border-border bg-background shadow-lg',
+          'p-1.5 hidden'
+        )}
+        role="menu"
+        aria-label={triggerLabel}
+      >
+        {locales.map((locale) => {
+          const href = swapLocaleInPath(currentPath, locale);
+          const isActive = locale === currentLocale;
+          return (
+            <a
+              href={href}
+              hreflang={locale}
+              lang={locale}
+              class="ttg-row"
+              role="menuitemradio"
+              aria-checked={isActive ? 'true' : 'false'}
+              data-locale={locale}
+            >
+              <span class="ttg-row-icon text-xs font-semibold tracking-wide min-w-[1.75rem] text-center">
+                {locale.toUpperCase()}
+              </span>
+              <span class="ttg-row-label">
+                <span class="ttg-row-title">{getLocaleName(locale)}</span>
+              </span>
+              <svg
+                class="ttg-check h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  )
+}
+
+<style>
+  /* Use ttg-row styles from ThemeModeDropdown — identical appearance */
+  .lang-wrapper .ttg-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0.625rem;
+    border-radius: 0.5rem;
+    color: var(--color-foreground-muted);
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      background-color var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .lang-wrapper .ttg-row:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-foreground);
+  }
+
+  .lang-wrapper .ttg-row:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: -2px;
+  }
+
+  .lang-wrapper .ttg-row[aria-checked='true'] {
+    background-color: var(--color-secondary);
+    color: var(--color-foreground);
+  }
+
+  .lang-wrapper .ttg-row[aria-checked='true'] .ttg-check {
+    display: block;
+  }
+
+  .lang-wrapper .ttg-check {
+    display: none;
+    color: var(--color-brand-500);
+  }
+
+  .lang-wrapper .ttg-row-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-foreground-subtle);
+  }
+
+  .lang-wrapper .ttg-row[aria-checked='true'] .ttg-row-icon {
+    color: var(--color-brand-500);
+  }
+</style>
+
+<script>
+  function closeAllLangPanels(): void {
+    document.querySelectorAll<HTMLElement>('.lang-panel').forEach((p) => p.classList.add('hidden'));
+    document.querySelectorAll<HTMLButtonElement>('.lang-wrapper .ttg-trigger').forEach((t) => {
+      t.setAttribute('aria-expanded', 'false');
+      t.querySelector('.lang-chevron')?.classList.remove('rotate-180');
+    });
+  }
+
+  function initLanguageSwitcher(): void {
+    const wrappers = document.querySelectorAll<HTMLElement>('.lang-wrapper');
+    if (!wrappers.length) return;
+
+    wrappers.forEach((wrapper) => {
+      if (wrapper.dataset.langInit) return;
+      wrapper.dataset.langInit = 'true';
+
+      const trigger = wrapper.querySelector<HTMLButtonElement>('.ttg-trigger');
+      const panel = wrapper.querySelector<HTMLElement>('.lang-panel');
+      if (!trigger || !panel) return;
+
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const willOpen = panel.classList.contains('hidden');
+        // Close other open panels (theme mode + colour theme)
+        closeAllLangPanels();
+        document.querySelectorAll<HTMLElement>('.ttg-panel').forEach((p) => p.classList.add('hidden'));
+        document.querySelectorAll<HTMLButtonElement>('.ttg-trigger').forEach((t) => {
+          if (t !== trigger) {
+            t.setAttribute('aria-expanded', 'false');
+            t.querySelector('.ttg-chevron')?.classList.remove('rotate-180');
+          }
+        });
+        document.getElementById('theme-dropdown-panel')?.classList.add('hidden');
+        const themeTrigger = document.getElementById('theme-dropdown-trigger');
+        if (themeTrigger) {
+          themeTrigger.setAttribute('aria-expanded', 'false');
+          themeTrigger.querySelector('.theme-chevron')?.classList.remove('rotate-180');
+        }
+
+        if (willOpen) {
+          panel.classList.remove('hidden');
+          trigger.setAttribute('aria-expanded', 'true');
+          trigger.querySelector('.lang-chevron')?.classList.add('rotate-180');
+        }
+      });
+    });
+
+    if (!(window as unknown as { __langGlobalInit?: boolean }).__langGlobalInit) {
+      (window as unknown as { __langGlobalInit?: boolean }).__langGlobalInit = true;
+
+      document.addEventListener('click', (e) => {
+        const open = document.querySelector<HTMLElement>('.lang-panel:not(.hidden)');
+        if (!open) return;
+        const wrapper = open.closest('.lang-wrapper');
+        if (wrapper && !wrapper.contains(e.target as Node)) closeAllLangPanels();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeAllLangPanels();
+        }
+      });
+    }
+  }
+
+  initLanguageSwitcher();
+  document.addEventListener('astro:page-load', initLanguageSwitcher);
+  document.addEventListener('astro:after-swap', initLanguageSwitcher);
+</script>

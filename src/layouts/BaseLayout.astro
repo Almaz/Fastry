@@ -1,13 +1,16 @@
 ---
 import '@/styles/global.css';
+import outfitFont from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
+import manropeFont from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import SEO from '@/components/seo/SEO.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import Analytics from '@/components/layout/Analytics.astro';
 import ConsentBanner from '@/components/ui/overlay/ConsentBanner';
-import { ClientRouter } from 'astro:transitions';
+import CursorTrail from '@/components/effects/CursorTrail.astro';
 import { createWebsiteSchema, createOrganizationSchema, createPersonSchema, createProfessionalServiceSchema } from '@/lib/schema';
-import type { WebSite, Organization, Person, WithContext } from 'schema-dts';
+import type { Thing, WithContext } from 'schema-dts';
 import siteConfig from '@/config/site.config';
+import { getLocaleFromPath } from '@/i18n';
 
 interface Props {
   title?: string;
@@ -25,6 +28,12 @@ interface Props {
   includeOrgSchema?: boolean;
   includePersonSchema?: boolean;
   includeProfessionalServiceSchema?: boolean;
+  extraSchemas?: WithContext<Thing>[];
+  eagerReveal?: boolean;
+  /** When true, the scroll-progress bar sits at the very top of the viewport
+   *  (above the header). When false (default), it sits below the header
+   *  (top-[64px]), matching the bar-shaped header layout. */
+  scrollProgressAtTop?: boolean;
 }
 
 const {
@@ -38,10 +47,13 @@ const {
   includeOrgSchema = false,
   includePersonSchema = false,
   includeProfessionalServiceSchema = false,
+  extraSchemas = [],
+  eagerReveal = false,
+  scrollProgressAtTop = false,
 } = Astro.props;
 
 // Build JSON-LD schemas
-const schemas: Array<WithContext<WebSite> | WithContext<Organization> | WithContext<Person>> = [createWebsiteSchema()];
+const schemas: WithContext<Thing>[] = [createWebsiteSchema()];
 if (includeOrgSchema) {
   schemas.push(createOrganizationSchema());
 }
@@ -51,14 +63,24 @@ if (includePersonSchema) {
 if (includeProfessionalServiceSchema) {
   schemas.push(createProfessionalServiceSchema());
 }
+schemas.push(...extraSchemas);
+
+const locale = getLocaleFromPath(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth dark" data-theme="blue">
+<html lang={locale} data-pagefind-filter={`lang:${locale}`} class="scroll-smooth dark" data-theme="blue" data-theme-mode="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content={Astro.generator} />
+
+    <!-- Preload display + body fonts so they're ready for first paint -->
+    <link rel="preload" as="font" type="font/woff2" href={manropeFont} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={outfitFont} crossorigin="anonymous" />
+
+    {siteConfig.articleFeatures?.comments?.enabled && (
+      <link rel="preconnect" href="https://giscus.app" crossorigin />
+    )}
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href={siteConfig.branding.favicon.svg} />
@@ -85,11 +107,15 @@ if (includeProfessionalServiceSchema) {
     <!-- Analytics (loads if PUBLIC_GA_MEASUREMENT_ID or PUBLIC_GTM_ID is set) -->
     <Analytics />
 
-    <!-- View Transitions (client-side routing with animated page transitions) -->
-    <ClientRouter />
+    <!-- Client-side view transitions are intentionally disabled. They composed
+         poorly with the theme's CSS keyframe animations (hero slide-up,
+         data-reveal fades) and produced a visible post-fade "aftershake" on
+         mobile. Each navigation now does a normal page load, so animations
+         run cleanly from frame 0 every time. -->
+
 
     <!-- Dynamic favicon: syncs letter (first letter of site name) and color (brand-500) with active theme -->
-    <script define:vars={{ _faviconLetter: siteConfig.name.charAt(0).toUpperCase() }}>
+    <script is:inline define:vars={{ _faviconLetter: siteConfig.name.charAt(0).toUpperCase() }}>
       (function () {
         const LETTER = _faviconLetter;
 
@@ -132,28 +158,48 @@ if (includeProfessionalServiceSchema) {
       })();
     </script>
 
-    <!-- Theme script (runs before body paint; <html> starts with class="dark" as default) -->
+    <!-- Theme bootstrap (runs before body paint; no flash of wrong theme).
+         Implements a 3-state colour-mode contract:
+           localStorage.theme ∈ {'system','light','dark'}  (default 'system')
+           <html data-theme-mode="…">                      (mirrors saved mode)
+           <html class="dark">                              (resolved appearance)
+         When mode === 'system', <html>.dark tracks prefers-color-scheme live. -->
     <script is:inline>
       (function () {
         const COLOR_THEMES = ['orange', 'amber', 'lime', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'magenta'];
+        const VALID_MODES = ['system', 'light', 'dark'];
 
-        function applyTheme(el) {
+        function getMode() {
           try {
-            // Dark / light mode
-            if (sessionStorage.getItem('theme') === 'light') {
-              el.classList.remove('dark');
-            } else {
-              el.classList.add('dark');
-            }
-          } catch (_) { /* ignored */ }
+            const stored = localStorage.getItem('theme');
+            if (VALID_MODES.indexOf(stored) !== -1) return stored;
+          } catch { /* private mode / disabled storage */ }
+          return 'system';
+        }
 
+        function applyMode(el) {
+          const mode = getMode();
+          el.setAttribute('data-theme-mode', mode);
+          const isDark =
+            mode === 'dark' ||
+            (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) el.classList.add('dark');
+          else el.classList.remove('dark');
+        }
+
+        function applyColorTheme(el) {
           try {
-            // Color theme — persisted in sessionStorage so it resets to blue on every new visit
+            // Color palette — sessionStorage so it resets to default on each new visit
             const saved = sessionStorage.getItem('color-theme');
             if (saved && COLOR_THEMES.indexOf(saved) !== -1) {
               el.setAttribute('data-theme', saved);
             }
-          } catch (_) { /* ignored */ }
+          } catch { /* ignored */ }
+        }
+
+        function applyTheme(el) {
+          applyMode(el);
+          applyColorTheme(el);
         }
 
         applyTheme(document.documentElement);
@@ -161,10 +207,18 @@ if (includeProfessionalServiceSchema) {
         if (!window.__themeListenersInit) {
           window.__themeListenersInit = true;
 
+          // Live-update when the OS flips colour scheme AND the user is on 'system'.
+          const mql = window.matchMedia('(prefers-color-scheme: dark)');
+          const onSchemeChange = function () {
+            if (getMode() === 'system') applyMode(document.documentElement);
+          };
+          if (mql.addEventListener) mql.addEventListener('change', onSchemeChange);
+          else if (mql.addEventListener) mql.addEventListener('change', onSchemeChange); // Safari < 14
+
+          // Re-apply across Astro view transitions (no flash on swap).
           document.addEventListener('astro:before-swap', function (e) {
             applyTheme(e.newDocument.documentElement);
           });
-
           document.addEventListener('astro:after-swap', function () {
             applyTheme(document.documentElement);
           });
@@ -173,7 +227,7 @@ if (includeProfessionalServiceSchema) {
     </script>
   </head>
 
-  <body class="min-h-screen bg-background text-foreground antialiased">
+  <body class="min-h-screen bg-background text-foreground antialiased" data-eager-reveal={eagerReveal ? '' : undefined}>
     <!-- Skip to content link -->
     <a
       href="#main-content"
@@ -181,6 +235,66 @@ if (includeProfessionalServiceSchema) {
     >
       Skip to content
     </a>
+
+<!-- Scroll progress bar -->
+<div
+  id="scroll-progress-bar-container"
+  class={"fixed left-0 z-[60] h-[2px] w-full overflow-hidden bg-transparent " + (scrollProgressAtTop ? "top-0" : "top-16")}
+  aria-hidden="true"
+>
+  <div
+    id="scroll-progress-bar"
+    class="h-full w-0 bg-brand-500 transition-none"
+  />
+</div>
+
+<script>
+  // Scroll-progress bar: standalone driver.
+  // Lives in BaseLayout so it is guaranteed to be present on every page
+  // regardless of which layout or header variant is used.
+  (function () {
+    const bar = document.getElementById('scroll-progress-bar')!;
+    if (!bar) return;
+
+    let docMaxScrollY = 0;
+    let ticking = false;
+
+    function updateMaxScrollY() {
+      docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        const pct = docMaxScrollY > 0 ? (window.scrollY / docMaxScrollY) * 100 : 0;
+        bar.style.width = pct + '%';
+        ticking = false;
+      });
+    }
+
+    function init() {
+      updateMaxScrollY();
+      onScroll();
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', updateMaxScrollY, { passive: true });
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(updateMaxScrollY).observe(document.documentElement);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+
+    // Re-init after Astro SPA navigations
+    document.addEventListener('astro:page-load', init);
+    document.addEventListener('astro:after-swap', init);
+  })();
+</script>
 
     <slot name="header" />
 
@@ -192,62 +306,206 @@ if (includeProfessionalServiceSchema) {
 
     <ConsentBanner />
 
+    <CursorTrail />
+
     <!-- Back to top button -->
     <button
       id="back-to-top"
       aria-label="Back to top"
-      class="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-background border border-border-strong text-foreground-muted shadow-md opacity-0 translate-y-2 pointer-events-none transition-[opacity,transform] duration-200"
+      class="fixed bottom-9 right-8 sm:bottom-6 sm:right-6 z-50 h-12 w-12"
+      style="opacity:0;translate:0 2rem;pointer-events:none"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+      <!-- Scroll-progress ring (rotated so arc starts at 12 o'clock) -->
+      <svg class="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 48 48" aria-hidden="true">
+        <!-- Faint grey track -->
+        <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" class="text-border" stroke-width="2" opacity="0.5" />
+        <!-- Brand progress arc -->
+        <circle id="back-to-top-ring" cx="24" cy="24" r="21" fill="none" stroke="currentColor" class="text-brand-500" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="131.95" stroke-dashoffset="131.95" />
+      </svg>
+      <!-- Inner face -->
+      <span class="absolute inset-[5px] flex items-center justify-center rounded-full bg-background border border-border-strong text-foreground-muted shadow-md" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+      </span>
     </button>
 
     <script is:inline>
       (function () {
         const THRESHOLD = 400;
+        const CIRCUMFERENCE = 131.95;
+
+        // Cache `scrollHeight - innerHeight` so the per-frame scroll handler
+        // never reads layout-dependent properties. Reading scrollHeight on
+        // DOMContentLoaded forced a synchronous layout BEFORE first paint
+        // (Lighthouse flagged this script as ~551ms of forced reflow). The
+        // first read is now deferred to a rAF inside initBackToTop — that
+        // runs after the browser has committed initial paint, off the
+        // critical path. ResizeObserver picks up later changes.
+        let docMaxScrollY = 0;
+        function updateDocMaxScrollY() {
+          docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+        }
+        window.addEventListener('resize', updateDocMaxScrollY, { passive: true });
+        if (typeof ResizeObserver !== 'undefined') {
+          new ResizeObserver(updateDocMaxScrollY).observe(document.documentElement);
+        }
 
         function initBackToTop() {
           const btn = document.getElementById('back-to-top');
           if (!btn || btn.dataset.bttInit) return;
           btn.dataset.bttInit = 'true';
 
-          function update() {
-            if (window.scrollY > THRESHOLD) {
-              btn.classList.remove('opacity-0', 'translate-y-2', 'pointer-events-none');
-              btn.classList.add('opacity-100', 'translate-y-0');
+          const ring = document.getElementById('back-to-top-ring');
+          const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          let ticking = false;
+          let visible = false;
+
+          // Ensure initial hidden state is applied via JS (guards against any cascade override)
+          btn.style.opacity = '0';
+          btn.style.translate = '0 2rem';
+          btn.style.pointerEvents = 'none';
+
+          function show() {
+            if (reducedMotion) {
+              btn.style.transition = 'none';
             } else {
-              btn.classList.add('opacity-0', 'translate-y-2', 'pointer-events-none');
-              btn.classList.remove('opacity-100', 'translate-y-0');
+              btn.style.transition = 'opacity 250ms cubic-bezier(0,0,0.2,1), translate 250ms cubic-bezier(0,0,0.2,1)';
+            }
+            btn.style.opacity = '1';
+            btn.style.translate = '0 0';
+            btn.style.pointerEvents = 'auto';
+            visible = true;
+          }
+
+          function hide() {
+            if (reducedMotion) {
+              btn.style.transition = 'none';
+            } else {
+              btn.style.transition = 'opacity 300ms cubic-bezier(0.4,0,1,1), translate 300ms cubic-bezier(0.4,0,1,1)';
+            }
+            btn.style.opacity = '0';
+            btn.style.translate = '0 2rem';
+            btn.style.pointerEvents = 'none';
+            visible = false;
+          }
+
+          function updateFrame() {
+            const pct = docMaxScrollY > 0 ? Math.min(1, Math.max(0, window.scrollY / docMaxScrollY)) : 0;
+            if (ring) {
+              ring.style.strokeDashoffset = String(CIRCUMFERENCE * (1 - pct));
+            }
+            if (window.scrollY > THRESHOLD) {
+              if (!visible) show();
+            } else {
+              if (visible) hide();
+            }
+            ticking = false;
+          }
+
+          function onScroll() {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(updateFrame);
             }
           }
 
-          window.addEventListener('scroll', update, { passive: true });
+          window.addEventListener('scroll', onScroll, { passive: true });
           btn.addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
           });
-          update();
+
+          document.addEventListener('astro:before-swap', function () {
+            window.removeEventListener('scroll', onScroll);
+          }, { once: true });
+
+          // Run the first frame on rAF so it picks up the initial scroll
+          // position after layout has settled — and read scrollHeight here
+          // (after first paint) instead of forcing layout pre-paint.
+          requestAnimationFrame(function () {
+            updateDocMaxScrollY();
+            updateFrame();
+          });
         }
 
-        initBackToTop();
         document.addEventListener('astro:page-load', initBackToTop);
-        document.addEventListener('astro:after-swap', initBackToTop);
+        initBackToTop();
       })();
     </script>
 
-    <!-- Scroll reveal: adds .is-visible to [data-reveal] elements as they enter the viewport -->
     <script is:inline>
       (function () {
         function initReveal() {
-          const els = document.querySelectorAll('[data-reveal]:not(.is-visible)');
+          const els = Array.prototype.slice.call(
+            document.querySelectorAll('[data-reveal]:not(.is-visible), [data-reveal-children]:not(.is-visible)')
+          );
+
+          // Also observe each direct child of [data-reveal-content] so long
+          // article bodies (blog posts, project pages) animate block-by-block.
+          document.querySelectorAll('[data-reveal-content]').forEach(function (container) {
+            Array.prototype.forEach.call(container.children, function (child) {
+              if (!child.classList.contains('is-visible')) els.push(child);
+            });
+          });
+
           if (!els.length) return;
-          const observer = new IntersectionObserver(function (entries) {
+
+          const eager = document.body.hasAttribute('data-eager-reveal');
+          const belowFoldMargin = eager ? '0px 0px -5% 0px' : '0px 0px -10% 0px';
+
+          // Two scroll-triggered observers for below-fold elements. Tall
+          // elements (taller than ~85% of the viewport) use threshold 0 so
+          // they still fire; shorter elements use 0.15 so animations feel
+          // earned (the user actually sees them play).
+          const shortObs = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
               if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
+                shortObs.unobserve(entry.target);
               }
             });
-          }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-          els.forEach(function (el) { observer.observe(el); });
+          }, { threshold: 0.15, rootMargin: belowFoldMargin });
+
+          const tallObs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                tallObs.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0, rootMargin: belowFoldMargin });
+
+          // First-pass observer: hands us boundingClientRect and rootBounds
+          // for each element without forcing a synchronous layout read. The
+          // browser computes the geometry off the main thread, replacing
+          // the previous getBoundingClientRect() classifier loop that
+          // Lighthouse flagged as a ~76ms forced reflow.
+          // rootMargin -25% bottom defines "above-the-fold" as the top 75%
+          // of the viewport, matching the prior `rect.top < vh*0.75` rule.
+          let revealIndex = 0;
+          const firstPass = new IntersectionObserver(function (entries) {
+            // Preserve document order so the above-fold stagger is stable.
+            entries.sort(function (a, b) {
+              const pos = a.target.compareDocumentPosition(b.target);
+              if (pos & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+              if (pos & Node.DOCUMENT_POSITION_PRECEDING) return 1;
+              return 0;
+            });
+
+            entries.forEach(function (entry) {
+              firstPass.unobserve(entry.target);
+              if (entry.isIntersecting) {
+                const i = revealIndex++;
+                setTimeout(function () {
+                  entry.target.classList.add('is-visible');
+                }, 250 + i * 80);
+              } else {
+                const rb = entry.rootBounds;
+                const tall = rb ? entry.boundingClientRect.height > rb.height * 0.85 : false;
+                (tall ? tallObs : shortObs).observe(entry.target);
+              }
+            });
+          }, { threshold: 0, rootMargin: '0px 0px -25% 0px' });
+
+          els.forEach(function (el) { firstPass.observe(el); });
         }
 
         if (document.readyState === 'loading') {
@@ -255,8 +513,6 @@ if (includeProfessionalServiceSchema) {
         } else {
           initReveal();
         }
-
-        document.addEventListener('astro:after-swap', initReveal);
       })();
     </script>
   </body>
