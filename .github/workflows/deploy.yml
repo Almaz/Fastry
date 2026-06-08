@@ -40,7 +40,7 @@ jobs:
       - name: Build
         run: pnpm run build
         env:
-          SITE_URL: ${{ secrets.SITE_URL || 'https://almaz.github.io/Fastry' }}
+          SITE_URL: ${{ secrets.SITE_URL || 'https://fastry.ru' }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
