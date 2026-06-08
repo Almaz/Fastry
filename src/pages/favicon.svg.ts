@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import siteConfig from '@/config/site.config';
+import { buildFaviconSvg } from '@/lib/favicon';
 
 // Pre-render at build time so the favicon is a plain static file in the
 // output — no serverless function needed, no runtime overhead.
@@ -7,12 +8,12 @@ export const prerender = true;
 
 export const GET: APIRoute = () => {
   const letter = siteConfig.name.charAt(0).toUpperCase();
-  const color  = siteConfig.branding.colors.themeColor;
+  const color = siteConfig.branding.colors.themeColor;
 
-  const svg = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="48" height="48" rx="8" fill="${color}"/>
-  <text x="24" y="24" text-anchor="middle" dominant-baseline="central" fill="white" font-family="Outfit, system-ui, sans-serif" font-weight="700" font-size="34">${letter}</text>
-</svg>`;
+  // The letter is outlined to a vector path (see src/lib/favicon), so the SVG
+  // is self-contained and renders without the Outfit web font — search-engine
+  // crawlers can now capture it for the SERP.
+  const svg = buildFaviconSvg(letter, color);
 
   return new Response(svg, {
     headers: { 'Content-Type': 'image/svg+xml' },
