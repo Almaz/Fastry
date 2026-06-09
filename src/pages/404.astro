@@ -136,6 +136,16 @@ const blogHref = localizedPath('/blog', locale);
     z-index: 1;
   }
 
+  /* Dark mode: make body background dark so the canvas shows through
+     instead of a white backdrop from global styles. */
+  .dark body:has(#bg-canvas) {
+    background-color: #0a0a0b !important;
+  }
+
+  .dark body:has(#bg-canvas) main {
+    background-color: transparent !important;
+  }
+
   /* Dark mode: slightly transparent dark background so the animated canvas
      shows through, matching the light-mode /80 treatment. */
   .dark body:has(#bg-canvas) section.bg-background-secondary\/80 {
