@@ -174,6 +174,12 @@ const blogHref = localizedPath('/blog', locale);
    *
    * This also swaps Header and Footer navigation texts and links,
    * since those are rendered server-side with locale='en'.
+   *
+   * Uses robust selectors to find elements regardless of DOM structure:
+   * - .nav-link for desktop header nav links
+   * - .mobile-menu-row for mobile menu links
+   * - footer nav a[href] for footer links
+   * - [aria-label] for accessibility labels
    */
   (function() {
     var path = window.location.pathname;
@@ -242,71 +248,106 @@ const blogHref = localizedPath('/blog', locale);
       return map[href] || null;
     }
 
-    // ── 1. Swap Header nav links ──────────────────────────────────
-    var headerNavLinks = document.querySelectorAll('header nav a[href]');
-    headerNavLinks.forEach(function(link) {
+    // ── Helper: update a single nav link element ──────────────────
+    function updateNavLink(link) {
       var href = link.getAttribute('href');
       var ruText = ruNavLabel(href);
       if (ruText) {
-        link.textContent = ruText;
+        // Only update text if the link has no child elements (icons etc.)
+        // or if the direct text content matches an English label
+        var childEls = link.querySelectorAll('*');
+        if (childEls.length === 0) {
+          link.textContent = ruText;
+        } else {
+          // Link has child elements — find and replace text nodes
+          link.childNodes.forEach(function(n) {
+            if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) {
+              n.textContent = ruText;
+            }
+          });
+        }
+        link.setAttribute('href', ruHref(href));
+      }
+    }
+
+    // ── 1. Swap Header desktop nav links (.nav-link) ──────────────
+    document.querySelectorAll('header a.nav-link').forEach(updateNavLink);
+
+    // ── 2. Swap Header mobile menu links (.mobile-menu-row) ───────
+    document.querySelectorAll('a.mobile-menu-row').forEach(function(link) {
+      var href = link.getAttribute('href');
+      var ruText = ruNavLabel(href);
+      if (ruText) {
+        // Mobile menu rows have a complex structure with icon + text + chevron
+        // Find the span with class 'flex-1' which contains the label text
+        var textSpan = link.querySelector('span.flex-1');
+        if (textSpan) {
+          textSpan.textContent = ruText;
+        }
         link.setAttribute('href', ruHref(href));
       }
     });
 
-    // ── 2. Swap Header CTA button ─────────────────────────────────
+    // ── 3. Swap Header CTA button ─────────────────────────────────
     var ctaBtn = document.querySelector('header .hdr-cta-brand');
     if (ctaBtn) {
       // Replace text content but keep icon elements
-      var ctaTextNodes = [];
       ctaBtn.childNodes.forEach(function(n) {
         if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) {
-          ctaTextNodes.push(n);
+          n.textContent = ruNav.startProject;
         }
       });
-      ctaTextNodes.forEach(function(n) {
-        n.textContent = ruNav.startProject;
-      });
-      // Update href
+      // Also check for Button inner span/div text
+      var ctaTextEl = ctaBtn.querySelector('span, div');
+      if (ctaTextEl && !ctaTextEl.querySelector('svg, img, .icon')) {
+        ctaTextEl.textContent = ruNav.startProject;
+      }
       var ctaHref = ctaBtn.getAttribute('href');
       if (ctaHref) ctaBtn.setAttribute('href', ruHref(ctaHref));
     }
 
-    // ── 3. Swap Header aria-labels ────────────────────────────────
+    // ── 4. Swap Header aria-labels ────────────────────────────────
     // Mobile menu button
     var menuBtn = document.querySelector('header button[aria-label*="Menu" i], header button[aria-label*="menu" i]');
     if (menuBtn) menuBtn.setAttribute('aria-label', ruNav.openMenu);
 
     // Nav aria-labels
-    var navEls = document.querySelectorAll('header nav[aria-label]');
-    navEls.forEach(function(nav) {
+    document.querySelectorAll('header nav[aria-label]').forEach(function(nav) {
       var label = nav.getAttribute('aria-label');
       if (label && label.toLowerCase().includes('navigation')) {
         nav.setAttribute('aria-label', ruNav.mainNavigation);
       }
     });
 
-    // ── 4. Swap Header data-i18n attributes ───────────────────────
+    // Mobile menu container aria-label
+    document.querySelectorAll('div[role="navigation"][aria-label]').forEach(function(nav) {
+      var label = nav.getAttribute('aria-label');
+      if (label && label.toLowerCase().includes('navigation')) {
+        nav.setAttribute('aria-label', ruNav.mobileNavigation);
+      }
+    });
+
+    // ── 5. Swap Header data-i18n attributes ───────────────────────
     var headerEl = document.querySelector('header[data-i18n-navigate]');
     if (headerEl) {
       headerEl.setAttribute('data-i18n-navigate', ruNav.navigate);
       headerEl.setAttribute('data-i18n-theme', ruNav.theme);
     }
 
-    // ── 5. Swap mobile menu labels ────────────────────────────────
-    var mobileLabels = document.querySelectorAll('.mobile-menu-label');
-    mobileLabels.forEach(function(label) {
-      var text = label.textContent.trim();
-      if (text.toLowerCase().includes('navigate') || text === 'Navigate') {
+    // ── 6. Swap mobile menu labels ────────────────────────────────
+    document.querySelectorAll('.mobile-menu-label').forEach(function(label) {
+      var text = label.textContent.trim().toLowerCase();
+      if (text === 'navigate' || text.includes('navigate')) {
         label.textContent = ruNav.navigate;
-      } else if (text.toLowerCase().includes('theme') || text === 'Theme') {
+      } else if (text === 'theme' || text.includes('theme')) {
         label.textContent = ruNav.theme;
-      } else if (text.toLowerCase().includes('connect') || text === 'Connect') {
+      } else if (text === 'connect' || text.includes('connect')) {
         label.textContent = ruNav.connect;
       }
     });
 
-    var mobileSubLabels = document.querySelectorAll('.mobile-menu-section span.text-sm');
-    mobileSubLabels.forEach(function(label) {
+    // Mobile sub-labels (colour theme, language)
+    document.querySelectorAll('.mobile-menu-section span.text-sm').forEach(function(label) {
       var text = label.textContent.trim().toLowerCase();
       if (text.includes('colour') || text.includes('color') || text.includes('theme')) {
         label.textContent = ruNav.colourTheme;
@@ -315,35 +356,31 @@ const blogHref = localizedPath('/blog', locale);
       }
     });
 
-    // ── 6. Swap Footer nav links ──────────────────────────────────
-    var footerNavLinks = document.querySelectorAll('footer nav a[href]');
-    footerNavLinks.forEach(function(link) {
-      var href = link.getAttribute('href');
-      var ruText = ruNavLabel(href);
-      if (ruText) {
-        link.textContent = ruText;
-        link.setAttribute('href', ruHref(href));
+    // ── 7. Swap Footer nav links ──────────────────────────────────
+    document.querySelectorAll('footer nav a[href]').forEach(updateNavLink);
+
+    // ── 8. Swap Footer copyright ──────────────────────────────────
+    document.querySelectorAll('footer p').forEach(function(p) {
+      var text = p.textContent || '';
+      if (text.indexOf('©') !== -1 || text.indexOf('Fastry') !== -1) {
+        // Replace the site name but keep the year and copyright symbol
+        p.textContent = text.replace(/Fastry/g, 'Fastry');
       }
     });
 
-    // ── 7. Swap Footer copyright ──────────────────────────────────
-    var copyrightEl = document.querySelector('footer p.text-sm.text-foreground-muted');
-    if (copyrightEl) {
-      copyrightEl.textContent = copyrightEl.textContent.replace(/Fastry|©/g, function(match) {
-        if (match === 'Fastry') return 'Fastry';
-        return match;
-      });
-    }
-
-    // ── 8. Swap Footer logo link ──────────────────────────────────
+    // ── 9. Swap Footer logo link ──────────────────────────────────
     var footerLogoLink = document.querySelector('footer a[href="/"]');
     if (footerLogoLink) footerLogoLink.setAttribute('href', '/ru');
 
-    // ── 9. Swap Header logo link ──────────────────────────────────
+    // ── 10. Swap Header logo link ─────────────────────────────────
     var headerLogoLink = document.querySelector('header a[href="/"]');
     if (headerLogoLink) headerLogoLink.setAttribute('href', '/ru');
 
-    // ── 10. Swap 404 content ──────────────────────────────────────
+    // ── 11. Update header data-locale attribute ───────────────────
+    var headerDataLocale = document.querySelector('header[data-locale]');
+    if (headerDataLocale) headerDataLocale.setAttribute('data-locale', 'ru');
+
+    // ── 12. Swap 404 content ──────────────────────────────────────
     var ru = ru404;
 
     // Swap badge
