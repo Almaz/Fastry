@@ -3,7 +3,7 @@
  * Analytics Component
  *
  * Conditionally loads analytics scripts based on environment variables.
- * Supports Google Analytics (GA4) and Google Tag Manager.
+ * Supports Google Analytics (GA4), Google Tag Manager, and Yandex Metrica.
  *
  * When PUBLIC_CONSENT_ENABLED is true, integrates with Google Consent Mode v2:
  * - consent_mode_v2: Scripts load normally but with denied defaults (cookieless pings)
@@ -12,6 +12,7 @@
  * Environment variables:
  * - PUBLIC_GA_MEASUREMENT_ID: Google Analytics 4 Measurement ID (e.g., G-XXXXXXXXXX)
  * - PUBLIC_GTM_ID: Google Tag Manager Container ID (e.g., GTM-XXXXXXX)
+ * - PUBLIC_YM_ID: Yandex Metrica counter ID (e.g., 109746637)
  * - PUBLIC_CONSENT_ENABLED: Enable cookie consent integration (boolean)
  *
  * CSP: All is:inline scripts here are STATIC (no define:vars). Dynamic values are
@@ -24,22 +25,29 @@
  *     https://*.googletagmanager.com
  *     https://*.google-analytics.com
  *     https://analytics.google.com
+ *     https://mc.yandex.ru
+ *     https://yastatic.net
  *
  *   connect-src:
  *     https://*.google-analytics.com      (covers region1, region2, etc.)
  *     https://analytics.google.com         (separate domain, not a subdomain)
  *     https://*.googletagmanager.com
+ *     https://mc.yandex.ru
+ *
+ *   img-src:
+ *     https://mc.yandex.ru
  *
  * IMPORTANT: GA4 sends data to regional endpoints like
  * https://region1.google-analytics.com/g/s/collect — whitelisting only
  * www.google-analytics.com will silently drop all tracking requests with
  * no console errors. The wildcard *.google-analytics.com is required.
  */
-import { PUBLIC_GA_MEASUREMENT_ID, PUBLIC_GTM_ID, PUBLIC_CONSENT_ENABLED } from 'astro:env/client';
+import { PUBLIC_GA_MEASUREMENT_ID, PUBLIC_GTM_ID, PUBLIC_YM_ID, PUBLIC_CONSENT_ENABLED } from 'astro:env/client';
 import consentConfig from '@/config/consent.config';
 
 const gaId = PUBLIC_GA_MEASUREMENT_ID;
 const gtmId = PUBLIC_GTM_ID;
+const ymId = PUBLIC_YM_ID;
 const consentEnabled = PUBLIC_CONSENT_ENABLED;
 const consentMode = consentConfig.mode;
 const storageKey = consentConfig.storageKey;
@@ -77,7 +85,8 @@ for (const [key, cat] of Object.entries(consentConfig.categories)) {
 // Rendering flags — keeps template conditions simple and highlighter-friendly
 const hasGtm = !!gtmId;
 const hasGa = !!gaId && !gtmId;
-const hasAnalytics = !!(gaId || gtmId);
+const hasYm = !!ymId;
+const hasAnalytics = !!(gaId || gtmId || ymId);
 const noConsent = !consentEnabled;
 const isV2 = consentEnabled && consentMode === 'consent_mode_v2';
 const isStrict = consentEnabled && consentMode === 'strict';
@@ -86,6 +95,7 @@ const isStrict = consentEnabled && consentMode === 'strict';
 const analyticsDataJson = JSON.stringify({
   gtmId: gtmId || null,
   gaId: gaId || null,
+  ymId: ymId || null,
   storageKey,
   configVersion,
   gcmDefaults,
@@ -130,6 +140,25 @@ const analyticsDataJson = JSON.stringify({
         gtag('config', d.gaId);
       })();
     </script>
+  </>
+)}
+
+{/* ── No consent: load Yandex Metrica directly ── */}
+{noConsent && hasYm && (
+  <>
+    <script is:inline>
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=' + JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'ym');
+
+      ym(JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript>
+      <div><img src={`https://mc.yandex.ru/watch/${ymId}`} style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
   </>
 )}
 
@@ -214,12 +243,34 @@ const analyticsDataJson = JSON.stringify({
   </>
 )}
 
+{/* ── V2 mode: load Yandex Metrica after consent defaults ── */}
+{isV2 && hasYm && (
+  <>
+    <script is:inline>
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=' + JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'ym');
+
+      ym(JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript>
+      <div><img src={`https://mc.yandex.ru/watch/${ymId}`} style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+  </>
+)}
+
 {/* ── Strict mode: meta tags for consent banner dynamic injection ── */}
 {isStrict && hasGtm && (
   <meta name="gtm-id" content={gtmId} />
 )}
 {isStrict && hasGa && (
   <meta name="ga-id" content={gaId} />
+)}
+{isStrict && hasYm && (
+  <meta name="ym-id" content={ymId} />
 )}
 
 {/* ── Strict mode: conditionally load GTM if consent already granted ── */}
@@ -255,6 +306,25 @@ const analyticsDataJson = JSON.stringify({
         function gtag(...args){window.dataLayer.push(args);}
         gtag('js', new Date());
         gtag('config', d.gaId);
+      }
+    })();
+  </script>
+)}
+
+{/* ── Strict mode: conditionally load Yandex Metrica if consent already granted ── */}
+{isStrict && hasYm && (
+  <script is:inline>
+    (function(){
+      const d = JSON.parse(document.getElementById('analytics-data').textContent);
+      if (window.__consentState && window.__consentState.decided && window.__consentState.categories[d.analyticsCategoryKey]) {
+        (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=' + d.ymId, 'ym');
+
+        ym(d.ymId, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
       }
     })();
   </script>
