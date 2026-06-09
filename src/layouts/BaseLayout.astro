@@ -86,6 +86,34 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}${siteConfig.branding.favicon.svg.replace(/^\//, '')}`} />
     <link rel="manifest" href={`${import.meta.env.BASE_URL}manifest.webmanifest`} />
 
+    <!--
+      theme-color: set synchronously before first paint so the browser chrome
+      matches the active colour theme from the very first frame.
+      Reads sessionStorage (same key as the theme bootstrap script below) and
+      maps the saved theme name to its --brand-500 hex value. Falls back to
+      orange (#ee4000) when nothing is stored (default theme).
+    -->
+    <script is:inline>
+      (function () {
+        var COLORS = {
+          orange: '#ee4000', amber: '#da8100', lime: '#4fa700',
+          emerald: '#00ac55', teal: '#00aca5', cyan: '#00a9bb',
+          sky: '#009ee5', blue: '#0083ff', indigo: '#316fff',
+          violet: '#6a65ff', purple: '#934aff', magenta: '#cb00c6',
+          green: '#00ab45',
+        };
+        var meta = document.createElement('meta');
+        meta.name = 'theme-color';
+        try {
+          var saved = sessionStorage.getItem('color-theme');
+          meta.content = (saved && COLORS[saved]) || '#ee4000';
+        } catch (e) {
+          meta.content = '#ee4000';
+        }
+        document.head.appendChild(meta);
+      })();
+    </script>
+
     <!-- Dynamic favicon: syncs brand colour with active theme -->
     <script is:inline>
       (function () {
@@ -121,12 +149,6 @@ const locale = getLocaleFromPath(Astro.url.pathname);
         }
       })();
     </script>
-    <!--
-      theme-color is kept as a static fallback for the initial SSR render.
-      A client-side script below (updateThemeColor) keeps it in sync with
-      the active colour theme (data-theme) by reading --brand-500.
-    -->
-    <meta name="theme-color" content={siteConfig.branding.colors.themeColor} />
 
     <!-- SEO -->
     <SEO
