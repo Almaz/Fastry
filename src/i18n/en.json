@@ -54,6 +54,7 @@
     "title": "Blog",
     "description": "Latest articles and updates",
     "readingTime": "{minutes} min read",
+    "readingTimeShort": "{minutes} min",
     "publishedOn": "Published on {date}",
     "updatedOn": "Updated on {date}",
     "writtenBy": "Written by {author}",

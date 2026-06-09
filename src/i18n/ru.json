@@ -54,6 +54,7 @@
     "title": "Блог",
     "description": "Свежие статьи и обновления",
     "readingTime": "{minutes} мин. чтения",
+    "readingTimeShort": "{minutes} мин.",
     "publishedOn": "Опубликовано {date}",
     "updatedOn": "Обновлено {date}",
     "writtenBy": "Автор: {author}",
