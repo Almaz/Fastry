@@ -1,0 +1,161 @@
+---
+/**
+ * 404 page — Russian version
+ * Served by Netlify _redirects rule when a visitor lands on a non-existent /ru/* URL.
+ * Unlike the root 404.html, this page is rendered with locale = 'ru' on the server,
+ * so Header, Footer, and all content are in Russian.
+ */
+import PageLayout from '@/layouts/PageLayout.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Card from '@/components/ui/data-display/Card/Card.astro';
+import Button from '@/components/ui/form/Button/Button.astro';
+import { Hero } from '@/components/hero';
+import { localizedPath, t } from '@/i18n';
+
+const locale = 'ru';
+
+const badgeText = t('errors.404.badge', locale);
+const headingPart = t('errors.404.titlePart', locale);
+const headingHighlight = t('errors.404.titleHighlight', locale);
+const description = t('errors.404.description', locale);
+const recoveryTitle = t('errors.404.recoveryTitle', locale);
+
+const homeLabel = t('errors.404.buttons.home', locale);
+const blogLabel = t('errors.404.buttons.blog', locale);
+
+const recoveryLinks = [
+  {
+    icon: 'layers',
+    title: t('errors.404.links.projects.title', locale),
+    description: t('errors.404.links.projects.description', locale),
+    href: localizedPath('/projects', locale),
+  },
+  {
+    icon: 'book',
+    title: t('errors.404.links.blog.title', locale),
+    description: t('errors.404.links.blog.description', locale),
+    href: localizedPath('/blog', locale),
+  },
+  {
+    icon: 'mail',
+    title: t('errors.404.links.contact.title', locale),
+    description: t('errors.404.links.contact.description', locale),
+    href: localizedPath('/contact', locale),
+  },
+];
+
+const homeHref = localizedPath('/', locale);
+const blogHref = localizedPath('/blog', locale);
+---
+
+<PageLayout
+  title={t('errors.pageNotFound', locale) + ' — ' + t('siteName', locale)}
+  description={t('errors.pageNotFoundMessage', locale)}
+  noindex
+  eagerReveal
+>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <Hero layout="centered" size="sm" class="!bg-transparent" data-reveal>
+    <Badge slot="badge" variant="brand" pill>
+      <Icon name="compass" size="sm" />
+      {badgeText}
+    </Badge>
+
+    <h1 slot="title">
+      {headingPart} <span class="text-brand-500">{headingHighlight}</span>
+    </h1>
+
+    <p slot="description">
+      {description}
+    </p>
+
+    <div slot="actions" class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <Button href={homeHref} size="lg">
+        <Icon name="arrow-left" size="sm" />
+        {homeLabel}
+      </Button>
+      <Button href={blogHref} variant="outline" size="lg">
+        {blogLabel}
+        <Icon name="arrow-right" size="sm" />
+      </Button>
+    </div>
+  </Hero>
+
+  {/* Recovery Section */}
+  <section class="py-[var(--space-section-md)] bg-background-secondary/80 backdrop-blur-sm border-t border-border relative z-10">
+    <div class="mx-auto max-w-6xl px-6">
+      <div class="mb-8 text-center" data-reveal>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+          {recoveryTitle}
+        </h2>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-3">
+        {recoveryLinks.map((link, i) => (
+          <Card hover href={link.href} class="group" data-reveal data-reveal-delay={i}>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                <Icon name={link.icon} size="sm" />
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="text-base font-semibold text-foreground">{link.title}</h3>
+                <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                  {link.description}
+                </p>
+              </div>
+              <Icon name="arrow-up-right" size="sm" class="text-foreground-muted group-hover:text-brand-500 transition-colors shrink-0" />
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style is:global>
+  body:has(#bg-canvas) {
+    background-color: transparent !important;
+  }
+
+  body:has(#bg-canvas) main {
+    background-color: transparent !important;
+    position: relative;
+    z-index: 1;
+  }
+
+  body:has(#bg-canvas) footer {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Dark mode: make body background dark so the canvas shows through
+     instead of a white backdrop from global styles. */
+  .dark body:has(#bg-canvas) {
+    background-color: #0a0a0b !important;
+  }
+
+  .dark body:has(#bg-canvas) main {
+    background-color: transparent !important;
+  }
+
+  /* Dark mode: slightly transparent dark background so the animated canvas
+     shows through, matching the light-mode /80 treatment. */
+  .dark body:has(#bg-canvas) section.bg-background-secondary\/80 {
+    background-color: color-mix(in oklch, var(--color-background-secondary) 80%, transparent) !important;
+  }
+
+  #bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script is:inline src="/scripts/404-bg.js"></script>
