@@ -338,7 +338,6 @@ const posts = (await getCollection('blog', ({ data, id }) => !data.draft && id.s
             href={`/blog/${post.id.replace('ru/', '')}`}
             publishedAt={post.data.publishedAt}
             tags={post.data.tags}
-            author={post.data.author}
             image={post.data.image}
             svgSlug={post.data.svgSlug}
             class={index === 3 ? 'hidden sm:block lg:hidden' : undefined}
