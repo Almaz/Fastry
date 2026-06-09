@@ -1,5 +1,5 @@
 [build]
-  command = "PUBLIC_YM_ID=109746637 pnpm run build"
+  command = "pnpm run build"
   publish = "dist"
 
 [build.environment]
