@@ -1,6 +1,7 @@
 ---
 /**
- * 404 page — supports both English and Russian based on URL
+ * 404 page — Russian version
+ * Served when a visitor lands on a non-existent /ru/* URL.
  */
 import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
@@ -8,10 +9,9 @@ import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import Button from '@/components/ui/form/Button/Button.astro';
 import { Hero } from '@/components/hero';
-import { getLocaleFromPath, localizedPath, t } from '@/i18n';
+import { localizedPath, t } from '@/i18n';
 
-const url = Astro.url;
-const locale = getLocaleFromPath(url.pathname);
+const locale = 'ru';
 
 const badgeText = t('errors.404.badge', locale);
 const headingPart = t('errors.404.titlePart', locale);

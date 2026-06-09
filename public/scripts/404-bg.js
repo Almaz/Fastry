@@ -14,13 +14,51 @@
   var mouseY = null;
   var mouseRadius = 150;
 
-  var colorPalette = [
-    'rgba(139, 92, 246, ',
-    'rgba(59, 130, 246, ',
-    'rgba(168, 85, 247, ',
-    'rgba(96, 165, 250, ',
-    'rgba(192, 132, 252, '
-  ];
+  function isDark() {
+    return document.documentElement.classList.contains('dark');
+  }
+
+  function getColors() {
+    if (isDark()) {
+      return {
+        bgFill: 'rgba(10, 10, 18, 0.18)',
+        gradStops: [
+          { pos: 0, color: 'hsla(260, 75%, 12%, 0.35)' },
+          { pos: 0.6, color: 'hsla(210, 80%, 18%, 0.45)' },
+          { pos: 1, color: 'rgba(5, 5, 12, 0.7)' },
+        ],
+        lineColor: 'rgba(139, 92, 246, ',
+        particleColors: [
+          'rgba(139, 92, 246, ',
+          'rgba(59, 130, 246, ',
+          'rgba(168, 85, 247, ',
+          'rgba(96, 165, 250, ',
+          'rgba(192, 132, 252, ',
+        ],
+        waveColor: 'rgba(139, 92, 246, 0.05)',
+      };
+    } else {
+      return {
+        bgFill: 'rgba(255, 255, 255, 0.25)',
+        gradStops: [
+          { pos: 0, color: 'hsla(260, 40%, 92%, 0.5)' },
+          { pos: 0.6, color: 'hsla(210, 45%, 90%, 0.5)' },
+          { pos: 1, color: 'rgba(240, 240, 250, 0.6)' },
+        ],
+        lineColor: 'rgba(139, 92, 246, ',
+        particleColors: [
+          'rgba(139, 92, 246, ',
+          'rgba(59, 130, 246, ',
+          'rgba(168, 85, 247, ',
+          'rgba(96, 165, 250, ',
+          'rgba(192, 132, 252, ',
+        ],
+        waveColor: 'rgba(139, 92, 246, 0.04)',
+      };
+    }
+  }
+
+  var colors = getColors();
 
   function randomRange(min, max) {
     return min + Math.random() * (max - min);
@@ -37,7 +75,7 @@
         vy: (Math.random() - 0.5) * 0.6,
         size: baseSize,
         alpha: randomRange(0.3, 0.85),
-        colorIndex: Math.floor(Math.random() * colorPalette.length),
+        colorIndex: Math.floor(Math.random() * colors.particleColors.length),
         pulseSpeed: randomRange(0.005, 0.02),
         pulsePhase: Math.random() * Math.PI * 2,
         originalSize: baseSize,
@@ -88,18 +126,30 @@
   }
 
   function draw() {
-    ctx.fillStyle = 'rgba(10, 10, 18, 0.18)';
+    colors = getColors();
+
+    ctx.fillStyle = colors.bgFill;
     ctx.fillRect(0, 0, width, height);
 
     var grad = ctx.createLinearGradient(0, 0, width * 0.6, height);
     var timeGrad = Date.now() * 0.0015;
     var hue1 = (Math.sin(timeGrad) * 20 + 260) % 360;
     var hue2 = (Math.sin(timeGrad + 2.2) * 20 + 210) % 360;
-    grad.addColorStop(0, 'hsla(' + hue1 + ', 75%, 12%, 0.35)');
-    grad.addColorStop(0.6, 'hsla(' + hue2 + ', 80%, 18%, 0.45)');
-    grad.addColorStop(1, 'rgba(5, 5, 12, 0.7)');
+
+    if (isDark()) {
+      grad.addColorStop(0, 'hsla(' + hue1 + ', 75%, 12%, 0.35)');
+      grad.addColorStop(0.6, 'hsla(' + hue2 + ', 80%, 18%, 0.45)');
+      grad.addColorStop(1, 'rgba(5, 5, 12, 0.7)');
+    } else {
+      grad.addColorStop(0, 'hsla(' + hue1 + ', 40%, 92%, 0.5)');
+      grad.addColorStop(0.6, 'hsla(' + hue2 + ', 45%, 90%, 0.5)');
+      grad.addColorStop(1, 'rgba(240, 240, 250, 0.6)');
+    }
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, width, height);
+
+    var particleColors = colors.particleColors;
+    var lineColor = colors.lineColor;
 
     for (var i = 0; i < particles.length; i++) {
       for (var j = i + 1; j < particles.length; j++) {
@@ -112,7 +162,7 @@
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = 'rgba(139, 92, 246, ' + (opacity * 0.8) + ')';
+          ctx.strokeStyle = lineColor + (opacity * 0.8) + ')';
           ctx.lineWidth = 1.0;
           ctx.stroke();
         }
@@ -121,7 +171,7 @@
 
     for (var i = 0; i < particles.length; i++) {
       var p = particles[i];
-      var color = colorPalette[p.colorIndex];
+      var color = particleColors[p.colorIndex];
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
 
@@ -142,7 +192,7 @@
       var waveX = width * 0.5 + Math.sin(Date.now() * 0.0008 + i) * width * 0.2;
       var waveY = height * 0.6 + Math.cos(Date.now() * 0.0005 + i * 1.2) * height * 0.1;
       var gradient = ctx.createRadialGradient(waveX, waveY, 20, waveX + 5, waveY - 5, 150);
-      gradient.addColorStop(0, 'rgba(139, 92, 246, 0.05)');
+      gradient.addColorStop(0, colors.waveColor);
       gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
