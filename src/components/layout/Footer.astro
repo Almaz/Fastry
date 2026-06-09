@@ -33,6 +33,7 @@ export interface NavItem {
   labelKey?: string;
   href: string;
   external?: boolean;
+  iconOnly?: boolean;
 }
 
 export interface FooterLinkGroup {
@@ -115,6 +116,7 @@ const defaultNav: NavItem[] = getFooterNavItems().map((item: NavConfigItem) => (
   labelKey: item.labelKey,
   href: item.href,
   external: item.external,
+  iconOnly: item.iconOnly,
 }));
 const navItems: NavItem[] = nav || defaultNav;
 const allNavItems: NavItem[] = navItems;
@@ -182,11 +184,17 @@ function getSocialIcon(platform: string): string {
           {allNavItems.map((item) => (
             <a
               href={localizedPath(item.href, locale)}
-              class="transition-colors hover:text-foreground"
+              class={cn('transition-colors hover:text-foreground', item.iconOnly && 'p-1')}
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              aria-label={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}
+              title={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}
             >
-              {t(item.labelKey ?? item.label, locale)}
+              {item.iconOnly ? (
+                <Icon name="home" size="sm" />
+              ) : (
+                t(item.labelKey ?? item.label, locale)
+              )}
             </a>
           ))}
         </nav>
@@ -353,11 +361,17 @@ function getSocialIcon(platform: string): string {
           {allNavItems.map((item) => (
             <a
               href={localizedPath(item.href, locale)}
-              class="transition-colors hover:text-foreground"
+              class={cn('transition-colors hover:text-foreground', item.iconOnly && 'p-1')}
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              aria-label={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}
+              title={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}
             >
-              {t(item.labelKey ?? item.label, locale)}
+              {item.iconOnly ? (
+                <Icon name="home" size="sm" />
+              ) : (
+                t(item.labelKey ?? item.label, locale)
+              )}
             </a>
           ))}
         </nav>

@@ -19,6 +19,7 @@ export interface NavItem {
   href: string;
   order: number;
   external?: boolean;
+  iconOnly?: boolean;
 }
 
 export interface LegalLink {
@@ -27,6 +28,7 @@ export interface LegalLink {
 }
 
 export const navItems: NavItem[] = [
+  { label: 'Home', labelKey: 'nav.home', href: '/', order: 0, iconOnly: true },
   { label: 'Services', labelKey: 'nav.sections.services', href: '/services', order: 1 },
   { label: 'Projects', labelKey: 'nav.sections.projects', href: '/projects', order: 2 },
   { label: 'Blog', labelKey: 'nav.sections.blog', href: '/blog', order: 3 },
@@ -35,6 +37,7 @@ export const navItems: NavItem[] = [
 ];
 
 export const footerNavItems: NavItem[] = [
+  { label: 'Home', labelKey: 'nav.home', href: '/', order: 0, iconOnly: true },
   { label: 'Services', labelKey: 'nav.sections.services', href: '/services', order: 1 },
   { label: 'Projects', labelKey: 'nav.sections.projects', href: '/projects', order: 2 },
   { label: 'Blog', labelKey: 'nav.sections.blog', href: '/blog', order: 3 },

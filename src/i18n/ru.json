@@ -2,6 +2,7 @@
   "siteName": "Fastry",
   "nav": {
     "home": "Главная",
+    "homeTooltip": "Переход на главную",
     "skipToContent": "Перейти к содержимому",
     "openMenu": "Открыть меню",
     "closeMenu": "Закрыть меню",

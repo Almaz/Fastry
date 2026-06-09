@@ -41,6 +41,7 @@ export interface NavItem {
   label: string;
   labelKey?: string;
   href: string;
+  iconOnly?: boolean;
 }
 
 export interface HeaderAction {
@@ -121,6 +122,7 @@ const defaultNav = getNavItems().map((item: NavConfigItem) => ({
   label: item.label,
   labelKey: item.labelKey,
   href: item.href,
+  iconOnly: item.iconOnly,
 }));
 const navItems: NavItem[] = nav || [...extraNav, ...defaultNav];
 
@@ -146,7 +148,14 @@ function isActive(href: string): boolean {
   if (!showActiveState) return false;
   if (href.startsWith('#')) return false;
   const localizedHref = localizedPath(href.startsWith('#') && !isLandingPage ? `/${href}` : href, locale);
-  return currentPath === localizedHref || currentPath.startsWith(localizedHref + '/');
+  // Normalise trailing slashes for comparison
+  const normalisedPath = currentPath.replace(/\/$/, '');
+  const normalisedHref = localizedHref.replace(/\/$/, '');
+  // For the home link, only mark as active when exactly on the homepage
+  if (normalisedHref === localizedPath('/', locale).replace(/\/$/, '')) {
+    return normalisedPath === normalisedHref;
+  }
+  return normalisedPath === normalisedHref || normalisedPath.startsWith(normalisedHref + '/');
 }
 
 function getSocialIconData(url: string): { icon: string; labelKey: string } {
@@ -222,24 +231,33 @@ const buttonId = `${menuId}-button`;
           </nav>
         ) : (
           <nav class="hidden items-center gap-1 lg:flex" aria-label={t('nav.mainNavigation', locale)}>
-            {navItems.map(({ label, labelKey, href }) => (
+            {navItems.map(({ label, labelKey, href, iconOnly }) => (
               <a
                 href={localizedPath(href.startsWith('#') && !isLandingPage ? `/${href}` : href, locale)}
                 class={cn(
                   'nav-link relative rounded-md px-3 py-2 text-sm',
                   'transition-all duration-(--transition-fast)',
                   isFloating && 'hdr-invert-text',
-                  isFloating
-                    ? (isActive(href)
-                        ? 'hdr-nav-active font-semibold'
-                        : 'font-medium')
-                    : (isActive(href)
-                        ? 'nav-link-active font-semibold text-foreground bg-secondary'
-                        : 'nav-link-inactive font-medium text-foreground-muted hover:text-foreground hover:bg-secondary/70')
+                  iconOnly && 'px-2',
+                  iconOnly && isActive(href)
+                    ? 'nav-link-active font-semibold text-foreground bg-secondary/70'
+                    : isFloating
+                      ? (isActive(href)
+                          ? 'hdr-nav-active font-semibold'
+                          : 'font-medium')
+                      : (isActive(href)
+                          ? 'nav-link-active font-semibold text-foreground bg-secondary'
+                          : 'nav-link-inactive font-medium text-foreground-muted hover:text-foreground hover:bg-secondary/70')
                 )}
                 aria-current={isActive(href) ? 'page' : undefined}
+                aria-label={iconOnly ? t('nav.homeTooltip', locale) : undefined}
+                title={iconOnly ? t('nav.homeTooltip', locale) : undefined}
               >
-                {t(labelKey ?? label, locale)}
+                {iconOnly ? (
+                  <Icon name="home" size="sm" />
+                ) : (
+                  t(labelKey ?? label, locale)
+                )}
               </a>
             ))}
           </nav>
@@ -399,7 +417,7 @@ const buttonId = `${menuId}-button`;
 
               <p class="mobile-menu-label">{t('nav.navigate', locale)}</p>
               <ul class="space-y-0.5">
-                {navItems.map(({ label, labelKey, href }, idx) => {
+                {navItems.map(({ label, labelKey, href, iconOnly }, idx) => {
                   const active = isActive(href);
                   const resolvedHref = localizedPath(href.startsWith('#') && !isLandingPage ? `/${href}` : href, locale);
                   return (
@@ -419,7 +437,7 @@ const buttonId = `${menuId}-button`;
                           <Icon name={getNavIcon(href)} size="sm" />
                         </span>
                         <span class="flex-1">{t(labelKey ?? label, locale)}</span>
-                        <Icon name="chevron-right" size="sm" class="mobile-menu-chevron" />
+                        {!iconOnly && <Icon name="chevron-right" size="sm" class="mobile-menu-chevron" />}
                       </a>
                     </li>
                   );

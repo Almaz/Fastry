@@ -2,6 +2,7 @@
   "siteName": "Fastry",
   "nav": {
     "home": "Home",
+    "homeTooltip": "Go to homepage",
     "skipToContent": "Skip to content",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
