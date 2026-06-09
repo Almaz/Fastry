@@ -22,7 +22,7 @@ interface ScriptLine {
   type: LineType;
 }
 
-// Astro Rocket setup flow: clone → install → dev
+// Fastry setup flow: clone → install → dev
 const script: ScriptLine[] = [
   // Step 1: clone
   { text: '$ git clone https://github.com/hansmartensdev/Astro-Rocket.git', delay: 1200, type: 'command' },

@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="public/readme-hero.svg" alt="Astro Rocket" width="880" />
+  <img src="public/readme-hero.svg" alt="Fastry" width="880" />
 </p>
 
 <p align="center">
-  <strong>Astro Rocket</strong> — A production-ready Astro 6 starter theme. Change the text, launch your site.
+  <strong>Fastry</strong> — A production-ready Astro 6 starter theme. Change the text, launch your site.
 </p>
 
 <p align="center">
@@ -11,8 +11,8 @@
   <a href="https://tailwindcss.com"><img src="https://img.shields.io/badge/Tailwind-4.0-38bdf8?logo=tailwindcss&logoColor=white" alt="Tailwind CSS" /></a>
   <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-5.7-3178c6?logo=typescript&logoColor=white" alt="TypeScript" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-22c55e" alt="License" /></a>
-  <a href="https://github.com/hansmartensdev/astro-rocket"><img src="https://img.shields.io/github/stars/hansmartensdev/astro-rocket?style=flat&label=%E2%AD%90%20Star%20on%20GitHub&color=f59e0b" alt="Star on GitHub" /></a>
-  <a href="https://github.com/hansmartensdev/astro-rocket"><img src="https://visitor-badge.laobi.icu/badge?page_id=hansmartensdev.astro-rocket" alt="Visitors" /></a>
+  <a href="https://github.com/Almaz/Fastry"><img src="https://img.shields.io/github/stars/Almaz/Fastry?style=flat&label=%E2%AD%90%20Star%20on%20GitHub&color=f59e0b" alt="Star on GitHub" /></a>
+  <a href="https://github.com/Almaz/Fastry"><img src="https://visitor-badge.laobi.icu/badge?page_id=hansmartensdev.Fastry" alt="Visitors" /></a>
 </p>
 
 <p align="center">
@@ -28,21 +28,21 @@
 
 ## Overview
 
-Astro Rocket is a **launch-ready starter theme** for web designers, developers, bloggers, and anyone who needs a portfolio website. Every page is already built and styled — you change the text and content, and your site is ready to go live.
+Fastry is a **launch-ready starter theme** for web designers, developers, bloggers, and anyone who needs a portfolio website. Every page is already built and styled — you change the text and content, and your site is ready to go live.
 
 It ships with a full blog, a complete component library, a built-in SEO layer, dark mode, a contact form, and 12 colour themes you can switch with one click. It's built on Astro 6 and Tailwind CSS v4.
 
-**[Live demo → astrorocket.dev](https://astrorocket.dev)** · **[Built by Hans Martens → hansmartens.dev](https://hansmartens.dev)**
+**[Live demo → fastry.ru](https://fastry.ru)** · **[Built by Almaz → almazworks.com](https://almazworks.com)**
 
-> **Astro Rocket is a fork of [Velocity](https://github.com/southwellmedia/velocity) by [Southwell Media](https://southwellmedia.com).** Velocity is the foundation — a powerful Astro boilerplate with a comprehensive design system and component library. Full credit to the Southwell Media team for that work. Astro Rocket builds on it with a different goal: a complete, ready-to-launch website where you only change the text to make it your own.
+> **Fastry is a fork of [Velocity](https://github.com/southwellmedia/velocity) by [Southwell Media](https://southwellmedia.com).** Velocity is the foundation — a powerful Astro boilerplate with a comprehensive design system and component library. Full credit to the Southwell Media team for that work. Fastry builds on it with a different goal: a complete, ready-to-launch website where you only change the text to make it your own.
 
 ---
 
 ## What changed from Velocity
 
-The following changes were made to the free Velocity theme to create Astro Rocket:
+The following changes were made to the free Velocity theme to create Fastry:
 
-| Change | Velocity | Astro Rocket |
+| Change | Velocity | Fastry |
 |--------|----------|--------------|
 | **Theme switching** | Edit a CSS import file and rebuild | 12 colour swatches in the header — click one and the logo badge, blog images, and every brand color update live on screen. No file edits, no rebuilds. Selector can be removed from the header once you've chosen a color. |
 | **Colour themes** | 1 default theme | 12 Tailwind-based themes — all 12 shown as swatches in the header selector (Orange, Amber, Lime, Emerald, Teal, Cyan, Sky, Blue, Indigo, Violet, Purple, Magenta) |
@@ -54,7 +54,7 @@ The following changes were made to the free Velocity theme to create Astro Rocke
 | **Colour mode** | Binary `localStorage` toggle | 3-state picker — System / Light / Dark in `localStorage`, with `prefers-color-scheme` live tracking under 'System' (see [Colour Mode](#colour-mode)) |
 | **Target audience** | Developers & agencies | Web designers, developers, bloggers, and portfolio sites |
 | **Ready to launch** | Boilerplate starting point | Fully styled pages — replace the text and your site is live |
-| **Maintained by** | Southwell Media | Hans Martens |
+| **Maintained by** | Southwell Media | Almaz |
 
 ---
 
@@ -86,7 +86,7 @@ The following changes were made to the free Velocity theme to create Astro Rocke
 
 ### Internationalization (i18n)
 
-Astro Rocket ships with **native, opt-in i18n** since 1.3.0. When the flag is off (the default) the build is byte-for-byte identical to a single-locale Astro Rocket site — no `/en/` prefix, no `LanguageSwitcher`, no `hreflang`, no JS for locale routing. Turn it on and you get locale-prefixed routes, an accessible `LanguageSwitcher` dropdown in the header (and mobile menu), `hreflang` SEO tags, and a `t()` translation helper backed by JSON dictionaries.
+Fastry ships with **native, opt-in i18n** since 1.3.0. When the flag is off (the default) the build is byte-for-byte identical to a single-locale Fastry site — no `/en/` prefix, no `LanguageSwitcher`, no `hreflang`, no JS for locale routing. Turn it on and you get locale-prefixed routes, an accessible `LanguageSwitcher` dropdown in the header (and mobile menu), `hreflang` SEO tags, and a `t()` translation helper backed by JSON dictionaries.
 
 #### Enabling i18n
 
@@ -132,7 +132,7 @@ import AboutPage from '@/components/pages/AboutPage.astro';
 
 #### Translating UI strings
 
-UI strings (button labels, "Read more", "Published on", etc.) live in `src/i18n/<locale>.json`. Astro Rocket ships English (`en.json`) and Dutch (`nl.json`) out of the box. Use the `t()` helper in any `.astro` file:
+UI strings (button labels, "Read more", "Published on", etc.) live in `src/i18n/<locale>.json`. Fastry ships English (`en.json`) and Dutch (`nl.json`) out of the box. Use the `t()` helper in any `.astro` file:
 
 ```astro
 ---
@@ -162,7 +162,7 @@ The whole system is build-time. No client-side routing, no framework hydration f
 
 #### Comparing to Southwell Media's CLI
 
-[`create-velocity-astro`](https://github.com/southwellmedia/create-velocity-astro) is the upstream Velocity CLI for scaffolding a fresh project with i18n. **It is not needed for Astro Rocket** — the equivalent feature is built in here. If you ever do run it, run it in an **empty directory**: it scaffolds a fresh Velocity project and will overwrite an existing directory (including a cloned Astro Rocket repo) if you confirm the "Directory already exists" prompt.
+[`create-velocity-astro`](https://github.com/southwellmedia/create-velocity-astro) is the upstream Velocity CLI for scaffolding a fresh project with i18n. **It is not needed for Fastry** — the equivalent feature is built in here. If you ever do run it, run it in an **empty directory**: it scaffolds a fresh Velocity project and will overwrite an existing directory (including a cloned Fastry repo) if you confirm the "Directory already exists" prompt.
 
 ---
 
@@ -177,7 +177,7 @@ The whole system is build-time. No client-side routing, no framework hydration f
 
 ```bash
 # Clone the repository
-git clone https://github.com/hansmartensdev/astro-rocket.git my-project
+git clone https://github.com/Almaz/Fastry.git my-project
 cd my-project
 
 # Install dependencies
@@ -197,7 +197,7 @@ Visit `http://localhost:4321` to see your site.
 ## Project Structure
 
 ```
-astro-rocket/
+Fastry/
 ├── public/                  # Static assets (fonts, favicon)
 ├── src/
 │   ├── assets/              # Images and icons (processed by Astro)
@@ -296,7 +296,7 @@ BING_SITE_VERIFICATION=your-code
 
 ## Design System
 
-Astro Rocket uses a three-tier design token system with OKLCH colors for perceptual uniformity:
+Fastry uses a three-tier design token system with OKLCH colors for perceptual uniformity:
 
 1. **Primitives** (`src/styles/tokens/primitives.css`) — raw color scales (gray, brand, status)
 2. **Semantic tokens** (`src/styles/themes/*.css`) — purpose-based mappings (background, foreground, border, etc.)
@@ -304,7 +304,7 @@ Astro Rocket uses a three-tier design token system with OKLCH colors for percept
 
 ### Switching Themes
 
-Astro Rocket ships with 12 colour themes, all based on Tailwind's color palette. All 12 are shown as colour swatches in the header dropdown (`ThemeSelectorDropdown`) on desktop and in the mobile menu (`ThemeSelector`). Clicking a swatch applies the theme instantly — the logo badge, blog image gradients, and every brand color on the page update live. No file edits, no rebuilds. This is the key difference from Velocity, where switching theme requires editing a CSS import file and rebuilding.
+Fastry ships with 12 colour themes, all based on Tailwind's color palette. All 12 are shown as colour swatches in the header dropdown (`ThemeSelectorDropdown`) on desktop and in the mobile menu (`ThemeSelector`). Clicking a swatch applies the theme instantly — the logo badge, blog image gradients, and every brand color on the page update live. No file edits, no rebuilds. This is the key difference from Velocity, where switching theme requires editing a CSS import file and rebuilding.
 
 The 12 themes in order: Orange, Amber, Lime, Emerald, Teal, Cyan, Sky, Blue (default), Indigo, Violet, Purple, and Magenta. The `themes` array in `src/components/layout/ThemeSelector.astro` controls which swatches are shown and in what order. You can also **remove the selector from the header entirely** once you've settled on a color — just remove `showThemeSelector` from the layout file.
 
@@ -363,7 +363,7 @@ OKLCH values are `oklch(lightness chroma hue)`. To shift your brand to blue, cha
 
 ### Colour Mode
 
-Astro Rocket ships a 3-state colour-mode system — **System / Light / Dark** — instead of a binary toggle. The user's choice is persisted in `localStorage` under the key `theme`, and the resolved appearance is applied via the `.dark` class on `<html>`. Under `'system'`, the page tracks `window.matchMedia('(prefers-color-scheme: dark)')` live, so flipping the OS theme updates the page in real time without a reload.
+Fastry ships a 3-state colour-mode system — **System / Light / Dark** — instead of a binary toggle. The user's choice is persisted in `localStorage` under the key `theme`, and the resolved appearance is applied via the `.dark` class on `<html>`. Under `'system'`, the page tracks `window.matchMedia('(prefers-color-scheme: dark)')` live, so flipping the OS theme updates the page in real time without a reload.
 
 State contract:
 
@@ -391,7 +391,7 @@ import ThemeModeDropdown from '@/components/layout/ThemeModeDropdown.astro';
 <ThemeModeDropdown />
 ```
 
-The full design — bootstrap script, dropdown anatomy, the live "Currently dark/light" sub-line under 'System', and how two component instances stay state-synced — is written up in the [System, Light, Dark blog post](https://astrorocket.dev/blog/colour-mode-system).
+The full design — bootstrap script, dropdown anatomy, the live "Currently dark/light" sub-line under 'System', and how two component instances stay state-synced — is written up in the [System, Light, Dark blog post](https://fastry.ru/blog/colour-mode-system).
 
 > **Why `localStorage` for colour mode but `sessionStorage` for the colour palette?** They serve different intents. The colour mode is the user's accessibility / preference setting and should survive reloads and new tabs — `localStorage`. The 12-swatch colour palette is a brand-discovery toy that should reset on every new visit so first impressions stay on-brand — `sessionStorage`. Keeping them on different storage tiers is intentional, not accidental.
 
@@ -428,7 +428,7 @@ Foreground tokens are documented with their contrast ratios inline. When customi
 
 ## Components
 
-Astro Rocket includes 57 components across 7 categories. All UI components use [class-variance-authority (CVA)](https://cva.style) for type-safe variant management.
+Fastry includes 57 components across 7 categories. All UI components use [class-variance-authority (CVA)](https://cva.style) for type-safe variant management.
 
 ### UI Components (31)
 
@@ -585,7 +585,7 @@ locale: en
 Your content here...
 ```
 
-To link from one post to another, use `<PostLink uid="target-post-id">link text</PostLink>` in your MDX instead of a hard-coded `/blog/...` URL. The id resolves to the right URL at build time, and a broken reference fails the build — so renaming a post never leaves a dead internal link. Give a post an optional `uid` (above) to make it a link target. The [configuration guide](/blog/astro-rocket-configuration-guide) post has the full walkthrough.
+To link from one post to another, use `<PostLink uid="target-post-id">link text</PostLink>` in your MDX instead of a hard-coded `/blog/...` URL. The id resolves to the right URL at build time, and a broken reference fails the build — so renaming a post never leaves a dead internal link. Give a post an optional `uid` (above) to make it a link target. The [configuration guide](/blog/Fastry-configuration-guide) post has the full walkthrough.
 
 ### Querying Content
 
@@ -715,7 +715,7 @@ pnpm build
 
 ## Performance
 
-Astro Rocket is optimized for Core Web Vitals:
+Fastry is optimized for Core Web Vitals:
 
 - **Lighthouse Score**: 100/100/100/100 on both mobile and desktop
 - **Zero JavaScript** by default (islands architecture)
@@ -727,11 +727,11 @@ Astro Rocket is optimized for Core Web Vitals:
 
 ## Animations
 
-Every page in Astro Rocket includes purposeful animations that make the site feel polished and alive. All animations respect the user's `prefers-reduced-motion` setting — they are disabled automatically for users who prefer less motion.
+Every page in Fastry includes purposeful animations that make the site feel polished and alive. All animations respect the user's `prefers-reduced-motion` setting — they are disabled automatically for users who prefer less motion.
 
 ### Page transitions
 
-Astro Rocket uses Astro's built-in `<ClientRouter />` (View Transitions API) to animate between pages. Instead of a full browser reload, content fades smoothly from one page to the next. This is enabled globally in `BaseLayout.astro` and requires no per-page configuration.
+Fastry uses Astro's built-in `<ClientRouter />` (View Transitions API) to animate between pages. Instead of a full browser reload, content fades smoothly from one page to the next. This is enabled globally in `BaseLayout.astro` and requires no per-page configuration.
 
 ### Scroll-triggered animations
 
@@ -805,12 +805,12 @@ MIT License — see [LICENSE](LICENSE) for details.
 
 ## Links
 
-- [Astro Rocket on GitHub](https://github.com/hansmartensdev/astro-rocket)
+- [Fastry on GitHub](https://github.com/Almaz/Fastry)
 - [Velocity — the original theme](https://github.com/southwellmedia/velocity) by [Southwell Media](https://southwellmedia.com)
 - [Astro Documentation](https://docs.astro.build)
 - [Tailwind CSS v4](https://tailwindcss.com/docs)
 
 ---
 
-**Astro Rocket** is designed and maintained by [Hans Martens](https://hansmartens.dev).
+**Fastry** is designed and maintained by [Almaz](https://almazworks.com).
 Built on [Velocity](https://github.com/southwellmedia/velocity) — the original theme by [Southwell Media](https://southwellmedia.com).

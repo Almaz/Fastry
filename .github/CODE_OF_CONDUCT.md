@@ -2,7 +2,7 @@
 
 ## Our Standards
 
-Astro Rocket is an open-source project and everyone who participates — whether through issues, pull requests, discussions, or any other channel — is expected to treat others with respect and professionalism.
+Fastry is an open-source project and everyone who participates — whether through issues, pull requests, discussions, or any other channel — is expected to treat others with respect and professionalism.
 
 **Expected behaviour:**
 - Be welcoming and considerate in your language and actions

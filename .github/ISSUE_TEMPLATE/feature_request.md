@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a new component, page, or improvement for Astro Rocket
+about: Suggest a new component, page, or improvement for Fastry
 title: "[Feature] "
 labels: enhancement
 assignees: ''
