@@ -28,9 +28,3 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
-
-# Russian 404 — serve the Russian 404 page for any non-existent /ru/* URL
-[[redirects]]
-  from = "/ru/*"
-  to = "/ru/404/index.html"
-  status = 404

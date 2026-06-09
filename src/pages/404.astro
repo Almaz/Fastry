@@ -1,6 +1,14 @@
 ---
 /**
  * 404 page — supports both English and Russian based on URL
+ *
+ * IMPORTANT: Netlify always serves the root 404.html for any 404 error,
+ * regardless of the URL path. Therefore, locale detection MUST happen
+ * on the client side via JavaScript.
+ *
+ * The server-side frontmatter renders English as the default fallback.
+ * A client-side script then checks if the URL starts with /ru/ and
+ * swaps all visible text to Russian.
  */
 import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
@@ -8,10 +16,10 @@ import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import Button from '@/components/ui/form/Button/Button.astro';
 import { Hero } from '@/components/hero';
-import { getLocaleFromPath, localizedPath, t } from '@/i18n';
+import { localizedPath, t } from '@/i18n';
 
-const url = Astro.url;
-const locale = getLocaleFromPath(url.pathname);
+// Default to English on the server — client JS will swap to Russian if needed
+const locale = 'en';
 
 const badgeText = t('errors.404.badge', locale);
 const headingPart = t('errors.404.titlePart', locale);
@@ -58,24 +66,24 @@ const blogHref = localizedPath('/blog', locale);
   <Hero layout="centered" size="sm" class="!bg-transparent" data-reveal>
     <Badge slot="badge" variant="brand" pill>
       <Icon name="compass" size="sm" />
-      {badgeText}
+      <span id="404-badge">{badgeText}</span>
     </Badge>
 
-    <h1 slot="title">
-      {headingPart} <span class="text-brand-500">{headingHighlight}</span>
+    <h1 slot="title" id="404-heading">
+      {headingPart} <span class="text-brand-500" id="404-heading-highlight">{headingHighlight}</span>
     </h1>
 
-    <p slot="description">
+    <p slot="description" id="404-description">
       {description}
     </p>
 
     <div slot="actions" class="flex flex-col sm:flex-row items-center justify-center gap-4">
-      <Button href={homeHref} size="lg">
+      <Button href={homeHref} size="lg" id="404-home-btn">
         <Icon name="arrow-left" size="sm" />
-        {homeLabel}
+        <span id="404-home-label">{homeLabel}</span>
       </Button>
-      <Button href={blogHref} variant="outline" size="lg">
-        {blogLabel}
+      <Button href={blogHref} variant="outline" size="lg" id="404-blog-btn">
+        <span id="404-blog-label">{blogLabel}</span>
         <Icon name="arrow-right" size="sm" />
       </Button>
     </div>
@@ -85,12 +93,12 @@ const blogHref = localizedPath('/blog', locale);
   <section class="py-[var(--space-section-md)] bg-background-secondary/80 backdrop-blur-sm border-t border-border relative z-10">
     <div class="mx-auto max-w-6xl px-6">
       <div class="mb-8 text-center" data-reveal>
-        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground" id="404-recovery-title">
           {recoveryTitle}
         </h2>
       </div>
 
-      <div class="grid gap-6 lg:grid-cols-3">
+      <div class="grid gap-6 lg:grid-cols-3" id="404-recovery-links">
         {recoveryLinks.map((link, i) => (
           <Card hover href={link.href} class="group" data-reveal data-reveal-delay={i}>
             <div class="flex items-start gap-4">
@@ -147,3 +155,92 @@ const blogHref = localizedPath('/blog', locale);
 </style>
 
 <script is:inline src="/scripts/404-bg.js"></script>
+
+<script is:inline>
+  /**
+   * Client-side locale detection for the 404 page.
+   * Netlify always serves the root 404.html regardless of the URL path,
+   * so we must detect /ru/ on the client and swap texts dynamically.
+   */
+  (function() {
+    var path = window.location.pathname;
+    if (!path.startsWith('/ru')) return;
+
+    var ru = {
+      badge: '404 — страница не найдена',
+      titlePart: 'Страница не',
+      titleHighlight: 'найдена.',
+      description: 'Эта страница была перемещена, удалена или никогда не существовала. Давайте вернём вас на правильный путь.',
+      recoveryTitle: 'Попробуйте один из этих разделов',
+      homeLabel: 'На главную',
+      blogLabel: 'Перейти в блог',
+      links: [
+        { title: 'Проекты', desc: 'Избранные работы и кейсы.', href: '/ru/projects' },
+        { title: 'Блог', desc: 'Заметки о дизайне, коде и мастерстве.', href: '/ru/blog' },
+        { title: 'Контакты', desc: 'Начните разговор о вашем проекте.', href: '/ru/contact' },
+      ],
+    };
+
+    // Swap badge
+    var badgeEl = document.getElementById('404-badge');
+    if (badgeEl) badgeEl.textContent = ru.badge;
+
+    // Swap heading parts
+    var headingEl = document.getElementById('404-heading');
+    if (headingEl) {
+      // headingEl contains text nodes + a span for the highlight
+      var highlightSpan = document.getElementById('404-heading-highlight');
+      // Replace the first text node (before the span)
+      var nodes = headingEl.childNodes;
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].nodeType === Node.TEXT_NODE && nodes[i].textContent.trim()) {
+          nodes[i].textContent = ru.titlePart + ' ';
+          break;
+        }
+      }
+      if (highlightSpan) highlightSpan.textContent = ru.titleHighlight;
+    }
+
+    // Swap description
+    var descEl = document.getElementById('404-description');
+    if (descEl) descEl.textContent = ru.description;
+
+    // Swap recovery title
+    var recoveryEl = document.getElementById('404-recovery-title');
+    if (recoveryEl) recoveryEl.textContent = ru.recoveryTitle;
+
+    // Swap home button label
+    var homeLabelEl = document.getElementById('404-home-label');
+    if (homeLabelEl) homeLabelEl.textContent = ru.homeLabel;
+
+    // Swap blog button label
+    var blogLabelEl = document.getElementById('404-blog-label');
+    if (blogLabelEl) blogLabelEl.textContent = ru.blogLabel;
+
+    // Swap home button href
+    var homeBtn = document.getElementById('404-home-btn');
+    if (homeBtn) homeBtn.setAttribute('href', '/ru');
+
+    // Swap blog button href
+    var blogBtn = document.getElementById('404-blog-btn');
+    if (blogBtn) blogBtn.setAttribute('href', '/ru/blog');
+
+    // Swap recovery links
+    var linksContainer = document.getElementById('404-recovery-links');
+    if (linksContainer) {
+      var cards = linksContainer.querySelectorAll('[data-reveal]');
+      for (var j = 0; j < cards.length && j < ru.links.length; j++) {
+        var card = cards[j];
+        var titleEl = card.querySelector('h3');
+        var descEl_ = card.querySelector('p');
+        var linkEl = card.closest('a') || card.querySelector('a');
+        if (titleEl) titleEl.textContent = ru.links[j].title;
+        if (descEl_) descEl_.textContent = ru.links[j].desc;
+        if (linkEl) linkEl.setAttribute('href', ru.links[j].href);
+      }
+    }
+
+    // Update page title
+    document.title = ru.badge + ' — Fastry';
+  })();
+</script>
