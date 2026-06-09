@@ -24,7 +24,7 @@ import {
   type NavItem as NavConfigItem,
 } from '@/config/nav.config';
 import { footerVariants, footerColumnGridVariants } from './footer.variants';
-import Logo from '@/components/ui/marketing/Logo/Logo.astro';
+import SiteLogo from '@/components/ui/marketing/Logo/SiteLogo.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import { t, getLocaleFromPath, localizedPath } from '@/i18n';
 
@@ -165,10 +165,7 @@ function getSocialIcon(platform: string): string {
               <slot name="logo" />
             ) : (
               <a href={localizedPath("/", locale)} class="flex items-center gap-2">
-                <Logo size="md" class="bg-brand-600" />
-                <span class="font-display text-base font-bold text-brand-600 dark:text-foreground">
-                  {t('siteName', locale)}
-                </span>
+                <SiteLogo size={120} />
               </a>
             )}
             {(hasTaglineSlot || tagline) && (
@@ -184,7 +181,7 @@ function getSocialIcon(platform: string): string {
           {allNavItems.map((item) => (
             <a
               href={localizedPath(item.href, locale)}
-              class={cn('transition-colors hover:text-foreground', item.iconOnly && 'p-1')}
+              class={cn('transition-colors hover:text-foreground')}
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               aria-label={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}
@@ -238,10 +235,7 @@ function getSocialIcon(platform: string): string {
                 <slot name="logo" />
               ) : (
                 <a href={localizedPath("/", locale)} class="flex items-center gap-2">
-                  <Logo size="md" class="bg-brand-600" />
-                  <span class="font-display text-base font-bold text-brand-600 dark:text-foreground">
-                    {t('siteName', locale)}
-                  </span>
+                  <SiteLogo size={120} />
                 </a>
               )}
               {(hasTaglineSlot || tagline) && (
@@ -341,10 +335,7 @@ function getSocialIcon(platform: string): string {
             <slot name="logo" />
           ) : (
             <a href={localizedPath("/", locale)} class="flex items-center gap-2">
-              <Logo size="md" class="bg-brand-600" />
-              <span class="font-display text-xl font-bold text-brand-600 dark:text-foreground">
-                {t('siteName', locale)}
-              </span>
+              <SiteLogo size={140} />
             </a>
           )
         )}
@@ -361,7 +352,7 @@ function getSocialIcon(platform: string): string {
           {allNavItems.map((item) => (
             <a
               href={localizedPath(item.href, locale)}
-              class={cn('transition-colors hover:text-foreground', item.iconOnly && 'p-1')}
+              class={cn('transition-colors hover:text-foreground')}
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               aria-label={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}

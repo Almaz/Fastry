@@ -180,7 +180,7 @@ const siteConfig: SiteConfig = {
   branding: {
     logo: {
       alt: 'Fastry',
-      imageUrl: '/favicon.svg',
+      imageUrl: '/fastry-logo-l.svg',
     },
     favicon: {
       svg: '/favicon.svg',
