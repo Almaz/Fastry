@@ -1,20 +1,11 @@
 /**
- * Format a date for display
+ * Format a date for display (yyyy/MM/dd)
  */
-export function formatDate(date: Date, locale = 'en-US'): string {
-  // Russian: use DD.MM.YYYY format
-  if (locale.startsWith('ru')) {
-    return new Intl.DateTimeFormat('ru-RU', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }).format(date);
-  }
-  return new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date);
+export function formatDate(date: Date, _locale = 'en-US'): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}/${m}/${d}`;
 }
 
 /**
