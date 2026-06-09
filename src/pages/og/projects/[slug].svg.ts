@@ -4,12 +4,11 @@ import { renderOgSvg } from '@/lib/og';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const projects = await getCollection('projects', ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true;
+    return data.locale === 'en' && (import.meta.env.PROD ? data.draft !== true : true);
   });
   return projects
-    .filter((project) => !project.id.startsWith('ru/'))
     .map((project) => ({
-    params: { slug: project.id.replace(/\.mdx?$/, '') },
+    params: { slug: project.id.replace(/^en\//, '') },
     props: {
       title: project.data.title,
       description: project.data.description,

@@ -1,6 +1,6 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
-// Form Components
+// Компоненты форм
 import Button from '@/components/ui/form/Button/Button.astro';
 import Input from '@/components/ui/form/Input/Input.astro';
 import Textarea from '@/components/ui/form/Textarea/Textarea.astro';
@@ -8,7 +8,7 @@ import Select from '@/components/ui/form/Select/Select.astro';
 import Checkbox from '@/components/ui/form/Checkbox/Checkbox.astro';
 import Radio from '@/components/ui/form/Radio/Radio.astro';
 import Switch from '@/components/ui/form/Switch/Switch.astro';
-// Data Display Components
+// Компоненты отображения данных
 import Card from '@/components/ui/data-display/Card/Card.astro';
 import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Avatar from '@/components/ui/data-display/Avatar/Avatar.astro';
@@ -17,24 +17,24 @@ import Table from '@/components/ui/data-display/Table/Table.astro';
 import Pagination from '@/components/ui/data-display/Pagination/Pagination.astro';
 import Progress from '@/components/ui/data-display/Progress/Progress.astro';
 import Skeleton from '@/components/ui/data-display/Skeleton/Skeleton.astro';
-// Feedback Components
+// Компоненты обратной связи
 import Alert from '@/components/ui/feedback/Alert/Alert.astro';
 import { ToastDemo } from '@/components/ui/feedback/Toast';
 import Tooltip from '@/components/ui/feedback/Tooltip/Tooltip.astro';
-// Overlay Components
+// Компоненты перекрытий
 import Dialog from '@/components/ui/overlay/Dialog/Dialog.astro';
 import Dropdown from '@/components/ui/overlay/Dropdown/Dropdown.astro';
 import Tabs from '@/components/ui/overlay/Tabs/Tabs.astro';
 import VerticalTabs from '@/components/ui/overlay/VerticalTabs/VerticalTabs.astro';
 import Accordion from '@/components/ui/overlay/Accordion/Accordion.astro';
-// Layout Components
+// Компоненты макета
 import Separator from '@/components/ui/layout/Separator/Separator.astro';
-// Primitives
+// Примитивы
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
-// Marketing Components
+// Маркетинговые компоненты
 import CTA from '@/components/ui/marketing/CTA/CTA.astro';
 import SocialProof from '@/components/ui/marketing/SocialProof/SocialProof.astro';
-// Other Components
+// Другие компоненты
 import { Hero } from '@/components/hero';
 import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
@@ -47,86 +47,86 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
 ---
 
 <PageLayout
-  title="Component Showcase"
-  description="Explore Fastry's comprehensive UI component library. Production-ready, accessible, and beautifully designed."
+  title="Витрина компонентов"
+  description="Изучите обширную библиотеку UI-компонентов Fastry. Готовые к использованию, доступные и красиво оформленные."
   noindex={true}
   footerBackground="secondary"
 >
 
-  <!-- Hero Section -->
+  <!-- Секция Hero -->
   <Hero layout="split" size="lg">
-    <Badge slot="badge" variant="brand" pill>50+ production components</Badge>
+    <Badge slot="badge" variant="brand" pill>50+ готовых компонентов</Badge>
 
     <h1 slot="title">
-      Component <span class="text-brand-500">Library</span>
+      Библиотека <span class="text-brand-500">компонентов</span>
     </h1>
 
     <p slot="description">
-      Production-ready UI primitives built with accessibility and performance in mind.
-      Copy, paste, and customize to match your brand.
+      Готовые к использованию UI-примитивы, созданные с заботой о доступности и производительности.
+      Копируйте, вставляйте и настраивайте под свой бренд.
     </p>
 
     <Fragment slot="actions">
       <Button href="#hero" class="hero-btn-brand">
-        Browse Components
+        Просмотреть компоненты
         <Icon name="arrow-right" size="sm" />
       </Button>
       <Button href="https://github.com/hansmartensdev/Astro-Rocket" target="_blank" class="hero-btn-learn">
         <Icon name="github" size="sm" />
-        View Source
+        Исходный код
       </Button>
     </Fragment>
   </Hero>
 
 
 
-  <!-- Components Showcase -->
+  <!-- Витрина компонентов -->
   <div class="mx-auto max-w-6xl px-6 py-20 space-y-32">
 
-    <!-- Hero Section -->
+    <!-- Секция Hero -->
     <section id="hero" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="star" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Hero</h2>
-          <p class="text-foreground-muted mt-1">Flexible hero sections with multiple layouts, backgrounds, and slot-based content injection.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Герой</h2>
+          <p class="text-foreground-muted mt-1">Гибкие hero-секции с несколькими макетами, фонами и слотами для инъекции контента.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Hero - Split Layout -->
+        <!-- Hero - Разделенный макет -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Split Layout</span>
-            <span class="showcase-hint">Two-column with aside slot</span>
+            <span class="showcase-label">Разделенный макет</span>
+            <span class="showcase-hint">Две колонки со слотом aside</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Hero layout="split" size="md" class="!pt-12 !pb-12">
-              <Badge slot="badge" variant="brand" pill>New release</Badge>
+              <Badge slot="badge" variant="brand" pill>Новый релиз</Badge>
 
               <h2 slot="title">
-                Build faster with <span class="text-brand-500">Fastry</span>
+                Стройте быстрее с <span class="text-brand-500">Fastry</span>
               </h2>
 
               <p slot="description">
-                A modern starter kit for production websites.
+                Современный стартовый набор для production-сайтов.
               </p>
 
               <Fragment slot="actions">
-                <Button size="sm">Get Started</Button>
-                <Button size="sm" variant="outline">Learn More</Button>
+                <Button size="sm">Начать</Button>
+                <Button size="sm" variant="outline">Подробнее</Button>
               </Fragment>
 
               <div slot="aside" class="bg-background-secondary border border-border rounded-lg p-6 text-center">
                 <Icon name="code" size="lg" class="text-brand-500 mx-auto mb-2" />
-                <p class="text-sm text-foreground-muted">Aside content slot</p>
+                <p class="text-sm text-foreground-muted">Слот для дополнительного контента</p>
               </div>
 
               <SocialProof
                 class="mt-[var(--space-stack-lg)]"
-                text="Trusted by developers"
+                text="Доверяют разработчики"
                 avatars={[
                   'https://i.pravatar.cc/150?img=12',
                   'https://i.pravatar.cc/150?img=33',
@@ -137,27 +137,27 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Hero - Centered Layout -->
+        <!-- Hero - Центрированный макет -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Centered Layout</span>
-            <span class="showcase-hint">Single column, center-aligned</span>
+            <span class="showcase-label">Центрированный макет</span>
+            <span class="showcase-hint">Одна колонка, выравнивание по центру</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Hero layout="centered" size="md" class="!pt-12 !pb-12">
-              <Badge slot="badge" variant="brand" pill>About us</Badge>
+              <Badge slot="badge" variant="brand" pill>О нас</Badge>
 
               <h2 slot="title">
-                We're on a <span class="text-brand-500">mission</span>
+                У нас есть <span class="text-brand-500">миссия</span>
               </h2>
 
               <p slot="description">
-                Building the tools developers love to use. Our team is dedicated to creating exceptional experiences.
+                Создаём инструменты, которыми разработчики любят пользоваться. Наша команда стремится создавать исключительные решения.
               </p>
 
               <Fragment slot="actions">
-                <Button size="sm">Meet the Team</Button>
-                <Button size="sm" variant="ghost">Our Story</Button>
+                <Button size="sm">Познакомиться с командой</Button>
+                <Button size="sm" variant="ghost">Наша история</Button>
               </Fragment>
             </Hero>
           </div>
@@ -176,61 +176,61 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Hero Backgrounds Grid -->
+        <!-- Сетка фонов Hero -->
         <div class="grid gap-6 lg:grid-cols-2">
-          <!-- Secondary Background -->
+          <!-- Фон второго уровня -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Secondary Background</span>
+              <span class="showcase-label">Фон второго уровня</span>
             </div>
             <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
               <Hero layout="split" size="sm" class="!pt-8 !pb-8 bg-surface-secondary">
-                <h2 slot="title">Secondary Background</h2>
-                <p slot="description">Subtle elevation from the default background.</p>
+                <h2 slot="title">Фон второго уровня</h2>
+                <p slot="description">Лёгкое возвышение над фоном по умолчанию.</p>
               </Hero>
             </div>
           </div>
 
-          <!-- Gradient Background -->
+          <!-- Градиентный фон -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Gradient Background</span>
+              <span class="showcase-label">Градиентный фон</span>
             </div>
             <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
               <Hero layout="split" size="sm" class="!pt-8 !pb-8 bg-gradient-to-br from-background via-background to-background-secondary">
-                <h2 slot="title">Gradient Background</h2>
-                <p slot="description">Smooth gradient transition effect.</p>
+                <h2 slot="title">Градиентный фон</h2>
+                <p slot="description">Эффект плавного градиентного перехода.</p>
               </Hero>
             </div>
           </div>
         </div>
 
-        <!-- Inverted Background (Full Width) -->
+        <!-- Инвертированный фон (на всю ширину) -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Inverted Background</span>
-            <span class="showcase-hint">Always dark, regardless of theme</span>
+            <span class="showcase-label">Инвертированный фон</span>
+            <span class="showcase-hint">Всегда тёмный, независимо от темы</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Hero layout="centered" size="sm" class="invert-section !pt-10 !pb-10 bg-background">
               <h2 slot="title">
-                <span class="text-foreground">Dark mode </span><span class="text-brand-400">always</span>
+                <span class="text-foreground">Тёмная тема </span><span class="text-brand-400">всегда</span>
               </h2>
 
               <p slot="description" class="text-foreground-secondary">
-                Perfect for CTAs and sections that need to stand out.
+                Идеально подходит для CTA и секций, которые должны выделяться.
               </p>
 
               <Fragment slot="actions">
-                <Button size="sm">Primary Action</Button>
+                <Button size="sm">Главное действие</Button>
                 <Button size="sm" variant="outline">
-                  Secondary
+                  Второстепенное
                 </Button>
               </Fragment>
 
               <SocialProof
                 class="mt-[var(--space-stack-lg)]"
-                text="Join thousands of users"
+                text="Присоединяйтесь к тысячам пользователей"
                 avatars={[
                   'https://i.pravatar.cc/150?img=5',
                   'https://i.pravatar.cc/150?img=8',
@@ -241,11 +241,11 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Size Variations -->
+        <!-- Вариации размеров -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Size Variations</span>
-            <span class="showcase-hint">sm, md, lg, xl padding options</span>
+            <span class="showcase-label">Вариации размеров</span>
+            <span class="showcase-hint">параметры отступа sm, md, lg, xl</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -256,10 +256,10 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                   </div>
                   <div class="bg-background text-center py-2">
                     <span class="text-xs text-foreground-subtle">
-                      {size === 'sm' && 'Compact padding'}
-                      {size === 'md' && 'Default padding'}
-                      {size === 'lg' && 'Large padding'}
-                      {size === 'xl' && 'Extra-large padding'}
+                      {size === 'sm' && 'Компактный отступ'}
+                      {size === 'md' && 'Отступ по умолчанию'}
+                      {size === 'lg' && 'Большой отступ'}
+                      {size === 'xl' && 'Очень большой отступ'}
                     </span>
                   </div>
                 </div>
@@ -268,16 +268,16 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Props Reference -->
+        <!-- Справка по параметрам -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Available Props</span>
-            <span class="showcase-hint">Simplified API (composition-first)</span>
+            <span class="showcase-label">Доступные параметры</span>
+            <span class="showcase-hint">Упрощённый API (композиция прежде всего)</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-4 sm:grid-cols-2 text-sm">
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Props</h4>
+                <h4 class="font-semibold text-foreground mb-2">Параметры</h4>
                 <ul class="space-y-1 text-foreground-muted">
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">layout</code> centered | split</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">size</code> sm | md | lg | xl</li>
@@ -285,60 +285,60 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Slots</h4>
+                <h4 class="font-semibold text-foreground mb-2">Слоты</h4>
                 <ul class="space-y-1 text-foreground-muted">
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">badge</code> Use Badge component</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">title</code> Use h1/h2 directly</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">description</code> Use p directly</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">actions</code> CTA buttons</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">aside</code> Side content (split only)</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">badge</code> Используйте компонент Badge</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">title</code> Используйте h1/h2 напрямую</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">description</code> Используйте p напрямую</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">actions</code> Кнопки призыва к действию</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">aside</code> Боковой контент (только для split)</li>
                 </ul>
               </div>
             </div>
             <p class="text-xs text-foreground-subtle mt-4">
-              <strong>Backgrounds:</strong> Use CSS classes for custom backgrounds (e.g., <code class="bg-secondary px-1 rounded">class="bg-surface-invert"</code>)
+              <strong>Фоны:</strong> Используйте CSS-классы для пользовательских фонов (например, <code class="bg-secondary px-1 rounded">class="bg-surface-invert"</code>)
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Layout Section (Header & Footer) -->
+    <!-- Секция Layout (Шапка и Подвал) -->
     <section id="layout" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="layout" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Layout</h2>
-          <p class="text-foreground-muted mt-1">Header and Footer components for consistent page structure. Variant-based with full customization via design tokens.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Макет</h2>
+          <p class="text-foreground-muted mt-1">Компоненты шапки и подвала для единообразной структуры страницы. Варианты с полной кастомизацией через дизайн-токены.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Header Default Layout -->
+        <!-- Шапка: макет по умолчанию -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Default Layout</span>
-            <span class="showcase-hint">Logo left, nav + actions right-aligned</span>
+            <span class="showcase-label">Макет по умолчанию</span>
+            <span class="showcase-hint">Логотип слева, навигация + действия справа</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Header
               position="static"
               showMobileMenu={false}
               showCta
-              cta={{ label: 'Get Started', href: '#' }}
-              nav={[{ label: 'Features', href: '#' }, { label: 'Pricing', href: '#' }, { label: 'Docs', href: '#' }, { label: 'Blog', href: '#' }]}
+              cta={{ label: 'Начать', href: '#' }}
+              nav={[{ label: 'Возможности', href: '#' }, { label: 'Цены', href: '#' }, { label: 'Документация', href: '#' }, { label: 'Блог', href: '#' }]}
               actions={[{ icon: 'github', href: '#', label: 'GitHub', iconOnly: true }]}
             />
           </div>
         </div>
 
-        <!-- Minimal Layout -->
+        <!-- Минимальный макет -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Minimal Layout</span>
-            <span class="showcase-hint">Logo + CTA only, no navigation</span>
+            <span class="showcase-label">Минимальный макет</span>
+            <span class="showcase-hint">Логотип + CTA, без навигации</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Header
@@ -346,16 +346,16 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               position="static"
               showMobileMenu={false}
               showCta
-              cta={{ label: 'Sign In', href: '#' }}
+              cta={{ label: 'Войти', href: '#' }}
             />
           </div>
         </div>
 
-        <!-- Nav-only (no actions) -->
+        <!-- Только навигация (без действий) -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Nav Only</span>
-            <span class="showcase-hint">No CTA, no actions, just navigation</span>
+            <span class="showcase-label">Только навигация</span>
+            <span class="showcase-hint">Без CTA, без действий, только навигация</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Header
@@ -363,15 +363,15 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               showMobileMenu={false}
               showThemeToggle={false}
               showCta={false}
-              nav={[{ label: 'Home', href: '#' }, { label: 'About', href: '#' }, { label: 'Services', href: '#' }, { label: 'Contact', href: '#' }]}
+              nav={[{ label: 'Главная', href: '#' }, { label: 'О нас', href: '#' }, { label: 'Услуги', href: '#' }, { label: 'Контакты', href: '#' }]}
             />
           </div>
         </div>
 
-        <!-- Header Size Variants -->
+        <!-- Варианты размеров шапки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Size Variants</span>
+            <span class="showcase-label">Варианты размеров</span>
             <span class="showcase-hint">sm (48px), md (56px), lg (64px)</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
@@ -381,18 +381,18 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                   <div class="bg-background-secondary/50 px-4 py-2 border-b border-border flex items-center justify-between">
                     <span class="text-xs font-mono text-foreground-muted">size="{size}"</span>
                     <span class="text-xs text-foreground-subtle">
-                      {size === 'sm' && 'h-12 (48px) — compact'}
-                      {size === 'md' && 'h-14 (56px) — default'}
-                      {size === 'lg' && 'h-16 (64px) — spacious'}
+                      {size === 'sm' && 'h-12 (48px) — компактный'}
+                      {size === 'md' && 'h-14 (56px) — по умолчанию'}
+                      {size === 'lg' && 'h-16 (64px) — просторный'}
                     </span>
                   </div>
                   <Header
                     position="static"
                     size={size}
                     showMobileMenu={false}
-                    nav={[{ label: 'Features', href: '#' }, { label: 'Pricing', href: '#' }, { label: 'Docs', href: '#' }]}
+                    nav={[{ label: 'Возможности', href: '#' }, { label: 'Цены', href: '#' }, { label: 'Документация', href: '#' }]}
                     showCta
-                    cta={{ label: 'Get Started', href: '#' }}
+                    cta={{ label: 'Начать', href: '#' }}
                   />
                 </div>
               ))}
@@ -400,34 +400,34 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Header Background Variants -->
+        <!-- Варианты фона шапки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Background Variants</span>
+            <span class="showcase-label">Варианты фона</span>
             <span class="showcase-hint">default, solid, transparent</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <div class="divide-y divide-border">
-              <!-- Default with blur -->
+              <!-- По умолчанию с размытием -->
               <div class="relative">
                 <div class="absolute inset-0 bg-gradient-to-r from-brand-100 to-brand-200 dark:from-brand-900/30 dark:to-brand-800/30"></div>
                 <div class="relative">
                   <div class="bg-background/80 backdrop-blur-sm px-4 py-2 border-b border-border">
                     <span class="text-xs font-mono text-foreground-muted">variant="default"</span>
-                    <span class="text-xs text-foreground-subtle ml-2">— backdrop blur + transparency</span>
+                    <span class="text-xs text-foreground-subtle ml-2">— размытие фона + прозрачность</span>
                   </div>
-                  <Header position="static" size="sm" variant="default" showMobileMenu={false} nav={[{ label: 'Home', href: '#' }, { label: 'About', href: '#' }]} />
+                  <Header position="static" size="sm" variant="default" showMobileMenu={false} nav={[{ label: 'Главная', href: '#' }, { label: 'О нас', href: '#' }]} />
                 </div>
               </div>
               <!-- Solid -->
               <div>
                 <div class="bg-background-secondary/50 px-4 py-2 border-b border-border">
                   <span class="text-xs font-mono text-foreground-muted">variant="solid"</span>
-                  <span class="text-xs text-foreground-subtle ml-2">— opaque background</span>
+                  <span class="text-xs text-foreground-subtle ml-2">— непрозрачный фон</span>
                 </div>
-                <Header position="static" size="sm" variant="solid" showMobileMenu={false} nav={[{ label: 'Home', href: '#' }, { label: 'About', href: '#' }]} />
+                <Header position="static" size="sm" variant="solid" showMobileMenu={false} nav={[{ label: 'Главная', href: '#' }, { label: 'О нас', href: '#' }]} />
               </div>
-              <!-- Transparent on light image -->
+              <!-- Прозрачный на светлом изображении -->
               <div class="relative overflow-hidden">
                 <div
                   class="absolute inset-0 bg-cover bg-center grayscale brightness-150 opacity-60"
@@ -437,7 +437,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 <div class="relative">
                   <div class="bg-white/60 backdrop-blur-sm px-4 py-2 border-b border-black/10">
                     <span class="text-xs font-mono text-black/70">variant="transparent"</span>
-                    <span class="text-xs text-black/50 ml-2">— light background, dark text</span>
+                    <span class="text-xs text-black/50 ml-2">— светлый фон, тёмный текст</span>
                   </div>
                   <Header
                     position="static"
@@ -445,12 +445,12 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                     variant="transparent"
                     showMobileMenu={false}
                     showCta
-                    cta={{ label: 'Explore', href: '#' }}
-                    nav={[{ label: 'Home', href: '#' }, { label: 'Gallery', href: '#' }, { label: 'Contact', href: '#' }]}
+                    cta={{ label: 'Исследовать', href: '#' }}
+                    nav={[{ label: 'Главная', href: '#' }, { label: 'Галерея', href: '#' }, { label: 'Контакты', href: '#' }]}
                   />
                 </div>
               </div>
-              <!-- Transparent on dark (inverted colors) -->
+              <!-- Прозрачный на тёмном (инвертированные цвета) -->
               <div
                 class="relative bg-cover bg-center"
                 style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=200&fit=crop&q=80');"
@@ -459,7 +459,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 <div class="relative">
                   <div class="bg-black/30 backdrop-blur-sm px-4 py-2 border-b border-white/10">
                     <span class="text-xs font-mono text-white/90">variant="transparent" colorScheme="invert"</span>
-                    <span class="text-xs text-white/70 ml-2">— for dark backgrounds</span>
+                    <span class="text-xs text-white/70 ml-2">— для тёмных фонов</span>
                   </div>
                   <Header
                     position="static"
@@ -468,8 +468,8 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                     colorScheme="invert"
                     showMobileMenu={false}
                     showCta
-                    cta={{ label: 'Explore', href: '#' }}
-                    nav={[{ label: 'Home', href: '#' }, { label: 'Gallery', href: '#' }, { label: 'Contact', href: '#' }]}
+                    cta={{ label: 'Исследовать', href: '#' }}
+                    nav={[{ label: 'Главная', href: '#' }, { label: 'Галерея', href: '#' }, { label: 'Контакты', href: '#' }]}
                   />
                 </div>
               </div>
@@ -478,16 +478,16 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
         </div>
 
 
-        <!-- Header Props Reference -->
+        <!-- Справка по параметрам шапки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Header Props</span>
-            <span class="showcase-hint">Full API reference</span>
+            <span class="showcase-label">Параметры шапки</span>
+            <span class="showcase-hint">Полный API</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 text-sm">
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Layout & Position</h4>
+                <h4 class="font-semibold text-foreground mb-2">Макет и позиция</h4>
                 <ul class="space-y-1 text-foreground-muted">
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">layout</code> default | centered | minimal</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">position</code> fixed | sticky | static</li>
@@ -497,16 +497,16 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Navigation</h4>
+                <h4 class="font-semibold text-foreground mb-2">Навигация</h4>
                 <ul class="space-y-1 text-foreground-muted">
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">nav</code> NavItem[] (overrides routes)</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">extraNav</code> NavItem[] (adds to routes)</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">nav</code> NavItem[] (заменяет стандартные маршруты)</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">extraNav</code> NavItem[] (добавляет к маршрутам)</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">showActiveState</code> boolean</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">showMobileMenu</code> boolean</li>
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Actions</h4>
+                <h4 class="font-semibold text-foreground mb-2">Действия</h4>
                 <ul class="space-y-1 text-foreground-muted">
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">showCta</code> boolean</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">cta</code> {'{ label, href }'}</li>
@@ -518,11 +518,11 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Footer Component -->
+        <!-- Компонент подвала -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Footer - Simple Layout</span>
-            <span class="showcase-hint">Single row with logo, nav, optional social</span>
+            <span class="showcase-label">Подвал — простой макет</span>
+            <span class="showcase-hint">Одна строка с логотипом, навигацией и опциональными соцсетями</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Footer
@@ -537,100 +537,100 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Footer Minimal Layout -->
+        <!-- Минимальный макет подвала -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Minimal Layout</span>
-            <span class="showcase-hint">Copyright only — perfect for simple sites</span>
+            <span class="showcase-label">Минимальный макет</span>
+            <span class="showcase-hint">Только копирайт — идеально для простых сайтов</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Footer
               layout="minimal"
-              copyright="© {year} {siteName}"
+              copyright="{siteName} © {year}"
             />
           </div>
         </div>
 
-        <!-- Footer Stacked Layout -->
+        <!-- Вертикальный макет подвала -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Stacked Layout</span>
-            <span class="showcase-hint">Vertically stacked, centered — great for landing pages</span>
+            <span class="showcase-label">Вертикальный макет</span>
+            <span class="showcase-hint">Вертикальное выравнивание по центру — отлично для лендингов</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Footer
               layout="stacked"
-              tagline="Build faster, ship with confidence"
+              tagline="Стройте быстрее, выпускайте с уверенностью"
               socialLinks={[
                 { platform: 'github', href: '#' },
                 { platform: 'twitter', href: '#' },
               ]}
               legalLinks={[
-                { label: 'Privacy', href: '#' },
-                { label: 'Terms', href: '#' },
+                { label: 'Конфиденциальность', href: '#' },
+                { label: 'Условия', href: '#' },
               ]}
             />
           </div>
         </div>
 
-        <!-- Footer Columns Layout -->
+        <!-- Многоколоночный макет подвала -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Columns Layout</span>
-            <span class="showcase-hint">Multi-column with link groups</span>
+            <span class="showcase-label">Многоколоночный макет</span>
+            <span class="showcase-hint">Несколько колонок с группами ссылок</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <Footer
               layout="columns"
               columns={4}
-              tagline="Modern starter kit for production websites"
+              tagline="Современный стартовый набор для production-сайтов"
               socialLinks={[
                 { platform: 'github', href: '#' },
                 { platform: 'twitter', href: '#' },
               ]}
               linkGroups={[
                 {
-                  title: 'Product',
+                  title: 'Продукт',
                   links: [
-                    { label: 'Features', href: '#' },
-                    { label: 'Pricing', href: '#' },
-                    { label: 'Docs', href: '#' },
+                    { label: 'Возможности', href: '#' },
+                    { label: 'Цены', href: '#' },
+                    { label: 'Документация', href: '#' },
                   ],
                 },
                 {
-                  title: 'Company',
+                  title: 'Компания',
                   links: [
-                    { label: 'About', href: '#' },
-                    { label: 'Blog', href: '#' },
-                    { label: 'Careers', href: '#' },
+                    { label: 'О нас', href: '#' },
+                    { label: 'Блог', href: '#' },
+                    { label: 'Карьера', href: '#' },
                   ],
                 },
                 {
-                  title: 'Legal',
+                  title: 'Юридическая информация',
                   links: [
-                    { label: 'Privacy', href: '#' },
-                    { label: 'Terms', href: '#' },
+                    { label: 'Конфиденциальность', href: '#' },
+                    { label: 'Условия', href: '#' },
                   ],
                 },
               ]}
               legalLinks={[
-                { label: 'Privacy Policy', href: '#' },
-                { label: 'Terms of Service', href: '#' },
+                { label: 'Политика конфиденциальности', href: '#' },
+                { label: 'Условия использования', href: '#' },
               ]}
             />
           </div>
         </div>
 
-        <!-- Footer Props Reference -->
+        <!-- Справка по параметрам подвала -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Footer Props</span>
-            <span class="showcase-hint">Full API reference</span>
+            <span class="showcase-label">Параметры подвала</span>
+            <span class="showcase-hint">Полный API</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 text-sm">
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Layout</h4>
+                <h4 class="font-semibold text-foreground mb-2">Макет</h4>
                 <ul class="space-y-1 text-foreground-muted">
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">layout</code> simple | columns | minimal | stacked</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">columns</code> 2 | 3 | 4</li>
@@ -638,7 +638,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Content</h4>
+                <h4 class="font-semibold text-foreground mb-2">Содержимое</h4>
                 <ul class="space-y-1 text-foreground-muted">
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">nav</code> NavItem[]</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">linkGroups</code> FooterLinkGroup[]</li>
@@ -647,10 +647,10 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Copyright & Legal</h4>
+                <h4 class="font-semibold text-foreground mb-2">Копирайт и юридическое</h4>
                 <ul class="space-y-1 text-foreground-muted">
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">showCopyright</code> boolean</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">copyright</code> string (supports {'{year}'}, {'{siteName}'})</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">copyright</code> string (поддерживает {'{year}'}, {'{siteName}'})</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">legalLinks</code> LegalLink[]</li>
                 </ul>
               </div>
@@ -658,15 +658,15 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Design Tokens -->
+        <!-- Дизайн-токены навигации -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Navigation Design Tokens</span>
-            <span class="showcase-hint">Customize via CSS custom properties</span>
+            <span class="showcase-label">Токены оформления навигации</span>
+            <span class="showcase-hint">Кастомизация через CSS-переменные</span>
           </div>
           <div class="showcase-content">
             <div class="bg-background-secondary rounded-lg p-4 font-mono text-xs space-y-1 text-foreground-muted overflow-x-auto">
-              <p class="text-foreground-subtle">/* Customize nav link states in global.css */</p>
+              <p class="text-foreground-subtle">/* Настройка состояний ссылок навигации в global.css */</p>
               <p>--nav-link-color: var(--foreground-muted);</p>
               <p>--nav-link-hover-color: var(--foreground);</p>
               <p>--nav-link-hover-bg: var(--secondary);</p>
@@ -677,65 +677,65 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- CTA Default Variant -->
+        <!-- CTA - вариант по умолчанию -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">CTA - Default Variant</span>
-            <span class="showcase-hint">Light background with heading, description, and action buttons</span>
+            <span class="showcase-label">CTA — вариант по умолчанию</span>
+            <span class="showcase-hint">Светлый фон с заголовком, описанием и кнопками действий</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <CTA variant="default" size="md" maxWidth="lg">
               <h2 slot="heading">
-                Stop configuring. <span class="text-brand-500">Start building.</span>
+                Хватит настраивать. <span class="text-brand-500">Начните строить.</span>
               </h2>
               <p slot="description">
-                Join the developers building faster, better websites with Fastry.
+                Присоединяйтесь к разработчикам, которые создают быстрые и качественные сайты с Fastry.
               </p>
               <Fragment slot="actions">
-                <Button size="lg">Get Started</Button>
-                <Button variant="outline" size="lg">Learn More</Button>
+                <Button size="lg">Начать</Button>
+                <Button variant="outline" size="lg">Подробнее</Button>
               </Fragment>
             </CTA>
           </div>
         </div>
 
-        <!-- CTA Invert Variant -->
+        <!-- CTA - инвертированный вариант -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">CTA - Invert Variant</span>
-            <span class="showcase-hint">Dark background with inverted color scheme</span>
+            <span class="showcase-label">CTA — инвертированный вариант</span>
+            <span class="showcase-hint">Тёмный фон с инвертированной цветовой схемой</span>
           </div>
           <div class="showcase-content !p-0 overflow-hidden rounded-b-xl">
             <CTA variant="invert" size="md" maxWidth="md">
-              <h2 slot="heading">Ready to build?</h2>
+              <h2 slot="heading">Готовы к созданию?</h2>
               <p slot="description">
-                These components are just the beginning. Clone Fastry and start shipping faster.
+                Это лишь начало. Клонируйте Fastry и начните выпускать продукты быстрее.
               </p>
               <Fragment slot="actions">
                 <Button>
                   <Icon name="github" size="sm" />
-                  Clone Repository
+                  Клонировать репозиторий
                 </Button>
-                <Button variant="outline">Read Documentation</Button>
+                <Button variant="outline">Читать документацию</Button>
               </Fragment>
             </CTA>
           </div>
         </div>
 
-        <!-- CTA Size Variants -->
+        <!-- Варианты размеров CTA -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">CTA - Size Variants</span>
-            <span class="showcase-hint">sm, md, lg, xl padding options</span>
+            <span class="showcase-label">CTA — вариации размеров</span>
+            <span class="showcase-hint">параметры отступа sm, md, lg, xl</span>
           </div>
           <div class="showcase-content">
             <div class="bg-background-secondary rounded-lg p-4 font-mono text-xs space-y-1 text-foreground-muted overflow-x-auto">
-              <p class="text-foreground-subtle">/* Size variants control vertical padding */</p>
+              <p class="text-foreground-subtle">/* Варианты размера управляют вертикальными отступами */</p>
               <p>sm: 'py-16 md:py-20'</p>
               <p>md: 'py-20 md:py-24'</p>
-              <p>lg: 'py-24 md:py-32' (default)</p>
+              <p>lg: 'py-24 md:py-32' (по умолчанию)</p>
               <p>xl: 'py-32 md:py-40'</p>
-              <p class="mt-2 text-foreground-subtle">/* MaxWidth variants control content width */</p>
+              <p class="mt-2 text-foreground-subtle">/* Варианты MaxWidth управляют шириной контента */</p>
               <p>sm: 'max-w-xl' | md: 'max-w-2xl' | lg: 'max-w-3xl' | xl: 'max-w-4xl'</p>
             </div>
           </div>
@@ -743,63 +743,63 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Buttons Section -->
+    <!-- Секция кнопок -->
     <section id="buttons" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="box" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Buttons</h2>
-          <p class="text-foreground-muted mt-1">Interactive elements for actions and navigation. All variants support icons, loading states, and full accessibility.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Кнопки</h2>
+          <p class="text-foreground-muted mt-1">Интерактивные элементы для действий и навигации. Все варианты поддерживают иконки, состояния загрузки и полную доступность.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Button Variants -->
+        <!-- Варианты кнопок -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Variants</span>
-            <span class="showcase-hint">6 styles for different contexts</span>
+            <span class="showcase-label">Варианты</span>
+            <span class="showcase-hint">6 стилей для разных контекстов</span>
           </div>
           <div class="showcase-content">
             <div class="flex flex-wrap items-center gap-3">
-              <Button variant="primary">Primary</Button>
-              <Button variant="secondary">Secondary</Button>
-              <Button variant="outline">Outline</Button>
-              <Button variant="ghost">Ghost</Button>
-              <Button variant="link">Link</Button>
-              <Button variant="destructive">Destructive</Button>
+              <Button variant="primary">Основная</Button>
+              <Button variant="secondary">Вторичная</Button>
+              <Button variant="outline">Контурная</Button>
+              <Button variant="ghost">Прозрачная</Button>
+              <Button variant="link">Ссылка</Button>
+              <Button variant="destructive">Опасная</Button>
             </div>
           </div>
         </div>
 
-        <!-- Button Sizes -->
+        <!-- Размеры кнопок -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Sizes</span>
-            <span class="showcase-hint">Responsive scaling</span>
+            <span class="showcase-label">Размеры</span>
+            <span class="showcase-hint">Адаптивное масштабирование</span>
           </div>
           <div class="showcase-content">
             <div class="flex flex-wrap items-end gap-3">
-              <Button size="sm">Small</Button>
-              <Button size="md">Medium</Button>
-              <Button size="lg">Large</Button>
+              <Button size="sm">Маленькая</Button>
+              <Button size="md">Средняя</Button>
+              <Button size="lg">Большая</Button>
             </div>
           </div>
         </div>
 
-        <!-- Button States & Icons -->
+        <!-- Состояния и иконки кнопок -->
         <div class="grid gap-6 lg:grid-cols-2">
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">States</span>
+              <span class="showcase-label">Состояния</span>
             </div>
             <div class="showcase-content">
               <div class="flex flex-wrap items-center gap-3">
-                <Button>Default</Button>
-                <Button loading>Loading</Button>
-                <Button disabled>Disabled</Button>
+                <Button>По умолчанию</Button>
+                <Button loading>Загрузка</Button>
+                <Button disabled>Отключена</Button>
                 <Button icon><Icon name="plus" /></Button>
               </div>
             </div>
@@ -807,13 +807,13 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
 
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">With Icons</span>
+              <span class="showcase-label">С иконками</span>
             </div>
             <div class="showcase-content">
               <div class="flex flex-wrap items-center gap-3">
-                <Button><Icon name="mail" size="sm" /> Send</Button>
-                <Button variant="outline"><Icon name="download" size="sm" /> Export</Button>
-                <Button variant="ghost"><Icon name="star" size="sm" /> Star</Button>
+                <Button><Icon name="mail" size="sm" /> Отправить</Button>
+                <Button variant="outline"><Icon name="download" size="sm" /> Экспорт</Button>
+                <Button variant="ghost"><Icon name="star" size="sm" /> Избранное</Button>
               </div>
             </div>
           </div>
@@ -821,205 +821,205 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Form Inputs Section -->
+    <!-- Секция полей формы -->
     <section id="inputs" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="terminal" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Form Inputs</h2>
-          <p class="text-foreground-muted mt-1">Text fields, selects, checkboxes, and more. Built with native validation and ARIA support.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Поля формы</h2>
+          <p class="text-foreground-muted mt-1">Текстовые поля, селекты, чекбоксы и другие. Встроенная валидация и поддержка ARIA.</p>
         </div>
       </div>
 
       <div class="space-y-6">
         <div class="grid gap-6 lg:grid-cols-2">
-          <!-- Text Input -->
+          <!-- Текстовое поле -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Text Input</span>
-              <span class="showcase-hint">With labels & validation</span>
+              <span class="showcase-label">Текстовое поле</span>
+              <span class="showcase-hint">С метками и валидацией</span>
             </div>
             <div class="showcase-content space-y-5">
-              <Input label="Email address" type="email" placeholder="you@example.com" />
-              <Input label="Password" type="password" placeholder="••••••••" hint="Must be at least 8 characters" />
-              <Input label="Disabled" placeholder="Cannot edit" disabled />
+              <Input label="Email" type="email" placeholder="you@example.com" />
+              <Input label="Пароль" type="password" placeholder="••••••••" hint="Не менее 8 символов" />
+              <Input label="Отключено" placeholder="Недоступно для редактирования" disabled />
             </div>
           </div>
 
-          <!-- Input with Icons -->
+          <!-- Поле с иконками -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Input with Icons</span>
-              <span class="showcase-hint">Leading & trailing icons</span>
+              <span class="showcase-label">Поле с иконками</span>
+              <span class="showcase-hint">Иконки слева и справа</span>
             </div>
             <div class="showcase-content space-y-5">
-              <Input label="Search" placeholder="Search..." leadingIcon="search" />
+              <Input label="Поиск" placeholder="Поиск..." leadingIcon="search" />
               <Input label="Email" type="email" placeholder="you@example.com" leadingIcon="mail" />
-              <Input label="Website" placeholder="https://example.com" leadingIcon="globe" trailingIcon="external-link" />
+              <Input label="Веб-сайт" placeholder="https://example.com" leadingIcon="globe" trailingIcon="external-link" />
             </div>
           </div>
 
-          <!-- Textarea -->
+          <!-- Текстовая область -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Textarea</span>
-              <span class="showcase-hint">Multi-line text input</span>
+              <span class="showcase-label">Текстовая область</span>
+              <span class="showcase-hint">Многострочный ввод</span>
             </div>
             <div class="showcase-content">
-              <Textarea label="Message" placeholder="Write your message here..." rows={5} hint="Supports markdown formatting" />
+              <Textarea label="Сообщение" placeholder="Напишите ваше сообщение..." rows={5} hint="Поддерживается markdown" />
             </div>
           </div>
 
-          <!-- Select -->
+          <!-- Выпадающий список -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Select</span>
-              <span class="showcase-hint">Native dropdown</span>
+              <span class="showcase-label">Выпадающий список</span>
+              <span class="showcase-hint">Нативный селект</span>
             </div>
             <div class="showcase-content">
-              <Select label="Country" options={[
-                { value: '', label: 'Select a country...' },
-                { value: 'us', label: 'United States' },
-                { value: 'uk', label: 'United Kingdom' },
-                { value: 'ca', label: 'Canada' },
-                { value: 'de', label: 'Germany' },
-                { value: 'fr', label: 'France' },
+              <Select label="Страна" options={[
+                { value: '', label: 'Выберите страну...' },
+                { value: 'us', label: 'США' },
+                { value: 'uk', label: 'Великобритания' },
+                { value: 'ca', label: 'Канада' },
+                { value: 'de', label: 'Германия' },
+                { value: 'fr', label: 'Франция' },
               ]} />
             </div>
           </div>
 
-          <!-- Checkboxes -->
+          <!-- Чекбоксы -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Checkboxes</span>
-              <span class="showcase-hint">Custom styled controls</span>
+              <span class="showcase-label">Чекбоксы</span>
+              <span class="showcase-hint">Кастомизированные элементы управления</span>
             </div>
             <div class="showcase-content space-y-4">
-              <Checkbox label="I agree to the terms of service" />
-              <Checkbox label="Send me product updates" checked />
-              <Checkbox label="Enable notifications" description="Receive alerts for important updates" />
-              <Checkbox label="Disabled checkbox" disabled />
+              <Checkbox label="Я согласен с условиями использования" />
+              <Checkbox label="Присылать обновления о продукте" checked />
+              <Checkbox label="Включить уведомления" description="Получать оповещения о важных обновлениях" />
+              <Checkbox label="Отключенный чекбокс" disabled />
             </div>
           </div>
 
-          <!-- Radio Buttons -->
+          <!-- Радиокнопки -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Radio Buttons</span>
-              <span class="showcase-hint">Single-select controls</span>
+              <span class="showcase-label">Радиокнопки</span>
+              <span class="showcase-hint">Выбор одного варианта</span>
             </div>
             <div class="showcase-content space-y-4">
-              <Radio name="notify-default" value="all" label="All notifications" checked />
-              <Radio name="notify-default" value="important" label="Important only" description="Only critical updates" />
-              <Radio name="notify-default" value="none" label="None" />
+              <Radio name="notify-default" value="all" label="Все уведомления" checked />
+              <Radio name="notify-default" value="important" label="Только важные" description="Только критические обновления" />
+              <Radio name="notify-default" value="none" label="Нет" />
             </div>
           </div>
         </div>
 
-        <!-- Radio Cards - Full width -->
+        <!-- Карточки-радиокнопки на всю ширину -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Plan Selection</span>
-            <span class="showcase-hint">Card-style radio options</span>
+            <span class="showcase-label">Выбор тарифа</span>
+            <span class="showcase-hint">Радиокнопки в стиле карточек</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-4 sm:grid-cols-3">
-              <Radio variant="card" name="plan-cards" value="free" label="Free" description="Basic features for personal projects" checked />
-              <Radio variant="card" name="plan-cards" value="pro" label="Pro" description="Advanced tools for professionals" />
-              <Radio variant="card" name="plan-cards" value="team" label="Team" description="Collaboration features for teams" />
+              <Radio variant="card" name="plan-cards" value="free" label="Бесплатный" description="Базовые возможности для личных проектов" checked />
+              <Radio variant="card" name="plan-cards" value="pro" label="Pro" description="Продвинутые инструменты для профессионалов" />
+              <Radio variant="card" name="plan-cards" value="team" label="Командный" description="Возможности для совместной работы" />
             </div>
           </div>
         </div>
 
-        <!-- Switch -->
+        <!-- Переключатели -->
         <div class="grid gap-6 lg:grid-cols-2">
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Switch</span>
-              <span class="showcase-hint">Toggle on/off states</span>
+              <span class="showcase-label">Переключатель</span>
+              <span class="showcase-hint">Включение/выключение состояний</span>
             </div>
             <div class="showcase-content space-y-5">
-              <Switch label="Email notifications" description="Receive email alerts for important updates" checked />
-              <Switch label="Marketing emails" description="Get product news and feature announcements" />
-              <Switch label="SMS alerts" description="Receive text messages for critical events" />
+              <Switch label="Email-уведомления" description="Получать оповещения о важных обновлениях по email" checked />
+              <Switch label="Маркетинговые письма" description="Получать новости о продукте и анонсы функций" />
+              <Switch label="SMS-оповещения" description="Получать текстовые сообщения о критических событиях" />
             </div>
           </div>
 
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Switch Sizes & States</span>
-              <span class="showcase-hint">sm, md, lg + disabled</span>
+              <span class="showcase-label">Размеры и состояния переключателя</span>
+              <span class="showcase-hint">sm, md, lg + отключённый</span>
             </div>
             <div class="showcase-content space-y-5">
-              <Switch size="sm" label="Small switch" checked />
-              <Switch size="md" label="Medium switch (default)" checked />
-              <Switch size="lg" label="Large switch" checked />
-              <Switch label="Disabled off" disabled />
-              <Switch label="Disabled on" disabled checked />
+              <Switch size="sm" label="Маленький переключатель" checked />
+              <Switch size="md" label="Средний переключатель (по умолчанию)" checked />
+              <Switch size="lg" label="Большой переключатель" checked />
+              <Switch label="Отключён, выкл" disabled />
+              <Switch label="Отключён, вкл" disabled checked />
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Feedback Section -->
+    <!-- Секция обратной связи -->
     <section id="feedback" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="alert-circle" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Feedback</h2>
-          <p class="text-foreground-muted mt-1">Badges, alerts, and status indicators to communicate state and guide user actions.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Обратная связь</h2>
+          <p class="text-foreground-muted mt-1">Бейджи, алерты и индикаторы состояния для передачи информации и направления действий пользователя.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Badges -->
+        <!-- Бейджи -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Badges</span>
-            <span class="showcase-hint">Status indicators</span>
+            <span class="showcase-label">Бейджи</span>
+            <span class="showcase-hint">Индикаторы состояния</span>
           </div>
           <div class="showcase-content">
             <div class="flex flex-wrap items-center gap-3">
-              <Badge>Default</Badge>
+              <Badge>По умолчанию</Badge>
               <Badge variant="success">
                 <Icon name="check" size="xs" />
-                Success
+                Успешно
               </Badge>
               <Badge variant="warning">
                 <Icon name="alert-triangle" size="xs" />
-                Warning
+                Внимание
               </Badge>
               <Badge variant="info">
                 <Icon name="info" size="xs" />
-                Info
+                Информация
               </Badge>
             </div>
           </div>
         </div>
 
-        <!-- Alerts -->
+        <!-- Алерты -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Alerts</span>
-            <span class="showcase-hint">Contextual messages</span>
+            <span class="showcase-label">Алерты</span>
+            <span class="showcase-hint">Контекстные сообщения</span>
           </div>
           <div class="showcase-content space-y-4">
-            <Alert variant="info" title="Tip">
-              Use keyboard shortcuts to navigate faster. Press <kbd class="px-1.5 py-0.5 text-xs font-mono bg-background-secondary rounded border border-border">⌘K</kbd> to open the command palette.
+            <Alert variant="info" title="Совет">
+              Используйте горячие клавиши для быстрой навигации. Нажмите <kbd class="px-1.5 py-0.5 text-xs font-mono bg-background-secondary rounded border border-border">⌘K</kbd>, чтобы открыть палитру команд.
             </Alert>
-            <Alert variant="success" title="Deployment successful">
-              Your changes are now live at <span class="underline underline-offset-2">your-app.vercel.app</span>
+            <Alert variant="success" title="Деплой успешен">
+              Ваши изменения опубликованы на <span class="underline underline-offset-2">your-app.vercel.app</span>
             </Alert>
-            <Alert variant="warning" title="Approaching limit">
-              You've used 80% of your monthly API quota. Consider upgrading your plan.
+            <Alert variant="warning" title="Приближение лимита">
+              Вы использовали 80% вашего месячного API-лимита. Рассмотрите возможность обновления тарифа.
             </Alert>
-            <Alert variant="error" title="Build failed" dismissible>
-              Error in <code class="text-xs font-mono">src/components/Button.tsx</code> — missing required prop "variant"
+            <Alert variant="error" title="Ошибка сборки" dismissible>
+              Ошибка в <code class="text-xs font-mono">src/components/Button.tsx</code> — отсутствует обязательный параметр "variant"
             </Alert>
           </div>
         </div>
@@ -1027,8 +1027,8 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
         <!-- Toast -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Toast Notifications</span>
-            <span class="showcase-hint">Click buttons to trigger toasts</span>
+            <span class="showcase-label">Toast-уведомления</span>
+            <span class="showcase-hint">Нажмите кнопки, чтобы вызвать уведомления</span>
           </div>
           <div class="showcase-content">
             <ToastDemo client:load />
@@ -1037,117 +1037,117 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Overlays Section -->
+    <!-- Секция перекрытий -->
     <section id="overlays" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="layers" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Overlays</h2>
-          <p class="text-foreground-muted mt-1">Dialogs, dropdowns, tooltips, and tabs. Full keyboard navigation and focus management.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Перекрытия</h2>
+          <p class="text-foreground-muted mt-1">Диалоги, выпадающие меню, подсказки и вкладки. Полная навигация с клавиатуры и управление фокусом.</p>
         </div>
       </div>
 
       <div class="grid gap-6 lg:grid-cols-2">
-        <!-- Dialog -->
+        <!-- Диалог -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Dialog</span>
-            <span class="showcase-hint">Modal overlay</span>
+            <span class="showcase-label">Диалог</span>
+            <span class="showcase-hint">Модальное окно</span>
           </div>
           <div class="showcase-content">
             <Button onclick="openDialog('demo-dialog')">
               <Icon name="external-link" size="sm" />
-              Open Dialog
+              Открыть диалог
             </Button>
 
-            <Dialog id="demo-dialog" title="Delete project?" description="This action cannot be undone.">
+            <Dialog id="demo-dialog" title="Удалить проект?" description="Это действие нельзя отменить.">
               <p class="text-foreground-muted text-sm">
-                Are you sure you want to delete <strong class="text-foreground">astro-rocket-demo</strong>? All files, deployments, and analytics data will be permanently removed.
+                Вы уверены, что хотите удалить <strong class="text-foreground">astro-rocket-demo</strong>? Все файлы, деплои и аналитические данные будут безвозвратно удалены.
               </p>
               <div class="flex justify-end gap-3 pt-6">
-                <Button variant="outline" onclick="closeDialog('demo-dialog')">Cancel</Button>
+                <Button variant="outline" onclick="closeDialog('demo-dialog')">Отмена</Button>
                 <Button variant="destructive" onclick="closeDialog('demo-dialog')">
                   <Icon name="x" size="sm" />
-                  Delete Project
+                  Удалить проект
                 </Button>
               </div>
             </Dialog>
           </div>
         </div>
 
-        <!-- Dropdown -->
+        <!-- Выпадающее меню -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Dropdown</span>
-            <span class="showcase-hint">Action menu</span>
+            <span class="showcase-label">Выпадающее меню</span>
+            <span class="showcase-hint">Меню действий</span>
           </div>
           <div class="showcase-content">
             <Dropdown
               items={[
-                { label: 'Edit', href: '#', icon: 'edit' },
-                { label: 'Duplicate', href: '#', icon: 'copy' },
-                { label: 'Share', href: '#', icon: 'share' },
+                { label: 'Редактировать', href: '#', icon: 'edit' },
+                { label: 'Дублировать', href: '#', icon: 'copy' },
+                { label: 'Поделиться', href: '#', icon: 'share' },
                 { separator: true, label: '' },
-                { label: 'Archive', href: '#', icon: 'archive' },
-                { label: 'Delete', href: '#', disabled: true, icon: 'trash' },
+                { label: 'Архивировать', href: '#', icon: 'archive' },
+                { label: 'Удалить', href: '#', disabled: true, icon: 'trash' },
               ]}
             >
               <Button variant="outline" slot="trigger">
-                Actions
+                Действия
                 <Icon name="chevron-down" size="sm" />
               </Button>
             </Dropdown>
           </div>
         </div>
 
-        <!-- Tooltips -->
+        <!-- Подсказки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Tooltips</span>
-            <span class="showcase-hint">Contextual hints</span>
+            <span class="showcase-label">Подсказки</span>
+            <span class="showcase-hint">Контекстные подсказки</span>
           </div>
           <div class="showcase-content">
             <div class="flex flex-wrap items-center gap-4">
-              <Tooltip content="Tooltip on top" position="top">
-                <Button variant="outline" size="sm">Top</Button>
+              <Tooltip content="Подсказка сверху" position="top">
+                <Button variant="outline" size="sm">Сверху</Button>
               </Tooltip>
-              <Tooltip content="Tooltip on bottom" position="bottom">
-                <Button variant="outline" size="sm">Bottom</Button>
+              <Tooltip content="Подсказка снизу" position="bottom">
+                <Button variant="outline" size="sm">Снизу</Button>
               </Tooltip>
-              <Tooltip content="Tooltip on left" position="left">
-                <Button variant="outline" size="sm">Left</Button>
+              <Tooltip content="Подсказка слева" position="left">
+                <Button variant="outline" size="sm">Слева</Button>
               </Tooltip>
-              <Tooltip content="Tooltip on right" position="right">
-                <Button variant="outline" size="sm">Right</Button>
+              <Tooltip content="Подсказка справа" position="right">
+                <Button variant="outline" size="sm">Справа</Button>
               </Tooltip>
             </div>
           </div>
         </div>
 
-        <!-- Tabs -->
+        <!-- Вкладки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Tabs</span>
-            <span class="showcase-hint">Content organization</span>
+            <span class="showcase-label">Вкладки</span>
+            <span class="showcase-hint">Организация контента</span>
           </div>
           <div class="showcase-content">
             <Tabs
               tabs={[
-                { id: 'overview', label: 'Overview' },
-                { id: 'analytics', label: 'Analytics' },
-                { id: 'settings', label: 'Settings' },
+                { id: 'overview', label: 'Обзор' },
+                { id: 'analytics', label: 'Аналитика' },
+                { id: 'settings', label: 'Настройки' },
               ]}
             >
               <div data-tab-content="overview" class="text-sm text-foreground-muted">
-                <p>Project overview with key metrics and recent activity. Tabs support full keyboard navigation.</p>
+                <p>Обзор проекта с ключевыми метриками и недавней активностью. Вкладки поддерживают полную навигацию с клавиатуры.</p>
               </div>
               <div data-tab-content="analytics" class="text-sm text-foreground-muted">
-                <p>Analytics data with charts and performance insights. Press arrow keys to navigate between tabs.</p>
+                <p>Аналитические данные с графиками и аналитикой производительности. Используйте стрелки для переключения между вкладками.</p>
               </div>
               <div data-tab-content="settings" class="text-sm text-foreground-muted">
-                <p>Configure your project settings. Use Home/End to jump to first/last tab.</p>
+                <p>Настройте параметры вашего проекта. Используйте Home/End для перехода к первой/последней вкладке.</p>
               </div>
             </Tabs>
           </div>
@@ -1155,174 +1155,174 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Navigation Section -->
+    <!-- Секция навигации -->
     <section id="navigation" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="menu" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Navigation</h2>
-          <p class="text-foreground-muted mt-1">Vertical tabs and navigation patterns with responsive mobile behavior.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Навигация</h2>
+          <p class="text-foreground-muted mt-1">Вертикальные вкладки и навигационные паттерны с адаптивным поведением на мобильных устройствах.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Vertical Tabs - Basic -->
+        <!-- Вертикальные вкладки - базовые -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Vertical Tabs</span>
-            <span class="showcase-hint">Responsive: dropdown on mobile, sidebar on desktop</span>
+            <span class="showcase-label">Вертикальные вкладки</span>
+            <span class="showcase-hint">Адаптивно: выпадающий список на мобильных, боковая панель на десктопе</span>
           </div>
           <div class="showcase-content">
             <VerticalTabs
               tabs={[
-                { id: 'account', label: 'Account', description: 'Manage your profile' },
-                { id: 'security', label: 'Security', description: 'Password & 2FA settings' },
-                { id: 'notifications', label: 'Notifications', description: 'Email & push preferences' },
+                { id: 'account', label: 'Аккаунт', description: 'Управление профилем' },
+                { id: 'security', label: 'Безопасность', description: 'Пароль и 2FA' },
+                { id: 'notifications', label: 'Уведомления', description: 'Email и push-настройки' },
               ]}
             >
               <div data-tab-content="account" class="text-sm text-foreground-muted">
-                <p class="mb-2"><strong class="text-foreground">Account Settings</strong></p>
-                <p>Update your profile information, email address, and personal details. Changes are saved automatically.</p>
+                <p class="mb-2"><strong class="text-foreground">Настройки аккаунта</strong></p>
+                <p>Обновите информацию профиля, email и личные данные. Изменения сохраняются автоматически.</p>
               </div>
               <div data-tab-content="security" class="text-sm text-foreground-muted">
-                <p class="mb-2"><strong class="text-foreground">Security Settings</strong></p>
-                <p>Configure password requirements, enable two-factor authentication, and manage active sessions.</p>
+                <p class="mb-2"><strong class="text-foreground">Настройки безопасности</strong></p>
+                <p>Настройте требования к паролю, включите двухфакторную аутентификацию и управляйте активными сессиями.</p>
               </div>
               <div data-tab-content="notifications" class="text-sm text-foreground-muted">
-                <p class="mb-2"><strong class="text-foreground">Notification Preferences</strong></p>
-                <p>Choose which notifications you receive via email, push, or in-app. You can also set quiet hours.</p>
+                <p class="mb-2"><strong class="text-foreground">Настройки уведомлений</strong></p>
+                <p>Выберите, какие уведомления вы получаете по email, push или внутри приложения. Также можно установить часы тишины.</p>
               </div>
             </VerticalTabs>
           </div>
         </div>
 
-        <!-- Vertical Tabs - With Icons -->
+        <!-- Вертикальные вкладки с иконками -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">With Icons</span>
-            <span class="showcase-hint">Enhanced visual hierarchy</span>
+            <span class="showcase-label">С иконками</span>
+            <span class="showcase-hint">Улучшенная визуальная иерархия</span>
           </div>
           <div class="showcase-content">
             <VerticalTabs
               tabs={[
-                { id: 'overview', label: 'Overview', description: 'Project summary', icon: 'layout' },
-                { id: 'analytics', label: 'Analytics', description: 'Traffic & insights', icon: 'zap' },
-                { id: 'settings', label: 'Settings', description: 'Configuration', icon: 'settings' },
+                { id: 'overview', label: 'Обзор', description: 'Сводка по проекту', icon: 'layout' },
+                { id: 'analytics', label: 'Аналитика', description: 'Трафик и инсайты', icon: 'zap' },
+                { id: 'settings', label: 'Настройки', description: 'Конфигурация', icon: 'settings' },
               ]}
             >
               <div data-tab-content="overview" class="text-sm text-foreground-muted">
                 <div class="grid gap-4 sm:grid-cols-3">
                   <Card variant="solid" padding="sm">
-                    <p class="text-xs text-foreground-subtle uppercase tracking-wider">Total Views</p>
+                    <p class="text-xs text-foreground-subtle uppercase tracking-wider">Всего просмотров</p>
                     <p class="text-2xl font-bold text-foreground mt-1">24,521</p>
                   </Card>
                   <Card variant="solid" padding="sm">
-                    <p class="text-xs text-foreground-subtle uppercase tracking-wider">Avg. Time</p>
-                    <p class="text-2xl font-bold text-foreground mt-1">3m 42s</p>
+                    <p class="text-xs text-foreground-subtle uppercase tracking-wider">Среднее время</p>
+                    <p class="text-2xl font-bold text-foreground mt-1">3м 42с</p>
                   </Card>
                   <Card variant="solid" padding="sm">
-                    <p class="text-xs text-foreground-subtle uppercase tracking-wider">Bounce Rate</p>
+                    <p class="text-xs text-foreground-subtle uppercase tracking-wider">Показатель отказов</p>
                     <p class="text-2xl font-bold text-foreground mt-1">32.4%</p>
                   </Card>
                 </div>
               </div>
               <div data-tab-content="analytics" class="text-sm text-foreground-muted">
-                <p>Detailed analytics with charts, traffic sources, and user behavior insights. Real-time data updates every minute.</p>
+                <p>Детальная аналитика с графиками, источниками трафика и инсайтами о поведении пользователей. Данные в реальном времени обновляются каждую минуту.</p>
               </div>
               <div data-tab-content="settings" class="text-sm text-foreground-muted">
-                <p>Configure project settings including domain, team permissions, and deployment preferences.</p>
+                <p>Настройте параметры проекта, включая домен, разрешения команды и предпочтения деплоя.</p>
               </div>
             </VerticalTabs>
           </div>
         </div>
 
-        <!-- Vertical Tabs - Bottom Sheet Variant -->
+        <!-- Вертикальные вкладки - вариант Bottom Sheet -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Bottom Sheet (Mobile)</span>
-            <span class="showcase-hint">Alternative mobile UX with mobileVariant="sheet"</span>
+            <span class="showcase-label">Нижний лист (мобильный)</span>
+            <span class="showcase-hint">Альтернативный UX на мобильных с mobileVariant="sheet"</span>
           </div>
           <div class="showcase-content">
             <VerticalTabs
               mobileVariant="sheet"
               tabs={[
-                { id: 'general', label: 'General', description: 'Basic preferences', icon: 'settings' },
-                { id: 'privacy', label: 'Privacy', description: 'Data & permissions', icon: 'shield' },
-                { id: 'billing', label: 'Billing', description: 'Payment methods', icon: 'wallet' },
+                { id: 'general', label: 'Основные', description: 'Базовые настройки', icon: 'settings' },
+                { id: 'privacy', label: 'Конфиденциальность', description: 'Данные и разрешения', icon: 'shield' },
+                { id: 'billing', label: 'Платежи', description: 'Способы оплаты', icon: 'wallet' },
               ]}
             >
               <div data-tab-content="general" class="text-sm text-foreground-muted">
-                <p class="mb-2"><strong class="text-foreground">General Settings</strong></p>
-                <p>Configure your basic preferences including language, timezone, and display options. Changes are saved automatically.</p>
+                <p class="mb-2"><strong class="text-foreground">Основные настройки</strong></p>
+                <p>Настройте базовые предпочтения, включая язык, часовой пояс и параметры отображения. Изменения сохраняются автоматически.</p>
               </div>
               <div data-tab-content="privacy" class="text-sm text-foreground-muted">
-                <p class="mb-2"><strong class="text-foreground">Privacy Controls</strong></p>
-                <p>Manage data sharing, third-party access, and communication preferences. Your privacy matters to us.</p>
+                <p class="mb-2"><strong class="text-foreground">Управление конфиденциальностью</strong></p>
+                <p>Управляйте обменом данными, доступом третьих сторон и предпочтениями коммуникации. Ваша конфиденциальность важна для нас.</p>
               </div>
               <div data-tab-content="billing" class="text-sm text-foreground-muted">
-                <p class="mb-2"><strong class="text-foreground">Billing Information</strong></p>
-                <p>View invoices, update payment methods, and manage your subscription plan. All payments are securely processed.</p>
+                <p class="mb-2"><strong class="text-foreground">Платёжная информация</strong></p>
+                <p>Просматривайте счета, обновляйте способы оплаты и управляйте подпиской. Все платежи обрабатываются безопасно.</p>
               </div>
             </VerticalTabs>
           </div>
         </div>
 
-        <!-- Props Reference -->
+        <!-- Справка по параметрам -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Available Props</span>
-            <span class="showcase-hint">VerticalTabs API</span>
+            <span class="showcase-label">Доступные параметры</span>
+            <span class="showcase-hint">API VerticalTabs</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 text-sm">
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Core Props</h4>
+                <h4 class="font-semibold text-foreground mb-2">Основные параметры</h4>
                 <ul class="space-y-1 text-foreground-muted">
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">tabs</code> Tab[] (required)</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">tabs</code> Tab[] (обязательно)</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">defaultValue</code> string</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">mobileVariant</code> 'dropdown' | 'sheet'</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">class</code> string</li>
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Tab Interface</h4>
+                <h4 class="font-semibold text-foreground mb-2">Интерфейс вкладки</h4>
                 <ul class="space-y-1 text-foreground-muted">
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">id</code> string (required)</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">label</code> string (required)</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">id</code> string (обязательно)</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">label</code> string (обязательно)</li>
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">description</code> string</li>
-                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">icon</code> string (Icon name)</li>
+                  <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">icon</code> string (имя иконки)</li>
                 </ul>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground mb-2">Content Panels</h4>
+                <h4 class="font-semibold text-foreground mb-2">Панели контента</h4>
                 <ul class="space-y-1 text-foreground-muted">
                   <li><code class="text-xs bg-secondary px-1.5 py-0.5 rounded">data-tab-content</code></li>
-                  <li class="text-xs">Match tab id for each panel</li>
+                  <li class="text-xs">Совпадает с id вкладки для каждой панели</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Pagination -->
+        <!-- Пагинация -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Pagination</span>
-            <span class="showcase-hint">Page navigation with ellipsis</span>
+            <span class="showcase-label">Пагинация</span>
+            <span class="showcase-hint">Навигация по страницам с многоточием</span>
           </div>
           <div class="showcase-content space-y-6">
             <div>
-              <p class="text-xs text-foreground-muted mb-3 font-mono">Page 1 of 10</p>
+              <p class="text-xs text-foreground-muted mb-3 font-mono">Страница 1 из 10</p>
               <Pagination currentPage={1} totalPages={10} />
             </div>
             <div>
-              <p class="text-xs text-foreground-muted mb-3 font-mono">Page 5 of 10</p>
+              <p class="text-xs text-foreground-muted mb-3 font-mono">Страница 5 из 10</p>
               <Pagination currentPage={5} totalPages={10} />
             </div>
             <div>
-              <p class="text-xs text-foreground-muted mb-3 font-mono">Page 10 of 10</p>
+              <p class="text-xs text-foreground-muted mb-3 font-mono">Страница 10 из 10</p>
               <Pagination currentPage={10} totalPages={10} />
             </div>
           </div>
@@ -1331,8 +1331,8 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
         <div class="grid gap-6 lg:grid-cols-2">
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Few Pages</span>
-              <span class="showcase-hint">No ellipsis needed</span>
+              <span class="showcase-label">Мало страниц</span>
+              <span class="showcase-hint">Многоточие не требуется</span>
             </div>
             <div class="showcase-content">
               <Pagination currentPage={2} totalPages={4} />
@@ -1341,7 +1341,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
 
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Size Variants</span>
+              <span class="showcase-label">Варианты размеров</span>
               <span class="showcase-hint">sm, md, lg</span>
             </div>
             <div class="showcase-content space-y-4">
@@ -1354,56 +1354,56 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Data Display Section -->
+    <!-- Секция отображения данных -->
     <section id="data" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="layout" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Data Display</h2>
-          <p class="text-foreground-muted mt-1">Cards, avatars, and icons for presenting content and user information.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Отображение данных</h2>
+          <p class="text-foreground-muted mt-1">Карточки, аватары и иконки для представления контента и информации о пользователе.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Card Variants -->
+        <!-- Варианты карточек -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Card Variants</span>
-            <span class="showcase-hint">5 visual styles</span>
+            <span class="showcase-label">Варианты карточек</span>
+            <span class="showcase-hint">5 визуальных стилей</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               <Card variant="default" padding="sm">
-                <p class="text-sm font-medium text-foreground">Default</p>
-                <p class="text-xs text-foreground-muted mt-1">Standard bordered card</p>
+                <p class="text-sm font-medium text-foreground">По умолчанию</p>
+                <p class="text-xs text-foreground-muted mt-1">Стандартная карточка с рамкой</p>
               </Card>
               <Card variant="solid" padding="sm">
-                <p class="text-sm font-medium text-foreground">Solid</p>
-                <p class="text-xs text-foreground-muted mt-1">Filled background</p>
+                <p class="text-sm font-medium text-foreground">Сплошная</p>
+                <p class="text-xs text-foreground-muted mt-1">Заполненный фон</p>
               </Card>
               <Card variant="outline" padding="sm">
-                <p class="text-sm font-medium text-foreground">Outline</p>
-                <p class="text-xs text-foreground-muted mt-1">Thick border, no fill</p>
+                <p class="text-sm font-medium text-foreground">Контурная</p>
+                <p class="text-xs text-foreground-muted mt-1">Толстая рамка, без заливки</p>
               </Card>
               <Card variant="ghost" padding="sm">
-                <p class="text-sm font-medium text-foreground">Ghost</p>
-                <p class="text-xs text-foreground-muted mt-1">Transparent container</p>
+                <p class="text-sm font-medium text-foreground">Прозрачная</p>
+                <p class="text-xs text-foreground-muted mt-1">Прозрачный контейнер</p>
               </Card>
               <Card variant="elevated" padding="sm">
-                <p class="text-sm font-medium text-foreground">Elevated</p>
-                <p class="text-xs text-foreground-muted mt-1">With shadow depth</p>
+                <p class="text-sm font-medium text-foreground">С тенью</p>
+                <p class="text-xs text-foreground-muted mt-1">С глубиной тени</p>
               </Card>
             </div>
           </div>
         </div>
 
-        <!-- Cards with Icon -->
+        <!-- Карточки с иконками -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Cards with Icons</span>
-            <span class="showcase-hint">Compose your own layout with icon, title, description</span>
+            <span class="showcase-label">Карточки с иконками</span>
+            <span class="showcase-hint">Комбинируйте иконку, заголовок и описание</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -1413,12 +1413,12 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                     <Icon name="zap" size="md" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-base font-semibold text-foreground">Performance</h3>
+                    <h3 class="text-base font-semibold text-foreground">Производительность</h3>
                     <p class="text-xs text-foreground-subtle mt-0.5 font-medium">100/100 Lighthouse</p>
                   </div>
                 </div>
                 <p class="text-sm text-foreground-muted leading-relaxed mt-4">
-                  Zero JavaScript by default. Islands architecture with selective hydration for optimal speed.
+                  Ноль JavaScript по умолчанию. Архитектура островов с выборочной гидратацией для максимальной скорости.
                 </p>
               </Card>
 
@@ -1428,12 +1428,12 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                     <Icon name="shield" size="md" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-base font-semibold text-foreground">Type-Safe</h3>
-                    <p class="text-xs text-foreground-subtle mt-0.5 font-medium">Full TypeScript</p>
+                    <h3 class="text-base font-semibold text-foreground">Безопасность типов</h3>
+                    <p class="text-xs text-foreground-subtle mt-0.5 font-medium">Полный TypeScript</p>
                   </div>
                 </div>
                 <p class="text-sm text-foreground-muted leading-relaxed mt-4">
-                  Strict types throughout with IDE autocompletion and compile-time error checking.
+                  Строгая типизация с автодополнением в IDE и проверкой ошибок на этапе компиляции.
                 </p>
               </Card>
 
@@ -1443,102 +1443,102 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                     <Icon name="globe" size="md" />
                   </div>
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-base font-semibold text-foreground">i18n Ready</h3>
-                    <p class="text-xs text-foreground-subtle mt-0.5 font-medium">Multi-language</p>
+                    <h3 class="text-base font-semibold text-foreground">Готовность к i18n</h3>
+                    <p class="text-xs text-foreground-subtle mt-0.5 font-medium">Многоязычность</p>
                   </div>
                 </div>
                 <p class="text-sm text-foreground-muted leading-relaxed mt-4">
-                  Built-in translation system with SEO-friendly URLs and automatic locale detection.
+                  Встроенная система переводов с SEO-дружественными URL и автоматическим определением локали.
                 </p>
               </Card>
             </div>
           </div>
         </div>
 
-        <!-- Simple Cards -->
+        <!-- Простые карточки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Simple Cards</span>
-            <span class="showcase-hint">Title and description only</span>
+            <span class="showcase-label">Простые карточки</span>
+            <span class="showcase-hint">Только заголовок и описание</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               <Card hover>
-                <h3 class="text-base font-semibold text-foreground">Getting Started</h3>
+                <h3 class="text-base font-semibold text-foreground">Начало работы</h3>
                 <p class="text-sm text-foreground-muted leading-relaxed mt-2">
-                  Quick setup guide to get your project running in minutes.
+                  Краткое руководство по запуску вашего проекта за несколько минут.
                 </p>
               </Card>
 
               <Card hover>
-                <h3 class="text-base font-semibold text-foreground">Documentation</h3>
+                <h3 class="text-base font-semibold text-foreground">Документация</h3>
                 <p class="text-sm text-foreground-muted leading-relaxed mt-2">
-                  Comprehensive API reference and usage examples.
+                  Полный справочник API и примеры использования.
                 </p>
               </Card>
 
               <Card hover>
-                <h3 class="text-base font-semibold text-foreground">Community</h3>
+                <h3 class="text-base font-semibold text-foreground">Сообщество</h3>
                 <p class="text-sm text-foreground-muted leading-relaxed mt-2">
-                  Join our Discord server and connect with other developers.
+                  Присоединяйтесь к нашему Discord-серверу и общайтесь с другими разработчиками.
                 </p>
               </Card>
             </div>
           </div>
         </div>
 
-        <!-- Custom Content Cards -->
+        <!-- Карточки с пользовательским контентом -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Custom Layouts</span>
-            <span class="showcase-hint">Stats, profiles, actions</span>
+            <span class="showcase-label">Пользовательские макеты</span>
+            <span class="showcase-hint">Статистика, профили, действия</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              <!-- Stats Card -->
+              <!-- Карточка статистики -->
               <Card>
                 <div class="text-center">
-                  <p class="text-xs font-medium text-foreground-subtle uppercase tracking-wider">Total Revenue</p>
+                  <p class="text-xs font-medium text-foreground-subtle uppercase tracking-wider">Общая выручка</p>
                   <p class="text-3xl font-bold text-foreground mt-1">$45,231</p>
                   <p class="text-xs text-success mt-2 flex items-center justify-center gap-1">
                     <Icon name="arrow-right" size="xs" class="rotate-[-45deg]" />
-                    +12.5% from last month
+                    +12.5% по сравнению с прошлым месяцем
                   </p>
                 </div>
               </Card>
 
-              <!-- User Profile Card -->
+              <!-- Карточка профиля пользователя -->
               <Card>
                 <div class="flex items-center gap-4">
-                  <Avatar size="lg" src="https://i.pravatar.cc/150?img=32" alt="Sarah Chen" />
+                  <Avatar size="lg" src="https://i.pravatar.cc/150?img=32" alt="Сара Чен" />
                   <div class="flex-1 min-w-0">
-                    <h3 class="text-sm font-semibold text-foreground">Sarah Chen</h3>
-                    <p class="text-xs text-foreground-muted">Product Designer</p>
+                    <h3 class="text-sm font-semibold text-foreground">Сара Чен</h3>
+                    <p class="text-xs text-foreground-muted">Продуктовый дизайнер</p>
                     <div class="flex items-center gap-2 mt-2">
                       <Badge variant="success" class="text-[10px] px-1.5 py-0.5">Pro</Badge>
-                      <span class="text-xs text-foreground-subtle">San Francisco, CA</span>
+                      <span class="text-xs text-foreground-subtle">Сан-Франциско, Калифорния</span>
                     </div>
                   </div>
                 </div>
               </Card>
 
-              <!-- Action Card -->
+              <!-- Карточка действия -->
               <Card>
                 <div class="flex items-start justify-between gap-4">
                   <div>
                     <h3 class="text-sm font-semibold text-foreground">astro-rocket-app</h3>
-                    <p class="text-xs text-foreground-muted mt-0.5">Production deployment</p>
+                    <p class="text-xs text-foreground-muted mt-0.5">Продакшн деплой</p>
                   </div>
-                  <Badge variant="success">Live</Badge>
+                  <Badge variant="success">В работе</Badge>
                 </div>
                 <div class="flex items-center gap-2 mt-4 pt-4 border-t border-border">
                   <Button size="sm" variant="outline" class="flex-1">
                     <Icon name="eye" size="xs" />
-                    View
+                    Просмотр
                   </Button>
                   <Button size="sm" variant="outline" class="flex-1">
                     <Icon name="settings" size="xs" />
-                    Settings
+                    Настройки
                   </Button>
                 </div>
               </Card>
@@ -1546,52 +1546,52 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Avatars -->
+        <!-- Аватары -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Avatars</span>
-            <span class="showcase-hint">User representations</span>
+            <span class="showcase-label">Аватары</span>
+            <span class="showcase-hint">Представление пользователей</span>
           </div>
           <div class="showcase-content">
             <div class="flex flex-wrap items-end gap-4">
               <div class="text-center">
-                <Avatar size="xs" alt="John Doe" />
+                <Avatar size="xs" alt="Джон Доу" />
                 <span class="text-xs text-foreground-muted mt-2 block">xs</span>
               </div>
               <div class="text-center">
-                <Avatar size="sm" alt="Jane Smith" />
+                <Avatar size="sm" alt="Джейн Смит" />
                 <span class="text-xs text-foreground-muted mt-2 block">sm</span>
               </div>
               <div class="text-center">
-                <Avatar size="md" alt="Alex Johnson" />
+                <Avatar size="md" alt="Алекс Джонсон" />
                 <span class="text-xs text-foreground-muted mt-2 block">md</span>
               </div>
               <div class="text-center">
-                <Avatar size="lg" alt="Sam Wilson" />
+                <Avatar size="lg" alt="Сэм Уилсон" />
                 <span class="text-xs text-foreground-muted mt-2 block">lg</span>
               </div>
               <div class="text-center">
-                <Avatar size="xl" alt="Chris Lee" />
+                <Avatar size="xl" alt="Крис Ли" />
                 <span class="text-xs text-foreground-muted mt-2 block">xl</span>
               </div>
               <div class="pl-4 border-l border-border">
                 <div class="flex -space-x-3">
-                  <Avatar size="md" src="https://i.pravatar.cc/150?img=12" alt="User 1" class="ring-2 ring-background" />
-                  <Avatar size="md" src="https://i.pravatar.cc/150?img=33" alt="User 2" class="ring-2 ring-background" />
-                  <Avatar size="md" src="https://i.pravatar.cc/150?img=47" alt="User 3" class="ring-2 ring-background" />
+                  <Avatar size="md" src="https://i.pravatar.cc/150?img=12" alt="Пользователь 1" class="ring-2 ring-background" />
+                  <Avatar size="md" src="https://i.pravatar.cc/150?img=33" alt="Пользователь 2" class="ring-2 ring-background" />
+                  <Avatar size="md" src="https://i.pravatar.cc/150?img=47" alt="Пользователь 3" class="ring-2 ring-background" />
                   <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-xs font-medium ring-2 ring-background">+5</div>
                 </div>
-                <span class="text-xs text-foreground-muted mt-2 block">Stacked</span>
+                <span class="text-xs text-foreground-muted mt-2 block">Стопкой</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Icons -->
+        <!-- Иконки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Icons</span>
-            <span class="showcase-hint">Lucide icon set — 24 included</span>
+            <span class="showcase-label">Иконки</span>
+            <span class="showcase-hint">Набор Lucide — 24 включено</span>
           </div>
           <div class="showcase-content">
             <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-12 gap-2">
@@ -1606,56 +1606,56 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Separator -->
+        <!-- Разделитель -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Separator</span>
-            <span class="showcase-hint">Horizontal, vertical, and with labels</span>
+            <span class="showcase-label">Разделитель</span>
+            <span class="showcase-hint">Горизонтальный, вертикальный и с подписями</span>
           </div>
           <div class="showcase-content space-y-6">
             <div>
-              <p class="text-sm text-foreground-muted mb-3">Horizontal (default)</p>
+              <p class="text-sm text-foreground-muted mb-3">Горизонтальный (по умолчанию)</p>
               <Separator />
             </div>
             <div>
-              <p class="text-sm text-foreground-muted mb-3">With label</p>
-              <Separator label="OR" />
+              <p class="text-sm text-foreground-muted mb-3">С подписью</p>
+              <Separator label="ИЛИ" />
             </div>
             <div>
-              <p class="text-sm text-foreground-muted mb-3">With label text</p>
-              <Separator label="Continue with" />
+              <p class="text-sm text-foreground-muted mb-3">С текстом подписи</p>
+              <Separator label="Продолжить с помощью" />
             </div>
             <div>
-              <p class="text-sm text-foreground-muted mb-3">Vertical (in flex container)</p>
+              <p class="text-sm text-foreground-muted mb-3">Вертикальный (в flex-контейнере)</p>
               <div class="flex items-center gap-4 h-8">
-                <span class="text-sm text-foreground-muted">Item 1</span>
+                <span class="text-sm text-foreground-muted">Элемент 1</span>
                 <Separator orientation="vertical" />
-                <span class="text-sm text-foreground-muted">Item 2</span>
+                <span class="text-sm text-foreground-muted">Элемент 2</span>
                 <Separator orientation="vertical" />
-                <span class="text-sm text-foreground-muted">Item 3</span>
+                <span class="text-sm text-foreground-muted">Элемент 3</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Table -->
+        <!-- Таблица -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Table</span>
-            <span class="showcase-hint">Styled data table with hover and striping</span>
+            <span class="showcase-label">Таблица</span>
+            <span class="showcase-hint">Стилизованная таблица с наведением и чередованием строк</span>
           </div>
           <div class="showcase-content">
             <Table
               columns={[
-                { key: 'name', label: 'Name' },
+                { key: 'name', label: 'Имя' },
                 { key: 'email', label: 'Email' },
-                { key: 'role', label: 'Role' },
-                { key: 'status', label: 'Status', align: 'center' },
+                { key: 'role', label: 'Роль' },
+                { key: 'status', label: 'Статус', align: 'center' },
               ]}
               rows={[
-                { name: 'Sarah Chen', email: 'sarah@example.com', role: 'Admin', status: 'Active' },
-                { name: 'Alex Johnson', email: 'alex@example.com', role: 'Editor', status: 'Active' },
-                { name: 'Sam Wilson', email: 'sam@example.com', role: 'Viewer', status: 'Inactive' },
+                { name: 'Сара Чен', email: 'sarah@example.com', role: 'Администратор', status: 'Активен' },
+                { name: 'Алекс Джонсон', email: 'alex@example.com', role: 'Редактор', status: 'Активен' },
+                { name: 'Сэм Уилсон', email: 'sam@example.com', role: 'Наблюдатель', status: 'Неактивен' },
               ]}
             />
           </div>
@@ -1663,8 +1663,8 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
 
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Striped & Compact Table</span>
-            <span class="showcase-hint">Alternating rows with reduced padding</span>
+            <span class="showcase-label">Таблица с чередованием строк и компактная</span>
+            <span class="showcase-hint">Чередование строк с уменьшенными отступами</span>
           </div>
           <div class="showcase-content">
             <Table
@@ -1672,15 +1672,15 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               compact
               columns={[
                 { key: 'id', label: 'ID', align: 'center' },
-                { key: 'product', label: 'Product' },
-                { key: 'price', label: 'Price', align: 'right' },
-                { key: 'stock', label: 'Stock', align: 'right' },
+                { key: 'product', label: 'Продукт' },
+                { key: 'price', label: 'Цена', align: 'right' },
+                { key: 'stock', label: 'Остаток', align: 'right' },
               ]}
               rows={[
                 { id: '001', product: 'Fastry Pro', price: '$49', stock: '120' },
                 { id: '002', product: 'Fastry Team', price: '$99', stock: '85' },
                 { id: '003', product: 'Fastry Enterprise', price: '$249', stock: '42' },
-                { id: '004', product: 'Fastry Starter', price: 'Free', stock: '∞' },
+                { id: '004', product: 'Fastry Starter', price: 'Бесплатно', stock: '∞' },
               ]}
             />
           </div>
@@ -1689,21 +1689,21 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
         <!-- AvatarGroup -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Avatar Group</span>
-            <span class="showcase-hint">Stacked avatars with overflow</span>
+            <span class="showcase-label">Группа аватаров</span>
+            <span class="showcase-hint">Стопка аватаров с переполнением</span>
           </div>
           <div class="showcase-content space-y-6">
             <div>
-              <p class="text-xs text-foreground-muted mb-3 font-mono">max=4, 6 avatars</p>
+              <p class="text-xs text-foreground-muted mb-3 font-mono">max=4, 6 аватаров</p>
               <AvatarGroup
                 max={4}
                 avatars={[
-                  { src: 'https://i.pravatar.cc/150?img=12', alt: 'User 1' },
-                  { src: 'https://i.pravatar.cc/150?img=33', alt: 'User 2' },
-                  { src: 'https://i.pravatar.cc/150?img=47', alt: 'User 3' },
-                  { src: 'https://i.pravatar.cc/150?img=5', alt: 'User 4' },
-                  { src: 'https://i.pravatar.cc/150?img=8', alt: 'User 5' },
-                  { src: 'https://i.pravatar.cc/150?img=11', alt: 'User 6' },
+                  { src: 'https://i.pravatar.cc/150?img=12', alt: 'Пользователь 1' },
+                  { src: 'https://i.pravatar.cc/150?img=33', alt: 'Пользователь 2' },
+                  { src: 'https://i.pravatar.cc/150?img=47', alt: 'Пользователь 3' },
+                  { src: 'https://i.pravatar.cc/150?img=5', alt: 'Пользователь 4' },
+                  { src: 'https://i.pravatar.cc/150?img=8', alt: 'Пользователь 5' },
+                  { src: 'https://i.pravatar.cc/150?img=11', alt: 'Пользователь 6' },
                 ]}
               />
             </div>
@@ -1715,10 +1715,10 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                     size={size}
                     max={3}
                     avatars={[
-                      { src: 'https://i.pravatar.cc/150?img=12', alt: 'User 1' },
-                      { src: 'https://i.pravatar.cc/150?img=33', alt: 'User 2' },
-                      { src: 'https://i.pravatar.cc/150?img=47', alt: 'User 3' },
-                      { src: 'https://i.pravatar.cc/150?img=5', alt: 'User 4' },
+                      { src: 'https://i.pravatar.cc/150?img=12', alt: 'Пользователь 1' },
+                      { src: 'https://i.pravatar.cc/150?img=33', alt: 'Пользователь 2' },
+                      { src: 'https://i.pravatar.cc/150?img=47', alt: 'Пользователь 3' },
+                      { src: 'https://i.pravatar.cc/150?img=5', alt: 'Пользователь 4' },
                     ]}
                   />
                 </div>
@@ -1729,24 +1729,24 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Loading Section -->
+    <!-- Секция загрузки -->
     <section id="loading" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="loader" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Loading</h2>
-          <p class="text-foreground-muted mt-1">Skeleton loaders for perceived performance while content is being fetched.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Загрузка</h2>
+          <p class="text-foreground-muted mt-1">Скелетные загрузчики для повышения воспринимаемой производительности во время получения контента.</p>
         </div>
       </div>
 
       <div class="grid gap-6 lg:grid-cols-2">
-        <!-- Skeleton Variants -->
+        <!-- Варианты скелетонов -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Skeleton Types</span>
-            <span class="showcase-hint">Text, circular, rectangular</span>
+            <span class="showcase-label">Типы скелетонов</span>
+            <span class="showcase-hint">Текст, круг, прямоугольник</span>
           </div>
           <div class="showcase-content space-y-6">
             <div class="flex items-center gap-4">
@@ -1760,11 +1760,11 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Card Loading -->
+        <!-- Загрузка карточки -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Card Skeleton</span>
-            <span class="showcase-hint">Composite loading state</span>
+            <span class="showcase-label">Скелетон карточки</span>
+            <span class="showcase-hint">Составное состояние загрузки</span>
           </div>
           <div class="showcase-content">
             <div class="p-5 rounded-lg border border-border bg-background">
@@ -1784,34 +1784,34 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
           </div>
         </div>
 
-        <!-- Progress Determinate -->
+        <!-- Определённый прогресс -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Progress Bar</span>
-            <span class="showcase-hint">Determinate progress indicators</span>
+            <span class="showcase-label">Индикатор прогресса</span>
+            <span class="showcase-hint">Детерминированные индикаторы прогресса</span>
           </div>
           <div class="showcase-content space-y-5">
             <div>
-              <p class="text-xs text-foreground-muted mb-2 font-mono">25% — default</p>
+              <p class="text-xs text-foreground-muted mb-2 font-mono">25% — по умолчанию</p>
               <Progress value={25} />
             </div>
             <div>
-              <p class="text-xs text-foreground-muted mb-2 font-mono">60% — brand</p>
+              <p class="text-xs text-foreground-muted mb-2 font-mono">60% — брендовый</p>
               <Progress value={60} variant="brand" />
             </div>
             <div>
-              <p class="text-xs text-foreground-muted mb-2 font-mono">90% — success</p>
+              <p class="text-xs text-foreground-muted mb-2 font-mono">90% — успех</p>
               <Progress value={90} variant="success" />
             </div>
           </div>
         </div>
 
         <div class="grid gap-6 lg:grid-cols-2">
-          <!-- Color Variants -->
+          <!-- Цветовые варианты -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Color Variants</span>
-              <span class="showcase-hint">All 5 at 70%</span>
+              <span class="showcase-label">Цветовые варианты</span>
+              <span class="showcase-hint">Все 5 на 70%</span>
             </div>
             <div class="showcase-content space-y-4">
               <Progress value={70} variant="default" />
@@ -1822,11 +1822,11 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
             </div>
           </div>
 
-          <!-- Sizes -->
+          <!-- Размеры -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Size Variants</span>
-              <span class="showcase-hint">sm, md, lg + indeterminate</span>
+              <span class="showcase-label">Варианты размеров</span>
+              <span class="showcase-hint">sm, md, lg + неопределённый</span>
             </div>
             <div class="showcase-content space-y-5">
               <div>
@@ -1842,7 +1842,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 <Progress value={50} size="lg" variant="brand" />
               </div>
               <div>
-                <p class="text-xs text-foreground-muted mb-2 font-mono">Indeterminate</p>
+                <p class="text-xs text-foreground-muted mb-2 font-mono">Неопределённый</p>
                 <Progress variant="brand" />
               </div>
             </div>
@@ -1851,68 +1851,68 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Toggles Section -->
+    <!-- Секция переключателей -->
     <section id="toggles" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="toggle-left" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Toggles</h2>
-          <p class="text-foreground-muted mt-1">Accordion and expandable content patterns with native HTML details/summary.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Переключатели</h2>
+          <p class="text-foreground-muted mt-1">Аккордеон и расширяемые паттерны контента на основе нативных HTML details/summary.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- Accordion Default -->
+        <!-- Аккордеон по умолчанию -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Accordion - Default</span>
-            <span class="showcase-hint">Collapsible FAQ sections</span>
+            <span class="showcase-label">Аккордеон — по умолчанию</span>
+            <span class="showcase-hint">Сворачиваемые секции FAQ</span>
           </div>
           <div class="showcase-content">
             <Accordion
               items={[
-                { title: 'What is Fastry?', content: 'Fastry is a modern Astro starter template with Tailwind CSS v4, React islands, and a comprehensive component library. It includes everything you need to build production-ready websites.' },
-                { title: 'Is it free to use?', content: 'Yes! Fastry is open source and completely free. You can use it for personal and commercial projects without any restrictions.' },
-                { title: 'How do I customize the theme?', content: 'Fastry uses CSS custom properties (design tokens) for theming. Edit the token files in src/styles/tokens/ to customize colors, spacing, typography, and more.' },
+                { title: 'Что такое Fastry?', content: 'Fastry — современный стартовый шаблон Astro с Tailwind CSS v4, React-островами и обширной библиотекой компонентов. Включает всё необходимое для создания production-сайтов.' },
+                { title: 'Он бесплатен?', content: 'Да! Fastry имеет открытый исходный код и полностью бесплатен. Вы можете использовать его в личных и коммерческих проектах без ограничений.' },
+                { title: 'Как кастомизировать тему?', content: 'Fastry использует CSS-переменные (дизайн-токены) для тем. Отредактируйте файлы токенов в src/styles/tokens/, чтобы настроить цвета, отступы, типографику и многое другое.' },
               ]}
             />
           </div>
         </div>
 
         <div class="grid gap-6 lg:grid-cols-2">
-          <!-- Accordion Card Variant -->
+          <!-- Аккордеон в виде карточки -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Card Variant</span>
-              <span class="showcase-hint">With one item open by default</span>
+              <span class="showcase-label">Вариант карточки</span>
+              <span class="showcase-hint">Один элемент открыт по умолчанию</span>
             </div>
             <div class="showcase-content">
               <Accordion
                 variant="card"
                 items={[
-                  { title: 'Getting Started', content: 'Run the CLI scaffolding command to create a new project. Customize with flags like --demo, --components, and --i18n.', defaultOpen: true },
-                  { title: 'Deployment', content: 'Deploy to Vercel, Netlify, or any static host. The build output is optimized for performance out of the box.' },
-                  { title: 'Support', content: 'Join our GitHub discussions or file an issue for bugs and feature requests.' },
+                  { title: 'Начало работы', content: 'Выполните команду CLI для создания нового проекта. Настройте с помощью флагов --demo, --components и --i18n.', defaultOpen: true },
+                  { title: 'Деплой', content: 'Разверните на Vercel, Netlify или любом другом хостинге статики. Результат сборки оптимизирован для производительности из коробки.' },
+                  { title: 'Поддержка', content: 'Присоединяйтесь к обсуждениям на GitHub или сообщайте об ошибках и запросах функций.' },
                 ]}
               />
             </div>
           </div>
 
-          <!-- Accordion Exclusive -->
+          <!-- Аккордеон в эксклюзивном режиме -->
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Exclusive Mode</span>
-              <span class="showcase-hint">Only one item open at a time</span>
+              <span class="showcase-label">Эксклюзивный режим</span>
+              <span class="showcase-hint">Только один элемент открыт одновременно</span>
             </div>
             <div class="showcase-content">
               <Accordion
                 exclusive
                 items={[
-                  { title: 'Free Plan', content: 'Perfect for personal projects and learning. Includes all core components and basic templates.' },
-                  { title: 'Pro Plan', content: 'Advanced components, premium templates, priority support, and commercial license.' },
-                  { title: 'Enterprise', content: 'Custom development, dedicated support, SLA guarantees, and team training workshops.' },
+                  { title: 'Бесплатный тариф', content: 'Идеально подходит для личных проектов и обучения. Включает все основные компоненты и базовые шаблоны.' },
+                  { title: 'Pro тариф', content: 'Продвинутые компоненты, премиум-шаблоны, приоритетная поддержка и коммерческая лицензия.' },
+                  { title: 'Enterprise', content: 'Индивидуальная разработка, выделенная поддержка, гарантии SLA и обучение команды.' },
                 ]}
               />
             </div>
@@ -1921,93 +1921,93 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
       </div>
     </section>
 
-    <!-- Patterns Section -->
+    <!-- Секция паттернов -->
     <section id="patterns" class="scroll-mt-32 flex flex-col gap-10">
       <div class="flex items-start gap-5">
         <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-brand-500/10 text-brand-500 shrink-0">
           <Icon name="layers" size="lg" />
         </div>
         <div>
-          <h2 class="font-display text-2xl font-bold text-foreground">Patterns</h2>
-          <p class="text-foreground-muted mt-1">Pre-composed component patterns for common UI needs — search, passwords, stats, and empty states.</p>
+          <h2 class="font-display text-2xl font-bold text-foreground">Паттерны</h2>
+          <p class="text-foreground-muted mt-1">Предварительно собранные паттерны компонентов для типовых UI-задач — поиск, пароли, статистика и пустые состояния.</p>
         </div>
       </div>
 
       <div class="space-y-6">
-        <!-- SearchInput -->
+        <!-- Поле поиска -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Search Input</span>
-            <span class="showcase-hint">Input with search icon, multiple sizes</span>
+            <span class="showcase-label">Поле поиска</span>
+            <span class="showcase-hint">Поле ввода с иконкой поиска, несколько размеров</span>
           </div>
           <div class="showcase-content space-y-5">
-            <SearchInput size="sm" placeholder="Search files..." />
-            <SearchInput placeholder="Search components..." />
-            <SearchInput size="lg" placeholder="Search documentation..." />
+            <SearchInput size="sm" placeholder="Поиск файлов..." />
+            <SearchInput placeholder="Поиск компонентов..." />
+            <SearchInput size="lg" placeholder="Поиск в документации..." />
           </div>
         </div>
 
-        <!-- PasswordInput -->
+        <!-- Поле пароля -->
         <div class="grid gap-6 lg:grid-cols-2">
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Password Input</span>
-              <span class="showcase-hint">With show/hide toggle</span>
+              <span class="showcase-label">Поле пароля</span>
+              <span class="showcase-hint">С переключением видимости</span>
             </div>
             <div class="showcase-content space-y-5">
-              <PasswordInput label="Password" hint="Must be at least 8 characters" />
-              <PasswordInput label="Confirm Password" placeholder="Re-enter password" />
+              <PasswordInput label="Пароль" hint="Не менее 8 символов" />
+              <PasswordInput label="Подтверждение пароля" placeholder="Повторите пароль" />
             </div>
           </div>
 
           <div class="component-showcase">
             <div class="showcase-header">
-              <span class="showcase-label">Password Sizes</span>
+              <span class="showcase-label">Размеры поля пароля</span>
               <span class="showcase-hint">sm, md, lg</span>
             </div>
             <div class="showcase-content space-y-5">
-              <PasswordInput size="sm" label="Small" />
-              <PasswordInput size="md" label="Medium (default)" />
-              <PasswordInput size="lg" label="Large" />
+              <PasswordInput size="sm" label="Маленький" />
+              <PasswordInput size="md" label="Средний (по умолчанию)" />
+              <PasswordInput size="lg" label="Большой" />
             </div>
           </div>
         </div>
 
-        <!-- StatCard -->
+        <!-- Карточки статистики -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Stat Cards</span>
-            <span class="showcase-hint">Metric display with trend indicators</span>
+            <span class="showcase-label">Карточки статистики</span>
+            <span class="showcase-hint">Отображение метрик с индикаторами тренда</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <StatCard label="Total Revenue" value="$45,231" trend="up" trendText="+12.5% from last month" icon="trending-up" />
-              <StatCard label="Active Users" value="2,338" trend="up" trendText="+8.2% from last week" icon="users" />
-              <StatCard label="Bounce Rate" value="24.3%" trend="down" trendText="-3.1% from last month" icon="trending-down" />
-              <StatCard label="Avg. Session" value="3m 42s" trend="neutral" trendText="No change" icon="loader" />
+              <StatCard label="Общая выручка" value="$45,231" trend="up" trendText="+12.5% по сравнению с прошлым месяцем" icon="trending-up" />
+              <StatCard label="Активные пользователи" value="2,338" trend="up" trendText="+8.2% по сравнению с прошлой неделей" icon="users" />
+              <StatCard label="Показатель отказов" value="24.3%" trend="down" trendText="-3.1% по сравнению с прошлым месяцем" icon="trending-down" />
+              <StatCard label="Средняя сессия" value="3м 42с" trend="neutral" trendText="Без изменений" icon="loader" />
             </div>
           </div>
         </div>
 
-        <!-- EmptyState -->
+        <!-- Пустое состояние -->
         <div class="component-showcase">
           <div class="showcase-header">
-            <span class="showcase-label">Empty State</span>
-            <span class="showcase-hint">Placeholder for empty data views</span>
+            <span class="showcase-label">Пустое состояние</span>
+            <span class="showcase-hint">Заполнитель для пустых представлений данных</span>
           </div>
           <div class="showcase-content">
             <div class="grid gap-6 lg:grid-cols-2">
               <EmptyState
                 icon="inbox"
-                title="No messages yet"
-                description="When you receive messages, they'll appear here. Start a conversation to get going."
-                actionLabel="New Message"
+                title="Нет сообщений"
+                description="Когда вы получите сообщения, они появятся здесь. Начните разговор, чтобы начать."
+                actionLabel="Новое сообщение"
                 actionHref="#"
               />
               <EmptyState
                 icon="search"
-                title="No results found"
-                description="Try adjusting your search or filters to find what you're looking for."
+                title="Ничего не найдено"
+                description="Попробуйте изменить поисковый запрос или фильтры."
               />
             </div>
           </div>
@@ -2017,19 +2017,19 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
 
   </div>
 
-  <!-- CTA Section -->
+  <!-- Секция CTA -->
   <CTA variant="invert" size="md" maxWidth="md">
-    <h2 slot="heading">Ready to build?</h2>
+    <h2 slot="heading">Готовы к созданию?</h2>
     <p slot="description">
-      These components are just the beginning. Clone Fastry and start shipping faster.
+      Это лишь начало. Клонируйте Fastry и начните выпускать продукты быстрее.
     </p>
     <Fragment slot="actions">
       <Button href="https://github.com/hansmartensdev/Astro-Rocket" target="_blank" class="hero-btn-brand">
         <Icon name="github" size="sm" />
-        Clone Repository
+        Клонировать репозиторий
       </Button>
       <Button variant="outline" href="/blog">
-        Read Documentation
+        Читать документацию
       </Button>
     </Fragment>
   </CTA>
@@ -2037,7 +2037,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
 </PageLayout>
 
 <style>
-  /* Showcase card styling */
+  /* Стили карточек витрины */
   .component-showcase {
     border-radius: 0.75rem;
     border: 1px solid var(--border);
@@ -2074,7 +2074,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
     background-color: var(--card);
   }
 
-  /* Hide scrollbar but keep functionality */
+  /* Скрыть полосу прокрутки, но оставить функциональность */
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
@@ -2083,7 +2083,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
     display: none;
   }
 
-  /* Keyboard styling */
+  /* Стили клавиатуры */
   kbd {
     font-family: var(--font-mono);
   }

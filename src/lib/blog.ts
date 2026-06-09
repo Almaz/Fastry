@@ -44,23 +44,23 @@ export function findTagBySlug(slug: string, allTags: string[]): string | undefin
  * Strip the locale prefix from a blog entry's id to get its URL slug
  * (e.g. "en/welcome" → "welcome").
  */
-export function getPostSlug(postId: string, locale = 'en'): string {
+export function getPostSlug(postId: string, locale = 'ru'): string {
   return postId.replace(new RegExp(`^${locale}/`), '');
 }
 
 /** URL path for an individual blog post. Supports locale-prefixed paths. */
-export function getPostUrl(postId: string, locale = 'en'): string {
+export function getPostUrl(postId: string, locale = 'ru'): string {
   const slug = getPostSlug(postId, locale);
-  if (locale === 'en') {
+  if (locale === 'ru') {
     return `/blog/${slug}`;
   }
   return `/${locale}/blog/${slug}`;
 }
 
 /** URL path for a blog tag archive. Supports locale-prefixed paths. */
-export function getTagUrl(tag: string, locale = 'en'): string {
+export function getTagUrl(tag: string, locale = 'ru'): string {
   const slug = tagToSlug(tag);
-  if (locale === 'en') {
+  if (locale === 'ru') {
     return `/blog/tag/${slug}`;
   }
   return `/${locale}/blog/tag/${slug}`;
@@ -71,7 +71,7 @@ export function getTagUrl(tag: string, locale = 'en'): string {
  * out in production, kept visible in dev so authors can preview them.
  */
 export async function getPublishedPosts(
-  locale = 'en',
+  locale = 'ru',
 ): Promise<CollectionEntry<'blog'>[]> {
   const all = await getCollection('blog', ({ data }) => {
     return data.locale === locale && (import.meta.env.PROD ? data.draft !== true : true);

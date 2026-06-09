@@ -1,7 +1,7 @@
 ---
 /**
- * Services page — Russian
- * URL: /ru/services
+ * Services page
+ * URL: /services
  */
 import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
@@ -12,36 +12,36 @@ import { Hero } from '@/components/hero';
 import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
 ---
 <PageLayout
-  title="Услуги — Веб-дизайн, Разработка и Производительность"
-  description="Три ключевые услуги для современных сайтов: продуманный дизайн, чистая разработка на Astro и измеримая производительность с SEO."
+  title="Services — Web Design, Development & Performance"
+  description="Three core services for modern websites: thoughtful design, clean Astro development, and measurable performance & SEO."
 >
   <Hero layout="centered" size="sm" class="isolate services-hero" showHeroHalo>
     <Badge slot="badge" variant="brand" pill>
       <Icon name="sparkles" size="sm" />
-      Услуги
+      Services
     </Badge>
     <h1 slot="title">
-      <span class="text-foreground">Что я предлагаю —</span><br />
-      <span class="text-brand-500">спроектировано, создано и настроено.</span>
+      <span class="text-foreground">What I offer —</span><br />
+      <span class="text-brand-500">designed, built, and tuned.</span>
     </h1>
 
     <p slot="description">
-      Три ключевые услуги, один неизменный стандарт. От первого
-      макета до финального Lighthouse-скора — каждый проект получает
-      одинаковое внимание к деталям.
+      Three core services, one consistent standard. From the first
+      wireframe to the final Lighthouse score, every project gets the
+      same attention to detail.
     </p>
 
     <Fragment slot="actions">
       <Button size="lg" href="#design" variant="outline">
-        Веб-дизайн
+        Web Design
         <Icon name="arrow-down" size="sm" class="hero-jump-arrow" />
       </Button>
       <Button size="lg" href="#development" variant="outline">
-        Разработка
+        Development
         <Icon name="arrow-down" size="sm" class="hero-jump-arrow" />
       </Button>
       <Button size="lg" href="#performance" variant="outline">
-        Производительность
+        Performance
         <Icon name="arrow-down" size="sm" class="hero-jump-arrow" />
       </Button>
     </Fragment>
@@ -56,20 +56,20 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
           <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
             <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">
               <Icon name="layout" size="sm" />
-              Веб-дизайн
+              Web Design
             </Badge>
             <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-              Дизайн с намерением
+              Design with intention
             </h2>
           </div>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Хороший дизайн начинается с людей, которые будут им пользоваться. Я создаю макеты, опираясь на ваш контент и вашу аудиторию, а не на тренды, которые быстро устаревают. Типографика, отступы и цвета выбираются ради ясности — а не новизны.
+            Great design starts with the people who'll use it. I design layouts shaped around your content and your audience, not around trends that age badly. Typography, spacing, and colour are chosen for clarity — not novelty.
           </p>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Учтён каждый экран: десктоп, планшет и телефон, который держат в руке на остановке. Бренд остаётся единым на протяжении всего опыта, а мелкие детали считаются частью дизайна, а не финальным полировкой.
+            Every screen is considered: desktop, tablet, and the phone someone holds at the bus stop. The brand stays consistent across the whole experience, and the small details are treated as part of the design, not the polish.
           </p>
-          <Button variant="outline" href="/ru/contact" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
-            Обсудить дизайн-проект
+          <Button variant="outline" href="/en/contact" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
+            Discuss a design project
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
@@ -80,51 +80,51 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
                 <Icon name="layout" size="md" />
               </div>
-              <h3 class="font-display text-base font-semibold text-foreground">Что входит</h3>
+              <h3 class="font-display text-base font-semibold text-foreground">What's included</h3>
             </div>
             <ul class="flex flex-col gap-3">
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Индивидуальные макеты</span> — созданные под ваш контент, а не из шаблона. Каждая секция заслуживает своё место, служа цели страницы.
+                  <span class="font-semibold text-foreground">Bespoke layouts</span> — built for your content, not from a template. Every section earns its place by serving the page's goal.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Адаптивность на всех разрешениях</span> — телефон, планшет, десктоп, ультраширокий. Макеты перестраиваются осмысленно, а не просто сжимаются.
+                  <span class="font-semibold text-foreground">Responsive across breakpoints</span> — phone, tablet, desktop, ultrawide. Layouts reflow with intent, not just shrink to fit.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Типографические системы</span> — читаемые, масштабируемые, в стиле бренда. Чёткая иерархия от заголовка до подписи, настроенная для длительного чтения.
+                  <span class="font-semibold text-foreground">Typography systems</span> — readable, scaleable, on-brand. A clear hierarchy from page title down to caption, tuned for long-form reading.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Светлая и тёмная темы</span> — один дизайн, два настроения, выбор пользователя. Оба режима проверяются на каждом этапе, а не дорабатываются в конце.
+                  <span class="font-semibold text-foreground">Light & dark themes</span> — one design, two moods, user's choice. Both modes are checked at every step, not retrofitted at the end.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Продуманная анимация</span> — взаимодействия, которые направляют, а не отвлекают. Настройки уменьшения движения уважаются без исключений.
+                  <span class="font-semibold text-foreground">Considered motion</span> — interactions that guide, never distract. Reduced-motion preferences are respected without exception.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Доступность в основе</span> — контраст, фокус, семантическая структура. Клавиатурная навигация и чтение с экрана проверяются перед запуском.
+                  <span class="font-semibold text-foreground">Accessibility baked in</span> — contrast, focus, semantic structure. Keyboard paths and screen-reader output are verified before launch.
                 </p>
               </li>
             </ul>
           </Card>
         </div>
         <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
-          <Button variant="outline" href="/ru/contact">
-            Обсудить дизайн-проект
+          <Button variant="outline" href="/en/contact">
+            Discuss a design project
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
@@ -141,20 +141,20 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
           <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
             <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">
               <Icon name="code" size="sm" />
-              Веб-разработка
+              Web Development
             </Badge>
             <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-              Код, который оправдывает себя
+              Code that earns its place
             </h2>
           </div>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Я создаю сайты на Astro, потому что он поставляет только то, что нужно, и ничего лишнего. Результат — сайты с отличными аудитами, которые ощущаются быстрыми и не становятся хрупкими со временем.
+            I build with Astro because it ships what's needed and nothing else. The result is sites that score well in audits, feel fast in the hand, and don't grow brittle over time.
           </p>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Архитектура важна не меньше результата: типизированный контент, предсказуемые границы компонентов, сборочный конвейер, который будущий разработчик (или будущий вы) сможет освоить без экскурсии.
+            Architecture matters as much as output: typed content, predictable component boundaries, and a build pipeline a future developer (or future you) can pick up without a guided tour.
           </p>
-          <Button variant="outline" href="/ru/projects" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
-            Посмотреть проекты
+          <Button variant="outline" href="/en/projects" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
+            See recent projects
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
@@ -165,51 +165,51 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
                 <Icon name="code" size="md" />
               </div>
-              <h3 class="font-display text-base font-semibold text-foreground">Что входит</h3>
+              <h3 class="font-display text-base font-semibold text-foreground">What's included</h3>
             </div>
             <ul class="flex flex-col gap-3">
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Astro + Tailwind</span> — современный стек, минимум JavaScript, чистый HTML. Браузер отображает страницу почти мгновенно, без налога на гидратацию.
+                  <span class="font-semibold text-foreground">Astro + Tailwind</span> — modern stack, minimal JavaScript, clean HTML. The browser renders the page almost instantly, with no hydration tax.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Типизированные коллекции контента</span> — структурированные блог, проекты и данные. Валидация схемы выполняется на сборке, поэтому неработающий контент никогда не публикуется.
+                  <span class="font-semibold text-foreground">Typed content collections</span> — structured blog, projects, and data. Schema validation runs at build time, so broken content never ships.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Формы и интеграции</span> — защищённые, с учётом GDPR, интегрированные с вашими инструментами. Отправки попадают в почту или CRM без утечки на клиентской стороне.
+                  <span class="font-semibold text-foreground">Forms & integrations</span> — protected, GDPR-aware, hooked into your tools. Submissions reach your inbox or CRM without leaking client-side.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Хостинг и деплой</span> — Netlify, Vercel, Cloudflare или ваша инфраструктура. Превью-деплои для каждой ветки, чтобы изменения можно было проверить до публикации.
+                  <span class="font-semibold text-foreground">Hosting & deploy</span> — Netlify, Vercel, Cloudflare, or your own infra. Preview deploys for every branch, so changes can be reviewed before they go live.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Контроль версий и CI</span> — рабочий процесс на git, повторяемые деплои. Автоматические проверки блокируют каждый пул-реквест до слияния.
+                  <span class="font-semibold text-foreground">Version control & CI</span> — git-based workflow, repeatable deploys. Automated checks gate every pull request before merge.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Документация по передаче</span> — код, ключи и README, который можно реально прочитать. Написано так, чтобы будущий разработчик (или будущий вы) мог взяться за проект без экскурсии.
+                  <span class="font-semibold text-foreground">Handover documentation</span> — code, keys, and a README you can actually read. Written so a future developer (or future you) can pick the project up without a tour.
                 </p>
               </li>
             </ul>
           </Card>
         </div>
         <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
-          <Button variant="outline" href="/ru/projects">
-            Посмотреть проекты
+          <Button variant="outline" href="/en/projects">
+            See recent projects
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
@@ -226,20 +226,20 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
           <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
             <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">
               <Icon name="zap" size="sm" />
-              Производительность
+              Performance
             </Badge>
             <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-              Быстрые страницы, находимые страницы
+              Fast pages, found pages
             </h2>
           </div>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Скорость и видимость в поиске — не функции, которые добавляют в конце, а ограничения, которые соблюдают с первого коммита. Каждая секунда загрузки страницы стоит внимания, рейтинга и доверия.
+            Speed and search visibility aren't features to add at the end — they're constraints to honour from the first commit. Every second a page loads costs attention, ranking, and trust.
           </p>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Я работаю по измеримым целям, а не по ощущениям. Core Web Vitals, техническое SEO и доступность отслеживаются, настраиваются и проверяются перед запуском — а панели управления остаются у вас после передачи.
+            I work to measurable targets, not vibes. Core Web Vitals, technical SEO, and accessibility are tracked, tuned, and verified before launch — and the dashboards stay yours after handover.
           </p>
-          <Button variant="outline" href="/ru/contact" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
-            Начать проект
+          <Button variant="outline" href="/en/contact" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
+            Start a project
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
@@ -250,51 +250,51 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
                 <Icon name="zap" size="md" />
               </div>
-              <h3 class="font-display text-base font-semibold text-foreground">Что входит</h3>
+              <h3 class="font-display text-base font-semibold text-foreground">What's included</h3>
             </div>
             <ul class="flex flex-col gap-3">
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Core Web Vitals</span> — LCP, INP и CLS в рамках порогов Google. Измеряется на реальных устройствах, а не только на синтетических тестах.
+                  <span class="font-semibold text-foreground">Core Web Vitals</span> — LCP, INP, and CLS held to Google's thresholds. Measured on real devices, not just synthetic tests.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Конвейер изображений</span> — современные форматы, адаптивные размеры, ленивая загрузка. Героические изображения управляются художественно, чтобы выглядеть правильно на каждом экране.
+                  <span class="font-semibold text-foreground">Image pipeline</span> — modern formats, responsive sizes, lazy loading. Hero images art-directed so they look right on every screen.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Техническое SEO</span> — метаданные, карты сайта, структурированные данные, OG-изображения. Всё настроено и проверено до первого сканирования.
+                  <span class="font-semibold text-foreground">Technical SEO</span> — metadata, sitemaps, structured data, OG images. All wired up and validated before the first crawl.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Доступность</span> — разметка с учётом WCAG и проверенный порядок фокуса. Тестируется с программой чтения с экрана и только клавиатурой, а не только проверкой контраста.
+                  <span class="font-semibold text-foreground">Accessibility</span> — WCAG-aware markup and verified focus order. Tested with a screen reader and the keyboard alone, not just a contrast checker.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Lighthouse-аудиты</span> — измеримые показатели, поставляемые с сайтом. Повторяемые в CI, чтобы они не дрейфовали после запуска.
+                  <span class="font-semibold text-foreground">Lighthouse audits</span> — measurable scores delivered with the site. Repeatable in CI so they don't quietly drift after launch.
                 </p>
               </li>
               <li class="flex items-start gap-3">
                 <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-1" />
                 <p class="text-sm text-foreground-muted leading-relaxed">
-                  <span class="font-semibold text-foreground">Приватная аналитика</span> — полезные данные, без баннера cookie. Самостоятельный хостинг или анонимизация вендором — данные никогда не продаются.
+                  <span class="font-semibold text-foreground">Privacy-friendly analytics</span> — useful data, no cookie banner. Self-hosted or vendor-anonymised, never sold on.
                 </p>
               </li>
             </ul>
           </Card>
         </div>
         <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
-          <Button variant="outline" href="/ru/contact">
-            Начать проект
+          <Button variant="outline" href="/en/contact">
+            Start a project
             <Icon name="arrow-right" size="sm" />
           </Button>
         </div>
@@ -307,13 +307,13 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col items-center gap-4 text-center" data-reveal>
         <div class="flex flex-col items-center gap-6">
-          <Badge variant="brand" pill>Как это работает</Badge>
+          <Badge variant="brand" pill>How it works</Badge>
           <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-            Прозрачный и честный процесс
+            A clear, honest process
           </h2>
         </div>
         <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
-          Четыре этапа, одна точка контакта, никаких сюрпризов.
+          Four stages, one point of contact, no surprises.
         </p>
       </div>
 
@@ -324,9 +324,9 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               1
             </div>
             <div>
-              <h3 class="text-base font-semibold text-foreground">Знакомство</h3>
+              <h3 class="text-base font-semibold text-foreground">Discovery</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Беседа о ваших целях, аудитории и том, как выглядит успех. Без обязательств.
+                A conversation about your goals, your audience, and what success looks like. No obligation.
               </p>
             </div>
           </div>
@@ -337,9 +337,9 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               2
             </div>
             <div>
-              <h3 class="text-base font-semibold text-foreground">Предложение</h3>
+              <h3 class="text-base font-semibold text-foreground">Proposal</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Чёткие объём, сроки и стоимость. Одна страница, простым языком, фиксированная цена.
+                A clear scope, timeline, and cost. One page, plain language, fixed price.
               </p>
             </div>
           </div>
@@ -350,9 +350,9 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               3
             </div>
             <div>
-              <h3 class="text-base font-semibold text-foreground">Дизайн и сборка</h3>
+              <h3 class="text-base font-semibold text-foreground">Design & Build</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Короткие циклы с регулярными проверками. Вы видите, как сайт развивается в процессе создания.
+                Short cycles with regular check-ins. You see the site evolve as it's built.
               </p>
             </div>
           </div>
@@ -363,9 +363,9 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               4
             </div>
             <div>
-              <h3 class="text-base font-semibold text-foreground">Запуск и поддержка</h3>
+              <h3 class="text-base font-semibold text-foreground">Launch & Support</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Деплой, передача, остаюсь на связи. Доработки после запуска — без проблем.
+                Deploy, hand over, stay available. Iteration after launch is straightforward.
               </p>
             </div>
           </div>
@@ -378,40 +378,40 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
   <section class="relative z-10 py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <!-- Mobile: flat section, no card -->
     <div class="glitch:hidden mx-auto max-w-2xl px-6 text-center" data-reveal>
-      <Badge variant="brand" pill class="mb-6">Давайте обсудим</Badge>
+      <Badge variant="brand" pill class="mb-6">Let's talk</Badge>
       <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
-        Есть проект?
+        Have a project in mind?
       </h2>
       <p class="text-lg text-foreground-muted mb-8 text-balance">
-        Отправьте короткую заметку о том, что вы создаёте и что вам нужно. Я читаю каждое сообщение и отвечаю в течение рабочего дня.
+        Send a short note about what you're building and what you need. I read every message and reply within a working day.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button size="lg" href="/ru/contact" class="cta-btn-brand">
-          Начать проект
+        <Button size="lg" href="/en/contact" class="cta-btn-brand">
+          Start a project
           <Icon name="arrow-right" size="sm" />
         </Button>
-        <Button size="lg" variant="outline" href="/ru/about">
-          Подробнее обо мне
+        <Button size="lg" variant="outline" href="/en/about">
+          More about me
           <Icon name="arrow-right" size="sm" />
         </Button>
       </div>
     </div>
 
     <!-- Desktop: contained LetterGlitch band with glass card -->
-    <LetterGlitchBand locale="ru">
+    <LetterGlitchBand locale="en">
       <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
-        Есть проект?
+        Have a project in mind?
       </h2>
       <p class="text-lg text-foreground-muted mb-8 text-balance">
-        Отправьте короткую заметку о том, что вы создаёте и что вам нужно. Я читаю каждое сообщение и отвечаю в течение рабочего дня.
+        Send a short note about what you're building and what you need. I read every message and reply within a working day.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button size="lg" href="/ru/contact" class="hero-btn-brand">
-          Начать проект
+        <Button size="lg" href="/en/contact" class="hero-btn-brand">
+          Start a project
           <Icon name="arrow-right" size="sm" />
         </Button>
-        <Button size="lg" variant="outline" href="/ru/about">
-          Подробнее обо мне
+        <Button size="lg" variant="outline" href="/en/about">
+          More about me
           <Icon name="arrow-right" size="sm" />
         </Button>
       </div>

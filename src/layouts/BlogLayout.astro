@@ -279,7 +279,7 @@ const schemas = faqSchema ? [blogPostingSchema, faqSchema] : [blogPostingSchema]
 
   <!-- Desktop: contained LetterGlitch band with glass card -->
   <section class="hidden glitch:block relative z-10 py-[var(--space-section-md)] bg-background-secondary">
-    <LetterGlitchBand maxWidth="7xl">
+    <LetterGlitchBand maxWidth="7xl" locale={locale}>
       <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">{t('common.followAlong', locale)}</h2>
       <p class="text-lg text-foreground-muted mb-8 text-balance">{t('common.stayInLoop', locale)}</p>
 

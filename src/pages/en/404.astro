@@ -1,9 +1,9 @@
 ---
 /**
- * 404 page — Russian version
- * Served by Netlify _redirects rule when a visitor lands on a non-existent /ru/* URL.
- * Unlike the root 404.html, this page is rendered with locale = 'ru' on the server,
- * so Header, Footer, and all content are in Russian.
+ * 404 page — English
+ * Note: Netlify always serves the root 404.html for any 404 error.
+ * The root 404.astro handles both languages via client-side JS.
+ * This page exists for direct access at /en/404.
  */
 import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
@@ -13,7 +13,7 @@ import Button from '@/components/ui/form/Button/Button.astro';
 import { Hero } from '@/components/hero';
 import { localizedPath, t } from '@/i18n';
 
-const locale = 'ru';
+const locale = 'en';
 
 const badgeText = t('errors.404.badge', locale);
 const headingPart = t('errors.404.titlePart', locale);
@@ -130,8 +130,6 @@ const blogHref = localizedPath('/blog', locale);
     z-index: 1;
   }
 
-  /* Dark mode: make body background dark so the canvas shows through
-     instead of a white backdrop from global styles. */
   .dark body:has(#bg-canvas) {
     background-color: #0a0a0b !important;
   }
@@ -140,8 +138,6 @@ const blogHref = localizedPath('/blog', locale);
     background-color: transparent !important;
   }
 
-  /* Dark mode: slightly transparent dark background so the animated canvas
-     shows through, matching the light-mode /80 treatment. */
   .dark body:has(#bg-canvas) section.bg-background-secondary\/80 {
     background-color: color-mix(in oklch, var(--color-background-secondary) 80%, transparent) !important;
   }

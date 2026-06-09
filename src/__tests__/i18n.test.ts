@@ -48,19 +48,21 @@ describe('i18n localizedPath()', () => {
 });
 
 describe('i18n locale helpers', () => {
-  it('resolves an unknown locale to the default', () => {
-    expect(resolveLocale('xx')).toBe('en');
-    expect(resolveLocale(undefined)).toBe('en');
+  it('resolves an unknown locale to the default (now ru)', () => {
+    expect(resolveLocale('xx')).toBe('ru');
+    expect(resolveLocale(undefined)).toBe('ru');
   });
 
   it('validates a configured locale', () => {
     expect(isValidLocale('en')).toBe(true);
+    expect(isValidLocale('ru')).toBe(true);
     expect(isValidLocale('xx')).toBe(false);
     expect(isValidLocale(undefined)).toBe(false);
   });
 
   it('returns the display name when configured, otherwise the code', () => {
     expect(getLocaleName('en')).toBe('English');
+    expect(getLocaleName('ru')).toBe('Русский');
     // 'nl' is in localeNames even though it's not in the active locales list
     expect(getLocaleName('nl')).toBe('Nederlands');
     expect(getLocaleName('xx')).toBe('xx');
@@ -68,23 +70,28 @@ describe('i18n locale helpers', () => {
 });
 
 describe('i18n getLocaleFromPath()', () => {
-  it('returns the default locale for the root path', () => {
-    expect(getLocaleFromPath('/')).toBe('en');
+  it('returns the default locale (ru) for the root path', () => {
+    expect(getLocaleFromPath('/')).toBe('ru');
   });
 
-  it('returns the default locale when no recognized prefix is present', () => {
-    expect(getLocaleFromPath('/about')).toBe('en');
-    expect(getLocaleFromPath('/blog/hello-world')).toBe('en');
+  it('returns the default locale (ru) when no recognized prefix is present', () => {
+    expect(getLocaleFromPath('/about')).toBe('ru');
+    expect(getLocaleFromPath('/blog/hello-world')).toBe('ru');
   });
 
-  it('returns the default locale when the first segment is not a configured locale', () => {
-    // Default config only has 'en' active — 'nl' is not recognized
-    expect(getLocaleFromPath('/nl/about')).toBe('en');
-    expect(getLocaleFromPath('/zh-cn/blog')).toBe('en');
+  it('returns the detected locale when the first segment is a configured locale', () => {
+    expect(getLocaleFromPath('/en/about')).toBe('en');
+    expect(getLocaleFromPath('/ru/about')).toBe('ru');
+  });
+
+  it('returns the default locale (ru) when the first segment is not a configured locale', () => {
+    // 'nl' is not in the active locales list
+    expect(getLocaleFromPath('/nl/about')).toBe('ru');
+    expect(getLocaleFromPath('/zh-cn/blog')).toBe('ru');
   });
 
   it('normalizes paths without a leading slash', () => {
-    expect(getLocaleFromPath('about')).toBe('en');
+    expect(getLocaleFromPath('about')).toBe('ru');
   });
 });
 
@@ -94,14 +101,33 @@ describe('i18n stripLocaleFromPath()', () => {
     expect(stripLocaleFromPath('/nl/about')).toBe('/nl/about');
   });
 
+  it('strips a recognized locale prefix', () => {
+    expect(stripLocaleFromPath('/en/about')).toBe('/about');
+    expect(stripLocaleFromPath('/ru/about')).toBe('/about');
+  });
+
   it('returns "/" for the root path', () => {
     expect(stripLocaleFromPath('/')).toBe('/');
+  });
+
+  it('returns "/" when stripping a locale-only path', () => {
+    expect(stripLocaleFromPath('/en')).toBe('/');
+    expect(stripLocaleFromPath('/ru')).toBe('/');
   });
 });
 
 describe('i18n swapLocaleInPath()', () => {
-  it('returns the path unchanged when targeting the default locale (no prefix added)', () => {
-    expect(swapLocaleInPath('/about', 'en')).toBe('/about');
+  it('returns the path unchanged when targeting the default locale (ru, no prefix added)', () => {
+    expect(swapLocaleInPath('/about', 'ru')).toBe('/about');
+  });
+
+  it('adds the locale prefix when targeting a non-default locale', () => {
+    expect(swapLocaleInPath('/about', 'en')).toBe('/en/about');
+  });
+
+  it('swaps an existing locale prefix to a different one', () => {
+    expect(swapLocaleInPath('/en/about', 'ru')).toBe('/about');
+    expect(swapLocaleInPath('/ru/about', 'en')).toBe('/en/about');
   });
 
   it('returns the same path when i18n is disabled, regardless of target', () => {

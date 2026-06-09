@@ -4,19 +4,13 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const visibleProjects = await getCollection('projects', ({ data }) => {
-    return import.meta.env.PROD ? data.draft !== true : true;
+    return data.locale === 'ru' && (import.meta.env.PROD ? data.draft !== true : true);
   });
 
-  const routableProjects = visibleProjects
-    .filter((p) => !p.data.placeholder)
-    .filter((p) => {
-      const slug = p.id.replace(/\.mdx?$/, '');
-      // Skip paths that start with "ru/" — they are handled by ru/projects/[slug].astro
-      return !slug.startsWith('ru/');
-    });
+  const routableProjects = visibleProjects.filter((p) => !p.data.placeholder);
 
   return routableProjects.map((project) => ({
-    params: { slug: project.id.replace(/\.mdx?$/, '') },
+    params: { slug: project.id.replace(/ru\//, '') },
     props: {
       project,
       related: visibleProjects
@@ -40,7 +34,7 @@ const { Content, headings } = await render(project);
   image={project.data.image}
   imageAlt={project.data.imageAlt}
   gallery={project.data.gallery}
-  slug={project.id.replace(/\.mdx?$/, '')}
+  slug={project.id.replace(/ru\//, '')}
   related={related}
   headings={headings}
   toc={project.data.toc}

@@ -12,11 +12,11 @@ interface Props {
   active?: string;
   /** Optional class extension. */
   class?: string;
-  /** Locale for URL generation. Defaults to 'en'. */
+  /** Locale for URL generation. Defaults to 'ru'. */
   locale?: string;
 }
 
-const { tags, active, class: extraClass, locale = 'en' } = Astro.props;
+const { tags, active, class: extraClass, locale = 'ru' } = Astro.props;
 ---
 
 {tags.length > 0 && (

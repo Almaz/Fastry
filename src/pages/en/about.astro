@@ -1,7 +1,7 @@
 ---
 /**
- * About page — Russian
- * URL: /ru/about
+ * About page
+ * URL: /about
  */
 import PageLayout from '@/layouts/PageLayout.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
@@ -14,91 +14,58 @@ import TechStack from '@/components/landing/TechStack.astro';
 import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
 ---
 <PageLayout
-  title="Обо мне — Веб-дизайнер и Разработчик"
-  description="Дизайнер и разработчик — создаю современные веб-проекты с чистым дизайном, прочной структурой и вниманием к деталям."
+  title="About Fastry — Astro 6 Starter Theme"
+  description="Fastry is a production-ready Astro 6 starter theme with 12 themes, 57+ components, built-in i18n, dark mode, and everything you need to launch fast."
+  footerBackground="secondary"
 >
   <Hero layout="centered" size="sm" class="isolate" showHeroHalo>
     <Badge slot="badge" variant="brand" pill>
-      <Icon name="user" size="sm" />
-      Обо мне
+      <Icon name="rocket" size="sm" />
+      About
     </Badge>
     <h1 slot="title">
       <span class="text-foreground [-webkit-text-fill-color:currentColor]">Fastry —</span><br />
       <span class="text-brand-500 [-webkit-text-fill-color:var(--color-brand-500)]">
-        <TypingEffect words={["Веб-дизайнер", "Веб-разработчик", "Astro-разработчик", "Пользователь Claude Code", "UI/UX-энтузиаст", "Блогер", "Любитель кофе"]} />
+        <TypingEffect words={["Astro 6 Starter", "Production-Ready", "12 Themes", "57+ Components", "Dark Mode", "Built-in i18n", "Zero Config SEO"]} />
       </span>
     </h1>
 
     <p slot="description">
-      Мне важны обе стороны мастерства — как сайт выглядит и как он
-      работает. Вот немного подробнее о том, как я мыслю и работаю.
+      A free, production-ready Astro 6 starter theme with everything you need to build fast, modern websites — without starting from scratch.
     </p>
   </Hero>
 
-  <!-- About me -->
+  <!-- About the theme -->
   <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <div class="mx-auto max-w-6xl px-6">
       <div class="grid gap-10 glitch:grid-cols-2 glitch:gap-12">
         <!-- Left: text -->
         <div class="flex flex-col justify-center gap-4 sm:items-center sm:text-center glitch:items-start glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
           <div class="flex flex-col gap-6 sm:items-center glitch:items-start">
-            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Строю с 2010</Badge>
+            <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Free & Open Source</Badge>
             <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground text-balance">
-              16 лет практического мастерства
+              A solid foundation for any project
             </h2>
           </div>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Я веб-дизайнер и разработчик с 16-летним опытом, базируюсь в Амстердаме и работаю по всему миру. Дизайн и код под ним — не разные работы для меня, а единое ремесло, которое ведёт один человек от первого эскиза до финального деплоя.
+            Fastry is a production-ready starter theme built on Astro 6. It ships with a full component library, 12 hand-crafted themes, dark mode, built-in i18n, and a blog — so you can focus on building your project, not the boilerplate.
           </p>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Результат — быстрые, поддерживаемые сайты, созданные с намерением, и прямая связь с человеком, который действительно делает работу, от первого разговора до запуска.
+            It's free, MIT licensed, and listed on the official Astro themes directory. Clone it, customise it, and ship something you're proud of.
           </p>
         </div>
-        <!-- Right: personal facts card -->
+        <!-- Right: theme facts card -->
         <div class="flex flex-col h-full" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
           <Card variant="elevated" padding="lg" class="flex-1 flex flex-col justify-center">
             <div class="grid grid-cols-2 sm:grid-cols-3 glitch:grid-cols-2 gap-x-6 gap-y-8">
               <div class="flex flex-col items-center text-center gap-3">
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="map-pin" size="md" />
+                  <Icon name="rocket" size="md" />
                 </div>
                 <div>
-                  <h3 class="text-base font-semibold text-foreground">Базируюсь в Амстердаме</h3>
+                  <h3 class="text-base font-semibold text-foreground">Astro 6</h3>
                   <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Работаю по всему миру, на голландском и английском.
-                  </p>
-                </div>
-              </div>
-              <div class="flex flex-col items-center text-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="award" size="md" />
-                </div>
-                <div>
-                  <h3 class="text-base font-semibold text-foreground">16 лет в ремесле</h3>
-                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Проектирую и создаю с 2010 года.
-                  </p>
-                </div>
-              </div>
-              <div class="flex flex-col items-center text-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="code-2" size="md" />
-                </div>
-                <div>
-                  <h3 class="text-base font-semibold text-foreground">Энтузиаст Astro</h3>
-                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Мой фреймворк выбора.
-                  </p>
-                </div>
-              </div>
-              <div class="flex flex-col items-center text-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="sparkles" size="md" />
-                </div>
-                <div>
-                  <h3 class="text-base font-semibold text-foreground">Энтузиаст AI</h3>
-                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Claude — мой ежедневный партнёр по размышлениям.
+                    Built on the latest Astro release.
                   </p>
                 </div>
               </div>
@@ -107,20 +74,53 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
                   <Icon name="layout" size="md" />
                 </div>
                 <div>
-                  <h3 class="text-base font-semibold text-foreground">UI/UX-энтузиаст</h3>
+                  <h3 class="text-base font-semibold text-foreground">12 themes</h3>
                   <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Чистый, удобный дизайн.
+                    Switch themes with one line.
                   </p>
                 </div>
               </div>
               <div class="flex flex-col items-center text-center gap-3">
                 <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-                  <Icon name="coffee" size="md" />
+                  <Icon name="code-2" size="md" />
                 </div>
                 <div>
-                  <h3 class="text-base font-semibold text-foreground">Любитель кофе</h3>
+                  <h3 class="text-base font-semibold text-foreground">57+ components</h3>
                   <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                    Заряжаюсь лучшим кофе.
+                    Composable, production-ready.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="sparkles" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Dark mode</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Built in, no extra setup needed.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="award" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Built-in i18n</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Multi-language support out of the box.
+                  </p>
+                </div>
+              </div>
+              <div class="flex flex-col items-center text-center gap-3">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
+                  <Icon name="zap" size="md" />
+                </div>
+                <div>
+                  <h3 class="text-base font-semibold text-foreground">Zero config SEO</h3>
+                  <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
+                    Structured data & meta tags included.
                   </p>
                 </div>
               </div>
@@ -130,18 +130,19 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
       </div>
     </div>
   </section>
-  <!-- Values -->
+
+  <!-- Principles -->
   <section class="py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6">
       <div class="mb-8 text-center flex flex-col items-center gap-4" data-reveal>
         <div class="flex flex-col items-center gap-6">
-          <Badge variant="brand" pill>Мой процесс</Badge>
+          <Badge variant="brand" pill>Design Principles</Badge>
           <h2 class="font-display text-4xl font-bold text-foreground">
-            Как я работаю
+            Built with intention
           </h2>
         </div>
         <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
-          Это не стремления — это ограничения, которым подчиняется каждый проект, от первого разговора до финальной передачи.
+          Every decision in Fastry — from component structure to default config — is driven by the same three principles.
         </p>
       </div>
       <div class="grid gap-6 sm:gap-8 sm:grid-cols-3">
@@ -151,9 +152,9 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               <Icon name="zap" size="md" />
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-base font-semibold text-foreground">Производительность прежде всего</h3>
+              <h3 class="text-base font-semibold text-foreground">Performance First</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Быстрые сайты лучше ранжируются, лучше конвертируют и радуют пользователей. Я оптимизирую скорость с самого начала.
+                Zero JavaScript by default. Every component is optimised for speed, Core Web Vitals, and lean output.
               </p>
             </div>
           </div>
@@ -164,9 +165,9 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               <Icon name="award" size="md" />
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-base font-semibold text-foreground">Опыт, который виден</h3>
+              <h3 class="text-base font-semibold text-foreground">Developer Experience</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                16 лет опыта означают, что я знаю, что работает, что нет и что именно нужно вашему проекту.
+                TypeScript throughout, sensible defaults, and a component library you can drop straight into any page.
               </p>
             </div>
           </div>
@@ -177,9 +178,9 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
               <Icon name="rocket" size="md" />
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-base font-semibold text-foreground">Современность с нуля</h3>
+              <h3 class="text-base font-semibold text-foreground">Modern from the Ground Up</h3>
               <p class="text-sm text-foreground-muted leading-relaxed mt-1.5">
-                Создано с современными инструментами. Быстро, поддерживаемо и готово к тому, что будет дальше.
+                Astro 6, Tailwind CSS 4, and a clean architecture that's easy to extend and maintain.
               </p>
             </div>
           </div>
@@ -187,25 +188,27 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
       </div>
     </div>
   </section>
-  <!-- My Stack -->
+
+  <!-- Tech Stack -->
   <TechStack
-    badge="Инструменты и технологии"
-    title="Мой стек"
-    description="Инструменты, на которые я полагаюсь каждый день для создания быстрых, современных сайтов — выбраны за производительность, отличный опыт разработки и надёжность."
+    badge="Tools & Tech"
+    title="The Stack"
+    description="The technologies powering Fastry — chosen for performance, great developer experience, and long-term reliability."
     background="secondary"
   />
+
   <!-- FAQ -->
   <section class="py-[var(--space-section-md)] bg-background border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col items-center gap-4 text-center" data-reveal>
         <div class="flex flex-col items-center gap-6">
-          <Badge variant="brand" pill>Полезно знать</Badge>
+          <Badge variant="brand" pill>Good to know</Badge>
           <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-            Часто задаваемые вопросы
+            Frequently asked questions
           </h2>
         </div>
         <p class="text-lg text-foreground-muted max-w-2xl mx-auto text-balance">
-          Некоторые вопросы, которые мне задают чаще всего.
+          Everything you need to know before getting started.
         </p>
       </div>
 
@@ -216,109 +219,109 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
             <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
               <Icon name="rocket" size="md" />
             </div>
-            <h3 class="font-display text-base font-semibold text-foreground">Об Astro</h3>
+            <h3 class="font-display text-base font-semibold text-foreground">About Astro</h3>
           </div>
           <div class="w-full">
             <details class="border-b border-border" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Что такое Astro?
+                What is Astro?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Astro — это современный веб-фреймворк для контент-ориентированных сайтов. Он поставляет ноль JavaScript по умолчанию — отправляя только то, что действительно нужно странице. Результат — быстрое время загрузки, отличные показатели Core Web Vitals и лёгкий поддерживаемый код.
+                Astro is a modern web framework built for content-driven sites. It ships zero JavaScript by default — only sending what the page actually needs. The result is fast load times, excellent Core Web Vitals scores, and lean, maintainable code.
               </div>
             </details>
             <details class="border-b border-border" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Почему вы строите на Astro?
+                Why build with Astro?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Потому что это совпадает с моим подходом к вебу: лёгкий, целенаправленный и созданный на века. Astro позволяет мне создавать быстрые сайты без борьбы с фреймворком — минимум JavaScript, чистый HTML, отличное SEO — чтобы я мог сосредоточиться на дизайне и деталях, которые действительно важны.
+                Astro is the right tool for content-heavy sites: minimal JavaScript, clean HTML, great SEO out of the box, and a developer experience that stays out of your way. It's lean, purposeful, and built to last.
               </div>
             </details>
             <details class="border-b border-border" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Вы всегда строите на Astro?
+                What can I build with Fastry?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Почти всегда. Для портфолио, бизнес-сайтов, маркетинговых страниц и блогов Astro — правильный инструмент. Если проект действительно требует чего-то другого, я скажу об этом честно. Но Astro справляется с большинством клиентских задач и делает это исключительно хорошо.
+                Portfolios, business sites, marketing pages, blogs, documentation sites — any content-driven project. Fastry gives you the structure, components, and defaults to hit the ground running.
               </div>
             </details>
             <details class="border-b border-border" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Вы создаёте темы для Astro?
+                Is Fastry listed on the official Astro themes directory?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Да. Я создал <a href="https://astro.build/themes/details/astro-rocket/"  class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">Fastry</a> — бесплатную, готовую к продакшену тему, опубликованную в официальном каталоге тем Astro. Она включает полную библиотеку компонентов, поддержку блога, тёмную тему, SEO и всё необходимое для запуска быстрого современного сайта без необходимости начинать с нуля.
+                Yes. <a href="https://astro.build/themes/details/astro-rocket/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">Fastry</a> is listed on the official Astro themes directory as a free, production-ready theme.
               </div>
             </details>
             <details class="border-b border-border last:border-0" name="faq-astro">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Планируете создавать больше тем для Astro?
+                Will Fastry keep up with new Astro releases?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Да, такие планы есть. Fastry активно поддерживается, и у меня есть идеи для новых тем. Следите за блогом или наблюдайте за официальным каталогом тем Astro — там будет видно, что дальше.
+                Yes. Fastry is actively maintained and updated to track new Astro releases. Follow along on the blog or watch the GitHub repository for updates.
               </div>
             </details>
           </div>
         </Card>
 
-        <!-- Card 2: About the work -->
+        <!-- Card 2: Using the theme -->
         <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="2">
           <div class="flex items-center gap-3 pb-4 border-b border-border">
             <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 shrink-0">
-              <Icon name="user" size="md" />
+              <Icon name="code-2" size="md" />
             </div>
-            <h3 class="font-display text-base font-semibold text-foreground">О работе</h3>
+            <h3 class="font-display text-base font-semibold text-foreground">Using the theme</h3>
           </div>
           <div class="w-full">
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Вы используете AI при создании сайтов?
+                Is it free to use?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Да — я работаю вместе с Claude как с партнёром по размышлениям на протяжении всего проекта. Не как с ярлыком, а как со вторым мнением, которое помогает обдумывать дизайн-решения, проверять код и замечать то, что я мог бы упустить.
+                Yes, completely free. Fastry is MIT licensed — use it for personal and commercial projects, no attribution required.
               </div>
             </details>
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Вы компания или агентство?
+                How do I switch themes?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Нет. Я дизайнер и разработчик, работающий solo, движимый искренним энтузиазмом к ремеслу, а не коммерческими показателями. Нет отдела продаж, нет аккаунт-менеджера, нет передачи джуниору. Вы работаете напрямую со мной от первого разговора до финальной сдачи.
+                Change a single line in your config. Fastry ships with 12 hand-crafted colour themes — swap between them instantly without touching a line of CSS.
               </div>
             </details>
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Как вы выбираете, какие проекты брать?
+                Does it support TypeScript?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Я ищу проекты, где хороший дизайн и качественное исполнение действительно важны для клиента. Я работаю лучше всего, когда есть чёткая цель, открытая линия связи и клиент, доверяющий процессу. Я лучше возьму меньше проектов и сделаю их хорошо, чем размажусь по слишком многим одновременно.
+                Yes, TypeScript is used throughout. All components, configs, and utilities are fully typed.
               </div>
             </details>
-            <details class="border-b border-border" name="faq-work">
+            <details class="border-b border-border" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Вы предлагаете поддержку или обслуживание после запуска?
+                How do I add my own language for i18n?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Да. Будь то небольшие обновления, изменения контента или что-то более серьёзное — я доступен после запуска. Мы можем согласовать любые условия, которые лучше всего подходят для проекта.
+                Fastry's i18n is config-driven. Add your locale to the i18n config file, create a matching translation file, and the routing and UI adapt automatically.
               </div>
             </details>
-            <details class="border-b border-border last:border-0" name="faq-work">
+            <details class="border-b border-border last:border-0" name="faq-theme">
               <summary class="flex w-full items-center justify-between text-sm py-4 text-left font-medium text-foreground transition-colors hover:text-foreground-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                Вы работаете с клиентами за пределами Нидерландов?
+                Where do I report bugs or suggest features?
                 <Icon name="chevron-down" size="sm" class="faq-icon shrink-0 text-foreground-muted transition-transform duration-200" />
               </summary>
               <div class="pb-4 text-sm text-foreground-muted leading-relaxed">
-                Безусловно. Я базируюсь в Амстердаме, но работаю с клиентами по всему миру. Большинство проектов ведутся полностью удалённо, что отлично работает при чётких вводных и хорошей коммуникации. Разница в часовых поясах редко бывает проблемой.
+                Open an issue or start a discussion on the <a href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">GitHub repository</a>. Contributions and feedback are always welcome.
               </div>
             </details>
           </div>
@@ -327,44 +330,49 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
     </div>
   </section>
 
-  <!-- More about me -->
+  <!-- Open Source -->
   <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <div class="mx-auto max-w-6xl px-6">
       <div class="grid gap-8 sm:gap-10 glitch:grid-cols-2 glitch:items-center">
         <!-- Text -->
         <div class="flex flex-col gap-4 sm:items-center sm:text-center glitch:items-start glitch:justify-center glitch:text-left" data-reveal="right" data-reveal-ease="smooth">
-          <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Предыстория</Badge>
+          <Badge variant="brand" pill class="self-start sm:self-center glitch:self-start">Open Source</Badge>
           <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
-            Более длинная история
+            Built in the open
           </h2>
           <p class="text-lg text-foreground-muted leading-relaxed text-pretty sm:max-w-xl sm:mx-auto glitch:max-w-none glitch:mx-0">
-            Вы видели работу, процесс и инструменты. Если хотите узнать человека за ними, я собрал всю историю в одном месте.
+            Fastry is free, open source, and MIT licensed. Browse the source, open issues, submit PRs, or just clone it and build something great.
           </p>
-          <Button variant="outline" size="lg" href="/ru/blog/hans-martens-web-designer-veghel" class="self-start sm:self-center glitch:self-start mt-2 sm:hidden glitch:inline-flex">
-            Прочитать полную историю
-            <Icon name="arrow-right" size="sm" />
-          </Button>
+          <div class="flex flex-wrap gap-3 self-start sm:self-center glitch:self-start mt-2">
+            <Button variant="outline" size="lg" href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer">
+              View on GitHub
+              <Icon name="arrow-right" size="sm" />
+            </Button>
+          </div>
         </div>
 
-        <!-- Image -->
-        <div class="mx-auto w-full max-w-sm sm:max-w-md glitch:mx-0 glitch:max-w-none" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
-          <a
-            href="/ru/blog/hans-martens-web-designer-veghel"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="group block overflow-hidden rounded-2xl border border-brand-500/20 bg-brand-500/5 shadow-md ring-1 ring-border/60 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:border-brand-500/40"
-            aria-label="Перейти к блогу"
-          >
-            <div class="flex items-center justify-center h-48 sm:h-64 bg-gradient-to-br from-brand-500/10 to-brand-500/5 transition-transform duration-300 group-hover:scale-105">
-              <Icon name="user" size="lg" class="text-brand-500/40" />
+        <!-- Info card -->
+        <div class="flex flex-col h-full" data-reveal="left" data-reveal-delay="1" data-reveal-ease="smooth">
+          <Card variant="elevated" padding="lg" class="flex-1 flex flex-col justify-center gap-6">
+            <div class="flex flex-col gap-2">
+              <h3 class="text-base font-semibold text-foreground">Made by Hans Martens</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed">
+                Fastry was designed and built by <a href="https://hansmartens.dev" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 decoration-brand-500 hover:text-brand-400 transition-colors">Hans Martens</a> — a web designer and developer who uses it as the foundation for client projects.
+              </p>
             </div>
-          </a>
-        </div>
-        <div class="hidden sm:flex justify-center glitch:hidden" data-reveal data-reveal-delay="2">
-          <Button size="lg" variant="outline" href="/ru/blog/hans-martens-web-designer-veghel" >
-            Прочитать полную историю
-            <Icon name="arrow-right" size="sm" />
-          </Button>
+            <div class="flex flex-col gap-2">
+              <h3 class="text-base font-semibold text-foreground">MIT License</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed">
+                Free to use in personal and commercial projects. No attribution required, though a star on GitHub is always appreciated.
+              </p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <h3 class="text-base font-semibold text-foreground">Actively maintained</h3>
+              <p class="text-sm text-foreground-muted leading-relaxed">
+                The theme is kept up to date with new Astro releases and regularly improved based on community feedback.
+              </p>
+            </div>
+          </Card>
         </div>
       </div>
     </div>
@@ -374,29 +382,29 @@ import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
   <section class="relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
     <!-- Mobile: flat section, no card -->
     <div class="glitch:hidden mx-auto max-w-2xl px-6 text-center" data-reveal>
-      <Badge variant="brand" pill class="mb-6">Давайте обсудим</Badge>
+      <Badge variant="brand" pill class="mb-6">Get started</Badge>
       <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
-        Подхожу вам?
+        Ready to build?
       </h2>
       <p class="text-lg text-foreground-muted mb-8 text-balance">
-        Если мой опыт и подход совпадают с тем, что вы ищете, я открыт для новых проектов. Давайте поговорим.
+        Clone Fastry, pick a theme, and launch your next project in minutes.
       </p>
-      <Button size="lg" href="/ru/contact" class="cta-btn-brand">
-        Начать проект
+      <Button size="lg" href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer" class="cta-btn-brand">
+        Get Started
         <Icon name="arrow-right" size="sm" />
       </Button>
     </div>
 
     <!-- Desktop: contained LetterGlitch band with glass card -->
-    <LetterGlitchBand locale="ru">
+    <LetterGlitchBand locale="en">
       <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
-        Подхожу вам?
+        Ready to build?
       </h2>
       <p class="text-lg text-foreground-muted mb-8 text-balance">
-        Если мой опыт и подход совпадают с тем, что вы ищете, я открыт для новых проектов. Давайте поговорим.
+        Clone Fastry, pick a theme, and launch your next project in minutes.
       </p>
-      <Button size="lg" href="/ru/contact" class="hero-btn-brand">
-        Начать проект
+      <Button size="lg" href="https://github.com/hansmartensdev/astro-rocket" target="_blank" rel="noopener noreferrer" class="hero-btn-brand">
+        Get Started
         <Icon name="arrow-right" size="sm" />
       </Button>
     </LetterGlitchBand>
