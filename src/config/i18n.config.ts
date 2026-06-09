@@ -33,13 +33,13 @@ export interface I18nConfig {
 
 const i18nConfig: I18nConfig = {
   enabled: true,
-  defaultLocale: 'en',
+  defaultLocale: 'ru',
   locales: ['ru', 'en'],
   localeNames: {
     en: 'English',
     ru: 'Русский',
   },
-  detectBrowserLocale: false,
+  detectBrowserLocale: true,
 };
 
 export default i18nConfig;
