@@ -18,16 +18,19 @@ interface Props {
   class?: string;
   /** Alt-текст для доступности */
   alt?: string;
+  /** Принудительно показать тёмный вариант логотипа (для тёмного фона в светлом режиме) */
+  forceDark?: boolean;
 }
 
-const { size = 160, class: className, alt = 'Fastry' } = Astro.props;
+const { size = 160, class: className, alt = 'Fastry', forceDark = false } = Astro.props;
 const aspectRatio = 12.52 / 53.43;
 const height = Math.round(size * aspectRatio);
 ---
 
-<!-- Тёмный режим -->
+<!-- Тёмный режим (показывается в dark mode или при forceDark) -->
 <svg
-  class={cn('dark:block hidden', className)}
+  class={cn(forceDark ? 'block' : 'dark:block hidden', className)}
+  data-site-logo="dark"
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 53.43 12.52"
   width={size}
@@ -41,9 +44,10 @@ const height = Math.round(size * aspectRatio);
   <path fill="#ffffff" fill-opacity=".4" d="M42.94 3.94v6.21h1.8V7.22c0-1.17.61-1.7 2.05-1.7h.35v1.93c0 2.47 1.74 2.8 2.65 2.8.41 0 1.32-.1 1.94-.83l-.01.73h1.7v-6.2h-1.8V7c0 1.2-.63 1.68-1.42 1.68-1.21 0-1.26-1.23-1.26-1.68V3.94h-2.15c-.8 0-1.58.16-2.13.82v-.82zm-1.57 4.12c-.44 0-1.78.29-1.02.45.82.17-1.3.32-1.3.64s2.13.26 1.34.55c-.44.16.4.55.98.55a1.1 1.1 0 1 0 0-2.19"/>
 </svg>
 
-<!-- Светлый режим -->
+<!-- Светлый режим (скрывается в dark mode или при forceDark) -->
 <svg
-  class={cn('block dark:hidden', className)}
+  class={cn(forceDark ? 'hidden' : 'block dark:hidden', className)}
+  data-site-logo="light"
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 53.43 12.52"
   width={size}

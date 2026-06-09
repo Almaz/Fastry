@@ -210,7 +210,7 @@ const buttonId = `${menuId}-button`;
           <slot name="logo" />
         ) : (
           <a href={localizedPath('/', locale)} class="flex items-center gap-2">
-            <SiteLogo size={size === 'sm' ? 120 : 160} />
+            <SiteLogo size={size === 'sm' ? 120 : 160} forceDark={isInvert} />
           </a>
         ))
     }
@@ -942,6 +942,23 @@ const buttonId = `${menuId}-button`;
   html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) .hdr-hamburger:hover svg {
     background-color: rgb(255 255 255 / 0.06);
     color: oklch(91% 0.008 250);
+  }
+
+  /* ── SiteLogo overrides for floating header ──
+     In light mode, the floating header sits over the hero-dark-gradient
+     (dark background). Before scrolling, show the dark variant (white text)
+     and hide the light variant. After scrolling, revert to normal. */
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) [data-site-logo="dark"] {
+    display: block !important;
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"]:not([data-scrolled]) [data-site-logo="light"] {
+    display: none !important;
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"][data-scrolled] [data-site-logo="dark"] {
+    display: none !important;
+  }
+  html:not(.dark) [data-header-shape="floating"][data-header-color-scheme="default"][data-scrolled] [data-site-logo="light"] {
+    display: block !important;
   }
 
   .dark [data-header-shape="floating"] .theme-dropdown-wrapper button,
