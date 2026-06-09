@@ -177,11 +177,11 @@ function getSocialIcon(platform: string): string {
         )}
 
         {/* Navigation Links */}
-        <nav class="flex flex-wrap justify-center gap-[var(--space-inline-lg)] md:gap-[var(--space-stack-lg)] text-sm font-medium text-foreground-muted">
+        <nav class="flex flex-wrap justify-center gap-[var(--space-inline-sm)] md:gap-[var(--space-stack-lg)] text-sm font-medium text-foreground-muted">
           {allNavItems.map((item) => (
             <a
               href={localizedPath(item.href, locale)}
-              class={cn('transition-colors hover:text-foreground')}
+              class={cn('transition-colors hover:text-foreground', item.iconOnly && 'inline-flex items-center')}
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               aria-label={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}
@@ -348,11 +348,11 @@ function getSocialIcon(platform: string): string {
         )}
 
         {/* Navigation Links */}
-        <nav class="flex flex-wrap justify-center gap-[var(--space-inline-lg)] text-sm font-medium text-foreground-muted">
+        <nav class="flex flex-wrap justify-center gap-[var(--space-inline-sm)] text-sm font-medium text-foreground-muted">
           {allNavItems.map((item) => (
             <a
               href={localizedPath(item.href, locale)}
-              class={cn('transition-colors hover:text-foreground')}
+              class={cn('transition-colors hover:text-foreground', item.iconOnly && 'inline-flex items-center')}
               target={item.external || item.href.startsWith('http') ? '_blank' : undefined}
               rel={item.external || item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
               aria-label={item.iconOnly ? t('nav.homeTooltip', locale) : undefined}
