@@ -171,12 +171,37 @@ const blogHref = localizedPath('/blog', locale);
    * Client-side locale detection for the 404 page.
    * Netlify always serves the root 404.html regardless of the URL path,
    * so we must detect /ru/ on the client and swap texts dynamically.
+   *
+   * This also swaps Header and Footer navigation texts and links,
+   * since those are rendered server-side with locale='en'.
    */
   (function() {
     var path = window.location.pathname;
     if (!path.startsWith('/ru')) return;
 
-    var ru = {
+    // ── Russian translations ──────────────────────────────────────
+    var ruNav = {
+      home: 'Главная',
+      services: 'Услуги',
+      projects: 'Проекты',
+      blog: 'Блог',
+      about: 'О нас',
+      contact: 'Контакты',
+      startProject: 'Начать проект',
+      navigate: 'Навигация',
+      theme: 'Тема',
+      colourTheme: 'Цветовая тема',
+      language: 'Язык',
+      connect: 'Связаться',
+      openMenu: 'Открыть меню',
+      mainNavigation: 'Основная навигация',
+      mobileNavigation: 'Мобильная навигация',
+      homeTooltip: 'На главную',
+      followAlong: 'Присоединяйтесь',
+      siteName: 'Fastry',
+    };
+
+    var ru404 = {
       badge: '404 — страница не найдена',
       titlePart: 'Страница не',
       titleHighlight: 'найдена.',
@@ -191,6 +216,136 @@ const blogHref = localizedPath('/blog', locale);
       ],
     };
 
+    // ── Helper: map English href → Russian href ───────────────────
+    function ruHref(href) {
+      if (href === '/' || href === '') return '/ru';
+      if (href.startsWith('/ru')) return href;
+      return '/ru' + href;
+    }
+
+    // ── Helper: map English href → Russian nav label ──────────────
+    function ruNavLabel(href) {
+      var map = {
+        '/': ruNav.home,
+        '/ru': ruNav.home,
+        '/services': ruNav.services,
+        '/ru/services': ruNav.services,
+        '/projects': ruNav.projects,
+        '/ru/projects': ruNav.projects,
+        '/blog': ruNav.blog,
+        '/ru/blog': ruNav.blog,
+        '/about': ruNav.about,
+        '/ru/about': ruNav.about,
+        '/contact': ruNav.contact,
+        '/ru/contact': ruNav.contact,
+      };
+      return map[href] || null;
+    }
+
+    // ── 1. Swap Header nav links ──────────────────────────────────
+    var headerNavLinks = document.querySelectorAll('header nav a[href]');
+    headerNavLinks.forEach(function(link) {
+      var href = link.getAttribute('href');
+      var ruText = ruNavLabel(href);
+      if (ruText) {
+        link.textContent = ruText;
+        link.setAttribute('href', ruHref(href));
+      }
+    });
+
+    // ── 2. Swap Header CTA button ─────────────────────────────────
+    var ctaBtn = document.querySelector('header .hdr-cta-brand');
+    if (ctaBtn) {
+      // Replace text content but keep icon elements
+      var ctaTextNodes = [];
+      ctaBtn.childNodes.forEach(function(n) {
+        if (n.nodeType === Node.TEXT_NODE && n.textContent.trim()) {
+          ctaTextNodes.push(n);
+        }
+      });
+      ctaTextNodes.forEach(function(n) {
+        n.textContent = ruNav.startProject;
+      });
+      // Update href
+      var ctaHref = ctaBtn.getAttribute('href');
+      if (ctaHref) ctaBtn.setAttribute('href', ruHref(ctaHref));
+    }
+
+    // ── 3. Swap Header aria-labels ────────────────────────────────
+    // Mobile menu button
+    var menuBtn = document.querySelector('header button[aria-label*="Menu" i], header button[aria-label*="menu" i]');
+    if (menuBtn) menuBtn.setAttribute('aria-label', ruNav.openMenu);
+
+    // Nav aria-labels
+    var navEls = document.querySelectorAll('header nav[aria-label]');
+    navEls.forEach(function(nav) {
+      var label = nav.getAttribute('aria-label');
+      if (label && label.toLowerCase().includes('navigation')) {
+        nav.setAttribute('aria-label', ruNav.mainNavigation);
+      }
+    });
+
+    // ── 4. Swap Header data-i18n attributes ───────────────────────
+    var headerEl = document.querySelector('header[data-i18n-navigate]');
+    if (headerEl) {
+      headerEl.setAttribute('data-i18n-navigate', ruNav.navigate);
+      headerEl.setAttribute('data-i18n-theme', ruNav.theme);
+    }
+
+    // ── 5. Swap mobile menu labels ────────────────────────────────
+    var mobileLabels = document.querySelectorAll('.mobile-menu-label');
+    mobileLabels.forEach(function(label) {
+      var text = label.textContent.trim();
+      if (text.toLowerCase().includes('navigate') || text === 'Navigate') {
+        label.textContent = ruNav.navigate;
+      } else if (text.toLowerCase().includes('theme') || text === 'Theme') {
+        label.textContent = ruNav.theme;
+      } else if (text.toLowerCase().includes('connect') || text === 'Connect') {
+        label.textContent = ruNav.connect;
+      }
+    });
+
+    var mobileSubLabels = document.querySelectorAll('.mobile-menu-section span.text-sm');
+    mobileSubLabels.forEach(function(label) {
+      var text = label.textContent.trim().toLowerCase();
+      if (text.includes('colour') || text.includes('color') || text.includes('theme')) {
+        label.textContent = ruNav.colourTheme;
+      } else if (text.includes('language')) {
+        label.textContent = ruNav.language;
+      }
+    });
+
+    // ── 6. Swap Footer nav links ──────────────────────────────────
+    var footerNavLinks = document.querySelectorAll('footer nav a[href]');
+    footerNavLinks.forEach(function(link) {
+      var href = link.getAttribute('href');
+      var ruText = ruNavLabel(href);
+      if (ruText) {
+        link.textContent = ruText;
+        link.setAttribute('href', ruHref(href));
+      }
+    });
+
+    // ── 7. Swap Footer copyright ──────────────────────────────────
+    var copyrightEl = document.querySelector('footer p.text-sm.text-foreground-muted');
+    if (copyrightEl) {
+      copyrightEl.textContent = copyrightEl.textContent.replace(/Fastry|©/g, function(match) {
+        if (match === 'Fastry') return 'Fastry';
+        return match;
+      });
+    }
+
+    // ── 8. Swap Footer logo link ──────────────────────────────────
+    var footerLogoLink = document.querySelector('footer a[href="/"]');
+    if (footerLogoLink) footerLogoLink.setAttribute('href', '/ru');
+
+    // ── 9. Swap Header logo link ──────────────────────────────────
+    var headerLogoLink = document.querySelector('header a[href="/"]');
+    if (headerLogoLink) headerLogoLink.setAttribute('href', '/ru');
+
+    // ── 10. Swap 404 content ──────────────────────────────────────
+    var ru = ru404;
+
     // Swap badge
     var badgeEl = document.getElementById('404-badge');
     if (badgeEl) badgeEl.textContent = ru.badge;
@@ -198,9 +353,7 @@ const blogHref = localizedPath('/blog', locale);
     // Swap heading parts
     var headingEl = document.getElementById('404-heading');
     if (headingEl) {
-      // headingEl contains text nodes + a span for the highlight
       var highlightSpan = document.getElementById('404-heading-highlight');
-      // Replace the first text node (before the span)
       var nodes = headingEl.childNodes;
       for (var i = 0; i < nodes.length; i++) {
         if (nodes[i].nodeType === Node.TEXT_NODE && nodes[i].textContent.trim()) {
