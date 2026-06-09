@@ -69,7 +69,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 ---
 
 <!doctype html>
-<html lang={locale} data-pagefind-filter={`lang:${locale}`} class="scroll-smooth dark" data-theme="blue" data-theme-mode="system">
+<html lang={locale} data-pagefind-filter={`lang:${locale}`} class="scroll-smooth dark" data-theme="orange" data-theme-mode="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -83,8 +83,8 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     )}
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href={siteConfig.branding.favicon.svg} />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}${siteConfig.branding.favicon.svg.replace(/^\//, '')}`} />
+    <link rel="manifest" href={`${import.meta.env.BASE_URL}manifest.webmanifest`} />
     <meta name="theme-color" content={siteConfig.branding.colors.themeColor} />
 
     <!-- SEO -->
@@ -99,7 +99,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     />
 
     <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} RSS Feed`} href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} RSS Feed`} href={`${import.meta.env.BASE_URL}rss.xml`} />
 
     <!-- JSON-LD Structured Data -->
     <JsonLd schema={schemas} />

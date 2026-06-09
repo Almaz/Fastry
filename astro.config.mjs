@@ -26,8 +26,7 @@ const astroI18nOptions = i18nEnabled
 
 export default defineConfig({
   output: 'static',
-  site: 'https://almaz.github.io/Fastry',
-  base: '/Fastry',
+  site: 'https://fastry.ru',
   ...(astroI18nOptions ? { i18n: astroI18nOptions } : {}),
 
   build: {

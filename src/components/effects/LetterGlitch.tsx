@@ -252,7 +252,7 @@ const LetterGlitch = ({
     const tmp = document.createElement('canvas');
     tmp.width = 1;
     tmp.height = 1;
-    const tmpCtx = tmp.getContext('2d');
+    const tmpCtx = tmp.getContext('2d', { willReadFrequently: true });
     if (!tmpCtx) return [];
     const root = getComputedStyle(document.documentElement);
     const resolved: string[] = [];
@@ -273,7 +273,7 @@ const LetterGlitch = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    context.current = canvas.getContext('2d');
+    context.current = canvas.getContext('2d', { willReadFrequently: true });
 
     if (useBrandTokens) {
       const brand = resolveBrandColors();

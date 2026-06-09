@@ -2,7 +2,7 @@
  * Internationalization (i18n) configuration.
  *
  * Off by default — when `enabled: false` or `locales` has a single entry,
- * Astro Rocket emits the same single-locale routes it always has and the
+ * Fastry emits the same single-locale routes it always has and the
  * `LanguageSwitcher`/`hreflang` machinery is skipped, so there is no
  * runtime or bundle-size cost.
  *

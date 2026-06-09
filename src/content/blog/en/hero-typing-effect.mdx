@@ -1,6 +1,6 @@
 ---
-title: "The Hero Typing Effect in Astro Rocket — How It Works and How to Tune It"
-description: "Astro Rocket's hero headline cycles through words with a typing animation. Learn how it works, how to tune every speed and pause, and how to disable it entirely."
+title: "The Hero Typing Effect in Fastry — How It Works and How to Tune It"
+description: "Fastry's hero headline cycles through words with a typing animation. Learn how it works, how to tune every speed and pause, and how to disable it entirely."
 publishedAt: 2026-03-16
 author: "Almaz"
 tags: ["astro-rocket", "components", "customization", "tutorial", "javascript"]
@@ -11,7 +11,7 @@ svgSlug: "hero-typing-effect"
 imageAlt: "Rocket icon above the words 'typing effect' on a dark background"
 ---
 
-Open the Astro Rocket About page and the headline does not sit still. It types one word, pauses, deletes it, and types the next — looping forever. This post explains exactly how that effect is built, what each value controls, and how to make it faster, slower, or gone entirely.
+Open the Fastry About page and the headline does not sit still. It types one word, pauses, deletes it, and types the next — looping forever. This post explains exactly how that effect is built, what each value controls, and how to make it faster, slower, or gone entirely.
 
 ## Where the component lives
 
@@ -29,7 +29,7 @@ The component currently lives in the About page hero, inside a brand-coloured `<
 
 ```astro
 <h1 slot="title">
-  <span class="text-foreground [-webkit-text-fill-color:currentColor]">Astro Rocket —</span><br />
+  <span class="text-foreground [-webkit-text-fill-color:currentColor]">Fastry —</span><br />
   <span class="text-brand-500 [-webkit-text-fill-color:var(--color-brand-500)]">
     <TypingEffect words={["Web Designer", "Web Developer", "Astro Developer", "Claude Code User", "UI / UX Enthusiast", "Blogger", "Coffee lover"]} />
   </span>
@@ -126,7 +126,7 @@ document.addEventListener('astro:page-load', startTyping);
 
 ## Why this component forks from the obvious implementation
 
-A naive typing effect takes about twenty lines: set an interval, increment a character index, write to a DOM node. That works fine in isolation. Astro Rocket runs Astro's `ClientRouter` for client-side navigation, lives in a heading (where descenders are visible), and cycles through words of different lengths — each of those facts breaks the naive version in a different way. Here is what was added and why.
+A naive typing effect takes about twenty lines: set an interval, increment a character index, write to a DOM node. That works fine in isolation. Fastry runs Astro's `ClientRouter` for client-side navigation, lives in a heading (where descenders are visible), and cycles through words of different lengths — each of those facts breaks the naive version in a different way. Here is what was added and why.
 
 ### Fix 1 — Client-side navigation (astro:page-load)
 
@@ -308,7 +308,7 @@ Remove the `<TypingEffect>` component and its import, then put your static headi
 ---
 
 <h1 slot="title">
-  <span class="text-foreground [-webkit-text-fill-color:currentColor]">Astro Rocket —</span><br />
+  <span class="text-foreground [-webkit-text-fill-color:currentColor]">Fastry —</span><br />
   Web Developer
 </h1>
 ```
@@ -319,7 +319,7 @@ If you want the styled text container but no animation and no cursor, just drop 
 
 ```astro
 <h1 slot="title">
-  <span class="text-foreground [-webkit-text-fill-color:currentColor]">Astro Rocket —</span><br />
+  <span class="text-foreground [-webkit-text-fill-color:currentColor]">Fastry —</span><br />
   <span>Web Developer</span>
 </h1>
 ```

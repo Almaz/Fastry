@@ -1,5 +1,5 @@
 ---
-title: "Going Multilingual: Native i18n in Astro Rocket 1.3.0"
+title: "Going Multilingual: Native i18n in Fastry 1.3.0"
 description: "How the new opt-in i18n system works, what it adds when you turn it on, and the exact steps to ship your site in English plus a second language."
 publishedAt: 2026-05-11
 author: "Almaz"
@@ -11,9 +11,9 @@ svgSlug: "i18n-in-astro-rocket"
 imageAlt: "Globe icon centred on a brand-coloured background with the label 'i18n'"
 ---
 
-Astro Rocket 1.3.0 ships native, opt-in internationalization. You can now run your site in two (or twenty) languages without leaving the theme — no scaffolding CLI, no plugins, no separate package. This post walks through what the feature is, what it costs (spoiler: nothing if you leave it off), and exactly how to turn it on for an English-plus-Dutch site.
+Fastry 1.3.0 ships native, opt-in internationalization. You can now run your site in two (or twenty) languages without leaving the theme — no scaffolding CLI, no plugins, no separate package. This post walks through what the feature is, what it costs (spoiler: nothing if you leave it off), and exactly how to turn it on for an English-plus-Dutch site.
 
-If you want the broader picture of how Astro Rocket is structured first, the <PostLink uid="configuration-guide">configuration guide</PostLink> covers `site.config.ts`, themes, and layout switches; the [SEO post](/blog/seo-in-astro-rocket) covers everything in the `<head>` that i18n now extends with `hreflang`.
+If you want the broader picture of how Fastry is structured first, the <PostLink uid="configuration-guide">configuration guide</PostLink> covers `site.config.ts`, themes, and layout switches; the [SEO post](/blog/seo-in-astro-rocket) covers everything in the `<head>` that i18n now extends with `hreflang`.
 
 ## Opt-in, off by default
 
@@ -28,7 +28,7 @@ const i18nConfig: I18nConfig = {
 };
 ```
 
-When `enabled` is `false` — the default — the build is byte-for-byte identical to a single-locale site. No `LanguageSwitcher` renders, no `hreflang` tags emit, no extra routes are generated, no JS for locale handling ships. Existing Astro Rocket sites upgrading to 1.3.0 see zero change.
+When `enabled` is `false` — the default — the build is byte-for-byte identical to a single-locale site. No `LanguageSwitcher` renders, no `hreflang` tags emit, no extra routes are generated, no JS for locale handling ships. Existing Fastry sites upgrading to 1.3.0 see zero change.
 
 Turn `enabled` on and add a second locale, and the whole machinery wakes up.
 
@@ -41,7 +41,7 @@ Four things start working as soon as `i18n.enabled` is `true` and `locales` has 
 3. **`hreflang` alternates** in the `<head>` of every page, pointing at every locale's version of that URL plus an `x-default` per [Google's recommendation](https://developers.google.com/search/docs/specialty/international/localized-versions) for choosing a fallback when no language matches.
 4. **A `t()` translation helper** backed by JSON dictionaries in `src/i18n/`. English and Dutch ship out of the box; you can add more files for any [BCP 47 locale](https://en.wikipedia.org/wiki/IETF_language_tag).
 
-There is no client-side routing, no React or framework hydration, and no language-detection middleware. Locale URLs are generated at build time and the `LanguageSwitcher` is a plain `<a>` dropdown — Astro Rocket's performance posture is preserved.
+There is no client-side routing, no React or framework hydration, and no language-detection middleware. Locale URLs are generated at build time and the `LanguageSwitcher` is a plain `<a>` dropdown — Fastry's performance posture is preserved.
 
 ## Step 1 — enable the feature
 
@@ -91,7 +91,7 @@ import MarketingLayout from '@/layouts/MarketingLayout.astro';
 ---
 
 <MarketingLayout
-  title="Welkom bij Astro Rocket"
+  title="Welkom bij Fastry"
   description="Een productieklaar Astro 6 starter-thema."
 >
   <section class="container py-24">
@@ -107,7 +107,7 @@ That's enough to make `/nl/` a real page. From there, mirror whichever sections 
 
 ### Blog posts and content collections
 
-Astro Rocket's blog and pages collections already carry a `locale` field on their schema (`src/content.config.ts`). Translated content lives in a parallel folder structure:
+Fastry's blog and pages collections already carry a `locale` field on their schema (`src/content.config.ts`). Translated content lives in a parallel folder structure:
 
 ```
 src/content/blog/en/hello-world.mdx
@@ -163,13 +163,13 @@ With the default `prefixDefaultLocale: false` setting:
 The `LanguageSwitcher` builds those URLs automatically. If a visitor is reading `/blog/hello-world` in English and clicks "Nederlands," they go to `/nl/blog/hello-world` — same slug, locale-prefixed. If the translated post lives at a different slug (`/nl/blog/hallo-wereld`), you have two options:
 
 1. **Keep the slug identical across locales** — easiest for routing, the `LanguageSwitcher` "just works." Translate only the title and body; keep the URL slug in English.
-2. **Use locale-specific slugs** — more natural for SEO. You'll need to add a small redirect or content mapping so the switcher can resolve `/blog/hello-world` → `/nl/blog/hallo-wereld`. That's outside the base theme; a future Astro Rocket release may build it in if there's demand.
+2. **Use locale-specific slugs** — more natural for SEO. You'll need to add a small redirect or content mapping so the switcher can resolve `/blog/hello-world` → `/nl/blog/hallo-wereld`. That's outside the base theme; a future Fastry release may build it in if there's demand.
 
 For a first multilingual launch, option 1 is the pragmatic choice.
 
 ## SEO checklist
 
-When i18n is on, Astro Rocket's SEO component automatically emits the right tags. Each page's `<head>` will contain:
+When i18n is on, Fastry's SEO component automatically emits the right tags. Each page's `<head>` will contain:
 
 ```html
 <link rel="alternate" hreflang="en" href="https://yoursite.com/about" />

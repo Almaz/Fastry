@@ -1,6 +1,6 @@
 ---
-title: "How Astro Rocket's Design System Works — Tokens, Colors, and Dark Mode"
-description: "Astro Rocket uses a three-tier token architecture with OKLCH colors. Change one value and the entire site updates. Here's how it works and how to make it yours."
+title: "How Fastry's Design System Works — Tokens, Colors, and Dark Mode"
+description: "Fastry uses a three-tier token architecture with OKLCH colors. Change one value and the entire site updates. Here's how it works and how to make it yours."
 publishedAt: 2026-03-16
 author: "Almaz"
 tags: ["astro-rocket", "design-system", "tailwind", "customization", "tutorial"]
@@ -11,7 +11,7 @@ svgSlug: "design-system-color-tokens"
 imageAlt: "Palette icon above the words 'design system' on a dark background"
 ---
 
-Most themes give you a stylesheet full of hardcoded values. Change the brand colour and you are hunting through dozens of files. Astro Rocket works differently — one change propagates everywhere, instantly, in both light and dark mode.
+Most themes give you a stylesheet full of hardcoded values. Change the brand colour and you are hunting through dozens of files. Fastry works differently — one change propagates everywhere, instantly, in both light and dark mode.
 
 The reason is a three-tier token architecture. Understanding it takes ten minutes. Using it makes every customisation faster and more consistent.
 
@@ -56,7 +56,7 @@ This means you can restyle a single component without disturbing anything else. 
 
 ## Why OKLCH
 
-Astro Rocket uses [OKLCH](https://oklch.com/) for all colour values instead of hex or HSL.
+Fastry uses [OKLCH](https://oklch.com/) for all colour values instead of hex or HSL.
 
 OKLCH describes colour in three dimensions: lightness (`L`), chroma (`C`), and hue (`H`). The key advantage is perceptual uniformity — two colours with the same `L` value look equally bright to the human eye. Hex and HSL do not guarantee this, which is why manually constructed palettes often look uneven.
 
@@ -71,7 +71,7 @@ In practice, this means the design token palette stays visually consistent acros
 
 ## Dark mode through tokens
 
-Dark mode in Astro Rocket is not a separate stylesheet. It is the same token system with different values applied under the `.dark` selector.
+Dark mode in Fastry is not a separate stylesheet. It is the same token system with different values applied under the `.dark` selector.
 
 ```css
 :root {
@@ -119,7 +119,7 @@ themeColor: '#7c3aed', // violet-600 as hex for browser chrome
 
 ## The Tailwind connection
 
-Astro Rocket uses Tailwind CSS v4, which reads CSS custom properties directly. The `brand-500` utility class maps to `--color-brand-500` — no `tailwind.config.js` entry required.
+Fastry uses Tailwind CSS v4, which reads CSS custom properties directly. The `brand-500` utility class maps to `--color-brand-500` — no `tailwind.config.js` entry required.
 
 ```html
 <!-- This reads --color-brand-500 automatically -->

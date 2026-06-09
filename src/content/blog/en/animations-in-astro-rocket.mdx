@@ -1,6 +1,6 @@
 ---
-title: "Animations in Astro Rocket — How the Premium Motion Design Works"
-description: "A deep dive into every animation layer in Astro Rocket: the spring-curve hero entrance, staggered cascades, scroll-reveal, and how it all stays smooth without a JS animation library."
+title: "Animations in Fastry — How the Premium Motion Design Works"
+description: "A deep dive into every animation layer in Fastry: the spring-curve hero entrance, staggered cascades, scroll-reveal, and how it all stays smooth without a JS animation library."
 publishedAt: 2026-04-17
 author: "Almaz"
 tags: ["astro-rocket", "animation", "css", "ux", "performance"]
@@ -8,18 +8,18 @@ featured: false
 locale: en
 image: "../../../assets/blog/animations-in-astro-rocket.svg"
 svgSlug: "animations-in-astro-rocket"
-imageAlt: "Layered motion lines and a rocket icon representing the animation system in Astro Rocket"
+imageAlt: "Layered motion lines and a rocket icon representing the animation system in Fastry"
 ---
 
 Motion is one of those things that is easy to get wrong and invisible when it is right. Too fast and the page feels cheap. Too slow and it feels heavy. The wrong easing curve and something technically correct still feels off — like a door that swings open and then stops dead instead of settling.
 
-[Astro Rocket](/projects/astro-rocket) ships a complete, layered animation system built entirely on CSS and a few dozen lines of JavaScript. No Framer Motion, no GSAP, no animation library of any kind. Every curve, every delay, every stagger is written by hand and tuned to feel like premium software.
+[Fastry](/projects/astro-rocket) ships a complete, layered animation system built entirely on CSS and a few dozen lines of JavaScript. No Framer Motion, no GSAP, no animation library of any kind. Every curve, every delay, every stagger is written by hand and tuned to feel like premium software.
 
 This post walks through every layer of that system: what plays, when it plays, and exactly how it is built.
 
 ## The spring curve
 
-Every entrance animation in Astro Rocket uses one easing curve:
+Every entrance animation in Fastry uses one easing curve:
 
 ```css
 cubic-bezier(0.22, 1.6, 0.36, 1)
@@ -198,7 +198,7 @@ The [hero typing effect](/blog/hero-typing-effect) on the About page cycles thro
 
 ## Why no view transitions
 
-Astro ships a `ClientRouter` that intercepts navigation and crossfades between pages without a full browser reload. Astro Rocket intentionally does not use it.
+Astro ships a `ClientRouter` that intercepts navigation and crossfades between pages without a full browser reload. Fastry intentionally does not use it.
 
 The reason is a compositing conflict: CSS keyframe animations that use `fill-mode: both` start their element in the animation's initial state (opacity 0, translated 40px). When a page transition swaps the DOM mid-navigation, the hero elements are introduced already in that hidden state. The incoming animation fires correctly, but on mobile and some desktop configurations there was a visible frame or two where the old page had faded out and the new page's hero had not yet started its entrance — a dark or blank flash that made the transition feel broken rather than seamless. A normal page load avoids this entirely: the browser renders the new page and the CSS starts from frame zero with no swap artifacts.
 
@@ -236,4 +236,4 @@ Three things make this system hold together at the quality level of a paid anima
 
 **Cascade precedence is explicit.** The animation rules live outside every Tailwind `@layer`, making them unlayered CSS. Unlayered rules win over any `@layer`-scoped utility — so no Tailwind class can accidentally override a `transition` or `animation` property that the system depends on.
 
-The full system is in `src/styles/global.css` and the observer script in `src/layouts/BaseLayout.astro`. See the [Astro Rocket project page](/projects/astro-rocket) for the full picture of what ships in the starter.
+The full system is in `src/styles/global.css` and the observer script in `src/layouts/BaseLayout.astro`. See the [Fastry project page](/projects/astro-rocket) for the full picture of what ships in the starter.

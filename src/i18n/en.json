@@ -10,6 +10,7 @@
     "navigate": "Navigate",
     "theme": "Theme",
     "colourTheme": "Colour theme",
+    "selectColour": "Colour theme",
     "language": "Language",
     "connect": "Connect",
     "mainNavigation": "Main navigation",
@@ -163,6 +164,6 @@
   },
   "footer": {
     "copyright": "© {year} {name}. All rights reserved.",
-    "builtWith": "Built with Astro Rocket"
+    "builtWith": "Built with Fastry"
   }
 }

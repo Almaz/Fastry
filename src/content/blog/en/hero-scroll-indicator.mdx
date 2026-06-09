@@ -1,6 +1,6 @@
 ---
 title: "Hero Scroll Indicator — Desktop-Only, Hides on Scroll"
-description: "Astro Rocket's hero has an animated scroll indicator: two bouncing chevrons that fade in after the hero animation and disappear the moment you start scrolling. Here's how every part of it works."
+description: "Fastry's hero has an animated scroll indicator: two bouncing chevrons that fade in after the hero animation and disappear the moment you start scrolling. Here's how every part of it works."
 publishedAt: 2026-04-16
 author: "Almaz"
 tags: ["astro-rocket", "features", "ux", "animation"]
@@ -11,7 +11,7 @@ svgSlug: "hero-scroll-indicator"
 imageAlt: "Two stacked chevron-down arrows on a brand-coloured background, representing the hero scroll indicator"
 ---
 
-The homepage hero in [Astro Rocket](https://astrorocket.dev) has a small detail at the bottom: two stacked chevrons that gently bounce, drawing the eye downward. They appear after the hero content has finished animating in and vanish the moment you start scrolling — quietly doing their job without getting in the way.
+The homepage hero in [Fastry](https://astrorocket.dev) has a small detail at the bottom: two stacked chevrons that gently bounce, drawing the eye downward. They appear after the hero content has finished animating in and vanish the moment you start scrolling — quietly doing their job without getting in the way.
 
 This post covers how it is built, why it is desktop-only, and a non-obvious CSS cascade issue that caused the hide-on-scroll to not work until it was fixed.
 
@@ -176,7 +176,7 @@ One word changed. The `backwards` fill is enough: it prevents the initial flash 
 
 ## Related scroll features
 
-The scroll indicator joins two other scroll-aware elements in Astro Rocket:
+The scroll indicator joins two other scroll-aware elements in Fastry:
 
 - **[Scroll progress bar](/blog/scroll-progress-bar)** — a thin brand-coloured line in the header that fills as you scroll, enabled on the homepage, blog index, and post pages.
 - **[Scroll progress ring](/blog/scroll-progress-ring)** — a circular arc around the back-to-top button that fills clockwise as you scroll down.

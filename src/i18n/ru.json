@@ -1,5 +1,5 @@
 {
-  "siteName": "Фастри",
+  "siteName": "Fastry",
   "nav": {
     "home": "Главная",
     "skipToContent": "Перейти к содержимому",
@@ -10,6 +10,7 @@
     "navigate": "Навигация",
     "theme": "Тема",
     "colourTheme": "Цветовая тема",
+    "selectColour": "Цветовая тема",
     "language": "Язык",
     "connect": "Контакты",
     "mainNavigation": "Основная навигация",
@@ -163,6 +164,6 @@
   },
   "footer": {
     "copyright": "{siteName} © {year}",
-    "builtWith": "Создано с помощью Astro Rocket"
+    "builtWith": "Создано с помощью Fastry"
   }
 }

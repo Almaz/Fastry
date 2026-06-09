@@ -26,7 +26,7 @@ const posts = (await getCollection('blog', ({ data, id }) => !data.draft && id.s
 ---
 
 <LandingLayout
-  title="Astro Rocket — Astro 6 starter theme"
+  title="Fastry — Astro 6 starter theme"
   description="A production-ready Astro 6 starter with 12 beautiful themes, 57+ components, built-in i18n, dark mode and a fast, modern foundation to build anything on."
   image="/og-default.svg"
   includePersonSchema={true}
@@ -36,7 +36,7 @@ const posts = (await getCollection('blog', ({ data, id }) => !data.draft && id.s
   <Hero layout="centered" size="xl" class="hero-dark-gradient" fullHeight>    <Badge slot="badge" variant="brand" pill pulse class="dark:text-brand-200">Available for new projects</Badge>
 
     <h1 slot="title" class="!text-[clamp(2rem,11.2vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-7xl">
-      <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor] whitespace-nowrap">Astro Rocket —</span><br />
+      <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor] whitespace-nowrap">Fastry —</span><br />
       <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]">Web Designer</span><br class="md:hidden" /><span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor]"> &amp; Developer</span>
     </h1>
 
@@ -356,8 +356,22 @@ const posts = (await getCollection('blog', ({ data, id }) => !data.draft && id.s
 
  <!-- Tech stack marquee — its own section in the 2-tone zebra. It follows the secondary Blog section, so it flips to `background` like the next stripe. Hidden on phones (portrait + landscape) via .stack-marquee-section; when it drops out, Blog (secondary) → CTA (background) still alternate, so the zebra holds on mobile too. -->
   <section class="stack-marquee-section relative z-10 py-[var(--space-section-md)] bg-background border-t border-border">
-    <div class="mx-auto max-w-6xl px-6" data-reveal>
-      <StackMarquee />
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
+      <div class="flex flex-col items-center gap-4 text-center" data-reveal>
+        <div class="flex flex-col items-center gap-6">
+          <Badge variant="brand" pill>Tech stack</Badge>
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-foreground">
+            Building with the best
+          </h2>
+        </div>
+        <p class="text-lg text-foreground-muted max-w-2xl mx-auto">
+          I use the best of the modern web to build websites.
+        </p>
+      </div>
+
+      <div data-reveal data-reveal-delay="1">
+        <StackMarquee />
+      </div>
     </div>
   </section>
 

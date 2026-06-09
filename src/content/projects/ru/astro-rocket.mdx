@@ -1,5 +1,5 @@
 ---
-title: "Astro Rocket"
+title: "Fastry"
 locale: "ru"
 description: "A production-ready Astro 6 starter for designers and developers — 12 live themes, 57+ components, native i18n, a full SEO stack, view transitions, reveal animations, and a complete design system you can launch as-is. The same foundation this site runs on, packaged so you can clone, customise, and ship in a day."
 url: "https://astrorocket.dev"
@@ -12,7 +12,7 @@ role: "Designer & Developer"
 services: ["Design System", "Component Library", "Open Source"]
 meta: ["Free & open source", "MIT licence", "Astro 6", "Lighthouse 4×100"]
 image: "../../../assets/projects/hans-martens-dev-astro-rocket.jpg"
-imageAlt: "Astro Rocket — open-source Astro 6 тема."
+imageAlt: "Fastry — open-source Astro 6 тема."
 ---
 
 import LighthouseScoresGrid from '@/components/landing/LighthouseScoresGrid.astro';
@@ -20,7 +20,7 @@ import Callout from '@/components/patterns/Callout.astro';
 
 ## About the project
 
-[Astro Rocket](https://astro.build/themes/details/astro-rocket/), created by Hans Martens — web designer and developer from Veghel, the Netherlands — is a production-ready Astro 6 starter that ships as a **complete, styled website**, not a blank slate. Clone it, update the text, go live. Everything else is already done.
+[Fastry](https://astro.build/themes/details/astro-rocket/), created by Hans Martens — web designer and developer from Veghel, the Netherlands — is a production-ready Astro 6 starter that ships as a **complete, styled website**, not a blank slate. Clone it, update the text, go live. Everything else is already done.
 
 It covers everything a serious portfolio or marketing site needs: a full design system, 57+ components, 12 live-switchable colour themes, a 3-state colour-mode system, a full blog with MDX, projects, content collections, the complete SEO stack, RSS, sitemap, structured data, **native opt-in i18n**, a contact form wired to Resend, a newsletter form, Pagefind search, cookie consent with Google Consent Mode v2, and a layered animation system — all wired together, all working on day one. Long-form blog posts get an auto-generated table of contents and Giscus-powered discussions; header and footer navigation are configured independently.
 
@@ -32,7 +32,7 @@ It scores **100 on every Lighthouse category** out of the box. It's built for de
 
 ## Lighthouse: 100 Across the Board
 
-Astro Rocket scores 100 on every Lighthouse category — Performance, Accessibility, Best Practices, and SEO — on the live demo at [astrorocket.dev](https://astrorocket.dev). That's not a tuned benchmark page; it's the full site with animations, a theme switcher, typed headlines, a contact form, the cursor trail, and the LetterGlitch CTA.
+Fastry scores 100 on every Lighthouse category — Performance, Accessibility, Best Practices, and SEO — on the live demo at [astrorocket.dev](https://astrorocket.dev). That's not a tuned benchmark page; it's the full site with animations, a theme switcher, typed headlines, a contact form, the cursor trail, and the LetterGlitch CTA.
 
 <div class="my-10">
   <LighthouseScoresGrid staggered={false} />
@@ -44,9 +44,9 @@ The scores are a side-effect of decisions made throughout the build: Astro's sta
 
 ## 12 Themes. Switch in Seconds.
 
-The theme switcher is one of Astro Rocket's most satisfying details. Twelve colour themes — **Orange, Amber, Lime, Emerald, Teal, Cyan, Sky, Blue, Indigo, Violet, Purple, and Magenta** — toggle instantly from a pill in the header. Click a swatch and every button, link, badge, progress bar, scroll-progress arc, logo monogram, blog cover gradient, and accent on the page updates in a single frame. No waiting, no code changes, no deploy.
+The theme switcher is one of Fastry's most satisfying details. Twelve colour themes — **Orange, Amber, Lime, Emerald, Teal, Cyan, Sky, Blue, Indigo, Violet, Purple, and Magenta** — toggle instantly from a pill in the header. Click a swatch and every button, link, badge, progress bar, scroll-progress arc, logo monogram, blog cover gradient, and accent on the page updates in a single frame. No waiting, no code changes, no deploy.
 
-The secret is CSS custom properties scoped to `data-theme` attributes on `<html>`. The browser does all the work — the server never needs to know. The full token system — how colours, spacing, and typography are wired together — is covered in [How Astro Rocket's Design System Works](/blog/design-system-color-tokens).
+The secret is CSS custom properties scoped to `data-theme` attributes on `<html>`. The browser does all the work — the server never needs to know. The full token system — how colours, spacing, and typography are wired together — is covered in [How Fastry's Design System Works](/blog/design-system-color-tokens).
 
 ## Colour Mode — System, Light, Dark
 
@@ -54,7 +54,7 @@ The colour-mode picker is a true 3-state system rather than a binary toggle. The
 
 The picker lives in the header as a pill-shaped dropdown right next to the colour-theme pill. It shows the icon for the *currently chosen mode* (monitor, sun, or moon), so the user can always see what they picked at a glance. Below the `md` breakpoint both pills hide from the header bar and reappear inside the mobile menu — selecting a mode in one updates the other instantly.
 
-A small inline bootstrap script in `<head>` runs synchronously before body paint to apply the saved mode and resolve the `.dark` class, so there is never a flash of the wrong theme — even across navigations. The full implementation, the storage contract, and the no-flash bootstrap are written up in [System, Light, Dark — How Astro Rocket's Colour-Mode System Works](/blog/colour-mode-system).
+A small inline bootstrap script in `<head>` runs synchronously before body paint to apply the saved mode and resolve the `.dark` class, so there is never a flash of the wrong theme — even across navigations. The full implementation, the storage contract, and the no-flash bootstrap are written up in [System, Light, Dark — How Fastry's Colour-Mode System Works](/blog/colour-mode-system).
 
 ## Homepage Hero — One Treatment, Both Modes
 
@@ -87,7 +87,7 @@ Underneath, the design system uses a three-tier token architecture (reference �
 
 ## Auto-Generated Branding
 
-Change `siteConfig.name` and the logo monogram badge and SVG favicon update at runtime — automatically, in the right brand colour, with no design tools required. The favicon is pre-rendered at build time directly from the config; the badge re-renders live the moment a visitor switches themes. This is the detail that makes Astro Rocket genuinely forkable: new name, new colour, new site. Every available toggle is documented in the [configuration guide](/blog/astro-rocket-configuration-guide).
+Change `siteConfig.name` and the logo monogram badge and SVG favicon update at runtime — automatically, in the right brand colour, with no design tools required. The favicon is pre-rendered at build time directly from the config; the badge re-renders live the moment a visitor switches themes. This is the detail that makes Fastry genuinely forkable: new name, new colour, new site. Every available toggle is documented in the [configuration guide](/blog/astro-rocket-configuration-guide).
 
 ## Iconify — 3,350+ Icons, One Component
 
@@ -95,7 +95,7 @@ A single `Icon` component covers the full Iconify catalogue: **350+ Lucide** UI 
 
 ## SEO — The Complete Stack
 
-Most starters ship three meta tags and call it SEO. Astro Rocket ships the complete implementation:
+Most starters ship three meta tags and call it SEO. Fastry ships the complete implementation:
 
 - **JSON-LD structured data** — `WebSite`, `Organization`, and `Person` schemas on the homepage; `BlogPosting` on every post; `Breadcrumbs` site-wide — prerequisites for rich results in Google Search
 - **Open Graph + Twitter Cards** — full social metadata on every page, with post cover images wired in automatically
@@ -106,11 +106,11 @@ Most starters ship three meta tags and call it SEO. Astro Rocket ships the compl
 - **Search Console verification** — Google and Bing codes via `.env`, no template edits
 - **Static OG image** — a polished default Open Graph card serves as the social preview for every page; no build-time image generation required
 
-The full setup — what each piece does, how to configure it, and what rich results it unlocks — is in [SEO in Astro Rocket](/blog/seo-in-astro-rocket).
+The full setup — what each piece does, how to configure it, and what rich results it unlocks — is in [SEO in Fastry](/blog/seo-in-astro-rocket).
 
 ## Internationalization — Native, Opt-In
 
-As of **v1.3.0**, internationalization is built into Astro Rocket itself — no upstream CLI, no project regeneration, no content restructure. Flip `enabled: true` in `src/config/i18n.config.ts` and the theme switches on:
+As of **v1.3.0**, internationalization is built into Fastry itself — no upstream CLI, no project regeneration, no content restructure. Flip `enabled: true` in `src/config/i18n.config.ts` and the theme switches on:
 
 - **Locale-prefixed routes** wired through Astro's native `i18n` config — `/en/blog/...`, `/nl/blog/...`
 - **`LanguageSwitcher` dropdown** in the desktop header and the mobile menu — accessible, keyboard-navigable, pure HTML `<a hreflang lang>` links, ~1 KB of inline JS for open/close
@@ -165,7 +165,7 @@ The native cursor stays visible — the effect is purely additive. On touch devi
 
 **Reduced motion.** Every animation respects `prefers-reduced-motion`. When the user opts out, entrances become instant, the cursor trail is skipped, and the typing effect falls back to the longest phrase rendered statically.
 
-A full technical breakdown of every animation layer is in [Animations in Astro Rocket](/blog/animations-in-astro-rocket).
+A full technical breakdown of every animation layer is in [Animations in Fastry](/blog/animations-in-astro-rocket).
 
 ## LetterGlitch CTA
 
@@ -193,7 +193,7 @@ Every piece of content lives in a typed Astro Content Collection: `blog`, `proje
 
 ## Deploy Anywhere
 
-Astro Rocket ships with first-party configuration for **Vercel**, **Netlify**, and **Cloudflare Pages** — `vercel.json`, `netlify.toml`, and `wrangler.toml` are all in the repo, each with security headers pre-configured. CI runs lint, type-check, and build on every push via GitHub Actions.
+Fastry ships with first-party configuration for **Vercel**, **Netlify**, and **Cloudflare Pages** — `vercel.json`, `netlify.toml`, and `wrangler.toml` are all in the repo, each with security headers pre-configured. CI runs lint, type-check, and build on every push via GitHub Actions.
 
 ## Zero JavaScript by Default
 
@@ -201,4 +201,4 @@ Astro's island architecture means every page ships pure HTML unless a component 
 
 ## Open Source
 
-Astro Rocket is open source under the MIT licence and submitted to the official Astro themes directory. It's a fork of and a tribute to [Velocity](https://github.com/southwellmedia/velocity) by Southwell Media — the foundation it builds on. If it saves you a week of setup, [a star on GitHub](https://github.com/hansmartensdev/Astro-Rocket) is the best way to say thanks.
+Fastry is open source under the MIT licence and submitted to the official Astro themes directory. It's a fork of and a tribute to [Velocity](https://github.com/southwellmedia/velocity) by Southwell Media — the foundation it builds on. If it saves you a week of setup, [a star on GitHub](https://github.com/hansmartensdev/Astro-Rocket) is the best way to say thanks.
