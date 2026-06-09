@@ -134,6 +134,21 @@ const hasNavSlot = Astro.slots.has('nav');
 const hasActionsSlot = Astro.slots.has('actions');
 const hasMobileMenuSlot = Astro.slots.has('mobile-menu');
 
+// Dev-time guard: Header renders only its named slots (logo, nav, actions,
+// mobile-menu) — it has no default <slot/>. So any default-slot content is
+// silently dropped. The usual culprit is a misplaced </Header> that swallows
+// the layout's page <slot /> and <Footer>, leaving the page blank below the
+// navbar with no error. Warn loudly in dev so this fails fast instead of
+// silently. No-op in production.
+if (import.meta.env.DEV && Astro.slots.has('default')) {
+  console.warn(
+    '[Header] Received content in the default slot, which Header does not render — ' +
+    'it only outputs the named slots (logo, nav, actions, mobile-menu), so this content is dropped. ' +
+    'A common cause is a misplaced </Header> wrapping the page <slot /> or <Footer>: ' +
+    'make sure those sit OUTSIDE <Header> and that only slotted children (e.g. <img slot="logo" />) sit inside it.'
+  );
+}
+
 const headerClasses = cn(
   headerVariants({ position, variant, shape }),
   isInvert && !isFloating && 'invert-section',
