@@ -5,9 +5,19 @@
  *
  * The filter "lang" is set on <html> via data-pagefind-filter="lang:en" or "lang:ru"
  * in BaseLayout.astro, so Pagefind indexes each page's language automatically.
+ *
+ * Pagefind is loaded via dynamic import(). pagefind.js is an ES module (uses
+ * `export { ... }`), so dynamic import() works correctly both in dev mode
+ * (Vite processes it) and in production (native browser import()).
+ *
+ * In dev mode, we copy pagefind.js from dist/pagefind/ to public/pagefind/ so
+ * the import path /pagefind/pagefind.js works both locally and in production.
  */
 (function () {
   let pagefindInstance: { destroy: () => void } | null = null;
+  let pagefindLoaded = false;
+  let pagefindLoading = false;
+  let pagefindQueue: Array<() => void> = [];
 
   const btn = document.getElementById('pagefind-search-btn');
   if (!btn) return;
@@ -35,6 +45,62 @@
   const closeBtn = overlay.querySelector('.pagefind-modal-close');
   const searchUiContainer = overlay.querySelector('#pagefind-search-ui');
 
+  /**
+   * Load pagefind.js via dynamic import().
+   * pagefind.js is an ES module (uses `export { ... }`), so dynamic import()
+   * works correctly both in dev mode and in production.
+   *
+   * We use window.location.origin to construct an absolute URL to bypass
+   * Vite's restriction on importing files from /public via relative import().
+   * In production (GitHub Pages), the absolute URL also works correctly.
+   *
+   * Returns a promise that resolves with the pagefind API module.
+   */
+  function loadPagefind(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      // Already loaded and initialized
+      if (pagefindLoaded) {
+        resolve(pagefindInstance);
+        return;
+      }
+
+      // Already loading — queue callback
+      if (pagefindLoading) {
+        pagefindQueue.push(() => {
+          if (pagefindInstance) {
+            resolve(pagefindInstance);
+          } else {
+            reject(new Error('Pagefind failed to load'));
+          }
+        });
+        return;
+      }
+
+      pagefindLoading = true;
+
+      // Use absolute URL to bypass Vite's restriction on importing from /public
+      const baseUrl = window.location.origin;
+      const pagefindUrl = baseUrl + '/pagefind/pagefind.js';
+
+      import(/* @vite-ignore */ pagefindUrl)
+        .then((pf) => {
+          pagefindLoaded = true;
+          pagefindLoading = false;
+          const queue = pagefindQueue;
+          pagefindQueue = [];
+          resolve(pf);
+          queue.forEach((cb) => cb());
+        })
+        .catch((err) => {
+          pagefindLoading = false;
+          const error = new Error('Failed to load /pagefind/pagefind.js: ' + err.message);
+          reject(error);
+          pagefindQueue.forEach((cb) => cb());
+          pagefindQueue = [];
+        });
+    });
+  }
+
   function openSearch(): void {
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -44,13 +110,11 @@
     setTimeout(async () => {
       try {
         if (!pagefindInstance) {
-          // Load pagefind directly
-          const pagefindUrl = new URL('/pagefind/pagefind.js', window.location.origin).href;
-          const pf: any = await import(/* @vite-ignore */ pagefindUrl);
-          const pagefind = pf.default || pf;
+          // Load pagefind via <script> tag (not dynamic import)
+          const pf = await loadPagefind();
 
           // Initialize
-          await pagefind.init();
+          await pf.init();
 
           // Create input and results container manually
           if (searchUiContainer) {
@@ -87,7 +151,7 @@
               try {
                 // Use Pagefind's built-in language filter.
                 // The "lang" filter is indexed from data-pagefind-filter="lang:xx" on <html>.
-                const search = await pagefind.search(term, {
+                const search = await pf.search(term, {
                   filters: { lang: [currentLang] }
                 });
 
