@@ -5,6 +5,12 @@
  * Conditionally loads analytics scripts based on environment variables.
  * Supports Google Analytics (GA4), Google Tag Manager, and Yandex Metrica.
  *
+ * Performance optimizations:
+ * - GA4/GTM: loaded with native `async` attribute
+ * - Yandex Metrica: loaded via Partytown (Web Worker) with lazy activation
+ *   on first user interaction (scroll, click, touch) to avoid blocking
+ *   the main thread and minimize Lighthouse impact.
+ *
  * When PUBLIC_CONSENT_ENABLED is true, integrates with Google Consent Mode v2:
  * - consent_mode_v2: Scripts load normally but with denied defaults (cookieless pings)
  * - strict: Scripts only load after explicit user consent
@@ -143,18 +149,37 @@ const analyticsDataJson = JSON.stringify({
   </>
 )}
 
-{/* ── No consent: load Yandex Metrica directly ── */}
+{/* ── No consent: load Yandex Metrica lazily via Partytown ── */}
 {noConsent && hasYm && (
   <>
     <script is:inline>
-      (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=' + JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'ym');
-
-      ym(JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+      (function(){
+        var d = JSON.parse(document.getElementById('analytics-data').textContent);
+        var loaded = false;
+        function loadYm() {
+          if (loaded) return;
+          loaded = true;
+          var s = document.createElement('script');
+          s.type = 'text/partytown';
+          s.innerHTML = [
+            '(function(m,e,t,r,i,k,a){',
+            'm[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};',
+            'm[i].l=1*new Date();',
+            'for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}',
+            'k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)',
+            '})(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=' + d.ymId + '","ym");',
+            'ym(' + d.ymId + ',"init",{ssr:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});'
+          ].join('');
+          document.head.appendChild(s);
+          // Cleanup event listeners after first load
+          ['scroll','click','touchstart'].forEach(function(e){
+            document.removeEventListener(e, loadYm, {passive:true, once:true});
+          });
+        }
+        ['scroll','click','touchstart'].forEach(function(e){
+          document.addEventListener(e, loadYm, {passive:true, once:true});
+        });
+      })();
     </script>
     <noscript>
       <div><img src={`https://mc.yandex.ru/watch/${ymId}`} style="position:absolute; left:-9999px;" alt="" /></div>
@@ -243,18 +268,36 @@ const analyticsDataJson = JSON.stringify({
   </>
 )}
 
-{/* ── V2 mode: load Yandex Metrica after consent defaults ── */}
+{/* ── V2 mode: load Yandex Metrica lazily via Partytown after consent defaults ── */}
 {isV2 && hasYm && (
   <>
     <script is:inline>
-      (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=' + JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'ym');
-
-      ym(JSON.parse(document.getElementById('analytics-data').textContent).ymId, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+      (function(){
+        var d = JSON.parse(document.getElementById('analytics-data').textContent);
+        var loaded = false;
+        function loadYm() {
+          if (loaded) return;
+          loaded = true;
+          var s = document.createElement('script');
+          s.type = 'text/partytown';
+          s.innerHTML = [
+            '(function(m,e,t,r,i,k,a){',
+            'm[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};',
+            'm[i].l=1*new Date();',
+            'for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}',
+            'k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)',
+            '})(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=' + d.ymId + '","ym");',
+            'ym(' + d.ymId + ',"init",{ssr:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});'
+          ].join('');
+          document.head.appendChild(s);
+          ['scroll','click','touchstart'].forEach(function(e){
+            document.removeEventListener(e, loadYm, {passive:true, once:true});
+          });
+        }
+        ['scroll','click','touchstart'].forEach(function(e){
+          document.addEventListener(e, loadYm, {passive:true, once:true});
+        });
+      })();
     </script>
     <noscript>
       <div><img src={`https://mc.yandex.ru/watch/${ymId}`} style="position:absolute; left:-9999px;" alt="" /></div>
@@ -311,20 +354,35 @@ const analyticsDataJson = JSON.stringify({
   </script>
 )}
 
-{/* ── Strict mode: conditionally load Yandex Metrica if consent already granted ── */}
+{/* ── Strict mode: conditionally load Yandex Metrica lazily via Partytown if consent already granted ── */}
 {isStrict && hasYm && (
   <script is:inline>
     (function(){
       const d = JSON.parse(document.getElementById('analytics-data').textContent);
       if (window.__consentState && window.__consentState.decided && window.__consentState.categories[d.analyticsCategoryKey]) {
-        (function(m,e,t,r,i,k,a){
-          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-          m[i].l=1*new Date();
-          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=' + d.ymId, 'ym');
-
-        ym(d.ymId, 'init', {ssr:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+        var loaded = false;
+        function loadYm() {
+          if (loaded) return;
+          loaded = true;
+          var s = document.createElement('script');
+          s.type = 'text/partytown';
+          s.innerHTML = [
+            '(function(m,e,t,r,i,k,a){',
+            'm[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};',
+            'm[i].l=1*new Date();',
+            'for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}',
+            'k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)',
+            '})(window,document,"script","https://mc.yandex.ru/metrika/tag.js?id=' + d.ymId + '","ym");',
+            'ym(' + d.ymId + ',"init",{ssr:true,clickmap:true,ecommerce:"dataLayer",referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});'
+          ].join('');
+          document.head.appendChild(s);
+          ['scroll','click','touchstart'].forEach(function(e){
+            document.removeEventListener(e, loadYm, {passive:true, once:true});
+          });
+        }
+        ['scroll','click','touchstart'].forEach(function(e){
+          document.addEventListener(e, loadYm, {passive:true, once:true});
+        });
       }
     })();
   </script>

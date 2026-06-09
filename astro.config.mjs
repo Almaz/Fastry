@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
+import partytown from '@astrojs/partytown';
 import i18nConfig from './src/config/i18n.config.ts';
 
 /**
@@ -59,6 +60,12 @@ export default defineConfig({
     mdx(),
     sitemap(),
     icon(),
+    partytown({
+      config: {
+        forward: ['ym'],
+        lib: '/~partytown/',
+      },
+    }),
   ],
 
   vite: {
