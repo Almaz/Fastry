@@ -4,6 +4,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  PUBLIC_YM_ID = "109746637"
 
 [[headers]]
   for = "/*"
