@@ -18,10 +18,17 @@ const maxWidthClass = maxWidth === '7xl' ? 'max-w-7xl' : 'max-w-6xl';
         <LetterGlitch client:visible outerVignette locale={locale} />
       </div>
       <div class="relative z-10 px-6 py-16 sm:py-24" data-reveal>
-        <div class="mx-auto max-w-2xl rounded-lg border border-brand-500/30 bg-background/85 px-6 py-10 sm:px-10 text-center shadow-xl backdrop-blur-md">
+        <div class="glitch-band-card mx-auto max-w-2xl rounded-lg border border-brand-500/30 bg-background/85 px-6 py-10 sm:px-10 text-center shadow-xl backdrop-blur-md">
           <slot />
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  /* Light mode: increase background opacity so the card reads better over the glitch effect */
+  html:not(.dark) .glitch-band-card {
+    background-color: color-mix(in oklch, var(--color-background) 95%, transparent);
+  }
+</style>
