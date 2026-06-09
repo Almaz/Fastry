@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { formatDate } from '@/lib/utils';
 import { t, getLocaleFromPath } from '@/i18n';
-import Logo from '@/components/ui/marketing/Logo/Logo.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import BlogImageSVG from '@/components/blog/BlogImageSVG.astro';
 import HeroGrid from '@/components/effects/HeroGrid.astro';
 import HeroBeam from '@/components/effects/HeroBeam.astro';
@@ -71,7 +71,7 @@ const readingTime = Math.max(1, Math.ceil(estimatedWords / wordsPerMinute));
     <div class="flex flex-wrap items-center justify-center gap-[var(--space-stack-lg)] text-sm text-foreground-muted">
       <!-- Author -->
       <div class="flex items-center gap-3">
-        <Logo size="sm" letter={author.charAt(0).toUpperCase()} />
+        <Icon name="user" size="sm" class="text-foreground-subtle" />
         <p class="font-semibold text-foreground">{author}</p>
       </div>
 
