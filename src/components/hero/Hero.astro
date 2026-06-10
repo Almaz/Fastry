@@ -22,10 +22,10 @@ interface Props extends HTMLAttributes<'section'> {
   blobPosition?: 'left' | 'right' | 'center';
   /** Fade the bottom of the section into the next section's background */
   bottomFade?: boolean;
+  /** Show an animated scroll indicator at the bottom (desktop only, hides on scroll) */
+  showScrollIndicator?: boolean;
   /** Stretch the section to fill at least the full viewport height (min-h-[100dvh]) */
   fullHeight?: boolean;
-  /** Show animated scroll indicator at the bottom of the hero */
-  showScrollIndicator?: boolean;
 }
 
 const {
@@ -37,6 +37,7 @@ const {
   showGlow = false,
   showHeroHalo = false,
   bottomFade = false,
+  showScrollIndicator = false,
   fullHeight = false,
   class: className,
   ...attrs
@@ -104,6 +105,20 @@ const gridClasses = cn(
     <div class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background-secondary hidden dark:block" aria-hidden="true" />
   )}
 
+
+  {showScrollIndicator && (
+    <div class="scroll-indicator-wrapper absolute bottom-14 left-1/2 -translate-x-1/2 z-10" aria-hidden="true">
+      <div class="scroll-indicator flex flex-col items-center gap-0.5">
+        <svg class="scroll-indicator-chevron w-7 h-7 text-brand-500/70" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+        <svg class="scroll-indicator-chevron-2 w-7 h-7 text-brand-500/35" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </div>
+    </div>
+  )}
+
   <div class={gridClasses}>
     {/* Content Column */}
     <div class={cn(contentClasses, 'order-1 lg:order-none animate-hero-stagger')}>
@@ -158,3 +173,71 @@ const gridClasses = cn(
     )}
   </div>
 </section>
+
+<style>
+  /* Fade in after the hero slide-up animation completes */
+  .scroll-indicator {
+    animation: si-fade-in 0.6s ease-out 1.4s backwards;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .scroll-indicator.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+  }
+
+  @keyframes si-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* First chevron bounces, second follows with a slight delay */
+  .scroll-indicator-chevron {
+    animation: si-bounce 2s ease-in-out 2s infinite;
+  }
+
+  .scroll-indicator-chevron-2 {
+    animation: si-bounce 2s ease-in-out 2.15s infinite;
+  }
+
+  @keyframes si-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(5px); }
+  }
+
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-indicator              { animation: none; opacity: 1; }
+    .scroll-indicator-chevron,
+    .scroll-indicator-chevron-2    { animation: none; }
+  }
+</style>
+
+<script>
+  // Scroll indicator: fade out once the user starts scrolling.
+  // Stored on window so re-init across navigations replaces the previous
+  // listener instead of stacking handlers.
+  function initScrollIndicator() {
+    const indicator = document.querySelector<HTMLElement>('.scroll-indicator');
+    if (!indicator) return;
+
+    const w = window as Window & { __scrollIndicatorHandler?: () => void };
+    if (w.__scrollIndicatorHandler) {
+      window.removeEventListener('scroll', w.__scrollIndicatorHandler);
+    }
+
+    function onScroll() {
+      if (window.scrollY > 50) {
+        indicator?.classList.add('is-hidden');
+        window.removeEventListener('scroll', onScroll);
+        delete w.__scrollIndicatorHandler;
+      }
+    }
+
+    w.__scrollIndicatorHandler = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  initScrollIndicator();
+</script>
