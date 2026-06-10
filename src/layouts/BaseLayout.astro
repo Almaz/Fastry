@@ -1,7 +1,5 @@
 ---
 import '@/styles/global.css';
-import interFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import manropeFont from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import SEO from '@/components/seo/SEO.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import Analytics from '@/components/layout/Analytics.astro';
@@ -74,10 +72,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Preload display + body fonts so they're ready for first paint -->
-    <link rel="preload" as="font" type="font/woff2" href={manropeFont} crossorigin="anonymous" />
-    <link rel="preload" as="font" type="font/woff2" href={interFont} crossorigin="anonymous" />
-
+    <!-- Preconnect hints for critical third-party origins.
+         Yandex Metrica is loaded via Partytown web worker. -->
+    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin />
     {siteConfig.articleFeatures?.comments?.enabled && (
       <link rel="preconnect" href="https://giscus.app" crossorigin />
     )}
@@ -123,12 +120,30 @@ const locale = getLocaleFromPath(Astro.url.pathname);
       })();
     </script>
 
-    <!-- Dynamic favicon: syncs brand colour with active theme -->
+    <!-- Dynamic favicon: syncs brand colour with active theme.
+         Reads sessionStorage (same key as theme-color meta) instead of
+         getComputedStyle to avoid forced layout / style recalc. -->
     <script is:inline>
       (function () {
+        var COLORS = {
+          orange: '#ee4000', amber: '#da8100', lime: '#4fa700',
+          emerald: '#00ac55', teal: '#00aca5', cyan: '#00a9bb',
+          sky: '#009ee5', blue: '#0083ff', indigo: '#316fff',
+          violet: '#6a65ff', purple: '#934aff', magenta: '#cb00c6',
+          green: '#00ab45',
+        };
+
+        function getBrandColor() {
+          try {
+            var saved = sessionStorage.getItem('color-theme');
+            return (saved && COLORS[saved]) || '#ee4000';
+          } catch (e) {
+            return '#ee4000';
+          }
+        }
+
         function updateFavicon() {
-          var color = getComputedStyle(document.documentElement).getPropertyValue('--brand-500').trim();
-          if (!color) return;
+          var color = getBrandColor();
           var svg =
             '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.52 18.52">' +
             '<path fill="' + color + '" d="M18.44 9.26a5.9 5.9 0 0 1-5.88 5.88c-3.15 0-7.64-2.06-5.25-2.95 4.21-1.56-7.23-1.2-7.23-2.93s11.44-2.54 7-3.47C3 4.93 10.2 3.4 12.57 3.4a5.9 5.9 0 0 1 5.88 5.87"/>' +

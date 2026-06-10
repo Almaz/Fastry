@@ -31,7 +31,17 @@ const isNetlify = process.env.NETLIFY === 'true' || process.env.CONTEXT === 'dep
 
 export default defineConfig({
   output: 'static',
-  adapter: isNetlify ? netlify() : vercel(),
+  adapter: isNetlify
+    ? netlify()
+    : vercel({
+        cacheControl: {
+          // Font files in _astro/ get 1-year immutable cache
+          '**/*.woff2': { maxAge: 31536000, immutable: true },
+          '**/*.woff': { maxAge: 31536000, immutable: true },
+          // All other _astro/ assets (JS, CSS, images) also get 1-year cache
+          '**/*': { maxAge: 31536000, immutable: true },
+        },
+      }),
   site: 'https://fastry.ru',
   ...(astroI18nOptions ? { i18n: astroI18nOptions } : {}),
 
