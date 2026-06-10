@@ -445,7 +445,10 @@ const configJson = JSON.stringify(consentConfig);
         setup();
       }
 
-      initConsentBanner();
+      // Defer to idle time so the consent banner setup doesn't contribute
+      // to long tasks on the main thread during page load.
+      var rIC = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
+      rIC(initConsentBanner);
       document.addEventListener('astro:page-load', initConsentBanner);
     </script>
   </>

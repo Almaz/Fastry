@@ -1,6 +1,6 @@
 ---
 import '@/styles/global.css';
-import outfitFont from '@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url';
+import interFont from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
 import manropeFont from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
 import SEO from '@/components/seo/SEO.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
@@ -76,7 +76,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 
     <!-- Preload display + body fonts so they're ready for first paint -->
     <link rel="preload" as="font" type="font/woff2" href={manropeFont} crossorigin="anonymous" />
-    <link rel="preload" as="font" type="font/woff2" href={outfitFont} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={interFont} crossorigin="anonymous" />
 
     {siteConfig.articleFeatures?.comments?.enabled && (
       <link rel="preconnect" href="https://giscus.app" crossorigin />
@@ -138,10 +138,13 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           if (link) link.setAttribute('href', 'data:image/svg+xml,' + encodeURIComponent(svg));
         }
 
+        // Defer favicon update to idle time so it doesn't contribute to long
+        // tasks on the main thread during page load.
+        var rIC = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', updateFavicon);
+          document.addEventListener('DOMContentLoaded', function () { rIC(updateFavicon); });
         } else {
-          updateFavicon();
+          rIC(updateFavicon);
         }
 
         if (!window.__faviconListenerInit) {
@@ -479,7 +482,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
         }
 
         document.addEventListener('astro:page-load', initBackToTop);
-        initBackToTop();
+        // Defer to idle time so back-to-top setup doesn't contribute to long tasks
+        var rIC = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
+        rIC(initBackToTop);
       })();
     </script>
 
@@ -560,10 +565,27 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           els.forEach(function (el) { firstPass.observe(el); });
         }
 
+        // Defer scroll-reveal setup to idle time so IntersectionObserver
+        // creation doesn't contribute to long tasks on the main thread.
+        var rIC = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initReveal);
+          document.addEventListener('DOMContentLoaded', function () { rIC(initReveal); });
         } else {
-          initReveal();
+          rIC(initReveal);
+        }
+      })();
+    </script>
+
+    <!-- Service Worker registration for offline caching -->
+    <script is:inline>
+      (function () {
+        if ('serviceWorker' in navigator) {
+          var rIC = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
+          rIC(function () {
+            navigator.serviceWorker.register('/sw.js').catch(function () {
+              // SW registration failed — non-critical, silently ignore
+            });
+          });
         }
       })();
     </script>
