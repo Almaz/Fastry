@@ -128,7 +128,7 @@ const themes = [
 
   function getActiveTheme(): string {
     try {
-      return sessionStorage.getItem(STORAGE_KEY) || DEFAULT_THEME;
+      return localStorage.getItem(STORAGE_KEY) || DEFAULT_THEME;
     } catch {
       return DEFAULT_THEME;
     }
@@ -136,7 +136,7 @@ const themes = [
 
   function setTheme(id: string) {
     document.documentElement.setAttribute('data-theme', id);
-    try { sessionStorage.setItem(STORAGE_KEY, id); } catch { /* private mode */ }
+    try { localStorage.setItem(STORAGE_KEY, id); } catch { /* private mode */ }
 
     // Update dropdown swatches
     const ddSwatches = document.querySelectorAll<HTMLButtonElement>('.theme-swatch-dd');

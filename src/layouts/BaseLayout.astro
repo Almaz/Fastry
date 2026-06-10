@@ -98,7 +98,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <!--
       theme-color: set synchronously before first paint so the browser chrome
       matches the active colour theme from the very first frame.
-      Reads sessionStorage (same key as the theme bootstrap script below) and
+      Reads localStorage (same key as the theme bootstrap script below) and
       maps the saved theme name to its --brand-500 hex value. Falls back to
       orange (#ee4000) when nothing is stored (default theme).
     -->
@@ -114,7 +114,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
         var meta = document.createElement('meta');
         meta.name = 'theme-color';
         try {
-          var saved = sessionStorage.getItem('color-theme');
+          var saved = localStorage.getItem('color-theme');
           meta.content = (saved && COLORS[saved]) || '#ee4000';
         } catch (e) {
           meta.content = '#ee4000';
@@ -263,8 +263,8 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 
         function applyColorTheme(el) {
           try {
-            // Color palette — sessionStorage so it resets to default on each new visit
-            const saved = sessionStorage.getItem('color-theme');
+            // Color palette — localStorage persists across sessions
+            const saved = localStorage.getItem('color-theme');
             if (saved && COLOR_THEMES.indexOf(saved) !== -1) {
               el.setAttribute('data-theme', saved);
             }
