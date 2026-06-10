@@ -39,8 +39,6 @@ export function resolveLocale(locale: string | undefined): Locale {
 }
 
 function getNested(dict: Dictionary, key: string): string | undefined {
-  // Safety: guard against undefined/null dict or key
-  if (!dict || !key) return undefined;
   const parts = key.split('.');
   let value: unknown = dict;
   for (const part of parts) {
@@ -67,11 +65,7 @@ function interpolate(template: string, vars?: Record<string, string | number>): 
  * non-fatal. Supports `{name}` placeholders via `vars`.
  */
 export function t(key: string, locale: Locale = defaultLocale, vars?: Record<string, string | number>): string {
-
-
-
-  const safeLocale = isValidLocale(locale) ? locale : defaultLocale;
-  const dict = dictionaries[safeLocale];
+  const dict = dictionaries[locale] ?? dictionaries[defaultLocale];
   const fallback = dictionaries[defaultLocale];
   const value = (dict && getNested(dict, key)) ?? (fallback && getNested(fallback, key)) ?? key;
   return interpolate(value, vars);

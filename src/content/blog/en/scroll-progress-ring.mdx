@@ -1,8 +1,8 @@
 ---
 title: "Scroll Progress Ring — A Circular Indicator on the Back-to-Top Button"
-description: "Fastry's back-to-top button now has a circular SVG progress ring that fills as you scroll. It's brand-coloured, theme-aware, and runs entirely in CSS and a small inline script."
+description: "Astro Rocket's back-to-top button now has a circular SVG progress ring that fills as you scroll. It's brand-coloured, theme-aware, and runs entirely in CSS and a small inline script."
 publishedAt: 2026-04-15
-author: "Almaz"
+author: "Hans Martens"
 tags: ["astro-rocket", "features", "ux", "animation"]
 featured: false
 locale: en
@@ -11,7 +11,7 @@ svgSlug: "scroll-progress-ring"
 imageAlt: "A circular progress ring surrounding a back-to-top arrow button on a brand-coloured background"
 ---
 
-Fastry's back-to-top button has been upgraded with a circular scroll-progress ring. As you scroll down the page, the ring fills clockwise around the button — giving the reader a visual sense of how far through the page they are. Clicking the button still scrolls back to the top.
+Astro Rocket's back-to-top button has been upgraded with a circular scroll-progress ring. As you scroll down the page, the ring fills clockwise around the button — giving the reader a visual sense of how far through the page they are. Clicking the button still scrolls back to the top.
 
 The ring colour is driven by the active colour theme. Switch to a different theme in the header and the ring changes colour instantly, along with every other brand-coloured element on the page.
 
@@ -107,7 +107,7 @@ No extra JavaScript. No theme-switch event listener. The cascade does it.
 
 ## View-transition cleanup
 
-Fastry uses Astro View Transitions for client-side page navigation. Because the back-to-top script is `is:inline` and runs once on first load, its scroll listener would otherwise accumulate across page navigations. The script removes the listener before each swap:
+Astro Rocket uses Astro View Transitions for client-side page navigation. Because the back-to-top script is `is:inline` and runs once on first load, its scroll listener would otherwise accumulate across page navigations. The script removes the listener before each swap:
 
 ```js
 document.addEventListener('astro:before-swap', function () {
@@ -132,7 +132,7 @@ The transition is handled entirely by Tailwind's `transition-[opacity,transform]
 
 ## Related features
 
-The scroll progress ring joins two other scroll-aware UX features in Fastry:
+The scroll progress ring joins two other scroll-aware UX features in Astro Rocket:
 
 - **[Scroll progress bar](/blog/scroll-progress-bar)** — a 2 px brand-coloured line in the header that fills as you scroll, enabled on the homepage, blog index, and individual post pages.
 - **Scroll reveal animations** — elements with a `data-reveal` attribute fade and slide into view as they enter the viewport, powered by `IntersectionObserver`.

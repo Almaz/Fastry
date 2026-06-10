@@ -5,6 +5,8 @@ import react from '@astrojs/react';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 import partytown from '@astrojs/partytown';
+import vercel from '@astrojs/vercel';
+import netlify from '@astrojs/netlify';
 import i18nConfig from './src/config/i18n.config.ts';
 
 /**
@@ -25,8 +27,11 @@ const astroI18nOptions = i18nEnabled
     }
   : undefined;
 
+const isNetlify = process.env.NETLIFY === 'true' || process.env.CONTEXT === 'deploy-preview';
+
 export default defineConfig({
   output: 'static',
+  adapter: isNetlify ? netlify() : vercel(),
   site: 'https://fastry.ru',
   ...(astroI18nOptions ? { i18n: astroI18nOptions } : {}),
 

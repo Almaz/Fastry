@@ -1,8 +1,8 @@
 ---
 title: "Contact Form Setup: Resend, Vercel, and GoDaddy Step by Step"
-description: "Fastry's contact form is wired up but needs three things to actually deliver email: a Resend account, a verified domain, and one environment variable on Vercel."
+description: "Astro Rocket's contact form is wired up but needs three things to actually deliver email: a Resend account, a verified domain, and one environment variable on Vercel."
 publishedAt: 2026-03-31
-author: "Almaz"
+author: "Hans Martens"
 tags: ["astro-rocket", "tutorial", "email", "vercel", "deployment"]
 featured: false
 locale: en
@@ -11,9 +11,9 @@ svgSlug: "contact-form-resend-setup"
 imageAlt: "A paper-plane send icon above the words 'send email' on a brand-coloured background"
 ---
 
-[Fastry](https://astrorocket.dev) ships with a fully working contact form — validation, honeypot spam protection, error handling, the lot. The one thing it does not include is an email service account, because that belongs to you. Getting the form to actually deliver requires three external pieces: a [Resend](https://resend.com) account, a verified sending domain, and one environment variable on Vercel. Here is exactly how to connect them.
+[Astro Rocket](https://astrorocket.dev) ships with a fully working contact form — validation, honeypot spam protection, error handling, the lot. The one thing it does not include is an email service account, because that belongs to you. Getting the form to actually deliver requires three external pieces: a [Resend](https://resend.com) account, a verified sending domain, and one environment variable on Vercel. Here is exactly how to connect them.
 
-**[Resend](https://resend.com)** is a developer-focused email delivery service. You send email through their API and they handle the infrastructure — deliverability, authentication, and sending reputation. It has a generous free tier and is what Fastry uses under the hood.
+**[Resend](https://resend.com)** is a developer-focused email delivery service. You send email through their API and they handle the infrastructure — deliverability, authentication, and sending reputation. It has a generous free tier and is what Astro Rocket uses under the hood.
 
 **[Vercel](https://vercel.com)** is the hosting platform this site runs on. It builds and deploys your Astro project on every push, and manages environment variables like API keys so they stay out of your source code.
 
@@ -89,7 +89,7 @@ If the form returns an error, the most common causes are:
 | No email received | Check your spam folder; Resend's dashboard shows delivery status under **Emails** |
 | 500 error on submit | `RESEND_API_KEY` env variable is missing or the deployment has not been re-run since adding it |
 
-## Which Fastry files to update
+## Which Astro Rocket files to update
 
 There are two files to touch. Nothing else needs changing for the contact form to work.
 

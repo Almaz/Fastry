@@ -1,8 +1,8 @@
 ---
 title: "Comments on Blog Posts — Giscus, Lazy-Loaded"
-description: "Fastry now has optional comments on blog posts, powered by Giscus and GitHub Discussions. The script is lazy-loaded so readers who don't scroll to the bottom pay zero cost."
+description: "Astro Rocket now has optional comments on blog posts, powered by Giscus and GitHub Discussions. The script is lazy-loaded so readers who don't scroll to the bottom pay zero cost."
 publishedAt: 2026-05-09
-author: "Almaz"
+author: "Hans Martens"
 tags: ["astro-rocket", "features", "blog", "comments", "giscus"]
 featured: false
 locale: en
@@ -11,7 +11,7 @@ svgSlug: "giscus-comments"
 imageAlt: "Three speech bubbles representing a comment thread, on a brand-coloured background"
 ---
 
-Fastry now supports comments at the bottom of blog posts. The integration uses [Giscus](https://giscus.app), which stores comments in a GitHub Discussions thread on a repo of your choice. No database, no third-party account, no ads.
+Astro Rocket now supports comments at the bottom of blog posts. The integration uses [Giscus](https://giscus.app), which stores comments in a GitHub Discussions thread on a repo of your choice. No database, no third-party account, no ads.
 
 It's **off by default**. When disabled, no JavaScript and no network requests are added to your blog pages. When enabled, the Giscus script is **lazy-loaded** — it only downloads when the reader actually scrolls toward the comments section. Readers who never scroll that far pay zero performance cost.
 
@@ -27,7 +27,7 @@ It's **off by default**. When disabled, no JavaScript and no network requests ar
    - `data-category`
    - `data-category-id`
 
-## Step 2 — Configure Fastry
+## Step 2 — Configure Astro Rocket
 
 Open `src/config/site.config.ts` and find `articleFeatures.comments`. Flip `enabled` to `true` and paste your four values:
 

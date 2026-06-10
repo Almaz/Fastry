@@ -1,8 +1,8 @@
 ---
-title: "SEO in Fastry: What's Built In and How to Configure It"
-description: "Fastry handles structured data, Open Graph, canonical URLs, sitemaps, and more out of the box. Here's exactly what ships and where to configure it."
+title: "SEO in Astro Rocket: What's Built In and How to Configure It"
+description: "Astro Rocket handles structured data, Open Graph, canonical URLs, sitemaps, and more out of the box. Here's exactly what ships and where to configure it."
 publishedAt: 2026-04-17
-author: "Almaz"
+author: "Hans Martens"
 tags: ["astro-rocket", "seo", "structured-data", "tutorial", "configuration"]
 featured: false
 locale: en
@@ -11,7 +11,7 @@ svgSlug: "seo-in-astro-rocket"
 imageAlt: "Search icon above the word 'seo' on a dark navy background"
 ---
 
-SEO is one of those areas where "we've handled it" can mean anything from three meta tags to a complete implementation. Fastry ships a complete one. Here is exactly what is included and where each piece lives.
+SEO is one of those areas where "we've handled it" can mean anything from three meta tags to a complete implementation. Astro Rocket ships a complete one. Here is exactly what is included and where each piece lives.
 
 ## What ships out of the box
 
@@ -28,7 +28,7 @@ None of these require per-page setup. They are wired into the base layout and ru
 
 ## Structured data
 
-Structured data is the part most themes skip. Fastry outputs [JSON-LD](https://json-ld.org/) schema.org markup on every page.
+Structured data is the part most themes skip. Astro Rocket outputs [JSON-LD](https://json-ld.org/) schema.org markup on every page.
 
 **Home page** outputs three schemas (exact set depends on which schema props are enabled in `src/pages/index.astro`):
 
@@ -45,7 +45,7 @@ Structured data is the part most themes skip. Fastry outputs [JSON-LD](https://j
   "description": "Post description",
   "datePublished": "2026-03-17",
   "dateModified": "2026-03-17",
-  "author": { "@type": "Person", "name": "Almaz" },
+  "author": { "@type": "Person", "name": "Hans Martens" },
   "image": "https://yoursite.com/og-image.jpg"
 }
 ```

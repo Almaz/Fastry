@@ -74,6 +74,8 @@ interface Props extends HTMLAttributes<'header'> {
   showSocialLinks?: boolean;
   autoHide?: boolean;
   invertOnReturn?: boolean;
+  showScrollProgress?: boolean;
+  scrollProgressPosition?: 'top' | 'bottom';
   /**
    * Max width of the inner container (only applies when `shape='bar'`).
    * Defaults to `'6xl'` (the historical width).
@@ -101,6 +103,8 @@ const {
   showActiveState = true,
   autoHide = true,
   invertOnReturn = true,
+  showScrollProgress = false,
+  scrollProgressPosition = 'top',
   logoText,
   hideLogo = false,
   maxWidth = '6xl',
@@ -116,6 +120,7 @@ const maxWidthClass = {
   '7xl': 'max-w-7xl',
   full: 'max-w-full',
 }[maxWidth];
+const effectiveShowScrollProgress = showScrollProgress || (isFloating && !autoHide);
 const isInvert = colorScheme === 'invert';
 
 const defaultNav = getNavItems().map((item: NavConfigItem) => ({
@@ -135,6 +140,21 @@ const hasLogoSlot = Astro.slots.has('logo');
 const hasNavSlot = Astro.slots.has('nav');
 const hasActionsSlot = Astro.slots.has('actions');
 const hasMobileMenuSlot = Astro.slots.has('mobile-menu');
+
+// Dev-time guard: Header renders only its named slots (logo, nav, actions,
+// mobile-menu) — it has no default <slot/>. So any default-slot content is
+// silently dropped. The usual culprit is a misplaced </Header> that swallows
+// the layout's page <slot /> and <Footer>, leaving the page blank below the
+// navbar with no error. Warn loudly in dev so this fails fast instead of
+// silently. No-op in production.
+if (import.meta.env.DEV && Astro.slots.has('default')) {
+  console.warn(
+    '[Header] Received content in the default slot, which Header does not render — ' +
+    'it only outputs the named slots (logo, nav, actions, mobile-menu), so this content is dropped. ' +
+    'A common cause is a misplaced </Header> wrapping the page <slot /> or <Footer>: ' +
+    'make sure those sit OUTSIDE <Header> and that only slotted children (e.g. <img slot="logo" />) sit inside it.'
+  );
+}
 
 const headerClasses = cn(
   headerVariants({ position, variant, shape }),
@@ -372,6 +392,26 @@ const buttonId = `${menuId}-button`;
     </div>
   </div>
 
+  {effectiveShowScrollProgress && (
+    isFloating ? (
+      <div
+        class={`absolute inset-x-3 h-[2px] overflow-hidden rounded-full ${scrollProgressPosition === 'top' ? 'top-[2px]' : 'bottom-[2px]'}`}
+        aria-hidden="true"
+      >
+        <div
+          id="scroll-progress-bar"
+          class="absolute left-0 top-0 h-full w-0 bg-brand-500 transition-none"
+        />
+      </div>
+    ) : (
+      <div
+        id="scroll-progress-bar"
+        class={`absolute left-0 h-[2px] w-0 bg-brand-500 transition-none ${scrollProgressPosition === 'top' ? 'top-0' : 'bottom-0'}`}
+        aria-hidden="true"
+      />
+    )
+  )}
+
   {
     showMobileMenu &&
       layout !== 'minimal' &&
@@ -452,6 +492,7 @@ const buttonId = `${menuId}-button`;
 
             {showLanguageSwitcher && (
               <section class="mobile-menu-section">
+                <p class="mobile-menu-label">{t('nav.language', locale)}</p>
                 <div
                   class="mobile-menu-stagger flex items-center justify-between rounded-xl px-3 py-2.5"
                   style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0)}`}
@@ -467,15 +508,12 @@ const buttonId = `${menuId}-button`;
                 <p class="mobile-menu-label">{t('nav.connect', locale)}</p>
                 <div class="flex flex-wrap items-center gap-2 px-2 pt-1 pb-2">
                   {mobileSocialLinks.map((url, sIdx) => {
-
                     const { icon, labelKey } = getSocialIconData(url);
                     return (
                       <a
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-
-
                         aria-label={t(labelKey, locale)}
                         title={t(labelKey, locale)}
                         class="mobile-menu-social mobile-menu-stagger inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-foreground-muted transition-colors"
@@ -643,12 +681,12 @@ const buttonId = `${menuId}-button`;
 </script>
 
 <script>
-  // Header scroll behaviour (scroll-progress bar is driven independently from
-  // BaseLayout). All layout reads are taken before any DOM writes.
-  // `docMaxScrollY` is cached; the first read is deferred to a rAF so it runs
-  // AFTER first paint instead of forcing a synchronous layout before it.
-  // ResizeObserver handles subsequent changes (font swap, image loads, reveal
-  // animations) without re-introducing a critical-path reflow.
+  // Header scroll behaviour + scroll-progress bar driven by a single rAF.
+  // All layout reads are taken before any DOM writes. `docMaxScrollY` is
+  // cached; the first read is deferred to a rAF so it runs AFTER first
+  // paint instead of forcing a synchronous layout before it. ResizeObserver
+  // handles subsequent changes (font swap, image loads, reveal animations)
+  // without re-introducing a critical-path reflow.
   const SCROLL_THRESHOLD = 60;
   const AUTO_HIDE_THRESHOLD = 150;
   const BAR_SCROLLED_CLASSES = ['bg-background/80', 'backdrop-blur-lg', 'border-b', 'border-border/50'];
@@ -673,6 +711,7 @@ const buttonId = `${menuId}-button`;
     const scrollHeaders = document.querySelectorAll<HTMLElement>(
       'header[data-header-shape="floating"], header[data-header-shape="bar"]'
     );
+    const progressBar = document.getElementById('scroll-progress-bar');
 
     scrollHeaders.forEach((header) => {
       if (header.dataset.scrollInit) return;
@@ -740,6 +779,13 @@ const buttonId = `${menuId}-button`;
             }
           }
 
+          // Drive the scroll-progress bar in the same frame, using the
+          // already-read currentScrollY and the cached docMaxScrollY.
+          if (progressBar) {
+            const pct = docMaxScrollY > 0 ? (currentScrollY / docMaxScrollY) * 100 : 0;
+            progressBar.style.width = `${pct}%`;
+          }
+
           lastScrollY = currentScrollY;
           ticking = false;
         });
@@ -753,6 +799,32 @@ const buttonId = `${menuId}-button`;
         onScroll();
       });
     });
+
+    // Edge case: a progress bar exists without a header scroll-watcher.
+    // Drive it with its own minimal rAF so the bar still updates.
+    if (progressBar && scrollHeaders.length === 0 && !progressBar.dataset.progressInit) {
+      progressBar.dataset.progressInit = 'true';
+      let pTicking = false;
+      const updateProgress = () => {
+        const pct = docMaxScrollY > 0 ? (window.scrollY / docMaxScrollY) * 100 : 0;
+        progressBar.style.width = `${pct}%`;
+        pTicking = false;
+      };
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!pTicking) {
+            pTicking = true;
+            requestAnimationFrame(updateProgress);
+          }
+        },
+        { passive: true },
+      );
+      requestAnimationFrame(() => {
+        updateDocMaxScrollY();
+        updateProgress();
+      });
+    }
   }
 
   initScrollDriven();

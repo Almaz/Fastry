@@ -1,8 +1,8 @@
 ---
-title: "System, Light, Dark — How Fastry's Colour-Mode System Works"
+title: "System, Light, Dark — How Astro Rocket's Colour-Mode System Works"
 description: "A 3-state colour-mode system with no flash, live OS-preference tracking, and a pill dropdown that respects what the user actually picked. Here is how it is built."
 publishedAt: 2026-05-06
-author: "Almaz"
+author: "Hans Martens"
 tags: ["astro-rocket", "dark-mode", "design-system", "ux", "tutorial"]
 featured: false
 locale: en
@@ -13,7 +13,7 @@ imageAlt: "Sun-and-moon icon above the words 'colour mode' on a dark background"
 
 Most sites get dark mode subtly wrong. Either they treat it as a binary toggle and forget the OS exists, or they respect the OS and forget the user might want to override it. The fix is small but the implementation is full of edge cases — flashes on first paint, stale state across view transitions, listeners that double-bind, OS flips that fail to propagate.
 
-Fastry ships a 3-state colour-mode system — **System / Light / Dark** — that resolves all of those. The user picks their preference, the page never flashes the wrong theme, and 'System' tracks the operating system live. This post walks through how it is built and how the header pill exposes it.
+Astro Rocket ships a 3-state colour-mode system — **System / Light / Dark** — that resolves all of those. The user picks their preference, the page never flashes the wrong theme, and 'System' tracks the operating system live. This post walks through how it is built and how the header pill exposes it.
 
 ## The state contract
 
