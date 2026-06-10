@@ -137,12 +137,13 @@ const locale = getLocaleFromPath(Astro.url.pathname);
            3. astro:after-swap → updateFavicon(). -->
     <script is:inline>
       (function () {
+        // Darkened web-safe colours for better contrast on the white favicon circle
         var COLORS = {
-          orange: '#ee4000', amber: '#da8100', lime: '#4fa700',
-          emerald: '#00ac55', teal: '#00aca5', cyan: '#00a9bb',
-          sky: '#009ee5', blue: '#0083ff', indigo: '#316fff',
-          violet: '#6a65ff', purple: '#934aff', magenta: '#cb00c6',
-          green: '#00ab45',
+          orange: '#993a00', amber: '#995a00', lime: '#3d7a00',
+          emerald: '#007a3d', teal: '#007a75', cyan: '#007a8a',
+          sky: '#00709a', blue: '#005fcc', indigo: '#2a4fcc',
+          violet: '#4a45cc', purple: '#6a2fcc', magenta: '#9a0090',
+          green: '#007a30',
         };
 
         function getBrandColor() {
@@ -151,9 +152,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
         }
 
         function buildSvgString(color) {
-          return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.52 18.52">' +
-            '<path fill="' + color + '" d="M18.44 9.26a5.9 5.9 0 0 1-5.88 5.88c-3.15 0-7.64-2.06-5.25-2.95 4.21-1.56-7.23-1.2-7.23-2.93s11.44-2.54 7-3.47C3 4.93 10.2 3.4 12.57 3.4a5.9 5.9 0 0 1 5.88 5.87"/>' +
-            '<path fill="#ffffff" d="M11.26 4.88c-2.06 0-2.4 1.47-2.4 2.45H7.9v1.34h.96v4.87h1.75V8.67h3.81c1.07 0 1.43.6 1.43.93-1.58-.01-4.07-.13-4.1 1.97-.02 2.34 2.69 1.97 4.22 1.97h1.68V10c0-2.19-1.6-2.67-2.99-2.67h-4.05c-.07-.6.39-1.1.82-1.1h1.79V4.87zm4.6 6.06v1.26c-1.16 0-2.35.24-2.35-.63 0-.8 1.15-.63 2.34-.63"/>' +
+          return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.32 14.32">' +
+            '<path fill="#ffffff" d="M14.32 7.15a7.16 7.16 0 0 1-7.16 7.16A7.16 7.16 0 0 1 0 7.15 7.16 7.16 0 0 1 7.16-.01a7.16 7.16 0 0 1 7.16 7.16"/>' +
+            '<path fill="' + color + '" d="M.26 5.23a7.5 7.5 0 0 0-.1 3.4c2.5.34 4.46.27 2.4 1.45-2.23 1.3 2.1 2.95 5.26 2.95 1.56 0 2.98-.61 4.03-1.6h-.63c-1.53 0-4.24.37-4.21-1.97.02-2.1 2.51-1.98 4.1-1.97 0-.34-.37-.93-1.43-.93H5.87v4.87H4.12V6.55h-.96V5.21h.96c0-.98.34-2.45 2.4-2.45h1.95V4.1H6.69c-.44 0-.9.52-.82 1.11h4.05c1.39 0 2.99.48 2.99 2.67v2.2c2.07-3.56-.17-8.82-5.09-8.8-2.33 0-8.8 1.55-5.48 2.4 3.1.8-1.6 1.4-2.02 1.54m9.92 3.58c-.83-.01-1.48.04-1.48.64 0 .87 1.2.63 2.35.63V8.81z"/>' +
             '</svg>';
         }
 
