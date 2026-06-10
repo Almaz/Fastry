@@ -233,16 +233,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           applyColorTheme(el);
         }
 
-        /** Update <meta name="theme-color"> to match the active colour theme. */
-        function updateThemeColor() {
-          var meta = document.querySelector('meta[name="theme-color"]');
-          if (!meta) return;
-          var color = getComputedStyle(document.documentElement).getPropertyValue('--brand-500').trim();
-          if (color) meta.setAttribute('content', color);
-        }
-
         applyTheme(document.documentElement);
-        updateThemeColor();
 
         if (!window.__themeListenersInit) {
           window.__themeListenersInit = true;
@@ -261,22 +252,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           });
           document.addEventListener('astro:after-swap', function () {
             applyTheme(document.documentElement);
-            updateThemeColor();
           });
-        }
-
-        // Watch for colour-theme changes (data-theme) and dark/light toggles (class)
-        // so theme-color stays in sync without needing a full page load.
-        if (!window.__themeColorObserverInit) {
-          window.__themeColorObserverInit = true;
-          new MutationObserver(function (mutations) {
-            for (var i = 0; i < mutations.length; i++) {
-              if (mutations[i].attributeName === 'data-theme' || mutations[i].attributeName === 'class') {
-                updateThemeColor();
-                break;
-              }
-            }
-          }).observe(document.documentElement, { attributes: true });
         }
       })();
     </script>
