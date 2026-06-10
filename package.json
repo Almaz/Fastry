@@ -28,7 +28,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/generate-search-index.mjs",
+    "copy-fonts": "node scripts/copy-fonts.mjs",
+    "build": "node scripts/copy-fonts.mjs && astro build && node scripts/generate-search-index.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint .",

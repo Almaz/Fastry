@@ -153,7 +153,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           var svg =
             '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.52 18.52">' +
             '<path fill="' + color + '" d="M18.44 9.26a5.9 5.9 0 0 1-5.88 5.88c-3.15 0-7.64-2.06-5.25-2.95 4.21-1.56-7.23-1.2-7.23-2.93s11.44-2.54 7-3.47C3 4.93 10.2 3.4 12.57 3.4a5.9 5.9 0 0 1 5.88 5.87"/>' +
-            '<path fill="#ffffff" d="M11.26 4.88c-2.06 0-2.4 1.47-2.4 2.45H7.9v1.34h.96v4.87h1.75V8.67h3.81c1.07 0 1.43.6 1.43.93-1.58-.01-4.07-.13-4.1 1.97-.02 2.34 2.69 1.97 4.22 1.97h1.68V10c0-2.19-1.6-2.67-2.99-2.67h-4.05c-.07-.6.39-1.1.82-1.1h1.79V4.87zm4.6 6.06v1.26c-1.16 0-2.35.24-2.35-.63 0-.8 1.15-.63 2.34-.63" font-family="Montserrat" font-size="11.54" font-weight="bold" letter-spacing=".38"/>' +
+            '<path fill="#ffffff" d="M11.26 4.88c-2.06 0-2.4 1.47-2.4 2.45H7.9v1.34h.96v4.87h1.75V8.67h3.81c1.07 0 1.43.6 1.43.93-1.58-.01-4.07-.13-4.1 1.97-.02 2.34 2.69 1.97 4.22 1.97h1.68V10c0-2.19-1.6-2.67-2.99-2.67h-4.05c-.07-.6.39-1.1.82-1.1h1.79V4.87zm4.6 6.06v1.26c-1.16 0-2.35.24-2.35-.63 0-.8 1.15-.63 2.34-.63" font-size="11.54" font-weight="bold" letter-spacing=".38"/>' +
             '</svg>';
           var link = document.querySelector('link[rel="icon"]');
           if (link) link.setAttribute('href', 'data:image/svg+xml,' + encodeURIComponent(svg));
