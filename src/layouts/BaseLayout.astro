@@ -1,5 +1,6 @@
 ---
 import '@/styles/global.css';
+import fontsCss from '@/styles/fonts/fonts.css?url';
 import SEO from '@/components/seo/SEO.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import Analytics from '@/components/layout/Analytics.astro';
@@ -72,9 +73,14 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Preconnect hints for critical third-party origins.
-         Yandex Metrica is loaded via Partytown web worker. -->
-    <link rel="preconnect" href="https://mc.yandex.ru" crossorigin />
+    <!-- Async font stylesheet: loaded with media="print" trick so it
+         does not block the critical rendering path. The @font-face
+         rules inside use font-display:swap, and metric-adjusted
+         fallbacks (Inter Fallback / Manrope Fallback) are already
+         declared in global.css, so text remains visible throughout. -->
+    <link rel="stylesheet" href={fontsCss} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fontsCss} /></noscript>
+
     {siteConfig.articleFeatures?.comments?.enabled && (
       <link rel="preconnect" href="https://giscus.app" crossorigin />
     )}

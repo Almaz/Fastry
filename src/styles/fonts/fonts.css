@@ -1,0 +1,9 @@
+/* Font-face declarations — loaded asynchronously via media="print" trick
+   to avoid blocking the critical rendering path. Only the subsets we
+   actually use: latin + cyrillic for Inter and Manrope, latin for
+   JetBrains Mono. font-display: swap ensures text remains visible
+   while the webfonts load. */
+
+@import '@fontsource-variable/inter/wght.css' layer(fonts);
+@import '@fontsource-variable/manrope/wght.css' layer(fonts);
+@import '@fontsource-variable/jetbrains-mono/wght.css' layer(fonts);

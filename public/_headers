@@ -1,3 +1,5 @@
-# Vercel headers — higher priority than vercel.json for _astro/*
-/_astro/*
-  Cache-Control: public, max-age=31536000, immutable
+# Vercel headers — override built-in 10-min cache for font files
+/_astro/*.woff2
+  Cache-Control: public, max-age=604800, immutable
+/_astro/*.woff
+  Cache-Control: public, max-age=604800, immutable

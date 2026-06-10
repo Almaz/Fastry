@@ -9,16 +9,6 @@
 @import './tokens/typography.css';
 @import './tokens/spacing.css';
 
-/* Self-hosted fonts via Fontsource (CSP-safe, no external requests).
-   Only the subsets we actually use: latin + cyrillic for Manrope (body),
-   latin + cyrillic for Inter (display headings), latin for JetBrains Mono (code).
-   font-display: swap — the metric-adjusted fallbacks (Inter Fallback /
-   Manrope Fallback) are already configured below, so the swap is invisible
-   and we avoid the layout shift that font-display:swap can cause. */
-@import '@fontsource-variable/manrope/wght.css' layer(fonts);
-@import './fonts/inter.css' layer(fonts);
-@import '@fontsource-variable/jetbrains-mono/wght.css' layer(fonts);
-
 /* Metric-adjusted fallback fonts.
    The variable fonts above arrive after first paint, so headings and body
    text used to reflow when the swap landed (Lighthouse reported CLS on the
