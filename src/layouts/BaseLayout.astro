@@ -98,7 +98,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <!-- manifest загружается асинхронно — не блокирует критический путь -->
     <link rel="manifest" href="/manifest.webmanifest" media="print" onload="this.setAttribute('media','all')" />
     <noscript><link rel="manifest" href="/manifest.webmanifest" /></noscript>
-    <!-- Unified bootstrap: theme-color + theme mode + favicon -- sync then deferred -->
+    <!-- theme-color static meta; JS updates content before paint -->
+    <meta name="theme-color" content="#ee4000" id="theme-color-meta" />
+    <!-- Unified bootstrap: theme mode + favicon -->
     <script is:inline>
       (function () {
         // ======== ДАННЫЕ ========
@@ -112,11 +114,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
         function getTheme() { var t = gs('color-theme','orange'); return THEMES.indexOf(t) !== -1 ? t : 'orange'; }
 
         // ======== КРИТИЧЕСКАЯ ЧАСТЬ (синхронно, до paint) ========
-        // 1. theme-color meta
-        var meta = document.createElement('meta');
-        meta.name = 'theme-color';
-        meta.content = TC[getTheme()] || '#ee4000';
-        document.head.appendChild(meta);
+        // 1. theme-color meta (update existing, no DOM creation)
+        var themeMeta = document.getElementById('theme-color-meta');
+        if (themeMeta) themeMeta.content = TC[getTheme()] || '#ee4000';
 
         // 2. Theme bootstrap
         var el = document.documentElement;
