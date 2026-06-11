@@ -310,7 +310,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
       </span>
     </button>
 
-    <script is:inline>
+    <script is:inline define:vars={{}}>
       (function () {
         const THRESHOLD = 400;
         const CIRCUMFERENCE = 131.95;
@@ -410,10 +410,13 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           });
         }
 
+        // Init after full page load to avoid forced layout before first paint
+        if (document.readyState === 'complete') {
+          initBackToTop();
+        } else {
+          window.addEventListener('load', initBackToTop);
+        }
         document.addEventListener('astro:page-load', initBackToTop);
-        // Defer to idle time so back-to-top setup doesn't contribute to long tasks
-        var rIC = window.requestIdleCallback || function (fn) { setTimeout(fn, 200); };
-        rIC(initBackToTop);
       })();
     </script>
 
