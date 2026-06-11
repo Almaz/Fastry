@@ -265,9 +265,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
-      // Defer init to a microtask so the document has finished parsing
-      // and layout has settled before the first scrollHeight read.
-      Promise.resolve().then(init);
+      // Defer init to requestAnimationFrame so layout has settled
+      // before the first scrollHeight read (avoids forced layout).
+      requestAnimationFrame(init);
     }
 
     // Re-init after Astro SPA navigations
