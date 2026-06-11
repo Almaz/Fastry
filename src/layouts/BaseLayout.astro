@@ -78,6 +78,8 @@ const locale = getLocaleFromPath(Astro.url.pathname);
          rules inside use font-display:swap, and metric-adjusted
          fallbacks (Inter Fallback / Manrope Fallback) are already
          declared in global.css, so text remains visible throughout. -->
+    <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href={fontsCss} media="print" onload="this.setAttribute('media','all')" />
     <noscript><link rel="stylesheet" href={fontsCss} /></noscript>
 
@@ -345,7 +347,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     let ticking = false;
 
     function updateMaxScrollY() {
-      docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+      requestAnimationFrame(function () {
+        docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+      });
     }
 
     function onScroll() {
@@ -359,8 +363,10 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     }
 
     function init() {
-      updateMaxScrollY();
-      onScroll();
+      requestAnimationFrame(function () {
+        updateMaxScrollY();
+        onScroll();
+      });
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -372,7 +378,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
-      init();
+      // Defer init to a microtask so the document has finished parsing
+      // and layout has settled before the first scrollHeight read.
+      Promise.resolve().then(init);
     }
 
     // Re-init after Astro SPA navigations
@@ -427,7 +435,9 @@ const locale = getLocaleFromPath(Astro.url.pathname);
         // critical path. ResizeObserver picks up later changes.
         let docMaxScrollY = 0;
         function updateDocMaxScrollY() {
-          docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+          requestAnimationFrame(function () {
+            docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+          });
         }
         window.addEventListener('resize', updateDocMaxScrollY, { passive: true });
         if (typeof ResizeObserver !== 'undefined') {
