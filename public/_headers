@@ -1,5 +1,7 @@
-# Vercel headers — override built-in 10-min cache for font files
-/_astro/*.woff2
-  Cache-Control: public, max-age=604800, immutable
-/_astro/*.woff
-  Cache-Control: public, max-age=604800, immutable
+# Cache headers for all platforms
+# Fonts: 1 year immutable
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+# Astro build assets: 1 year immutable
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
