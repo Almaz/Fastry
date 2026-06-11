@@ -171,37 +171,47 @@ const locale = getLocaleFromPath(Astro.url.pathname);
           var svgStr = buildSvgString(color);
           var uri = svgToDataUri(svgStr);
 
-          // Remove ALL existing <link rel="icon"> elements to avoid
-          // confusion — some browsers pick the first, others the last.
-          var existing = document.querySelectorAll('link[rel="icon"]');
-          for (var i = 0; i < existing.length; i++) {
-            existing[i].parentNode.removeChild(existing[i]);
-          }
-
-          // Create a fresh <link> with the dynamic SVG data URI.
+          // Batch DOM writes with a document fragment to avoid
+          // multiple forced layouts. Defer the actual DOM changes
+          // to rAF so they happen outside any style recalculation.
+          var fragment = document.createDocumentFragment();
           var link = document.createElement('link');
           link.rel = 'icon';
           link.type = 'image/svg+xml';
           link.href = uri;
-          document.head.appendChild(link);
+          fragment.appendChild(link);
+
+          var existing = document.querySelectorAll('link[rel="icon"]');
+          requestAnimationFrame(function () {
+            for (var i = 0; i < existing.length; i++) {
+              existing[i].parentNode.removeChild(existing[i]);
+            }
+            document.head.appendChild(fragment);
+          });
         }
 
         // Run on DOMContentLoaded (or immediately if already loaded).
+        // Deferred to rAF so layout reads never happen during critical path.
+        function deferredFavicon() {
+          requestAnimationFrame(updateFavicon);
+        }
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', updateFavicon);
+          document.addEventListener('DOMContentLoaded', deferredFavicon);
         } else {
-          updateFavicon();
+          deferredFavicon();
         }
 
         // React to theme changes at runtime.
         if (!window.__faviconObserverInit) {
           window.__faviconObserverInit = true;
           new MutationObserver(function () {
-            updateFavicon();
-          }).observe(document.documentElement, {
-            attributes: true
-          });
-          document.addEventListener('astro:after-swap', updateFavicon);
+                requestAnimationFrame(updateFavicon);
+              }).observe(document.documentElement, {
+                attributes: true
+              });
+              document.addEventListener('astro:after-swap', function () {
+                requestAnimationFrame(updateFavicon);
+              });
         }
       })();
     </script>
