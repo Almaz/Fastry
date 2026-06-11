@@ -694,7 +694,9 @@ const buttonId = `${menuId}-button`;
   let docMaxScrollY = 0;
   let docMetricsInited = false;
   function updateDocMaxScrollY() {
-    docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+    requestAnimationFrame(function () {
+      docMaxScrollY = document.documentElement.scrollHeight - window.innerHeight;
+    });
   }
   function initDocMetrics() {
     if (docMetricsInited) return;
@@ -827,9 +829,21 @@ const buttonId = `${menuId}-button`;
     }
   }
 
-  initScrollDriven();
-  document.addEventListener('astro:page-load', initScrollDriven);
-  document.addEventListener('astro:after-swap', initScrollDriven);
+  // Defer first init to avoid forced reflow on critical path.
+  // The first scrollHeight read happens inside requestAnimationFrame.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      requestAnimationFrame(initScrollDriven);
+    });
+  } else {
+    requestAnimationFrame(initScrollDriven);
+  }
+  document.addEventListener('astro:page-load', function () {
+    requestAnimationFrame(initScrollDriven);
+  });
+  document.addEventListener('astro:after-swap', function () {
+    requestAnimationFrame(initScrollDriven);
+  });
 </script>
 
 <style is:global>
