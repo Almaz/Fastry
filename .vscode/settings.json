@@ -1,0 +1,7 @@
+{
+  // Suppress "unknown at rule" warnings for Tailwind CSS v4 directives
+  "css.lint.unknownAtRules": "ignore",
+  // Also cover PostCSS language mode used by some extensions
+  "scss.lint.unknownAtRules": "ignore",
+  "less.lint.unknownAtRules": "ignore"
+}

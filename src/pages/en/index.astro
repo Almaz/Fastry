@@ -33,7 +33,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.loc
   includeProfessionalServiceSchema={true}
 >
   <!-- Hero -->
-  <Hero layout="centered" size="xl" class="hero-dark-gradient" fullHeight>    <Badge slot="badge" variant="brand" pill pulse class="dark:text-brand-200">Available for new projects</Badge>
+  <Hero layout="centered" size="xl" class="hero-dark-gradient" fullHeight showScrollIndicator>
+    <Badge slot="badge" variant="brand" pill pulse class="dark:text-brand-200">Available for new projects</Badge>
 
     <h1 slot="title" class="!text-[clamp(2rem,11.2vw,3rem)] sm:!text-5xl md:!text-6xl lg:!text-7xl">
       <span class="text-brand-600 dark:text-foreground [-webkit-text-fill-color:currentColor] whitespace-nowrap">Fastry —</span><br />
@@ -58,7 +59,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.loc
   </Hero>
 
   <!-- Services Section -->
-  <section class="relative z-10 py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+  <section id="content" class="relative z-10 py-[var(--space-section-md)] bg-background-secondary border-t border-border">
     <div class="mx-auto max-w-6xl px-6 flex flex-col gap-8">
       <div class="flex flex-col items-center gap-4 text-center" data-reveal>
         <div class="flex flex-col items-center gap-6">
@@ -154,7 +155,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft && data.loc
             variant="elevated"
             hover
             padding="none"
-            href={project.data.placeholder ? undefined : `/en/projects/${project.id.replace(/^en\//, '')}`}
+            href={project.data.placeholder ? undefined : `/en/projects/${project.id.replace(/\.mdx?$/, '').replace(/^en\//, '')}`}
             class="group flex flex-col"
             data-reveal
           >

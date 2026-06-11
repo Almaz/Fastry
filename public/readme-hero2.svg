@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="880"
+   height="260"
+   viewBox="0 0 880 260"
+   fill="none"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="readme-hero2.svg"
+   inkscape:version="1.4.4 (1:1.4.4+202605061436+dcaf3e7d9e)"
+   inkscape:export-filename="readme-hero.svg"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8">
+    <linearGradient
+       id="linearGradient11"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#3f3f3f;stop-opacity:1;"
+         offset="0"
+         id="stop11" />
+      <stop
+         style="stop-color:#010101;stop-opacity:1;"
+         offset="1"
+         id="stop12" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient11"
+       id="radialGradient1"
+       cx="336.18253"
+       cy="136.11806"
+       fx="336.18253"
+       fy="136.11806"
+       r="440"
+       gradientTransform="matrix(1,0,0,0.80042672,0,25.944527)"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.0210227"
+     inkscape:cx="413.80078"
+     inkscape:cy="150.82916"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <!-- Background -->
+  <rect
+     width="880"
+     height="260"
+     fill="#3b82f6"
+     id="rect1"
+     style="fill:url(#radialGradient1);fill-opacity:1" />
+  <!-- Lucide Rocket — scale(5), visual centre at (440, 100) -->
+  <!-- Wordmark -->
+  <!-- Corner marks -->
+  <path
+     d="M 30 50 L 30 30 L 50 30"
+     stroke="#93c5fd"
+     stroke-width="1.5"
+     fill="none"
+     stroke-opacity="0.45"
+     id="path5" />
+  <path
+     d="M 830 30 L 850 30 L 850 50"
+     stroke="#93c5fd"
+     stroke-width="1.5"
+     fill="none"
+     stroke-opacity="0.45"
+     id="path6" />
+  <path
+     d="M 30 210 L 30 230 L 50 230"
+     stroke="#93c5fd"
+     stroke-width="1.5"
+     fill="none"
+     stroke-opacity="0.45"
+     id="path7" />
+  <path
+     d="M 830 230 L 850 230 L 850 210"
+     stroke="#93c5fd"
+     stroke-width="1.5"
+     fill="none"
+     stroke-opacity="0.45"
+     id="path8" />
+  <path
+     id="path124"
+     style="opacity:0.5;fill:#ff5454;fill-opacity:1;stroke-width:32.339;stroke-linejoin:round"
+     d="m 344.37816,126.9978 c 0,25.29585 -20.50625,45.80187 -45.80215,45.802 -24.60505,1.2e-4 -59.63211,-16.05016 -40.94245,-22.98187 32.80166,-12.16557 -56.38419,-9.37102 -56.38419,-22.82013 0,-13.46701 89.15417,-19.78283 54.61255,-27.028915 -31.91036,-6.694217 24.29244,-18.773089 42.7141,-18.773089 25.2959,1.24e-4 45.80215,20.506264 45.80214,45.802004 z"
+     sodipodi:nodetypes="sssssss"
+     inkscape:export-filename="Ready/fastry-logo-d2.svg"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96" />
+  <path
+     id="path125"
+     style="font-weight:bold;font-size:11.541px;line-height:0.8;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';text-align:center;letter-spacing:0.376333px;fill:#ffffff;stroke-width:2.44266;stroke-linejoin:round"
+     d="m 288.40939,92.864805 c -16.0329,0 -18.71349,11.430735 -18.71349,19.076075 h -7.46928 v 10.43846 h 7.46928 v 37.96682 h 13.67762 v -37.96682 h 29.67165 c 8.29738,0 11.15557,4.63239 11.15557,7.28396 -12.34658,-0.0978 -31.7536,-1.0169 -31.93984,15.34145 -0.20817,18.2559 20.92663,15.34141 32.84224,15.34141 h 41.49608 c 14.26784,0 22.85093,-4.30519 22.85093,-14.6646 0,-7.2116 -4.74795,-11.4082 -11.51411,-13.04505 -5.90148,-1.42766 -18.27434,-0.50293 -18.27434,-6.30095 0,-3.95482 6.25176,-3.95622 9.54404,-3.95622 h 28.85479 v 18.80213 c 0,14.96234 10.62038,19.16469 18.08497,19.16469 h 30.86781 v -22.851 c 0,-12.97475 11.60721,-13.319 21.60616,-13.319 l 15.70405,36.57289 c -3.05162,7.8384 -9.32763,7.33633 -16.01027,7.33633 v 10.43847 c 13.18723,1.06813 22.08856,-0.29633 28.43489,-15.20849 L 518.6121,111.94088 H 505.11583 L 491.44227,144.8154 477.8533,111.94088 h -14.82573 c -6.65591,0 -12.35873,1.25494 -16.64675,6.36943 v -6.36943 h -13.40364 v 37.96683 h -14.8535 c -2.79467,0 -6.027,-3.00556 -6.027,-8.72624 v -18.80213 h 11.97341 V 111.94088 H 412.09668 V 101.2325 h -14.03615 v 10.70838 h -28.85479 c -9.74722,0 -22.40375,3.18738 -22.40375,14.93453 0,9.22137 7.36847,12.88998 17.72643,14.39873 3.78179,0.55087 11.51817,0.32174 11.51817,4.76598 0,3.01996 -3.80294,3.86755 -8.90758,3.86755 H 338.2369 v -17.18253 c 0,-17.00246 -12.45487,-20.78426 -23.30225,-20.78426 h -31.56113 c -0.57691,-4.60197 2.97107,-8.63761 6.38554,-8.63761 h 13.91926 V 92.864805 Z m 35.79135,47.236985 v 9.80588 c -9.00565,0 -18.26226,1.90684 -18.26226,-4.90293 0,-6.25714 8.98951,-4.90295 18.26226,-4.90295 z"
+     sodipodi:nodetypes="scccccccscssssssscsscsccccsccccsccccsscccccccssssscsscsccsccsc" />
+  <path
+     id="path126"
+     style="font-weight:bold;font-size:11.541px;line-height:0.8;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';text-align:center;letter-spacing:0.376333px;opacity:0.4;fill:#ffffff;fill-opacity:1;stroke-width:2.44266;stroke-linejoin:round"
+     d="m 535.99971,111.9409 v 48.4053 h 14.03607 v -22.85101 c 0,-9.10476 4.79412,-13.31901 16.01424,-13.31901 h 2.68318 v 15.11583 c 0,19.23861 13.55263,21.77534 20.69565,21.77534 3.18524,0 10.2997,-0.70182 15.09564,-6.47016 l -0.0701,5.74901 h 13.31899 V 111.9409 H 603.7373 v 23.93473 c 0,9.34839 -4.98504,13.04506 -11.15963,13.04506 -9.39403,0 -9.80592,-9.55091 -9.80592,-13.04506 V 111.9409 h -8.46841 -5.56773 -2.68318 c -6.29596,0 -12.35873,1.25494 -16.64674,6.36944 v -6.36944 z m -12.23127,32.10906 c -3.42248,-1e-5 -13.86511,2.2452 -7.93659,3.48887 6.41743,1.34623 -10.14441,2.51781 -10.14441,5.0198 0,2.49867 16.56886,1.97802 10.47474,4.23824 -3.4723,1.28782 3.03494,4.27048 7.60626,4.27048 4.69971,-2e-5 8.5087,-3.80908 8.5087,-8.50872 0,-4.69964 -3.80899,-8.50866 -8.5087,-8.50867 z" />
+</svg>
