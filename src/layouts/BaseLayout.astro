@@ -95,9 +95,7 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <!-- manifest загружается асинхронно — не блокирует критический путь -->
-    <link rel="manifest" href="/manifest.webmanifest" media="print" onload="this.setAttribute('media','all')" />
-    <noscript><link rel="manifest" href="/manifest.webmanifest" /></noscript>
+    <!-- manifest — загружается через SW, не блокирует критический путь -->
     <!-- theme-color static meta; JS updates content before paint -->
     <meta name="theme-color" content="#ee4000" id="theme-color-meta" />
     <!-- Unified bootstrap: theme mode + favicon -->

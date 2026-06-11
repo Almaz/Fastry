@@ -21,6 +21,7 @@ const PRECACHE_URLS = [
   '/apple-touch-icon.png',
   '/pwa-192x192.png',
   '/pwa-512x512.png',
+  '/manifest.webmanifest',
 ];
 
 // Типы ресурсов, которые кэшируем по схеме Cache First
@@ -40,6 +41,9 @@ function isCacheFirst(url) {
 
   // Шрифты
   if (url.pathname.startsWith('/fonts/')) return true;
+
+  // Web Manifest
+  if (url.pathname === '/manifest.webmanifest') return true;
 
   // Статические ресурсы с хэшем в имени
   if (/\.(woff2?|css|js|svg|png|jpg|jpeg|webp|avif|ico)(\?|$)/.test(url.pathname)) {
