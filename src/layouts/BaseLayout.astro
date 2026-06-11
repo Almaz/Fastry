@@ -95,126 +95,82 @@ const locale = getLocaleFromPath(Astro.url.pathname);
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href={`${import.meta.env.BASE_URL}manifest.webmanifest`} />
-
-    <!--
-      theme-color: set synchronously before first paint so the browser chrome
-      matches the active colour theme from the very first frame.
-      Reads localStorage (same key as the theme bootstrap script below) and
-      maps the saved theme name to its --brand-500 hex value. Falls back to
-      orange (#ee4000) when nothing is stored (default theme).
-    -->
+    <!-- manifest загружается асинхронно — не блокирует критический путь -->
+    <link rel="manifest" href="/manifest.webmanifest" media="print" onload="this.setAttribute('media','all')" />
+    <noscript><link rel="manifest" href="/manifest.webmanifest" /></noscript>
+    <!-- Unified bootstrap: theme-color + theme mode + favicon -- sync then deferred -->
     <script is:inline>
       (function () {
-        var COLORS = {
-          orange: '#ee4000', amber: '#da8100', lime: '#4fa700',
-          emerald: '#00ac55', teal: '#00aca5', cyan: '#00a9bb',
-          sky: '#009ee5', blue: '#0083ff', indigo: '#316fff',
-          violet: '#6a65ff', purple: '#934aff', magenta: '#cb00c6',
-          green: '#00ab45',
-        };
+        // ======== ДАННЫЕ ========
+        var TC = { orange:'#ee4000', amber:'#da8100', lime:'#4fa700', emerald:'#00ac55', teal:'#00aca5', cyan:'#00a9bb', sky:'#009ee5', blue:'#0083ff', indigo:'#316fff', violet:'#6a65ff', purple:'#934aff', magenta:'#cb00c6', green:'#00ab45' };
+        var FC = { orange:'#993a00', amber:'#995a00', lime:'#3d7a00', emerald:'#007a3d', teal:'#007a75', cyan:'#007a8a', sky:'#00709a', blue:'#005fcc', indigo:'#2a4fcc', violet:'#4a45cc', purple:'#6a2fcc', magenta:'#9a0090', green:'#007a30' };
+        var THEMES = ['orange','amber','lime','emerald','teal','cyan','sky','blue','indigo','violet','purple','magenta','green'];
+        var SVG_PREFIX = '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 14.32 14.32\"><path fill=\"#fff\" d=\"M14.32 7.15a7.16 7.16 0 0 1-7.16 7.16A7.16 7.16 0 0 1 0 7.15 7.16 7.16 0 0 1 7.16-.01a7.16 7.16 0 0 1 7.16 7.16\"/><path fill=\"';
+        var SVG_SUFFIX = '\" d=\"M.26 5.23a7.5 7.5 0 0 0-.1 3.4c2.5.34 4.46.27 2.4 1.45-2.23 1.3 2.1 2.95 5.26 2.95 1.56 0 2.98-.61 4.03-1.6h-.63c-1.53 0-4.24.37-4.21-1.97.02-2.1 2.51-1.98 4.1-1.97 0-.34-.37-.93-1.43-.93H5.87v4.87H4.12V6.55h-.96V5.21h.96c0-.98.34-2.45 2.4-2.45h1.95V4.1H6.69c-.44 0-.9.52-.82 1.11h4.05c1.39 0 2.99.48 2.99 2.67v2.2c2.07-3.56-.17-8.82-5.09-8.8-2.33 0-8.8 1.55-5.48 2.4 3.1.8-1.6 1.4-2.02 1.54m9.92 3.58c-.83-.01-1.48.04-1.48.64 0 .87 1.2.63 2.35.63V8.81z\"/></svg>';
+
+        function gs(key, fb) { try { var v = localStorage.getItem(key); return v !== null ? v : fb; } catch(e) { return fb; } }
+        function getTheme() { var t = gs('color-theme','orange'); return THEMES.indexOf(t) !== -1 ? t : 'orange'; }
+
+        // ======== КРИТИЧЕСКАЯ ЧАСТЬ (синхронно, до paint) ========
+        // 1. theme-color meta
         var meta = document.createElement('meta');
         meta.name = 'theme-color';
-        try {
-          var saved = localStorage.getItem('color-theme');
-          meta.content = (saved && COLORS[saved]) || '#ee4000';
-        } catch (e) {
-          meta.content = '#ee4000';
-        }
+        meta.content = TC[getTheme()] || '#ee4000';
         document.head.appendChild(meta);
-      })();
-    </script>
 
-    <!-- Dynamic favicon: syncs brand colour with active theme.
-         Replaces ALL <link rel="icon"> elements with a single SVG favicon
-         encoded as a base64 data URI.  This is the most reliable approach
-         because:
-           - Some browsers cache the first <link rel="icon"> they see
-           - Multiple <link rel="icon"> elements can confuse querySelector
-           - data:image/svg+xml;base64 is universally supported for favicons
+        // 2. Theme bootstrap
+        var el = document.documentElement;
+        var mode = gs('theme','system');
+        el.setAttribute('data-theme-mode', mode);
+        var isDark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (isDark) el.classList.add('dark'); else el.classList.remove('dark');
+        el.setAttribute('data-theme', getTheme());
 
-         Strategy:
-           1. On DOMContentLoaded → updateFavicon() synchronously.
-           2. MutationObserver on <html> (all attributes) → updateFavicon().
-           3. astro:after-swap → updateFavicon(). -->
-    <script is:inline>
-      (function () {
-        // Darkened web-safe colours for better contrast on the white favicon circle
-        var COLORS = {
-          orange: '#993a00', amber: '#995a00', lime: '#3d7a00',
-          emerald: '#007a3d', teal: '#007a75', cyan: '#007a8a',
-          sky: '#00709a', blue: '#005fcc', indigo: '#2a4fcc',
-          violet: '#4a45cc', purple: '#6a2fcc', magenta: '#9a0090',
-          green: '#007a30',
-        };
-
-        function getBrandColor() {
-          var theme = document.documentElement.getAttribute('data-theme');
-          return (theme && COLORS[theme]) || '#ee4000';
-        }
-
-        function buildSvgString(color) {
-          return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14.32 14.32">' +
-            '<path fill="#ffffff" d="M14.32 7.15a7.16 7.16 0 0 1-7.16 7.16A7.16 7.16 0 0 1 0 7.15 7.16 7.16 0 0 1 7.16-.01a7.16 7.16 0 0 1 7.16 7.16"/>' +
-            '<path fill="' + color + '" d="M.26 5.23a7.5 7.5 0 0 0-.1 3.4c2.5.34 4.46.27 2.4 1.45-2.23 1.3 2.1 2.95 5.26 2.95 1.56 0 2.98-.61 4.03-1.6h-.63c-1.53 0-4.24.37-4.21-1.97.02-2.1 2.51-1.98 4.1-1.97 0-.34-.37-.93-1.43-.93H5.87v4.87H4.12V6.55h-.96V5.21h.96c0-.98.34-2.45 2.4-2.45h1.95V4.1H6.69c-.44 0-.9.52-.82 1.11h4.05c1.39 0 2.99.48 2.99 2.67v2.2c2.07-3.56-.17-8.82-5.09-8.8-2.33 0-8.8 1.55-5.48 2.4 3.1.8-1.6 1.4-2.02 1.54m9.92 3.58c-.83-.01-1.48.04-1.48.64 0 .87 1.2.63 2.35.63V8.81z"/>' +
-            '</svg>';
-        }
-
-        function svgToDataUri(svgStr) {
-          try {
-            return 'data:image/svg+xml;base64,' + btoa(svgStr);
-          } catch (e) {
-            return 'data:image/svg+xml,' + encodeURIComponent(svgStr);
-          }
-        }
-
-        function updateFavicon() {
-          var color = getBrandColor();
-          var svgStr = buildSvgString(color);
-          var uri = svgToDataUri(svgStr);
-
-          // Batch DOM writes with a document fragment to avoid
-          // multiple forced layouts. Defer the actual DOM changes
-          // to rAF so they happen outside any style recalculation.
-          var fragment = document.createDocumentFragment();
+        // ======== ОТЛОЖЕННАЯ ЧАСТЬ (после paint) ========
+        var ric = window.requestIdleCallback || function(fn) { setTimeout(fn, 100); };
+        ric(function () {
+          // 3. Favicon — заменяем статическую иконку
+          var color = FC[getTheme()] || '#ee4000';
+          var svg = SVG_PREFIX + color + SVG_SUFFIX;
+          var uri;
+          try { uri = 'data:image/svg+xml;base64,' + btoa(svg); } catch(e) { uri = 'data:image/svg+xml,' + encodeURIComponent(svg); }
+          var existing = document.querySelectorAll('link[rel=\"icon\"]');
+          for (var i = 0; i < existing.length; i++) existing[i].remove();
           var link = document.createElement('link');
-          link.rel = 'icon';
-          link.type = 'image/svg+xml';
-          link.href = uri;
-          fragment.appendChild(link);
+          link.rel = 'icon'; link.type = 'image/svg+xml'; link.href = uri;
+          document.head.appendChild(link);
 
-          var existing = document.querySelectorAll('link[rel="icon"]');
-          requestAnimationFrame(function () {
-            for (var i = 0; i < existing.length; i++) {
-              existing[i].parentNode.removeChild(existing[i]);
+          // 4. Слушаем изменения темы
+          var mql = window.matchMedia('(prefers-color-scheme: dark)');
+          var onSchemeChange = function () {
+            if (gs('theme','system') === 'system') {
+              el.classList.toggle('dark', mql.matches);
             }
-            document.head.appendChild(fragment);
-          });
-        }
+          };
+          if (mql.addEventListener) mql.addEventListener('change', onSchemeChange);
 
-        // Run on DOMContentLoaded (or immediately if already loaded).
-        // Deferred to rAF so layout reads never happen during critical path.
-        function deferredFavicon() {
-          requestAnimationFrame(updateFavicon);
-        }
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', deferredFavicon);
-        } else {
-          deferredFavicon();
-        }
-
-        // React to theme changes at runtime.
-        if (!window.__faviconObserverInit) {
-          window.__faviconObserverInit = true;
+          var timerId = null;
           new MutationObserver(function () {
-                requestAnimationFrame(updateFavicon);
-              }).observe(document.documentElement, {
-                attributes: true
-              });
-              document.addEventListener('astro:after-swap', function () {
-                requestAnimationFrame(updateFavicon);
-              });
-        }
+            if (timerId) clearTimeout(timerId);
+            timerId = setTimeout(function () {
+              var t = getTheme();
+              var c = FC[t] || '#ee4000';
+              var s = SVG_PREFIX + c + SVG_SUFFIX;
+              var u;
+              try { u = 'data:image/svg+xml;base64,' + btoa(s); } catch(e) { u = 'data:image/svg+xml,' + encodeURIComponent(s); }
+              var links = document.querySelectorAll('link[rel=\"icon\"]');
+              for (var i = 0; i < links.length; i++) links[i].remove();
+              var nl = document.createElement('link');
+              nl.rel = 'icon'; nl.type = 'image/svg+xml'; nl.href = u;
+              document.head.appendChild(nl);
+            }, 200);
+          }).observe(el, { attributes: true, attributeFilter: ['data-theme', 'data-theme-mode'] });
+
+          document.addEventListener('astro:after-swap', function () {
+            el.setAttribute('data-theme', getTheme());
+            el.setAttribute('data-theme-mode', gs('theme','system'));
+          });
+        });
       })();
     </script>
 
@@ -245,73 +201,6 @@ const locale = getLocaleFromPath(Astro.url.pathname);
          run cleanly from frame 0 every time. -->
 
 
-    <!-- Theme bootstrap (runs before body paint; no flash of wrong theme).
-         Implements a 3-state colour-mode contract:
-           localStorage.theme ∈ {'system','light','dark'}  (default 'system')
-           <html data-theme-mode="…">                      (mirrors saved mode)
-           <html class="dark">                              (resolved appearance)
-         When mode === 'system', <html>.dark tracks prefers-color-scheme live. -->
-    <script is:inline>
-      (function () {
-        const COLOR_THEMES = ['orange', 'amber', 'lime', 'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'magenta'];
-        const VALID_MODES = ['system', 'light', 'dark'];
-
-        function getMode() {
-          try {
-            const stored = localStorage.getItem('theme');
-            if (VALID_MODES.indexOf(stored) !== -1) return stored;
-          } catch { /* private mode / disabled storage */ }
-          return 'system';
-        }
-
-        function applyMode(el) {
-          const mode = getMode();
-          el.setAttribute('data-theme-mode', mode);
-          const isDark =
-            mode === 'dark' ||
-            (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-          if (isDark) el.classList.add('dark');
-          else el.classList.remove('dark');
-        }
-
-        function applyColorTheme(el) {
-          try {
-            // Color palette — localStorage persists across sessions
-            const saved = localStorage.getItem('color-theme');
-            if (saved && COLOR_THEMES.indexOf(saved) !== -1) {
-              el.setAttribute('data-theme', saved);
-            }
-          } catch { /* ignored */ }
-        }
-
-        function applyTheme(el) {
-          applyMode(el);
-          applyColorTheme(el);
-        }
-
-        applyTheme(document.documentElement);
-
-        if (!window.__themeListenersInit) {
-          window.__themeListenersInit = true;
-
-          // Live-update when the OS flips colour scheme AND the user is on 'system'.
-          var mql = window.matchMedia('(prefers-color-scheme: dark)');
-          var onSchemeChange = function () {
-            if (getMode() === 'system') applyMode(document.documentElement);
-          };
-          if (mql.addEventListener) mql.addEventListener('change', onSchemeChange);
-          else if (mql.addEventListener) mql.addEventListener('change', onSchemeChange); // Safari < 14
-
-          // Re-apply across Astro view transitions (no flash on swap).
-          document.addEventListener('astro:before-swap', function (e) {
-            applyTheme(e.newDocument.documentElement);
-          });
-          document.addEventListener('astro:after-swap', function () {
-            applyTheme(document.documentElement);
-          });
-        }
-      })();
-    </script>
   </head>
 
   <body class="min-h-screen bg-background text-foreground antialiased" data-eager-reveal={eagerReveal ? '' : undefined}>
