@@ -39,11 +39,25 @@
     '</button>' +
     '</div>' +
     '<div id="pagefind-search-ui"></div>' +
+    '<div id="pagefind-search-progress" class="pagefind-search-progress">' +
+    '  <div class="pagefind-search-progress__track">' +
+    '    <div class="pagefind-search-progress__bar pagefind-search-progress__bar--indeterminate"></div>' +
+    '  </div>' +
+    '</div>' +
     '</div>';
   document.body.appendChild(overlay);
 
   const closeBtn = overlay.querySelector('.pagefind-modal-close');
   const searchUiContainer = overlay.querySelector('#pagefind-search-ui');
+  const progressEl = overlay.querySelector('#pagefind-search-progress');
+
+  function showProgress(): void {
+    if (progressEl) progressEl.classList.add('pagefind-search-progress--active');
+  }
+
+  function hideProgress(): void {
+    if (progressEl) progressEl.classList.remove('pagefind-search-progress--active');
+  }
 
   /**
    * Load pagefind.js via dynamic import().
@@ -107,11 +121,17 @@
 
     const currentLang = document.documentElement.lang || 'en';
 
+    // Show progress while Pagefind loads
+    showProgress();
+
     setTimeout(async () => {
       try {
         if (!pagefindInstance) {
           // Load pagefind via <script> tag (not dynamic import)
           const pf = await loadPagefind();
+
+          // Hide progress once Pagefind is loaded
+          hideProgress();
 
           // Initialize
           await pf.init();
@@ -148,12 +168,15 @@
             }
 
             debounceTimer = setTimeout(async () => {
+              showProgress();
               try {
                 // Use Pagefind's built-in language filter.
                 // The "lang" filter is indexed from data-pagefind-filter="lang:xx" on <html>.
                 const search = await pf.search(term, {
                   filters: { lang: [currentLang] }
                 });
+
+                hideProgress();
 
                 if (!search.results || search.results.length === 0) {
                   if (resultsContainer) {
@@ -180,6 +203,7 @@
                 html += '<p class="pagefind-ui__message">' + count + ' ' + (currentLang === 'ru' ? 'результатов' : 'results') + '</p>';
                 if (resultsContainer) resultsContainer.innerHTML = html;
               } catch (e) {
+                hideProgress();
                 console.warn('Pagefind search failed:', e);
               }
             }, 300);

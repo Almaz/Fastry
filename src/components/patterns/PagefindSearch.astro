@@ -244,10 +244,56 @@ const searchPlaceholder = t('common.searchPlaceholder', locale);
     display: none;
   }
 
+  /* ===== Search progress indicator ===== */
+  .pagefind-search-progress {
+    height: 0;
+    overflow: hidden;
+    transition: height 200ms ease;
+  }
+
+  .pagefind-search-progress--active {
+    height: 6px;
+  }
+
+  .pagefind-search-progress__track {
+    position: relative;
+    width: 100%;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 9999px;
+    background: color-mix(in oklch, var(--color-secondary) 60%, transparent);
+  }
+
+  .pagefind-search-progress__bar {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 300ms ease;
+  }
+
+  .pagefind-search-progress__bar--indeterminate {
+    width: 33.333%;
+    background: var(--color-brand-500);
+    animation: pagefind-progress-indeterminate 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @keyframes pagefind-progress-indeterminate {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(400%);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .pagefind-modal-overlay,
     .pagefind-modal {
       transition: none;
+    }
+    .pagefind-search-progress__bar--indeterminate {
+      animation: none;
+      width: 50%;
+      transform: none;
     }
   }
 </style>
