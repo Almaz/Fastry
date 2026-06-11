@@ -222,15 +222,17 @@ const locale = getLocaleFromPath(Astro.url.pathname);
   />
 </div>
 
-<script>
+<script define:vars={{}}>
   // Scroll-progress bar: standalone driver.
-  // Lives in BaseLayout so it is guaranteed to be present on every page
-  // regardless of which layout or header variant is used.
+  // Lives in BaseLayout so it is guaranteed to be present on every page.
+  // All geometry reads (scrollHeight) are deferred past first paint via
+  // requestAnimationFrame; the first read happens inside a load listener
+  // to guarantee layout is complete.
   (function () {
-    const bar = document.getElementById('scroll-progress-bar')!;
+    var bar = document.getElementById('scroll-progress-bar');
     if (!bar) return;
 
-    let docMaxScrollY = 0;
+    var docMaxScrollY = 0;
     let ticking = false;
 
     function updateMaxScrollY() {
@@ -262,12 +264,12 @@ const locale = getLocaleFromPath(Astro.url.pathname);
       new ResizeObserver(updateMaxScrollY).observe(document.documentElement);
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
+    // Init after full page load (including all resources) so scrollHeight
+    // is final and no forced layout occurs before first paint.
+    if (document.readyState === 'complete') {
+      init();
     } else {
-      // Defer init to requestAnimationFrame so layout has settled
-      // before the first scrollHeight read (avoids forced layout).
-      requestAnimationFrame(init);
+      window.addEventListener('load', init);
     }
 
     // Re-init after Astro SPA navigations
