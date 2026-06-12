@@ -74,8 +74,6 @@ interface Props extends HTMLAttributes<'header'> {
   showSocialLinks?: boolean;
   autoHide?: boolean;
   invertOnReturn?: boolean;
-  showScrollProgress?: boolean;
-  scrollProgressPosition?: 'top' | 'bottom';
   /**
    * Max width of the inner container (only applies when `shape='bar'`).
    * Defaults to `'6xl'` (the historical width).
@@ -103,8 +101,6 @@ const {
   showActiveState = true,
   autoHide = true,
   invertOnReturn = true,
-  showScrollProgress = false,
-  scrollProgressPosition = 'top',
   logoText,
   hideLogo = false,
   maxWidth = '6xl',
@@ -120,7 +116,6 @@ const maxWidthClass = {
   '7xl': 'max-w-7xl',
   full: 'max-w-full',
 }[maxWidth];
-const effectiveShowScrollProgress = showScrollProgress || (isFloating && !autoHide);
 const isInvert = colorScheme === 'invert';
 
 const defaultNav = getNavItems().map((item: NavConfigItem) => ({
@@ -391,26 +386,6 @@ const buttonId = `${menuId}-button`;
       }
     </div>
   </div>
-
-  {effectiveShowScrollProgress && (
-    isFloating ? (
-      <div
-        class={`absolute inset-x-3 h-[2px] overflow-hidden rounded-full ${scrollProgressPosition === 'top' ? 'top-[2px]' : 'bottom-[2px]'}`}
-        aria-hidden="true"
-      >
-        <div
-          id="scroll-progress-bar"
-          class="absolute left-0 top-0 h-full w-0 bg-brand-500 transition-none"
-        />
-      </div>
-    ) : (
-      <div
-        id="scroll-progress-bar"
-        class={`absolute left-0 h-[2px] w-0 bg-brand-500 transition-none ${scrollProgressPosition === 'top' ? 'top-0' : 'bottom-0'}`}
-        aria-hidden="true"
-      />
-    )
-  )}
 
   {
     showMobileMenu &&
@@ -708,13 +683,9 @@ const buttonId = `${menuId}-button`;
   }
 
   function initScrollDriven() {
-    initDocMetrics();
-
     const scrollHeaders = document.querySelectorAll<HTMLElement>(
       'header[data-header-shape="floating"], header[data-header-shape="bar"]'
     );
-    const progressBar = document.getElementById('scroll-progress-bar');
-
     scrollHeaders.forEach((header) => {
       if (header.dataset.scrollInit) return;
       header.dataset.scrollInit = 'true';
@@ -723,9 +694,14 @@ const buttonId = `${menuId}-button`;
       const isFloating = header.dataset.headerShape === 'floating';
       const isAutoHide = header.dataset.headerAutoHide !== 'false';
       const isTransparentBar = isBar && header.dataset.headerVariant === 'transparent';
+      const needsDocMetrics = isFloating && isAutoHide;
       let ticking = false;
       let lastScrollY = window.scrollY;
       let lastShownAtY = 0;
+
+      if (needsDocMetrics) {
+        initDocMetrics();
+      }
 
       function onScroll() {
         if (ticking) return;
@@ -781,13 +757,6 @@ const buttonId = `${menuId}-button`;
             }
           }
 
-          // Drive the scroll-progress bar in the same frame, using the
-          // already-read currentScrollY and the cached docMaxScrollY.
-          if (progressBar) {
-            const pct = docMaxScrollY > 0 ? (currentScrollY / docMaxScrollY) * 100 : 0;
-            progressBar.style.width = `${pct}%`;
-          }
-
           lastScrollY = currentScrollY;
           ticking = false;
         });
@@ -797,36 +766,13 @@ const buttonId = `${menuId}-button`;
       // Defer the first read+write to the next frame so layout reads
       // happen AFTER the browser has committed initial paint.
       requestAnimationFrame(() => {
-        updateDocMaxScrollY();
+        if (needsDocMetrics) {
+          updateDocMaxScrollY();
+        }
         onScroll();
       });
     });
 
-    // Edge case: a progress bar exists without a header scroll-watcher.
-    // Drive it with its own minimal rAF so the bar still updates.
-    if (progressBar && scrollHeaders.length === 0 && !progressBar.dataset.progressInit) {
-      progressBar.dataset.progressInit = 'true';
-      let pTicking = false;
-      const updateProgress = () => {
-        const pct = docMaxScrollY > 0 ? (window.scrollY / docMaxScrollY) * 100 : 0;
-        progressBar.style.width = `${pct}%`;
-        pTicking = false;
-      };
-      window.addEventListener(
-        'scroll',
-        () => {
-          if (!pTicking) {
-            pTicking = true;
-            requestAnimationFrame(updateProgress);
-          }
-        },
-        { passive: true },
-      );
-      requestAnimationFrame(() => {
-        updateDocMaxScrollY();
-        updateProgress();
-      });
-    }
   }
 
   // Defer first init to avoid forced reflow on critical path.

@@ -15,20 +15,16 @@ export function startTyping(
   const textEl = root.querySelector('.typing-text') as HTMLElement | null;
 
   // Lock the element width to the widest word so the layout never shifts
-  const measurer = document.createElement('span');
-  measurer.setAttribute('aria-hidden', 'true');
-  measurer.style.cssText = 'visibility:hidden;position:absolute;white-space:nowrap;pointer-events:none;';
   const cs = getComputedStyle(root);
-  measurer.style.font = cs.font;
-  measurer.style.letterSpacing = cs.letterSpacing;
-  document.body.appendChild(measurer);
-
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
   let maxWidth = 0;
-  for (const word of words) {
-    measurer.textContent = word + '|'; // include cursor character in measurement
-    maxWidth = Math.max(maxWidth, measurer.offsetWidth);
+  if (ctx) {
+    ctx.font = cs.font;
+    for (const word of words) {
+      maxWidth = Math.max(maxWidth, ctx.measureText(word + '|').width);
+    }
   }
-  document.body.removeChild(measurer);
   root.style.minWidth = maxWidth + 'px';
 
   let wordIndex = 0;

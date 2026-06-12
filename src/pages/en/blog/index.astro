@@ -38,7 +38,7 @@ const regularPosts = regularPostsAll.slice(0, BLOG_POSTS_PER_PAGE);
 const topTags = collectTopTags(posts, TAG_CLOUD_LIMIT);
 ---
 
-<PageLayout title="Blog — Fastry" description="Articles on web design, development, and the web by Fastry." showScrollProgress eagerReveal footerBackground={featuredPosts.length > 0 ? 'default' : 'secondary'}>
+<PageLayout title="Blog — Fastry" description="Articles on web design, development, and the web by Fastry." eagerReveal footerBackground={featuredPosts.length > 0 ? 'default' : 'secondary'}>
   <Hero layout="centered" size="sm" class="isolate" showHeroHalo>
     <Badge slot="badge" variant="brand" pill>
       <Icon name="book" size="sm" />

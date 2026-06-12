@@ -9,26 +9,24 @@
 @import './tokens/typography.css';
 @import './tokens/spacing.css';
 
-/* Metric-adjusted fallback fonts.
-   The variable fonts above arrive after first paint, so headings and body
-   text used to reflow when the swap landed (Lighthouse reported CLS on the
-   hero wordmark). These @font-face rules alias the system Arial to
-   "Inter Fallback" / "Manrope Fallback" with overrides that match each
-   variable font's metrics, so the pre-load fallback box has the same size
-   as the eventual webfont and the swap is invisible. */
+/* Metric-adjusted fallback fonts with precise overrides.
+   Inter (the LCP font) uses font-display: optional — if it arrives too late
+   the fallback is used permanently, so the fallback metrics must be nearly
+   identical to the webfont to prevent CLS. Values computed with fontpie.
+   Manrope uses swap, but accurate metrics still reduce CLS. */
 @font-face {
   font-family: 'Inter Fallback';
   src: local('Arial');
-  ascent-override: 90%;
-  descent-override: 22%;
+  ascent-override: 90.5%;
+  descent-override: 22.3%;
   line-gap-override: 0%;
-  size-adjust: 107%;
+  size-adjust: 107.2%;
 }
 @font-face {
   font-family: 'Manrope Fallback';
   src: local('Arial');
-  ascent-override: 99%;
-  descent-override: 26%;
+  ascent-override: 99.2%;
+  descent-override: 26.5%;
   line-gap-override: 0%;
   size-adjust: 99.5%;
 }

@@ -13,9 +13,10 @@ const maxWidthClass = maxWidth === '7xl' ? 'max-w-7xl' : 'max-w-6xl';
 
 <div class:list={['hidden glitch:block mx-auto px-6', maxWidthClass]}>
   <div class="relative isolate">
-    <div class="relative overflow-hidden rounded-lg border border-brand-500/30 bg-background ring-1 ring-brand-500/20">
+    <div class="letter-glitch-band relative overflow-hidden rounded-lg border border-brand-500/30 bg-background ring-1 ring-brand-500/20" data-locale={locale}>
+      <div class="letter-glitch-band__backdrop absolute inset-0" aria-hidden="true" />
       <div class="absolute inset-0" aria-hidden="true">
-        <LetterGlitch client:visible outerVignette locale={locale} />
+        <LetterGlitch client:media="(hover: hover) and (pointer: fine)" outerVignette locale={locale} />
       </div>
       <div class="relative z-10 px-6 py-16 sm:py-24" data-reveal>
         <div class="glitch-band-card mx-auto max-w-2xl rounded-lg border border-brand-500/30 bg-background/85 px-6 py-10 sm:px-10 text-center shadow-xl backdrop-blur-md">
@@ -27,7 +28,19 @@ const maxWidthClass = maxWidth === '7xl' ? 'max-w-7xl' : 'max-w-6xl';
 </div>
 
 <style>
-  /* Light mode: increase background opacity so the card reads better over the glitch effect */
+  .letter-glitch-band {
+    contain: paint;
+  }
+
+  .letter-glitch-band__backdrop {
+    background:
+      radial-gradient(circle at 50% 20%, color-mix(in oklch, var(--color-brand-500) 18%, transparent) 0%, transparent 58%),
+      radial-gradient(circle at 18% 28%, color-mix(in oklch, var(--color-brand-400) 12%, transparent) 0%, transparent 30%),
+      radial-gradient(circle at 82% 72%, color-mix(in oklch, var(--color-brand-600) 12%, transparent) 0%, transparent 34%),
+      linear-gradient(180deg, color-mix(in oklch, var(--color-secondary) 20%, transparent) 0%, transparent 45%, color-mix(in oklch, var(--color-secondary) 30%, transparent) 100%);
+  }
+
+  /* Light mode: increase background opacity so the card reads well over the static backdrop. */
   html:not(.dark) .glitch-band-card {
     background-color: color-mix(in oklch, var(--color-background) 95%, transparent);
   }
