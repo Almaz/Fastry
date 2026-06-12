@@ -299,31 +299,239 @@ const searchPlaceholder = t('common.searchPlaceholder', locale);
 </style>
 
 <!-- Pagefind search JS (lazy-loaded on first interaction) -->
-<script>
-  // @ts-nocheck
-  const btn = document.getElementById('pagefind-search-btn') as HTMLButtonElement | null;
-  if (btn) {
-    let controllerPromise = null;
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('pagefind-search-btn');
+    if (!btn) return;
 
-    function loadController() {
-      if (!controllerPromise) {
-        controllerPromise = import('./pagefind-search-client').then((mod) => mod.initPagefindSearch(btn));
+    var controller = null;
+
+    function initPagefindSearch(button) {
+      if (controller) return controller;
+
+      var searchLabel = button.dataset.searchLabel || 'Search';
+      var searchModalTitle = button.dataset.searchModalTitle || 'Search the site';
+      var searchPlaceholder = button.dataset.searchPlaceholder || 'Type a keyword...';
+
+      var pagefindInstance = null;
+      var pagefindLoaded = false;
+      var pagefindLoading = false;
+      var pagefindQueue = [];
+
+      var overlay = document.createElement('div');
+      overlay.className = 'pagefind-modal-overlay';
+      overlay.innerHTML =
+        '<div class="pagefind-modal">' +
+        '<div class="pagefind-modal-header">' +
+        '<h2 class="pagefind-modal-title">' + searchModalTitle + '</h2>' +
+        '<button class="pagefind-modal-close" aria-label="' + searchLabel + '">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>' +
+        '</svg>' +
+        '</button>' +
+        '</div>' +
+        '<div id="pagefind-search-ui"></div>' +
+        '<div id="pagefind-search-progress" class="pagefind-search-progress">' +
+        '  <div class="pagefind-search-progress__track">' +
+        '    <div class="pagefind-search-progress__bar pagefind-search-progress__bar--indeterminate"></div>' +
+        '  </div>' +
+        '</div>' +
+        '</div>';
+      document.body.appendChild(overlay);
+
+      var closeBtn = overlay.querySelector('.pagefind-modal-close');
+      var searchUiContainer = overlay.querySelector('#pagefind-search-ui');
+      var progressEl = overlay.querySelector('#pagefind-search-progress');
+
+      function showProgress() {
+        if (progressEl) progressEl.classList.add('pagefind-search-progress--active');
       }
-      return controllerPromise;
+
+      function hideProgress() {
+        if (progressEl) progressEl.classList.remove('pagefind-search-progress--active');
+      }
+
+      function loadPagefind() {
+        return new Promise(function (resolve, reject) {
+          if (pagefindLoaded) {
+            resolve(pagefindInstance);
+            return;
+          }
+
+          if (pagefindLoading) {
+            pagefindQueue.push(function () {
+              if (pagefindInstance) {
+                resolve(pagefindInstance);
+              } else {
+                reject(new Error('Pagefind failed to load'));
+              }
+            });
+            return;
+          }
+
+          pagefindLoading = true;
+
+          import('/pagefind/pagefind.js')
+            .then(async function (pf) {
+              if (pf && typeof pf.init === 'function') {
+                await pf.init();
+              }
+
+              pagefindLoaded = true;
+              pagefindLoading = false;
+              var queue = pagefindQueue.splice(0, pagefindQueue.length);
+              pagefindInstance = pf;
+              resolve(pf);
+              queue.forEach(function (cb) {
+                cb();
+              });
+            })
+            .catch(function (err) {
+              pagefindLoading = false;
+              reject(new Error('Failed to load /pagefind/pagefind.js: ' + err.message));
+              pagefindQueue.splice(0, pagefindQueue.length).forEach(function (cb) {
+                cb();
+              });
+            });
+        });
+      }
+
+      function closeSearch() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function openSearch() {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+
+        var currentLang = document.documentElement.lang || 'en';
+
+        showProgress();
+
+        setTimeout(function () {
+          (async function () {
+            try {
+              if (!pagefindInstance) {
+                var pf = await loadPagefind();
+
+                hideProgress();
+
+                if (searchUiContainer) {
+                  searchUiContainer.innerHTML =
+                    '<div class="pagefind-ui">' +
+                    '<div class="pagefind-ui__search-bar">' +
+                    '<div class="pagefind-ui__search-input-wrapper">' +
+                    '<svg class="pagefind-ui__search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                    '<circle cx="11" cy="11" r="8"/>' +
+                    '<path d="m21 21-4.3-4.3"/>' +
+                    '</svg>' +
+                    '<input class="pagefind-ui__search-input" type="text" placeholder="' + searchPlaceholder + '" />' +
+                    '<kbd class="pagefind-ui__search-kbd">Ctrl+K</kbd>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="pagefind-ui__results"></div>' +
+                    '</div>';
+                }
+
+                var input = searchUiContainer ? searchUiContainer.querySelector('.pagefind-ui__search-input') : null;
+                var resultsContainer = searchUiContainer ? searchUiContainer.querySelector('.pagefind-ui__results') : null;
+
+                var debounceTimer;
+                if (input) {
+                  input.addEventListener('input', function () {
+                    if (debounceTimer) clearTimeout(debounceTimer);
+                    var term = input.value.trim();
+                    if (term.length < 2) {
+                      if (resultsContainer) resultsContainer.innerHTML = '';
+                      return;
+                    }
+
+                    debounceTimer = setTimeout(function () {
+                      (async function () {
+                        showProgress();
+                        try {
+                          var search = await pf.search(term, {
+                            filters: { lang: [currentLang] },
+                          });
+
+                          hideProgress();
+
+                          if (!search.results || search.results.length === 0) {
+                            if (resultsContainer) {
+                              resultsContainer.innerHTML = '<p class="pagefind-ui__message">' + (currentLang === 'ru' ? 'Ничего не найдено' : 'No results found') + '</p>';
+                            }
+                            return;
+                          }
+
+                          var html = '';
+                          var count = 0;
+                          for (var i = 0; i < search.results.length; i++) {
+                            if (count >= 5) break;
+                            var result = search.results[i];
+                            var data = await result.data();
+                            var url = data.url || '';
+                            count++;
+                            html +=
+                              '<div class="pagefind-ui__result">' +
+                              '<a href="' + url + '" class="pagefind-ui__result-title">' + (data.title || data.meta?.title || '') + '</a>' +
+                              '<p class="pagefind-ui__result-excerpt">' + (data.excerpt || '') + '</p>' +
+                              '</div>';
+                          }
+                          html += '<p class="pagefind-ui__message">' + count + ' ' + (currentLang === 'ru' ? 'результатов' : 'results') + '</p>';
+                          if (resultsContainer) resultsContainer.innerHTML = html;
+                        } catch (error) {
+                          hideProgress();
+                          console.warn('Pagefind search failed:', error);
+                        }
+                      })();
+                    }, 300);
+                  });
+                }
+              }
+            } catch (error) {
+              console.warn('Pagefind init failed:', error);
+            }
+
+            setTimeout(function () {
+              var input = overlay.querySelector('.pagefind-ui__search-input');
+              if (input) input.focus();
+            }, 100);
+          })();
+        }, 50);
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeSearch();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('open')) {
+          closeSearch();
+        }
+      });
+
+      controller = {
+        openSearch: openSearch,
+        closeSearch: closeSearch,
+      };
+
+      return controller;
     }
 
-    btn.addEventListener('click', async (e) => {
+    btn.addEventListener('click', function (e) {
       e.preventDefault();
-      const controller = await loadController();
-      controller.openSearch();
+      var searchController = initPagefindSearch(btn);
+      searchController.openSearch();
     });
 
-    document.addEventListener('keydown', async (e) => {
+    document.addEventListener('keydown', function (e) {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        const controller = await loadController();
-        controller.openSearch();
+        var searchController = initPagefindSearch(btn);
+        searchController.openSearch();
       }
     });
-  }
+  })();
 </script>

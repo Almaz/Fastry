@@ -11,7 +11,7 @@
  * визитах, минуя сеть даже при медленном соединении.
  */
 
-const CACHE_NAME = 'fastry-v1';
+const CACHE_NAME = 'fastry-v2';
 
 // Ресурсы для pre-cache при установке (критичные для offline-first)
 const PRECACHE_URLS = [
@@ -38,6 +38,9 @@ const CACHE_FIRST_TYPES = [
 function isCacheFirst(url) {
   // Astro-ресурсы (_astro/*) — хэшированные имена, immutable
   if (url.pathname.includes('/_astro/')) return true;
+
+  // Pagefind runtime and generated search artifacts
+  if (url.pathname.includes('/pagefind/')) return true;
 
   // Шрифты
   if (url.pathname.startsWith('/fonts/')) return true;
