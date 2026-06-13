@@ -124,7 +124,7 @@ const siteConfig: SiteConfig = {
   description:
     'Fastry — A production-ready Astro 6 starter with 12 beautiful themes, 57+ components, built-in i18n, dark mode and a fast, modern foundation to build anything on.',
   url: SITE_URL || 'https://fastry.ru',
-  ogImage: '/og-default.svg',
+  ogImage: '/og-default.png',
   author: 'Almaz',
   email: 'almazworks@yandex.ru',
   address: {
