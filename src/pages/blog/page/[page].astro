@@ -2,6 +2,7 @@
 import PageLayout from '@/layouts/PageLayout.astro';
 import BlogCard from '@/components/blog/BlogCard.astro';
 import Pagination from '@/components/blog/Pagination.astro';
+import TagList from '@/components/blog/TagList.astro';
 import Badge from '@/components/ui/data-display/Badge/Badge.astro';
 import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 import CTA from '@/components/ui/marketing/CTA/CTA.astro';
@@ -24,11 +25,12 @@ export async function getStaticPaths() {
   const regularPostsAll = nonFeatured.length > 0 ? nonFeatured : posts;
   const totalPages = Math.max(1, Math.ceil(regularPostsAll.length / BLOG_POSTS_PER_PAGE));
 
-  const allPaths = [];
+  // Page 1 lives at /blog; only emit /blog/page/2..N from this route.
+  const pages: { params: { page: string }; props: { page: number; totalPages: number } }[] = [];
   for (let page = 2; page <= totalPages; page++) {
-    allPaths.push({ params: { page: String(page) }, props: { page, totalPages, locale: 'ru' } });
+    pages.push({ params: { page: String(page) }, props: { page, totalPages } });
   }
-  return allPaths;
+  return pages;
 }
 
 const { page, totalPages } = Astro.props;
@@ -49,6 +51,7 @@ const socialLinks = resolveSocialLinks(siteConfig.socialLinks);
   title={`Блог — Страница ${page}`}
   description={`Страница ${page} из ${totalPages} — статьи об Astro, веб-производительности, дизайне и вебе.`}
   eagerReveal
+  footerBackground="secondary"
 >
   <Hero layout="centered" size="sm">
     <Badge slot="badge" variant="brand" pill>
@@ -73,21 +76,23 @@ const socialLinks = resolveSocialLinks(siteConfig.socialLinks);
         </a>
 
         {topTags.length > 0 && (
-          {"text": "<TagList tags={topTags} class=\"justify-center\" locale={locale} />"}
+          <TagList tags={topTags} class="justify-center" />
         )}
       </div>
 
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {pagePosts.map((post) => (
+        {pagePosts.map((post, index) => (
           <BlogCard
             title={post.data.title}
             description={post.data.description}
-            href={getPostUrl(post.id, 'ru')}
+            href={getPostUrl(post.id)}
             publishedAt={post.data.publishedAt}
             tags={post.data.tags}
             author={post.data.author}
             image={post.data.image}
             svgSlug={post.data.svgSlug}
+            revealDelay={index % 3}
+            eager={index === 0}
           />
         ))}
       </div>
