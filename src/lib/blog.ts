@@ -18,17 +18,27 @@ export const TAG_POSTS_PER_PAGE = 12;
  * (e.g. "web-performance"). Two-way deterministic — pair with `findTagBySlug`.
  */
 export function tagToSlug(tag: string): string {
-  // Convert to lowercase, transliterate common scripts, keep valid URL chars
-  let slug = tag
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\u0400-\u04ff]+/g, '-')  // keep Cyrillic too
-    .replace(/^-+|-+$/g, '');
+  const translitMap: Record<string, string> = {
+    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+    'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i',
+    'й': 'i', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+    'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
+    'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch',
+    'ш': 'sh', 'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '',
+    'э': 'e', 'ю': 'yu', 'я': 'ya',
+  };
 
-  // Fallback if slug is empty (e.g. tag consisted entirely of stripped chars)
+  let slug = tag.toLowerCase().trim();
+
+  // Transliterate Cyrillic to Latin
+  slug = slug.replace(/[а-яё]/g, (ch) => translitMap[ch] ?? ch);
+
+  // Replace any non-alphanumeric characters with hyphens
+  slug = slug.replace(/[^a-z0-9]+/g, '-')
+             .replace(/^-+|-+$/g, '');
+
+  // Fallback if slug is empty
   if (!slug) {
-    // URL-encode the original tag as a last resort
     slug = encodeURIComponent(tag.toLowerCase()).replace(/%/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
   }
 
