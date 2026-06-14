@@ -34,6 +34,7 @@ import Icon from '@/components/ui/primitives/Icon/Icon.astro';
 // Маркетинговые компоненты
 import CTA from '@/components/ui/marketing/CTA/CTA.astro';
 import SocialProof from '@/components/ui/marketing/SocialProof/SocialProof.astro';
+import LetterGlitchBand from '@/components/patterns/LetterGlitchBand.astro';
 // Другие компоненты
 import { Hero } from '@/components/hero';
 import Header from '@/components/layout/Header.astro';
@@ -128,9 +129,9 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 class="mt-[var(--space-stack-lg)]"
                 text="Доверяют разработчики"
                 avatars={[
-                  'https://i.pravatar.cc/150?img=12',
-                  'https://i.pravatar.cc/150?img=33',
-                  'https://i.pravatar.cc/150?img=47',
+                  '/img/pravatar150-12.jpeg',
+                  '/img/pravatar150-33.jpeg',
+                  '/img/pravatar150-47.jpeg',
                 ]}
               />
             </Hero>
@@ -232,9 +233,9 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                 class="mt-[var(--space-stack-lg)]"
                 text="Присоединяйтесь к тысячам пользователей"
                 avatars={[
-                  'https://i.pravatar.cc/150?img=5',
-                  'https://i.pravatar.cc/150?img=8',
-                  'https://i.pravatar.cc/150?img=11',
+                  '/img/pravatar150-5.jpeg',
+                  '/img/pravatar150-8.jpeg',
+                  '/img/pravatar150-11.jpeg',
                 ]}
               />
             </Hero>
@@ -431,7 +432,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               <div class="relative overflow-hidden">
                 <div
                   class="absolute inset-0 bg-cover bg-center grayscale brightness-150 opacity-60"
-                  style="background-image: url('/photo-1506905925346-21bda4d32df4.jpeg');"
+                  style="background-image: url('/img/photo-1506905925346-21bda4d32df4.jpeg');"
                 ></div>
                 <div class="absolute inset-0 bg-white/20"></div>
                 <div class="relative">
@@ -453,7 +454,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               <!-- Прозрачный на тёмном (инвертированные цвета) -->
               <div
                 class="relative bg-cover bg-center"
-                style="background-image: url('/photo-1451187580459-43490279c0fa.jpeg');"
+                style="background-image: url('/img/photo-1451187580459-43490279c0fa.jpeg');"
               >
                 <div class="absolute inset-0 bg-black/40"></div>
                 <div class="relative">
@@ -1510,7 +1511,7 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               <!-- Карточка профиля пользователя -->
               <Card>
                 <div class="flex items-center gap-4">
-                  <Avatar size="lg" src="https://i.pravatar.cc/150?img=32" alt="Сара Чен" />
+                  <Avatar size="lg" src="/img/pravatar150-32.jpeg" alt="Сара Чен" />
                   <div class="flex-1 min-w-0">
                     <h3 class="text-sm font-semibold text-foreground">Сара Чен</h3>
                     <p class="text-xs text-foreground-muted">Продуктовый дизайнер</p>
@@ -1576,9 +1577,9 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               </div>
               <div class="pl-4 border-l border-border">
                 <div class="flex -space-x-3">
-                  <Avatar size="md" src="https://i.pravatar.cc/150?img=12" alt="Пользователь 1" class="ring-2 ring-background" />
-                  <Avatar size="md" src="https://i.pravatar.cc/150?img=33" alt="Пользователь 2" class="ring-2 ring-background" />
-                  <Avatar size="md" src="https://i.pravatar.cc/150?img=47" alt="Пользователь 3" class="ring-2 ring-background" />
+                  <Avatar size="md" src="/img/pravatar150-12.jpeg" alt="Пользователь 1" class="ring-2 ring-background" />
+                  <Avatar size="md" src="/img/pravatar150-33.jpeg" alt="Пользователь 2" class="ring-2 ring-background" />
+                  <Avatar size="md" src="/img/pravatar150-47.jpeg" alt="Пользователь 3" class="ring-2 ring-background" />
                   <div class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-xs font-medium ring-2 ring-background">+5</div>
                 </div>
                 <span class="text-xs text-foreground-muted mt-2 block">Стопкой</span>
@@ -1698,12 +1699,12 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
               <AvatarGroup
                 max={4}
                 avatars={[
-                  { src: 'https://i.pravatar.cc/150?img=12', alt: 'Пользователь 1' },
-                  { src: 'https://i.pravatar.cc/150?img=33', alt: 'Пользователь 2' },
-                  { src: 'https://i.pravatar.cc/150?img=47', alt: 'Пользователь 3' },
-                  { src: 'https://i.pravatar.cc/150?img=5', alt: 'Пользователь 4' },
-                  { src: 'https://i.pravatar.cc/150?img=8', alt: 'Пользователь 5' },
-                  { src: 'https://i.pravatar.cc/150?img=11', alt: 'Пользователь 6' },
+                  { src: '/img/pravatar150-12.jpeg', alt: 'Пользователь 1' },
+                  { src: '/img/pravatar150-33.jpeg', alt: 'Пользователь 2' },
+                  { src: '/img/pravatar150-47.jpeg', alt: 'Пользователь 3' },
+                  { src: '/img/pravatar150-5.jpeg', alt: 'Пользователь 4' },
+                  { src: '/img/pravatar150-8.jpeg', alt: 'Пользователь 5' },
+                  { src: '/img/pravatar150-11.jpeg', alt: 'Пользователь 6' },
                 ]}
               />
             </div>
@@ -1715,10 +1716,10 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
                     size={size}
                     max={3}
                     avatars={[
-                      { src: 'https://i.pravatar.cc/150?img=12', alt: 'Пользователь 1' },
-                      { src: 'https://i.pravatar.cc/150?img=33', alt: 'Пользователь 2' },
-                      { src: 'https://i.pravatar.cc/150?img=47', alt: 'Пользователь 3' },
-                      { src: 'https://i.pravatar.cc/150?img=5', alt: 'Пользователь 4' },
+                      { src: '/img/pravatar150-12.jpeg', alt: 'Пользователь 1' },
+                      { src: '/img/pravatar150-33.jpeg', alt: 'Пользователь 2' },
+                      { src: '/img/pravatar150-47.jpeg', alt: 'Пользователь 3' },
+                      { src: '/img/pravatar150-5.jpeg', alt: 'Пользователь 4' },
                     ]}
                   />
                 </div>
@@ -2017,23 +2018,49 @@ import StackMarquee from '@/components/landing/StackMarquee.astro';
 
   </div>
 
-  <!-- Секция CTA -->
-  <CTA variant="invert" size="md" maxWidth="md">
-    <h2 slot="heading">Готовы к созданию?</h2>
-    <p slot="description">
-      Это лишь начало. Клонируйте Fastry и начните выпускать продукты быстрее.
-    </p>
-    <Fragment slot="actions">
-      <Button href="https://github.com/hansmartensdev/Astro-Rocket" target="_blank" class="hero-btn-brand">
-        <Icon name="github" size="sm" />
-        Клонировать репозиторий
-      </Button>
-      <Button variant="outline" href="/blog">
-        Читать документацию
-      </Button>
-    </Fragment>
-  </CTA>
+ <!-- CTA — secondary by default so it alternates with the Marquee (background) above and the Footer (background) below while the marquee is shown; on phones (marquee hidden) .cta-section reverts it to background so Blog → CTA → Footer still alternates -->
+  <section class="cta-section relative z-10 py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <!-- Mobile: flat section, no card -->
+    <div class="glitch:hidden mx-auto max-w-2xl px-6 text-center" data-reveal>
+      <Badge variant="brand" pill class="mb-6">Давайте обсудим</Badge>
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        Готовы к созданию?
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        Это лишь начало. Клонируйте Fastry и начните выпускать продукты быстрее.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button size="lg" href="/contact" class="cta-btn-brand">
+          Начать проект
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+        <Button size="lg" variant="outline" href="/blog">
+          Читать документацию
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+      </div>
+    </div>
 
+    <!-- Desktop: contained LetterGlitch band with glass card -->
+    <LetterGlitchBand locale="ru">
+      <h2 class="font-display text-4xl font-bold text-foreground mb-4 text-balance">
+        Готовы к созданию?
+      </h2>
+      <p class="text-lg text-foreground-muted mb-8 text-balance">
+        Это лишь начало. Клонируйте Fastry и начните выпускать продукты быстрее.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <Button size="lg" href="/contact" class="hero-btn-brand">
+          Начать проект
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+        <Button size="lg" variant="outline" href="/blog">
+          Читать документацию
+          <Icon name="arrow-right" size="sm" />
+        </Button>
+      </div>
+    </LetterGlitchBand>
+  </section>
 </PageLayout>
 
 <style>
