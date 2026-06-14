@@ -117,12 +117,15 @@ const searchPlaceholder = t('common.searchPlaceholder', locale);
   }
 
   .pagefind-ui__result {
+    display: block;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: 1rem;
     margin-bottom: 0.75rem;
     background: var(--color-background);
     transition: border-color 150ms, box-shadow 150ms;
+    text-decoration: none;
+    color: inherit;
   }
   .pagefind-ui__result:hover {
     border-color: var(--color-brand-500);
@@ -137,14 +140,6 @@ const searchPlaceholder = t('common.searchPlaceholder', locale);
   html.dark .pagefind-ui__result-title {
     color: var(--color-brand-300);
   }
-  .pagefind-ui__result-title a {
-    color: inherit;
-    text-decoration: none;
-  }
-  .pagefind-ui__result-title a:hover {
-    text-decoration: underline;
-  }
-
   .pagefind-ui__result-excerpt {
     color: var(--color-foreground-muted);
     font-size: 0.875rem;
@@ -473,10 +468,13 @@ const searchPlaceholder = t('common.searchPlaceholder', locale);
                             var url = data.url || '';
                             count++;
                             html +=
-                              '<div class="pagefind-ui__result">' +
-                              '<a href="' + url + '" class="pagefind-ui__result-title">' + (data.title || data.meta?.title || '') + '</a>' +
+
+
+                              '<a href="' + url + '" class="pagefind-ui__result">' +
+                              '<span class="pagefind-ui__result-title">' + (data.title || data.meta?.title || '') + '</span>' +
                               '<p class="pagefind-ui__result-excerpt">' + (data.excerpt || '') + '</p>' +
-                              '</div>';
+
+                              '</a>';
                           }
                           html += '<p class="pagefind-ui__message">' + count + ' ' + (currentLang === 'ru' ? 'результатов' : 'results') + '</p>';
                           if (resultsContainer) resultsContainer.innerHTML = html;
