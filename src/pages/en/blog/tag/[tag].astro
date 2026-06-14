@@ -52,7 +52,7 @@ const { tag, posts, visibleTags, locale } = Astro.props;
   description={t('blog.postsTagged', locale, { count: posts.length, tag })}
   eagerReveal
 >
-  <Hero layout="centered" size="sm">
+  <Hero layout="centered" size="sm" class="isolate" showHeroHalo>
     <Badge slot="badge" variant="brand" pill>
       <Icon name="tag" size="sm" />
       {t('blog.tag', locale)}

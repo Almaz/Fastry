@@ -65,7 +65,7 @@
     "tableOfContents": "Содержание",
     "shareThisPost": "Поделиться записью",
     "tag": "Метка",
-    "postsTagged": "{count} записей с меткой «{tag}».",
+    "postsTagged": "Записи с меткой «{tag}» ({count} шт).",
     "allPosts": "Все записи",
     "noPostsForTag": "Нет записей с этой меткой.",
     "backToAllPosts": "Назад ко всем записям"
