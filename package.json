@@ -24,6 +24,7 @@
   },
 
   "homepage": "https://fastry.ru",
+  "bugs": {
     "url": "https://github.com/Almaz/Fastry/issues"
   },
   "scripts": {

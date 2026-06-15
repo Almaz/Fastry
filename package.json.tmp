@@ -1,0 +1,27 @@
+{
+  "name": "fastry",
+  "version": "1.0.0",
+  "description": "Fastry — A production-ready Astro 6 site built on Tailwind CSS v4",
+  "type": "module",
+  "author": "Almaz",
+  "license": "MIT",
+  "packageManager": "pnpm@11.5.0",
+  "keywords": [
+    "astro",
+    "astro-theme",
+    "theme",
+    "tailwind",
+    "tailwindcss",
+    "typescript",
+    "blog",
+    "starter",
+    "boilerplate",
+    "seo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Almaz/Fastry.git"
+  },
+  "homepage": "https://fastry.ru",
+  "url": "https://github.com/Almaz/Fastry/issues"
+}
