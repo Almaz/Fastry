@@ -42,10 +42,17 @@ function stripAllComments(html) {
 
   const result = parts.join('');
 
-  // Remove empty lines left after comment removal
-  return result.replace(/^[ \t]*[\r\n]+/gm, '');
-
-  }
+  // Remove empty lines and collapse whitespace inside script/style tags
+  var minified = result.replace(/^[ \t]*[\r\n]+/gm, '');
+  // Collapse consecutive spaces inside script/style tags to single space
+  minified = minified.replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script\s*>)/gi, function(match, open, code, close) {
+    return open + code.replace(/\s{2,}/g, ' ') + close;
+  });
+  minified = minified.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style\s*>)/gi, function(match, open, code, close) {
+    return open + code.replace(/\s{2,}/g, ' ') + close;
+  });
+  return minified;
+}
 
 function walk(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
