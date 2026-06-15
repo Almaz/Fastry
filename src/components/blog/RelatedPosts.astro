@@ -1,6 +1,7 @@
 ---
 import BlogCard from './BlogCard.astro';
 import { getCollection } from 'astro:content';
+import { getPostUrl } from '@/lib/blog';
 
 interface Props {
   currentSlug: string;
@@ -36,15 +37,6 @@ const relatedPosts = allPosts
   })
   .slice(0, maxPosts);
 
-// Generate URLs for each post (remove locale prefix from id)
-const getPostUrl = (postId: string) => {
-  const slug = postId.replace(`${locale}/`, '');
-  if (locale === 'ru') {
-    return `/blog/${slug}`;
-  }
-  return `/${locale}/blog/${slug}`;
-};
-
 const relatedTitle = locale === 'ru' ? 'Похожие записи' : 'Related Posts';
 ---
 
@@ -59,7 +51,7 @@ const relatedTitle = locale === 'ru' ? 'Похожие записи' : 'Related 
         <BlogCard
           title={post.data.title}
           description={post.data.description}
-          href={getPostUrl(post.id)}
+          href={getPostUrl(post.id, locale)}
           publishedAt={post.data.publishedAt}
           tags={post.data.tags}
           author={post.data.author}
