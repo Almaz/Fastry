@@ -29,6 +29,21 @@ const astroI18nOptions = i18nEnabled
 
 const isNetlify = process.env.NETLIFY === 'true' || process.env.CONTEXT === 'deploy-preview';
 
+/** Small Vite plugin that strips HTML comments from built HTML assets. */
+function stripHtmlCommentsPlugin() {
+  return {
+    name: 'strip-html-comments',
+    enforce: 'post',
+    generateBundle(_, bundle) {
+      for (const [fileName, chunk] of Object.entries(bundle)) {
+        if (chunk.type === 'asset' && fileName.endsWith('.html') && typeof chunk.source === 'string') {
+          chunk.source = chunk.source.replace(/<!--[\s\S]*?-->/g, '');
+        }
+      }
+    },
+  };
+}
+
 export default defineConfig({
   output: 'static',
   adapter: isNetlify
@@ -79,7 +94,10 @@ export default defineConfig({
   ],
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      stripHtmlCommentsPlugin(),
+    ],
   },
 
   security: {

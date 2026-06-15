@@ -20,15 +20,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/hansmartensdev/astro-rocket"
+    "url": "git+https://github.com/Almaz/Fastry.git"
   },
-  "homepage": "https://github.com/hansmartensdev/astro-rocket#readme",
-  "bugs": {
-    "url": "https://github.com/hansmartensdev/astro-rocket/issues"
+
+  "homepage": "https://fastry.ru",
+    "url": "https://github.com/Almaz/Fastry/issues"
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/generate-search-index.mjs",
+    "build": "astro build && node scripts/generate-search-index.mjs && node scripts/strip-html-comments.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint .",
