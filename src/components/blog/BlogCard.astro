@@ -16,6 +16,8 @@ interface Props {
   author?: string;
   image?: ImageMetadata;
   svgSlug?: string;
+  revealDelay?: number;
+  eager?: boolean;
   class?: string;
 }
 
@@ -28,6 +30,8 @@ const {
   author,
   image,
   svgSlug,
+  revealDelay,
+  eager = false,
   class: className,
 } = Astro.props;
 
@@ -39,7 +43,11 @@ const estimatedWords = description.split(' ').length * 10; // Rough estimate
 const readingTime = Math.max(1, Math.ceil(estimatedWords / wordsPerMinute));
 ---
 
-<article class:list={["group rounded-lg border border-brand-500/30 bg-background p-6 shadow-md ring-1 ring-brand-500/20 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-brand-500 hover:shadow-lg", className]} data-reveal>
+<article
+  class:list={["group rounded-lg border border-brand-500/30 bg-background p-6 shadow-md ring-1 ring-brand-500/20 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-brand-500 hover:shadow-lg", className]}
+  data-reveal
+  data-reveal-delay={revealDelay !== undefined ? String(revealDelay) : undefined}
+>
 
   <a href={href} class="block">
     <div
@@ -58,7 +66,7 @@ const readingTime = Math.max(1, Math.ceil(estimatedWords / wordsPerMinute));
           widths={[320, 640, 960]}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
           class="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
+          loading={eager ? 'eager' : 'lazy'}
         />
       ) : (
         <div class="aspect-video w-full" />
