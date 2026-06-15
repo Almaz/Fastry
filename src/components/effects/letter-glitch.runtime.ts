@@ -388,3 +388,22 @@ export function initAllLetterGlitches(): void {
     initLetterGlitch(root);
   });
 }
+
+function scheduleInit(): void {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+  const hasDesktopPointer = window.matchMedia ? window.matchMedia(MEDIA_QUERY).matches : true;
+  const prefersReducedMotion = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false;
+
+  if (!hasDesktopPointer || prefersReducedMotion) return;
+
+  initAllLetterGlitches();
+}
+
+if (typeof window !== 'undefined') {
+  (window as Window & { __letterGlitchRuntimeLoaded?: boolean }).__letterGlitchRuntimeLoaded = true;
+  scheduleInit();
+  document.addEventListener('astro:page-load', scheduleInit);
+}

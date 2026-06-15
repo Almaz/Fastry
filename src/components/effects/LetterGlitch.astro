@@ -1,4 +1,6 @@
 ---
+const loaderUrl = '/scripts/letter-glitch.runtime.js';
+
 interface Props {
   glitchColors?: string[];
   glitchSpeed?: number;
@@ -58,7 +60,7 @@ const {
   )}
 </div>
 
-<script is:inline>
+<script is:inline define:vars={{ loaderUrl }}>
   const scheduleInit = () => {
     const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -68,7 +70,7 @@ const {
     }
 
     const run = () => {
-      import('./letter-glitch.runtime.ts').then(({ initAllLetterGlitches }) => {
+      import(loaderUrl).then(({ initAllLetterGlitches }) => {
         initAllLetterGlitches();
       });
     };
