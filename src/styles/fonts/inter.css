@@ -1,4 +1,0 @@
-/* Inter Variable Font — only latin + cyrillic subsets.
-   We import the full wght.css from Fontsource and rely on Astro/Vite
-   tree-shaking to drop unused subsets at build time. */
-@import '@fontsource-variable/inter/wght.css' layer(fonts);

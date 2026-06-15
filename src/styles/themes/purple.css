@@ -96,7 +96,7 @@ html[data-theme="purple"] {
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
-  --theme-font-display: 'Inter Variable', 'Inter', 'Inter Fallback', var(--theme-font-sans);
+  --theme-font-display: 'Manrope Variable', 'Manrope', 'Manrope Fallback', var(--theme-font-sans);
   --theme-font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace,
     SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;

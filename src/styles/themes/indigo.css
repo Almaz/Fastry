@@ -1,36 +1,36 @@
 /* =============================================================================
-   Fastry Theme - Indigo
+   Fastry Theme - Purple
    =============================================================================
-   Deep indigo (hue 264°). Authoritative, bold, and focused — inspired by
-   Tailwind's indigo palette. The classic "serious blue-purple" used in
-   enterprise and productivity tools.
+   Vivid purple (hue 292°). Bold, expressive, and unmistakable — inspired by
+   Tailwind's purple palette (#a855f7). The quintessential purple: bright,
+   saturated, and full of personality.
 
-   Dark mode: near-black with a rich indigo tint and deep glow.
-   Light mode: clean neutral whites with indigo as the single accent.
+   Dark mode: near-black with a vivid purple tint and luminous glow.
+   Light mode: clean neutral whites with purple as the single accent.
    ============================================================================= */
 
-html[data-theme="indigo"] {
+html[data-theme="purple"] {
   /* -------------------------------------------------------------------------
-     Brand Scale Override — Indigo (hue 264)
-     Inspired by Tailwind indigo-*. Deep blue-purple, authoritative.
+     Brand Scale Override — Purple (hue 292)
+     Inspired by Tailwind purple-*. Vivid and full of character.
      ------------------------------------------------------------------------- */
-  --brand-50:  oklch(97.5% 0.02  264);
-  --brand-100: oklch(94.5% 0.05  264);
-  --brand-200: oklch(86%   0.11  264);
-  --brand-300: oklch(75%   0.18  264);
-  --brand-400: oklch(67%   0.22  264);
-  --brand-500: oklch(60%   0.24  264);
-  --brand-600: oklch(52%   0.22  264);
-  --brand-700: oklch(44%   0.18  264);
-  --brand-800: oklch(36%   0.14  264);
-  --brand-900: oklch(26%   0.09  264);
+  --brand-50:  oklch(97.5% 0.02  292);
+  --brand-100: oklch(94.5% 0.05  292);
+  --brand-200: oklch(86%   0.13  292);
+  --brand-300: oklch(76%   0.21  292);
+  --brand-400: oklch(68%   0.26  292);
+  --brand-500: oklch(62%   0.28  292);
+  --brand-600: oklch(52.5% 0.25  292);
+  --brand-700: oklch(44.5% 0.20  292);
+  --brand-800: oklch(36%   0.15  292);
+  --brand-900: oklch(25.5% 0.10  292);
 
   /* -------------------------------------------------------------------------
      Semantic Tokens - Light Mode
      ------------------------------------------------------------------------- */
   --background: var(--gray-0);
-  --background-secondary: oklch(97.5% 0.010 264);
-  --background-tertiary: oklch(95% 0.018 264);
+  --background-secondary: oklch(97.5% 0.010 292);
+  --background-tertiary: oklch(95% 0.018 292);
   --background-elevated: var(--gray-0);
 
   --foreground: var(--gray-900);           /* 18.3:1 on white — WCAG AAA */
@@ -78,16 +78,16 @@ html[data-theme="indigo"] {
   --error-light:   oklch(94% 0.05 25);
 
   /* -------------------------------------------------------------------------
-     Inverted/Contrast Section — deep indigo-dark
+     Inverted/Contrast Section — deep purple-dark
      ------------------------------------------------------------------------- */
-  --surface-invert: oklch(9.5% 0.015 264);
-  --surface-invert-secondary: oklch(13.5% 0.012 264);
-  --surface-invert-tertiary: oklch(17.5% 0.010 264);
+  --surface-invert: oklch(9.5% 0.020 292);
+  --surface-invert-secondary: oklch(13.5% 0.016 292);
+  --surface-invert-tertiary: oklch(17.5% 0.013 292);
   --on-invert: var(--gray-50);
   --on-invert-secondary: var(--gray-200);
   --on-invert-muted: var(--gray-300);
-  --border-invert: oklch(21% 0.012 264);
-  --border-invert-strong: oklch(29% 0.010 264);
+  --border-invert: oklch(21% 0.016 292);
+  --border-invert-strong: oklch(29% 0.013 292);
 
   /* -------------------------------------------------------------------------
      Typography
@@ -96,7 +96,7 @@ html[data-theme="indigo"] {
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
-  --theme-font-display: 'Inter Variable', 'Inter', 'Inter Fallback', var(--theme-font-sans);
+  --theme-font-display: 'Manrope Variable', 'Manrope', 'Manrope Fallback', var(--theme-font-sans);
   --theme-font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace,
     SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;
@@ -105,15 +105,15 @@ html[data-theme="indigo"] {
   --theme-body-leading: 1.6;
 
   /* -------------------------------------------------------------------------
-     Shadows — indigo-tinted
+     Shadows — purple-tinted
      ------------------------------------------------------------------------- */
-  --theme-shadow-sm: 0 1px 2px oklch(20% 0.02 264 / 0.07);
-  --theme-shadow-md: 0 4px 8px oklch(20% 0.02 264 / 0.09),
-    0 0 1px oklch(20% 0.02 264 / 0.05);
-  --theme-shadow-lg: 0 8px 16px oklch(20% 0.02 264 / 0.11),
-    0 0 1px oklch(20% 0.02 264 / 0.05);
-  --theme-shadow-xl: 0 24px 48px oklch(20% 0.02 264 / 0.16),
-    0 0 1px oklch(20% 0.02 264 / 0.05);
+  --theme-shadow-sm: 0 1px 2px oklch(20% 0.04 292 / 0.08);
+  --theme-shadow-md: 0 4px 8px oklch(20% 0.04 292 / 0.10),
+    0 0 1px oklch(20% 0.04 292 / 0.05);
+  --theme-shadow-lg: 0 8px 16px oklch(20% 0.04 292 / 0.13),
+    0 0 1px oklch(20% 0.04 292 / 0.05);
+  --theme-shadow-xl: 0 24px 48px oklch(20% 0.04 292 / 0.19),
+    0 0 1px oklch(20% 0.04 292 / 0.05);
 
   /* -------------------------------------------------------------------------
      Border Radii
@@ -126,43 +126,43 @@ html[data-theme="indigo"] {
 }
 
 /* -------------------------------------------------------------------------
-   Dark Mode — deep near-black with indigo depth
+   Dark Mode — deep near-black with purple luminance
    ------------------------------------------------------------------------- */
-html.dark[data-theme="indigo"] {
-  --background: oklch(9.5% 0.015 264);
-  --background-secondary: oklch(15% 0.012 264);
-  --background-tertiary: oklch(20% 0.010 264);
-  --background-elevated: oklch(15% 0.012 264);
+html.dark[data-theme="purple"] {
+  --background: oklch(9.5% 0.020 292);
+  --background-secondary: oklch(15% 0.016 292);
+  --background-tertiary: oklch(20% 0.013 292);
+  --background-elevated: oklch(15% 0.016 292);
 
-  --foreground: oklch(94% 0.010 264);
-  --foreground-secondary: oklch(82% 0.012 264);
-  --foreground-muted: oklch(68% 0.010 264);
-  --foreground-subtle: oklch(58% 0.008 264);   /*  ~4.8:1 on bg — WCAG AA  */
+  --foreground: oklch(91% 0.010 292);          /* purple-tinted near-white — 15:1 on dark bg, WCAG AAA */
+  --foreground-secondary: oklch(83% 0.015 292);
+  --foreground-muted: oklch(68% 0.012 292);
+  --foreground-subtle: oklch(58% 0.009 292);   /*  ~4.8:1 on bg — WCAG AA  */
 
-  --border: oklch(20% 0.012 264);
-  --border-strong: oklch(27% 0.010 264);
-  --border-subtle: oklch(13.5% 0.012 264);
+  --border: oklch(20% 0.016 292);
+  --border-strong: oklch(27% 0.013 292);
+  --border-subtle: oklch(13.5% 0.016 292);
 
-  --primary: oklch(94% 0.010 264);
-  --primary-hover: oklch(82% 0.012 264);
-  --primary-foreground: oklch(9.5% 0.015 264);
+  --primary: oklch(94% 0.010 292);
+  --primary-hover: oklch(82% 0.012 292);
+  --primary-foreground: oklch(9.5% 0.020 292);
 
-  --secondary: oklch(20% 0.010 264);
-  --secondary-hover: oklch(24% 0.010 264);
-  --secondary-foreground: oklch(90% 0.010 264);
+  --secondary: oklch(20% 0.013 292);
+  --secondary-hover: oklch(24% 0.013 292);
+  --secondary-foreground: oklch(90% 0.012 292);
 
   --accent: var(--brand-400);
   --accent-hover: var(--brand-500);
-  --accent-light: oklch(18% 0.07 264);
+  --accent-light: oklch(18% 0.09 292);
 
-  --muted: oklch(20% 0.010 264);
-  --muted-foreground: oklch(68% 0.010 264);
+  --muted: oklch(20% 0.013 292);
+  --muted-foreground: oklch(68% 0.012 292);
 
-  --card: oklch(15% 0.012 264);
-  --card-border: oklch(23% 0.012 264);
+  --card: oklch(15% 0.016 292);
+  --card-border: oklch(23% 0.016 292);
 
-  --input-bg: oklch(15% 0.012 264);
-  --input-border: oklch(27% 0.010 264);
+  --input-bg: oklch(15% 0.016 292);
+  --input-border: oklch(27% 0.013 292);
   --input-focus: var(--brand-400);
 
   --ring: var(--brand-400);
@@ -170,27 +170,27 @@ html.dark[data-theme="indigo"] {
   --destructive: oklch(65% 0.22 25);
   --destructive-foreground: var(--gray-0);
 
-  --gradient-start: oklch(9.5% 0.015 264);
-  --gradient-end: oklch(13% 0.012 264);
+  --gradient-start: oklch(9.5% 0.020 292);
+  --gradient-end: oklch(13% 0.016 292);
 
   --success-light: oklch(18% 0.06 155);
   --warning-light: oklch(18% 0.05 85);
   --error-light: oklch(18% 0.05 25);
 
-  --surface-invert: oklch(13% 0.012 264);
-  --surface-invert-secondary: oklch(16.5% 0.010 264);
-  --surface-invert-tertiary: oklch(21% 0.010 264);
-  --on-invert: oklch(94% 0.010 264);
-  --on-invert-secondary: oklch(72% 0.012 264);
-  --on-invert-muted: oklch(68% 0.010 264);
-  --border-invert: oklch(21% 0.010 264);
-  --border-invert-strong: oklch(29% 0.009 264);
+  --surface-invert: oklch(13% 0.016 292);
+  --surface-invert-secondary: oklch(16.5% 0.013 292);
+  --surface-invert-tertiary: oklch(21% 0.013 292);
+  --on-invert: oklch(95% 0.012 292);
+  --on-invert-secondary: oklch(72% 0.015 292);
+  --on-invert-muted: oklch(68% 0.012 292);
+  --border-invert: oklch(21% 0.013 292);
+  --border-invert-strong: oklch(29% 0.011 292);
 
-  --theme-shadow-sm: 0 1px 3px oklch(9% 0.03 264 / 0.35);
-  --theme-shadow-md: 0 4px 12px oklch(9% 0.03 264 / 0.4),
-    0 0 1px oklch(9% 0.03 264 / 0.15);
-  --theme-shadow-lg: 0 8px 24px oklch(9% 0.03 264 / 0.45),
-    0 1px 2px oklch(50% 0.18 264 / 0.07);
-  --theme-shadow-xl: 0 24px 48px oklch(9% 0.03 264 / 0.55),
-    0 2px 4px oklch(50% 0.18 264 / 0.10);
+  --theme-shadow-sm: 0 1px 3px oklch(9% 0.05 292 / 0.35);
+  --theme-shadow-md: 0 4px 12px oklch(9% 0.05 292 / 0.4),
+    0 0 1px oklch(9% 0.05 292 / 0.15);
+  --theme-shadow-lg: 0 8px 24px oklch(9% 0.05 292 / 0.45),
+    0 1px 2px oklch(50% 0.22 292 / 0.09);
+  --theme-shadow-xl: 0 24px 48px oklch(9% 0.05 292 / 0.55),
+    0 2px 4px oklch(50% 0.22 292 / 0.12);
 }

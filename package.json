@@ -1,7 +1,7 @@
 {
   "name": "fastry",
   "version": "1.0.0",
-  "description": "Fastry — A production-ready Astro 6 site built on Tailwind CSS v4",
+  "description": "Fastry \u2014 A production-ready Astro 6 site built on Tailwind CSS v4",
   "type": "module",
   "author": "Almaz",
   "license": "MIT",
@@ -22,7 +22,6 @@
     "type": "git",
     "url": "git+https://github.com/Almaz/Fastry.git"
   },
-
   "homepage": "https://fastry.ru",
   "bugs": {
     "url": "https://github.com/Almaz/Fastry/issues"
@@ -47,7 +46,6 @@
     "@astrojs/react": "5.0.7",
     "@astrojs/sitemap": "^3.7.3",
     "@astrojs/vercel": "^10.0.8",
-    "@fontsource-variable/inter": "^5.2.8",
     "@fontsource-variable/jetbrains-mono": "^5.2.8",
     "@fontsource-variable/manrope": "^5.2.8",
     "@fontsource-variable/outfit": "^5.2.8",
