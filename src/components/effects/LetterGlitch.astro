@@ -58,11 +58,20 @@ const {
   )}
 </div>
 
-<script>
-  import { initAllLetterGlitches } from './letter-glitch.runtime.ts';
-
+<script is:inline>
   const scheduleInit = () => {
-    const run = () => initAllLetterGlitches();
+    const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!isDesktop || prefersReducedMotion) {
+      return;
+    }
+
+    const run = () => {
+      import('./letter-glitch.runtime.ts').then(({ initAllLetterGlitches }) => {
+        initAllLetterGlitches();
+      });
+    };
 
     if ('requestIdleCallback' in window) {
       window.requestIdleCallback(run, { timeout: 500 });
