@@ -40,8 +40,12 @@ function stripAllComments(html) {
   const after = html.slice(lastIndex).replace(htmlCommentRegex, '');
   parts.push(after);
 
-  return parts.join('');
-}
+  const result = parts.join('');
+
+  // Remove empty lines left after comment removal
+  return result.replace(/^[ \t]*[\r\n]+/gm, '');
+
+  }
 
 function walk(dir) {
   const entries = readdirSync(dir, { withFileTypes: true });
