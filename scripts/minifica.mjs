@@ -22,7 +22,7 @@ function stripAllComments(html) {
     const before = html.slice(lastIndex, match.index).replace(htmlCommentRegex, '');
     parts.push(before);
 
-    // Inside script/style: find the opening > and closing </tag>
+    // Inside script/style: strip block comments only
     const fullTag = match[0];
     const tagName = fullTag.startsWith('<script') ? 'script' : 'style';
     const closeIdx = fullTag.toLowerCase().lastIndexOf(`</${tagName}>`);
@@ -42,16 +42,8 @@ function stripAllComments(html) {
 
   const result = parts.join('');
 
-  // Remove empty lines and collapse whitespace inside script/style tags
-  var minified = result.replace(/^[ \t]*[\r\n]+/gm, '');
-  // Collapse consecutive spaces inside script/style tags to single space
-  minified = minified.replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script\s*>)/gi, function(match, open, code, close) {
-    return open + code.replace(/\s{2,}/g, ' ') + close;
-  });
-  minified = minified.replace(/(<style\b[^>]*>)([\s\S]*?)(<\/style\s*>)/gi, function(match, open, code, close) {
-    return open + code.replace(/\s{2,}/g, ' ') + close;
-  });
-  return minified;
+  // Remove empty lines left after comment removal
+  return result.replace(/^[ \t]*[\r\n]+/gm, '');
 }
 
 function walk(dir) {

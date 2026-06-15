@@ -29,7 +29,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/generate-search-index.mjs && node scripts/strip-html-comments.mjs",
+    "build": "astro build && node scripts/generate-search-index.mjs && node scripts/minifica.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "lint": "eslint .",
