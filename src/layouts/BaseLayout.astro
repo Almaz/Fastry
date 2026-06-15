@@ -1,8 +1,6 @@
 ---
 import '@/styles/global.css';
 import fontsCss from '@/styles/fonts/fonts.css?url';
-import interLatinFont from '@/assets/fonts/inter-latin-wght-normal.woff2?url';
-import interCyrillicFont from '@/assets/fonts/inter-cyrillic-wght-normal.woff2?url';
 import SEO from '@/components/seo/SEO.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import Analytics from '@/components/layout/Analytics.astro';
@@ -77,13 +75,10 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 
     <!-- Async font stylesheet: loaded with media="print" trick so it
          does not block the critical rendering path. The @font-face
-         rules inside use font-display:optional for Inter (LCP) and
          swap for secondary fonts. Metric-adjusted fallbacks are in
          global.css to prevent CLS.
          Font binaries are imported from src/assets/fonts so Vite emits
          hashed, cache-friendly URLs instead of stable /fonts/* paths. -->
-    <link rel="preload" href={interLatinFont} as="font" type="font/woff2" crossorigin media="print" onload="this.media='all'" />
-    <link rel="preload" href={interCyrillicFont} as="font" type="font/woff2" crossorigin media="print" onload="this.media='all'" />
     <link rel="stylesheet" href={fontsCss} media="print" onload="this.setAttribute('media','all')" />
     <noscript><link rel="stylesheet" href={fontsCss} /></noscript>
 
