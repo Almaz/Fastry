@@ -1,0 +1,77 @@
+---
+interface Props {
+  glitchColors?: string[];
+  glitchSpeed?: number;
+  centerVignette?: boolean;
+  outerVignette?: boolean;
+  smooth?: boolean;
+  /**
+   * When true (default), the component resolves --brand-300, --brand-600,
+   * and --brand-900 from :root and uses those as the glitch palette.
+   */
+  useBrandTokens?: boolean;
+  /**
+   * Locale for character set selection.
+   * When 'ru', uses Cyrillic uppercase letters instead of Latin.
+   */
+  locale?: string;
+  class?: string;
+}
+
+const FALLBACK_COLORS = ['#5e4491', '#A476FF', '#241a38'];
+
+const {
+  glitchColors = FALLBACK_COLORS,
+  glitchSpeed = 33,
+  centerVignette = false,
+  outerVignette = false,
+  smooth = true,
+  useBrandTokens = true,
+  locale = 'en',
+  class: className,
+} = Astro.props as Props;
+---
+
+<div
+  class:list={['relative w-full h-full overflow-hidden', className]}
+  data-letter-glitch
+  data-glitch-colors={JSON.stringify(glitchColors)}
+  data-glitch-speed={glitchSpeed}
+  data-center-vignette={centerVignette ? 'true' : 'false'}
+  data-outer-vignette={outerVignette ? 'true' : 'false'}
+  data-smooth={smooth ? 'true' : 'false'}
+  data-use-brand-tokens={useBrandTokens ? 'true' : 'false'}
+  data-locale={locale}
+  aria-hidden="true"
+>
+  <canvas class="block h-full w-full pointer-events-none" />
+
+  {outerVignette && (
+    <div
+      class="pointer-events-none absolute left-0 top-0 h-full w-full"
+      style="background: radial-gradient(circle, color-mix(in srgb, var(--background) 0%, transparent) 60%, var(--background) 100%);"
+    />
+  )}
+
+  {centerVignette && (
+    <div class="pointer-events-none absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle,_rgba(0,0,0,0.8)_0%,_rgba(0,0,0,0)_60%)]" />
+  )}
+</div>
+
+<script>
+  import { initAllLetterGlitches } from './letter-glitch.runtime.ts';
+
+  const scheduleInit = () => {
+    const run = () => initAllLetterGlitches();
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(run, { timeout: 500 });
+      return;
+    }
+
+    setTimeout(run, 0);
+  };
+
+  scheduleInit();
+  document.addEventListener('astro:page-load', scheduleInit);
+</script>
