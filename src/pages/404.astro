@@ -1,6 +1,6 @@
 ---
 /**
- * 404 page — Russian (default)
+ * 404 page – Russian (default)
  * Served by Netlify _redirects rule when a visitor lands on a non-existent URL.
  * This is the root 404.html served for all 404 errors.
  * Server-side renders in Russian (default locale).
@@ -51,7 +51,7 @@ const blogHref = localizedPath('/blog', locale);
 ---
 
 <PageLayout
-  title={t('errors.pageNotFound', locale) + ' — ' + t('siteName', locale)}
+  title={t('errors.pageNotFound', locale) + ' – ' + t('siteName', locale)}
   description={t('errors.pageNotFoundMessage', locale)}
   noindex
   eagerReveal
@@ -200,9 +200,9 @@ const blogHref = localizedPath('/blog', locale);
     };
 
     var en404 = {
-      badge: '404 — Page not found',
-      titlePart: 'Page not',
-      titleHighlight: 'found.',
+      badge: '404 – Page not found',
+      titlePart: 'Page',
+      titleHighlight: 'not found.',
       description: 'This page has been moved, deleted, or never existed. Let\'s get you back on track.',
       recoveryTitle: 'Try one of these sections',
       homeLabel: 'Go home',
@@ -411,6 +411,6 @@ const blogHref = localizedPath('/blog', locale);
       }
     }
 
-    document.title = en.badge + ' — Fastry';
+    document.title = en.badge + ' – Fastry';
   })();
 </script>
