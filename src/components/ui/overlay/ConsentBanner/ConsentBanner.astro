@@ -18,6 +18,8 @@ interface Props {
   ui?: Partial<ConsentUIText>;
   alwaysOnLabel?: string;
   class?: string;
+  /** Localized category labels/descriptions — keyed by category key */
+  categoryLabels?: Record<string, { label: string; description: string }>;
 }
 
 const {
@@ -25,6 +27,7 @@ const {
   ui: uiOverrides,
   alwaysOnLabel: alwaysOnLabelProp,
   class: className,
+  categoryLabels,
 } = Astro.props;
 
 const consentEnabled = PUBLIC_CONSENT_ENABLED;
@@ -83,11 +86,11 @@ const configJson = JSON.stringify(consentConfig);
           <Button variant="primary" size="sm" id="consent-accept-all">
             {ui.acceptAll}
           </Button>
+          <Button variant="outline" size="sm" id="consent-customize">
+            {ui.customize}
+          </Button>
           <Button variant="secondary" size="sm" id="consent-decline-all">
             {ui.declineAll}
-          </Button>
-          <Button variant="link" size="sm" id="consent-customize">
-            {ui.customize}
           </Button>
         </div>
       </div>
@@ -99,11 +102,11 @@ const configJson = JSON.stringify(consentConfig);
         {Object.entries(consentConfig.categories).map(([key, cat]) => (
           <div class="consent-category" data-category={key}>
             <div class="consent-category-info">
-              <span class="consent-category-label">{cat.label}</span>
+              <span class="consent-category-label">{categoryLabels?.[key]?.label ?? cat.label}</span>
               {cat.required && (
                 <span class="consent-category-badge">{alwaysOnLabel}</span>
               )}
-              <p class="consent-category-description">{cat.description}</p>
+              <p class="consent-category-description">{categoryLabels?.[key]?.description ?? cat.description}</p>
             </div>
             <Switch
               id={`consent-${key}`}
@@ -479,7 +482,7 @@ const configJson = JSON.stringify(consentConfig);
     transform: translateY(0);
   }
 
-  .consent-banner-inner {
+  :global(html) .consent-banner-inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -487,8 +490,22 @@ const configJson = JSON.stringify(consentConfig);
     max-width: 72rem;
     margin: 0 auto;
     padding: 1.25rem 1.5rem;
-    background: var(--background-elevated);
+    background-color: var(--background-elevated);
     box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+    position: relative;
+  }
+
+  :global(html) .consent-banner-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background-color: color-mix(in oklch, var(--color-brand-500) 3%, transparent);
+  }
+
+  :global(html.dark) .consent-banner-inner::before {
+    background-color: color-mix(in oklch, var(--color-brand-400) 7%, transparent);
   }
 
   .consent-banner--bottom .consent-banner-inner {

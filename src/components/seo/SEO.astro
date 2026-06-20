@@ -32,7 +32,7 @@ const {
   nofollow = false,
 } = Astro.props;
 
-const pageTitle = title ? `${title} — ${siteConfig.name}` : siteConfig.name;
+const pageTitle = title ? `${title} – ${siteConfig.name}` : siteConfig.name;
 
 // Astro.url already includes the base path (/Fastry/) when configured,
 // so we can use it directly for canonical and hreflang URLs.
@@ -74,7 +74,7 @@ function getImageType(url: string): string | undefined {
 }
 const ogImageType = getImageType(ogImage);
 
-// hreflang alternates — only emitted when i18n is enabled with >1 locale.
+// hreflang alternates – only emitted when i18n is enabled with >1 locale.
 // `x-default` points at the default-locale URL per Google's recommendation.
 //
 // swapLocaleInPath() does NOT know about the Astro `base` path (/Fastry/),

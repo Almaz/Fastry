@@ -8,8 +8,8 @@ import ConsentBanner from '@/components/ui/overlay/ConsentBanner';
 import CursorTrail from '@/components/effects/CursorTrail.astro';
 import { createWebsiteSchema, createOrganizationSchema, createPersonSchema, createProfessionalServiceSchema } from '@/lib/schema';
 import type { Thing, WithContext } from 'schema-dts';
+import { t, getLocaleFromPath } from '@/i18n';
 import siteConfig from '@/config/site.config';
-import { getLocaleFromPath } from '@/i18n';
 
 interface Props {
   title?: string;
@@ -348,7 +348,38 @@ const locale = getLocaleFromPath(Astro.url.pathname);
 
     <slot name="footer" />
 
-    <ConsentBanner />
+    <ConsentBanner
+      ui={{
+        heading: t('cookieBanner.title', locale),
+        description: t('cookieBanner.description', locale),
+        acceptAll: t('cookieBanner.acceptAll', locale),
+        declineAll: t('cookieBanner.rejectAll', locale),
+        customize: t('cookieBanner.customize', locale),
+        savePreferences: t('cookieBanner.saveAndClose', locale),
+        settingsHeading: t('cookieBanner.modalTitle', locale),
+        alwaysOnLabel: t('cookieBanner.required', locale),
+        privacyPolicyLabel: t('cookieBanner.privacyPolicy', locale),
+      }}
+      alwaysOnLabel={t('cookieBanner.required', locale)}
+      categoryLabels={{
+        necessary: {
+          label: t('cookieBanner.modalNecessary', locale),
+          description: t('cookieBanner.modalNecessaryDescription', locale),
+        },
+        analytics: {
+          label: t('cookieBanner.modalAnalytics', locale),
+          description: t('cookieBanner.modalAnalyticsDescription', locale),
+        },
+        marketing: {
+          label: t('cookieBanner.modalMarketing', locale),
+          description: t('cookieBanner.modalMarketingDescription', locale),
+        },
+        preferences: {
+          label: t('cookieBanner.modalPreferences', locale),
+          description: t('cookieBanner.modalPreferencesDescription', locale),
+        },
+      }}
+    />
 
     <CursorTrail />
 
