@@ -67,7 +67,6 @@ export default defineConfig({
 
   env: {
     schema: {
-      SITE_URL: envField.string({ context: 'server', access: 'public', optional: true }),
       PUBLIC_GA_MEASUREMENT_ID: envField.string({ context: 'client', access: 'public', optional: true }),
       PUBLIC_GTM_ID: envField.string({ context: 'client', access: 'public', optional: true }),
       PUBLIC_YM_ID: envField.string({ context: 'client', access: 'public', optional: true }),
@@ -78,7 +77,8 @@ export default defineConfig({
       BING_SITE_VERIFICATION: envField.string({ context: 'server', access: 'public', optional: true }),
       PUBLIC_GOOGLE_MAPS_API_KEY: envField.string({ context: 'client', access: 'public', optional: true, default: '' }),
       PUBLIC_CONSENT_ENABLED: envField.boolean({ context: 'client', access: 'public', optional: true, default: false }),
-      PUBLIC_PRIVACY_POLICY_URL: envField.string({ context: 'client', access: 'public', optional: true, default: '' }),
+
+      PUBLIC_PRIVACY_POLICY_URL: envField.string({ context: 'client', access: 'public', optional: true, default: '/privacy' }),
     },
   },
 

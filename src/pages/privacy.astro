@@ -1,0 +1,238 @@
+---
+/**
+ * Privacy page – Russian
+ * URL: /privacy
+ */
+import PageLayout from '@/layouts/PageLayout.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Card from '@/components/ui/data-display/Card/Card.astro';
+import { Hero } from '@/components/hero';
+---
+
+<PageLayout
+  title="Политика конфиденциальности – обработка персональных данных"
+  description="Политика конфиденциальности персональных данных: как мы собираем, используем и защищаем вашу информацию."
+>
+  <Hero layout="centered" size="sm" class="isolate" showHeroHalo>
+    <Badge slot="badge" variant="brand" pill>
+      <Icon name="shield" size="sm" />
+      Действует с 16 июня 2026 года
+    </Badge>
+    <h1 slot="title">
+      <span class="text-foreground">Политика</span><br />
+      <span class="text-brand-500">конфиденциальности</span>
+    </h1>
+    <p slot="description">
+      Как мы собираем, используем и защищаем ваши персональные данные.
+    </p>
+  </Hero>
+
+  <!-- Sections 1–12 as cards with numbers -->
+  <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-6">
+
+      <!-- 1. Общие положения -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            1
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Общие положения</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">Настоящая Политика конфиденциальности персональных данных (далее – Политика) действует в отношении всей информации, которую сайт https://fastry.ru (далее – Сайт) может получить о пользователе во время использования сервисов Сайта.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">Использование Сайта означает безоговорочное согласие пользователя с настоящей Политикой и указанными в ней условиях обработки его персональных данных. В случае несогласия с этими условиями пользователь должен прекратить использование Сайта.</p>
+      </Card>
+
+      <!-- 2. Основные понятия -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="1" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            2
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Основные понятия</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">2.1. Персональные данные – любая информация, относящаяся к прямо или косвенно определенному или определяемому физическому лицу (субъекту персональных данных).</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">2.2. Обработка персональных данных – любое действие (операция) или совокупность действий (операций), совершаемых с персональными данными с использованием средств автоматизации или без использования таких средств.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">2.3. Удаление персональных данных – действия, в результате которых персональные данные уничтожаются в необратимой форме либо невозможно будет восстановить содержание персональных данных в информационной системе персональных данных и (или) прекратить обработку персональных данных информационной системой персональных данных.</p>
+      </Card>
+
+      <!-- 3. Обрабатываемые данные -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="2" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            3
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Обрабатываемые данные</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">3.1. Сайт собирает и хранит следующие персональные данные о пользователе:</p>
+        <ul class="flex flex-col gap-3">
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Имя и фамилия (при отправке формы связи)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Email адрес (при отправке формы связи)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Тема и содержание сообщения (при отправке формы связи)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">IP-адрес и технические данные (при посещении Сайта)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Информация о браузере и операционной системе (при посещении Сайта)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Куки и данные LocalStorage (при посещении Сайта)</p>
+          </li>
+        </ul>
+      </Card>
+
+      <!-- 4. Цели обработки -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="3" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            4
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Цели обработки персональных данных</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">4.1. Сайт обрабатывает персональные данные пользователей в следующих целях:</p>
+        <ul class="flex flex-col gap-3 mb-4">
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Предоставление пользователю доступа к сервисам Сайта</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Идентификация пользователя при авторизации</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Предоставление пользователю эффективной клиентской поддержки</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Обработка и ответ на запросы и заявки пользователя</p>
+          </li>
+        </ul>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">4.2. Сайт также использует информацию для улучшения качества сайта, анализа посещаемости и разработки новых услуг.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">4.3. Сайт не передает персональные данные третьим лицам, за исключением случаев, когда это требуется по закону или с согласия пользователя.</p>
+      </Card>
+
+      <!-- 5. Конфиденциальность -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="4" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            5
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Конфиденциальность персональных данных</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">5.1. Сайт принимает меры по защите персональных данных пользователей от несанкционированного доступа, изменения, раскрытия или уничтожения.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">5.2. Сайт хранит персональные данные только в течение времени, необходимого для достижения целей обработки, указанных в разделе 4.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">5.3. В случае прекращения необходимости хранения персональных данных они удаляются из базы данных в необратимой форме.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">5.4. Пользователь имеет право запросить удаление своих персональных данных в любое время, отправив запрос на email, указанный на Сайте.</p>
+      </Card>
+
+      <!-- 6. Куки -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="5" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            6
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Куки и другие технологии слежения</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">6.1. Сайт использует куки и другие технологии отслеживания для улучшения пользовательского опыта и анализа посещаемости.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">6.2. Куки – это небольшие фрагменты данных, которые отправляются браузеру и хранятся на устройстве пользователя.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">6.3. Пользователь может отказаться от использования куки, изменив настройки своего браузера. В этом случае некоторые функции Сайта могут стать недоступными.</p>
+      </Card>
+
+      <!-- 7. Третьи стороны -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="6" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            7
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Третьи стороны</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">7.1. Сайт может использовать услуги третьих сторон для обработки персональных данных.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">7.2. Третьи стороны имеют доступ к персональным данным только для выполнения своих обязательств перед Сайтом и обязываются соблюдать конфиденциальность.</p>
+        <ul class="flex flex-col gap-3">
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Яндекс.Метрика – для сбора статистики посещаемости (без Вебвизора и Карты кликов)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Хостинг-провайдер – для хранения данных Сайта</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Почтовые сервисы – для отправки уведомлений</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Технические подрядчики – для технического обслуживания Сайта</p>
+          </li>
+        </ul>
+      </Card>
+
+      <!-- 8. Изменения -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="7" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            8
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Изменения в Политике конфиденциальности</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">8.1. Сайт оставляет за собой право вносить изменения в настоящую Политику конфиденциальности.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">8.2. Новая Политика вступает в силу с момента ее размещения на Сайте, если иное не предусмотрено новой редакцией Политики.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">8.3. В случае существенных изменений Политики Сайт уведомит пользователя путем размещения уведомления на главной странице Сайта.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">8.4. Пользователь может отслеживать изменения в Политике, периодически просматривая ее на Сайте.</p>
+      </Card>
+
+      <!-- 9. Права субъектов -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="8" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            9
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Права субъектов персональных данных</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">9.1. Пользователь имеет право на доступ к своим персональным данным, их исправление или удаление.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">9.2. Пользователь имеет право на переносимость данных, т.е. получение своих персональных данных в структурированном, общепринятом формате.</p>
+      </Card>
+
+      <!-- 10. Как связаться -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="9" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            10
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Как связаться с нами</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">10.1. Вопросы и предложения по поводу настоящей Политики конфиденциальности можно направлять адрес электропочты, указанный на странице контактов.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">10.2. Мы обязуемся рассмотреть и ответить на ваше сообщение в течение 30 дней с момента его получения.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">10.3. Мы примем разумные меры для соблюдения конфиденциальности любых персональных данных, которые получаем от третьих лиц.</p>
+      </Card>
+
+      <!-- 11. Заключительные положения -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="10" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            11
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Заключительные положения</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">11.1. Настоящая Политика конфиденциальности является публичным договором между Сайтом и пользователем.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">11.2. Настоящая Политика конфиденциальности регулируется законодательством Российской Федерации.</p>
+      </Card>
+
+    </div>
+  </section>
+</PageLayout>

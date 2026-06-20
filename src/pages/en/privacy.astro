@@ -1,0 +1,238 @@
+---
+/**
+ * Privacy page – English
+ * URL: /en/privacy
+ */
+import PageLayout from '@/layouts/PageLayout.astro';
+import Icon from '@/components/ui/primitives/Icon/Icon.astro';
+import Badge from '@/components/ui/data-display/Badge/Badge.astro';
+import Card from '@/components/ui/data-display/Card/Card.astro';
+import { Hero } from '@/components/hero';
+---
+
+<PageLayout
+  title="Privacy Policy – Personal Data Processing"
+  description="Privacy Policy for Personal Data: how we collect, use, and protect your information."
+>
+  <Hero layout="centered" size="sm" class="isolate" showHeroHalo>
+    <Badge slot="badge" variant="brand" pill>
+      <Icon name="shield" size="sm" />
+      Effective from June 16, 2026
+    </Badge>
+    <h1 slot="title">
+      <span class="text-foreground">Privacy</span><br />
+      <span class="text-brand-500">Policy</span>
+    </h1>
+    <p slot="description">
+      How we collect, use, and protect your personal data.
+    </p>
+  </Hero>
+
+  <!-- Sections 1–12 as cards with numbers -->
+  <section class="py-[var(--space-section-md)] bg-background-secondary border-t border-border">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col gap-6">
+
+      <!-- 1. General Provisions -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            1
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">General Provisions</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">This Privacy Policy for Personal Data (hereinafter referred to as the "Policy") applies to all information that the website https://yourdomain.com (hereinafter referred to as the "Site") may receive about the user during the use of the Site's services.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">Use of the Site means unconditional acceptance of this Policy and the terms of processing of personal data specified herein. If you do not agree with these terms, you must stop using the Site.</p>
+      </Card>
+
+      <!-- 2. Key Terms -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="1" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            2
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Key Terms</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">2.1. Personal data — any information relating to an identified or identifiable natural person (data subject).</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">2.2. Processing of personal data — any action (operation) or set of actions (operations) performed with personal data using automated means or without such means.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">2.3. Deletion of personal data — actions resulting in the irreversible destruction of personal data or making it impossible to restore the content of personal data in the personal data information system and/or to cease processing of personal data by the personal data information system.</p>
+      </Card>
+
+      <!-- 3. Personal Data Processed -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="2" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            3
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Personal Data Processed on the Site</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">3.1. The Site collects and stores the following personal data about the user:</p>
+        <ul class="flex flex-col gap-3">
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Name and surname (when submitting a contact form)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Email address (when submitting a contact form)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Subject and content of the message (when submitting a contact form)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">IP address and technical data (when visiting the Site)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Browser and operating system information (when visiting the Site)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Cookies and LocalStorage data (when visiting the Site)</p>
+          </li>
+        </ul>
+      </Card>
+
+      <!-- 4. Purposes of Processing -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="3" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            4
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Purposes of Processing Personal Data</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">4.1. The Site processes personal data of users for the following purposes:</p>
+        <ul class="flex flex-col gap-3 mb-4">
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Providing users with access to the Site's services</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">User identification during authorization</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Providing effective customer support to users</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Processing and responding to user requests and applications</p>
+          </li>
+        </ul>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">4.2. The Site also uses information to improve the quality of the site, analyze traffic, and develop new services.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">4.3. The Site does not transfer personal data to third parties, except where required by law or with user consent.</p>
+      </Card>
+
+      <!-- 5. Confidentiality -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="4" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            5
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Confidentiality of Personal Data</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">5.1. The Site takes measures to protect users' personal data from unauthorized access, modification, disclosure, or destruction.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">5.2. The Site stores personal data only for the time necessary to achieve the processing purposes specified in Section 4.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">5.3. In case the need to store personal data ceases, they are deleted from the database in an irreversible manner.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">5.4. The user has the right to request deletion of their personal data at any time by sending a request to the email address specified on the Site.</p>
+      </Card>
+
+      <!-- 6. Cookies -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="5" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            6
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Cookies and Other Tracking Technologies</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">6.1. The Site uses cookies and other tracking technologies to enhance user experience and analyze traffic.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">6.2. Cookies are small data fragments that are sent to the browser and stored on the user's device.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">6.3. The user can refuse the use of cookies by changing their browser settings. In this case, some Site functions may become unavailable.</p>
+      </Card>
+
+      <!-- 7. Third Parties -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="6" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            7
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Third Parties</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">7.1. The Site may use services of third parties for processing personal data.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">7.2. Third parties have access to personal data only to fulfill their obligations to the Site and are obligated to maintain confidentiality.</p>
+        <ul class="flex flex-col gap-3">
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Yandex.Metrica — for collecting traffic statistics (without Webvisor and Click Map)</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Hosting provider — for storing Site data</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Email services — for sending notifications</p>
+          </li>
+          <li class="flex items-start gap-3">
+            <Icon name="check" size="sm" class="text-brand-500 shrink-0 mt-0.5" />
+            <p class="text-sm text-foreground-muted leading-relaxed">Technical contractors — for technical maintenance of the Site</p>
+          </li>
+        </ul>
+      </Card>
+
+      <!-- 8. Changes to Policy -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="7" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            8
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Changes to the Privacy Policy</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">8.1. The Site reserves the right to make changes to this Privacy Policy.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">8.2. The new Policy comes into effect from the moment of its placement on the Site, unless otherwise provided in the new version of the Policy.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">8.3. In case of significant changes to the Policy, the Site will notify the user by placing a notice on the main page of the Site.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">8.4. The user can track changes in the Policy by periodically viewing it on the Site.</p>
+      </Card>
+
+      <!-- 9. Rights of Data Subjects -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="8" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            9
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Rights of Data Subjects</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">9.1. The user has the right to access their personal data, rectify or delete it.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">9.2. The user has the right to data portability, i.e., to receive their personal data in a structured, commonly used format.</p>
+      </Card>
+
+      <!-- 10. Contact Us -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="9" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            10
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">How to Contact Us</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">10.1. Questions and suggestions regarding this Privacy Policy can be sent to the email address specified on the Site.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">10.2. We commit to consider and respond to your message within 30 days from the date of receipt.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">10.3. We will take reasonable measures to ensure the confidentiality of any personal data we receive from third parties.</p>
+      </Card>
+
+      <!-- 11. Final Provisions -->
+      <Card variant="elevated" padding="lg" data-reveal data-reveal-delay="10" data-reveal-ease="smooth">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-border">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-500/5 flex items-center justify-center text-brand-500 font-bold text-lg shrink-0">
+            11
+          </div>
+          <h2 class="font-display text-lg font-semibold text-foreground">Final Provisions</h2>
+        </div>
+        <p class="text-sm text-foreground-muted leading-relaxed mb-3">11.1. This Privacy Policy is a public agreement between the Site and the user.</p>
+        <p class="text-sm text-foreground-muted leading-relaxed">11.2. This Privacy Policy is governed by the laws of the Russian Federation.</p>
+      </Card>
+
+    </div>
+  </section>
+</PageLayout>
