@@ -41,7 +41,7 @@ export const footerNavItems: NavItem[] = [
   { label: 'Services', labelKey: 'nav.sections.services', href: '/services', order: 1 },
   { label: 'Projects', labelKey: 'nav.sections.projects', href: '/projects', order: 2 },
   { label: 'Blog', labelKey: 'nav.sections.blog', href: '/blog', order: 3 },
-  { label: 'About', labelKey: 'nav.sections.about', href: '/about', order: 4 },
+  { label: 'Privacy', labelKey: 'nav.sections.privacy', href: '/privacy', order: 4 },
   { label: 'Contact', labelKey: 'nav.sections.contact', href: '/contact', order: 5 },
 ];
 
