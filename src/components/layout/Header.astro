@@ -473,7 +473,7 @@ const buttonId = `${menuId}-button`;
                   style={`--stagger-index: ${navItems.length + (showThemeSelector ? 1 : 0)}`}
                 >
                   <span class="text-sm text-foreground-muted">{t('nav.language', locale)}</span>
-                  <LanguageSwitcher />
+                  <LanguageSwitcher dropdownDirection="up" />
                 </div>
               </section>
             )}

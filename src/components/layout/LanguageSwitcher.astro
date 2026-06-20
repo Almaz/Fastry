@@ -25,9 +25,11 @@ interface Props {
   class?: string;
   /** Render compact (icon-only trigger). Defaults to false. */
   compact?: boolean;
+  /** Dropdown open direction: 'down' (default) or 'up' */
+  dropdownDirection?: 'down' | 'up';
 }
 
-const { class: className, compact = false } = Astro.props;
+const { class: className, compact = false, dropdownDirection = 'down' } = Astro.props;
 
 const enabled = i18nIsEnabled();
 const currentPath = Astro.url.pathname;
@@ -86,10 +88,10 @@ const currentLanguageLabel = t('nav.currentLanguage', currentLocale);
         </svg>
       </button>
 
-      <!-- Dropdown panel (identical to ttg-panel) -->
       <div
         class={cn(
-          'lang-panel absolute right-0 top-full mt-2 z-50',
+          'lang-panel absolute right-0 z-50',
+          dropdownDirection === 'up' ? 'bottom-full mb-2' : 'top-full mt-2',
           'w-56 rounded-xl border border-border bg-background shadow-lg',
           'p-1.5 hidden'
         )}
