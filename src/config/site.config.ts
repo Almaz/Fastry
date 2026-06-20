@@ -1,5 +1,7 @@
 
 import { GOOGLE_SITE_VERIFICATION, BING_SITE_VERIFICATION } from 'astro:env/server';
+
+const SITE_URL = process.env.SITE_URL || 'https://fastry.ru';
 import i18nConfig, { type I18nConfig } from './i18n.config';
 
 export { i18nConfig };
@@ -123,7 +125,8 @@ export interface SiteConfig {
 const siteConfig: SiteConfig = {
   name: 'Fastry',
   description:
-  url: SITE_URL || 'https://fastry.ru',
+    'Fastry — A production-ready Astro 6 starter with 12 beautiful themes, 57+ components, built-in i18n, dark mode and a fast, modern foundation to build anything on.',
+  url: SITE_URL,
   ogImage: '/og-default.png',
   author: 'Almaz',
   email: 'almazworks@yandex.ru',
