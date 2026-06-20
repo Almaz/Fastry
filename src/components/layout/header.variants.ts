@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
-export const headerVariants = cva('z-50', {
+export const headerVariants = cva('z-[60]', {
   variants: {
     position: {
       fixed: 'fixed top-0 left-0 right-0',
