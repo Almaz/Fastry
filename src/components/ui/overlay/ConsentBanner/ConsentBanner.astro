@@ -288,13 +288,34 @@ const configJson = JSON.stringify(consentConfig);
 
         // ── Reopener ──
         function showReopener() {
-          const btn = document.getElementById('consent-reopener');
-          if (btn) btn.classList.add('consent-reopener--visible');
+          // Show immediately if near bottom or page is short, then track scroll
+          if (!window.__consentReopenerBound) {
+            window.__consentReopenerBound = true;
+            window.addEventListener('scroll', checkScrollAndShowReopener, { passive: true });
+          }
+          checkScrollAndShowReopener();
+          // Also check on resize (content might change height)
+          window.addEventListener('resize', checkScrollAndShowReopener, { passive: true });
         }
 
         function hideReopener() {
           const btn = document.getElementById('consent-reopener');
           if (btn) btn.classList.remove('consent-reopener--visible');
+        }
+
+        function checkScrollAndShowReopener() {
+          const btn = document.getElementById('consent-reopener');
+          if (!btn) return;
+          const scrollBottom = window.innerHeight + window.scrollY;
+          const docHeight = document.documentElement.scrollHeight;
+          // Show when:
+          // 1. Page is short (fits in viewport or slightly taller) — always show
+          // 2. User has scrolled to within 200px of the bottom
+          if (docHeight <= window.innerHeight + 200 || docHeight - scrollBottom < 200) {
+            btn.classList.add('consent-reopener--visible');
+          } else {
+            btn.classList.remove('consent-reopener--visible');
+          }
         }
 
         // ── Settings panel (via Dialog API) ──
@@ -617,10 +638,10 @@ const configJson = JSON.stringify(consentConfig);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;            /* 48px — matches back-to-top */
+    height: 3rem;           /* 48px — matches back-to-top */
     border-radius: 9999px;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in oklch, var(--color-brand-500) 30%, transparent);
     background: var(--background-elevated);
     color: var(--foreground-muted);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
@@ -632,17 +653,21 @@ const configJson = JSON.stringify(consentConfig);
       opacity var(--transition-normal),
       transform var(--transition-normal),
       color var(--transition-fast),
-      background-color var(--transition-fast);
+      background-color var(--transition-fast),
+      border-color var(--transition-fast);
   }
 
   .consent-reopener--bottom {
-    bottom: 1rem;
-    left: 1rem;
+    bottom: 2.25rem;       /* matches back-to-top bottom-9 on mobile */
+    left: 1rem;            /* left side — back-to-top is on the right */
+    right: auto;
   }
 
-  .consent-reopener--top {
-    top: 1rem;
-    left: 1rem;
+  @media (min-width: 640px) {
+    .consent-reopener--bottom {
+      bottom: 1.5rem;      /* matches back-to-top sm:bottom-6 */
+      left: 1.5rem;        /* matches back-to-top sm:right-6 but on left */
+    }
   }
 
   .consent-reopener--visible {
@@ -654,11 +679,21 @@ const configJson = JSON.stringify(consentConfig);
   .consent-reopener:hover {
     color: var(--foreground);
     background: var(--muted);
+    border-color: color-mix(in oklch, var(--color-brand-500) 55%, transparent);
   }
 
   .consent-reopener:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
+  }
+
+  .consent-reopener-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
   }
 
   /* ─── Responsive ─── */
