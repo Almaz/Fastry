@@ -42,7 +42,7 @@ const trendIcons = {
 };
 ---
 
-<Card variant="default" padding="md" hover class={className}>
+<Card variant="default" padding="md" hover class={cn('group', className)}>
   <div class="flex items-start justify-between">
     <div>
       <p class="text-sm text-foreground-muted">{label}</p>
@@ -55,7 +55,7 @@ const trendIcons = {
       )}
     </div>
     {icon && (
-      <div class="p-2.5 rounded-lg bg-secondary text-foreground-muted">
+      <div class="icon-invert p-2.5 rounded-lg bg-secondary text-foreground-muted">
         <Icon name={icon} size="md" />
       </div>
     )}
