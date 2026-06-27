@@ -10,6 +10,23 @@ Allow: /
 # Block API routes
 Disallow: /api/
 
+# Block components page from indexing
+Disallow: /components
+Disallow: /en/components
+
+# Block all pages from AI crawlers
+User-agent: Googlebot-AI
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: meta-ai
+Disallow: /
+
 Sitemap: ${siteUrl}sitemap-index.xml
 `.trim();
 
